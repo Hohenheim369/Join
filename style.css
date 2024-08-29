@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  font-family: "Livvic", normal;
+  font-family: "Inter", normal;
   height: 100%;
 }
 
@@ -19,4 +19,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 48px;
+}
+
+h1{
+    font-weight: 700;
+    font-size: 61px;
 }
