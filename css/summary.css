@@ -1,0 +1,26 @@
+body{
+    background-color: #f5f6f7;
+}
+
+.head {
+  width: 625px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.seperator {
+  border: 1.5px solid #29ABE2;
+  height: 59px;
+}
+
+span {
+    font-size: 27px;
+    font-weight: 400;
+}
+
+.content-tasks{
+    padding-top: 56px;
+    height: 562px;
+    width: 560px;
+}
