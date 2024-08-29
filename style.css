@@ -19,7 +19,6 @@ body {
   padding: 110px 96px 0px 96px; 
   display: flex;
   flex-direction: column;
-  gap: 48px;
 }
 
 h1{
