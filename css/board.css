@@ -1,3 +1,9 @@
+.bord-headline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .searchBox {
     width: 312px;
     height: 48px;
@@ -9,16 +15,15 @@
   }
   
   .searchBox input {
-    border: none;
-    outline: none;
-    padding: 4px 16px;
-    color: #000;
+    width: 48;
+    height: 32px;
+
   }
   
   .searchBox button {
     cursor: pointer;
     width: 48;
     height: 32px;
-    padding: 4px 16px;
-    background-color: white;
+    padding: none;
+
   }
