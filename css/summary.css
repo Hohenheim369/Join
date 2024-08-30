@@ -1,5 +1,5 @@
-body{
-    background-color: #f5f6f7;
+body {
+  background-color: #f5f6f7;
 }
 
 .head {
@@ -10,17 +10,78 @@ body{
 }
 
 .seperator {
-  border: 1.5px solid #29ABE2;
+  border: 1.5px solid #29abe2;
   height: 59px;
 }
 
 span {
-    font-size: 27px;
-    font-weight: 400;
+  font-size: 27px;
+  font-weight: 400;
+  font-family: "Inter", normal;
 }
 
-.content-tasks{
-    padding-top: 56px;
-    height: 562px;
-    width: 560px;
+.content-tasks {
+  display: flex;
+  padding-top: 56px;
+  height: 562px;
+  width: 560px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.to-do_done_block {
+  display: flex;
+  width: 560px;
+  height: 168px;
+  justify-content: space-between;
+}
+
+.to_do_block {
+  display: flex;
+  background-color: white;
+  width: 264px;
+  height: 168px;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.done_block {
+  display: flex;
+  background-color: white;
+  width: 264px;
+  height: 168px;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.priority_block {
+  display: flex;
+  background-color: white;
+  width: 560px;
+  height: 168px;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.task_block{
+  display: flex;
+  justify-content: space-between;
+}
+
+.task_in_block{
+  display: flex;
+  background-color: white;
+  width: 168px;
+  height: 168px;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.greeting{
+  font-size: 47px;
+  font-weight: 500;
 }
