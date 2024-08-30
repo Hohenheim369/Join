@@ -69,6 +69,25 @@ span {
   justify-content: center;
   align-items: center;
   gap: 18px;
+  transition: transform 0.08s ease-in-out
+}
+
+.to_do_block:hover {
+  cursor: pointer;
+  background-color: #2A3647;
+  transform: scale(1.1);
+}
+
+.to_do_block:hover .circel{
+  background-color: white;
+}
+
+.to_do_block:hover .circel svg path{
+  fill: #2A3647;
+}
+
+.to_do_block:hover span{
+  color: white;
 }
 
 .done_block {
@@ -80,6 +99,25 @@ span {
   justify-content: center;
   align-items: center;
   gap: 18px;
+  transition: transform 0.08s ease-in-out
+}
+
+.done_block:hover {
+  cursor: pointer;
+  background-color: #2A3647;
+  transform: scale(1.1);
+}
+
+.done_block:hover .circel{
+  background-color: white;
+}
+
+.done_block:hover .circel svg path{
+  stroke: #2A3647;
+}
+
+.done_block:hover span{
+  color: white;
 }
 
 .priority_block {
@@ -91,6 +129,17 @@ span {
   justify-content: center;
   align-items: center;
   gap: 61px;
+  transition: transform 0.08s ease-in-out
+}
+
+.priority_block:hover {
+  cursor: pointer;
+  background-color: #2A3647;
+  transform: scale(1.1);
+}
+
+.priority_block:hover span{
+  color: white;
 }
 
 .priority_and_nummber {
@@ -114,6 +163,17 @@ span {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: transform 0.08s ease-in-out
+}
+
+.task_in_block:hover {
+  cursor: pointer;
+  background-color: #2A3647;
+  transform: scale(1.1);
+}
+
+.task_in_block:hover span{
+  color: white;
 }
 
 .greeting {
