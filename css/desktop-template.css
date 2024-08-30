@@ -1,17 +1,20 @@
 
 header {
-    font-size: 20px !important;
-    font-family: "inter", Arial, sans-serif;
-    display: flex;
-    width: 1208px;
-    height: 96px;
-    padding: 20px 40px 20px 116px;
-    gap: 0px;
-    justify-content: space-between;
-    box-shadow: 0px 4px 4px 0px #0000001a;
-    align-items: center;
-    box-sizing: border-box;
-    background-color: white;
+  top: 0;
+  left: 232px;
+  position: absolute;
+  font-size: 20px !important;
+  font-family: "inter", Arial, sans-serif;
+  display: flex;
+  width: 1208px;
+  height: 96px;
+  padding: 20px 40px 20px 116px;
+  gap: 0px;
+  justify-content: space-between;
+  box-shadow: 0px 4px 4px 0px #0000001a;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: white;
   }
   
   .help {
@@ -79,6 +82,8 @@ header {
   }
 
   aside {
+    top: 0;
+    position: absolute;
     display: flex;
     width: 232px;
     height: 100vh;

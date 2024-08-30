@@ -1,5 +1,7 @@
 body {
   background-color: #f5f6f7;
+  visibility: hidden;
+  height: unset; /* überprüfen ob es nötig ist */
 }
 
 .head {
@@ -23,19 +25,19 @@ h2 {
   font-size: 27px;
   font-weight: 400;
   font-family: "Inter", normal;
-  color: #2A3647;
+  color: #2a3647;
 }
 
 h3 {
   font-size: 47px;
   font-weight: 500;
-  color: #2A3647;
+  color: #2a3647;
 }
 
 span {
   text-align: center;
   font-size: 20px;
-  color: #2A3647;
+  color: #2a3647;
 }
 
 .date {
@@ -69,24 +71,24 @@ span {
   justify-content: center;
   align-items: center;
   gap: 18px;
-  transition: transform 0.08s ease-in-out
+  transition: transform 0.08s ease-in-out;
 }
 
 .to_do_block:hover {
   cursor: pointer;
-  background-color: #2A3647;
+  background-color: #2a3647;
   transform: scale(1.1);
 }
 
-.to_do_block:hover .circel{
+.to_do_block:hover .circel {
   background-color: white;
 }
 
-.to_do_block:hover .circel svg path{
-  fill: #2A3647;
+.to_do_block:hover .circel svg path {
+  fill: #2a3647;
 }
 
-.to_do_block:hover span{
+.to_do_block:hover span {
   color: white;
 }
 
@@ -99,24 +101,24 @@ span {
   justify-content: center;
   align-items: center;
   gap: 18px;
-  transition: transform 0.08s ease-in-out
+  transition: transform 0.08s ease-in-out;
 }
 
 .done_block:hover {
   cursor: pointer;
-  background-color: #2A3647;
+  background-color: #2a3647;
   transform: scale(1.1);
 }
 
-.done_block:hover .circel{
+.done_block:hover .circel {
   background-color: white;
 }
 
-.done_block:hover .circel svg path{
-  stroke: #2A3647;
+.done_block:hover .circel svg path {
+  stroke: #2a3647;
 }
 
-.done_block:hover span{
+.done_block:hover span {
   color: white;
 }
 
@@ -129,16 +131,16 @@ span {
   justify-content: center;
   align-items: center;
   gap: 61px;
-  transition: transform 0.08s ease-in-out
+  transition: transform 0.08s ease-in-out;
 }
 
 .priority_block:hover {
   cursor: pointer;
-  background-color: #2A3647;
+  background-color: #2a3647;
   transform: scale(1.1);
 }
 
-.priority_block:hover span{
+.priority_block:hover span {
   color: white;
 }
 
@@ -163,16 +165,16 @@ span {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.08s ease-in-out
+  transition: transform 0.08s ease-in-out;
 }
 
 .task_in_block:hover {
   cursor: pointer;
-  background-color: #2A3647;
+  background-color: #2a3647;
   transform: scale(1.1);
 }
 
-.task_in_block:hover span{
+.task_in_block:hover span {
   color: white;
 }
 
@@ -224,7 +226,7 @@ span {
   align-items: center;
 }
 
-.deadline{
+.deadline {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
