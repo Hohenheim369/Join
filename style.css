@@ -25,3 +25,16 @@ h1{
     font-weight: 700;
     font-size: 61px;
 }
+
+.bg_color{
+  background-color: #F6F7F8;
+}
+
+.font_color{
+  color: #2A3647; 
+}
+
+.max_width{
+  max-width: 1440px;
+  margin: auto;
+}

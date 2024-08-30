@@ -1,11 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Task</title>
+    <link rel="stylesheet" href="../css/add_task.css" />
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <div class="content bg_color">
+      <h1>Add Task</h1>
+      <div class="content_order">
+        <form class="add_task_form">
+          <div class="div_order">
+            <label class="font_color">Title</label>
+            <input required placeholder="Enter a title" type="text" />
+          </div>
+          <div class="div_order">
+            <label class="font_color">Description</label>
+            <textarea
+              name="Description"
+              placeholder="Enter a Description"
+              id="description"
+            ></textarea>
+          </div>
+          <div class="div_order">
+            <label class="font_color">Assigned to</label>
+            <select
+              name="AssignedTo"
+              aria-placeholder="Select contacts to assign"
+              id="assignedTo"
+            ></select>
+          </div>
+        </form>
+        <div class="dividing_bar"></div>
+        <form class="add_task_form">
+          <div class="div_order">
+            <label class="font_color">Due date</label>
+            <input required type="date" />
+          </div>
+          <div class="div_order">
+            <label class="font_color">Prio</label>
+            <div class="div_button_order">
+              <button class="urgent_button">
+                Urgent
+                <img
+                  class="prio_img"
+                  src="../assets/img/svg/urgent.svg"
+                  alt="red arrows upside"
+                />
+              </button>
+              <button class="medium_button">
+                Medium
+                <img
+                  class="prio_img"
+                  src="../assets/img/svg/medium.svg"
+                  alt="orange equals"
+                />
+              </button>
+              <button class="low_button">
+                Low
+                <img
+                  class="prio_img"
+                  src="../assets/img/svg/low.svg"
+                  alt="green arrows downside"
+                />
+              </button>
+            </div>
+          </div>
+          <div class="div_order drop_down_icon">
+            <label class="font_color">Category</label>
+            <select name="Category" id="category"></select>
+          </div>
+          <div class="div_order">
+            <label class="font_color">Subtasks</label>
+            <input class="add_icon" placeholder="Add new subtask" type="text" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
