@@ -82,6 +82,25 @@ span {
 }
 
 .greeting{
+  padding: 56px 0px 0px 80px;
   font-size: 47px;
   font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
+
+
+.d-flex{
+  display: flex;
+}
+
+.center{
+  align-items: center;
 }
