@@ -160,3 +160,70 @@ select:not(:-internal-select-author-button) {
     padding: 0;
     margin: 0;
 }
+
+.bottom_order{
+  width: 976px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+
+.bottom_button_order{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.clear_button{
+  width: 110px;
+  border-radius: 10px;
+  border: 1px solid #2A3647;
+  height: 56px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 16px;
+  gap: 4px;
+  color: #2A3647;
+}
+
+.clear_button:hover{
+  border-color: #29ABE2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #29ABE2;
+}
+
+.create_task_button{
+  width: 183px;
+  border-radius: 10px;
+  border: 1px solid #2A3647;
+  height: 56px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+  padding: 16px;
+  gap: 4px;
+  background-color: #2A3647;
+  color: #ffffff;
+}
+
+.create_task_button:hover{
+  border-color: #29ABE2;
+  background-color: #29ABE2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+}
+
+.alert_field{
+  display: flex;
+  align-items: end;
+}
+
+.close_img{
+  height: 15px;
+}
+
+.check_img{
+  height: 15px;
+}
