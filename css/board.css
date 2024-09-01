@@ -1,29 +1,66 @@
-.bord-headline{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.bord-headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.board-menue{
+  width: 504px;
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .searchBox {
-    width: 312px;
-    height: 48px;
-    border: 1px solid rgb(168, 168, 168);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .searchBox input {
-    width: 48;
-    height: 32px;
+  width: 312px;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid rgb(168, 168, 168);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  }
-  
-  .searchBox button {
-    cursor: pointer;
-    width: 48;
-    height: 32px;
-    padding: none;
+.searchBox input {
+  height: 32px;
+  width: 230px;
+  padding: 0;
+  background: transparent;
+  font-size: 20px;
+}
 
-  }
+.searchBox input::placeholder {
+  font-weight: 400;
+  font-size: 20px;
+  color: rgb(209, 209, 209);
+}
+
+.searchBox button {
+  cursor: pointer;
+  height: 32px;
+  width: 48px;
+  padding: 0;
+  border-left: 1px solid rgb(209, 209, 209);
+  border-radius: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.searchBox button svg path {
+  transition: fill 0.1s ease;
+}
+
+.searchBox button:hover svg path {
+  fill: rgb(41, 171, 226);
+}
+
+.wh-32{
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
