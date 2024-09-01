@@ -17,6 +17,7 @@ body {
 .content {
   margin: 96px 0px 0px 232px;
   padding: 110px 96px 0px 96px;
+  background-color: rgb(246, 247, 248);
   display: flex;
   flex-direction: column;
 }
