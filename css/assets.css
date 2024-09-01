@@ -11,3 +11,7 @@ button {
     align-items: center;
     gap: 4px;
   }
+
+button:hover {
+  background-color: rgb(41, 171, 226);
+}
