@@ -11,11 +11,15 @@ html {
 
 body {
   font-family: "Inter", normal;
+  height: calc(100% - 96px);
 }
 
 .content {
-  margin: 96px 0px 0px 232px;
-  padding: 110px 96px 0px 96px;
+  height: 100%;
+  width: calc(100% - 232px);
+  margin-left: 232px;
+  margin-top: 96px;
+  padding: 110px 96px 0;
   background-color: rgb(246, 247, 248);
   display: flex;
   flex-direction: column;

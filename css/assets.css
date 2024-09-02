@@ -1,16 +1,16 @@
 button {
-    cursor: pointer;
-    height: 100%;
-    padding: 0 16px;
-    border-radius: 10px;
-    font-size: 21px;
-    font-weight: 700;
-    color: white;
-    background-color: rgb(42, 54, 71);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
+  cursor: pointer;
+  height: 100%;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-size: 21px;
+  font-weight: 700;
+  color: white;
+  background-color: rgb(42, 54, 71);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
 button:hover {
   background-color: rgb(41, 171, 226);
