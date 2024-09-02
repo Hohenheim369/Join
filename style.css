@@ -12,6 +12,7 @@ html {
 body {
   font-family: "Inter", normal;
   height: calc(100% - 96px);
+  background-color: #f6f7f8;
 }
 
 .content {
@@ -20,7 +21,6 @@ body {
   margin-left: 232px;
   margin-top: 96px;
   padding: 110px 96px 0;
-  background-color: rgb(246, 247, 248);
   display: flex;
   flex-direction: column;
 }
