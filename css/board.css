@@ -1,10 +1,15 @@
-.bord-headline {
+.board {
+  padding: 80px 64px 0;
+  gap: 55px;
+}
+
+.board-headline {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.board-menue{
+.board-menue {
   width: 504px;
   height: 48px;
   display: flex;
@@ -70,10 +75,73 @@
   fill: rgb(41, 171, 226);
 }
 
-.wh-32{
+.wh-32 {
   width: 32px;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.kanban-board {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgb(66, 82, 110);
+  display: flex;
+  justify-content: space-between;
+}
+
+.kanban-column {
+  width: 252px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kanban-headline {
+  display: flex;
+  justify-content: space-between;
+}
+
+.kanban-add-button{
+  padding: 0;
+  background-color: transparent;
+}
+
+.kanban-add-button:hover {
+  background-color: transparent;
+}
+
+.kanban-add-button:hover svg rect,
+.kanban-add-button:hover svg path {
+  stroke: rgb(41, 171, 226);
+}
+
+.kanban-add-button:active{
+  background-color: transparent;
+}
+
+.kanban-add-button:active svg rect,
+.kanban-add-button:active svg path {
+  stroke: rgb(9, 25, 49);
+}
+
+.kanban-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ticket-none{
+  width: 100%;
+  height: 48px;
+  background-color: rgb(231, 231, 231);
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(168, 168, 168);
+  border: 1px dashed rgb(168, 168, 168);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

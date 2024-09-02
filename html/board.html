@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/assets.css" />
-    <link rel="stylesheet" href="../css/media.css" />
     <link rel="stylesheet" href="../css/desktop-template.css" />
     <link rel="stylesheet" href="../css/board.css" />
+    <link rel="stylesheet" href="../css/media.css" />
 
     <script src="../js/include.js"></script>
   </head>
   <body>
     <div w3-include-html="/assets/templates/desktop_template.html"></div>
-    <div class="content">
-      <div class="bord-headline">
+    <div class="content board">
+      <div class="board-headline">
         <h1>Board</h1>
         <div class="board-menue">
           <div class="searchBox">
@@ -71,7 +71,71 @@
         </div>
       </div>
 
-      <div>Inhalt</div>
+      <div class="kanban-board">
+
+        <div class="kanban-column">
+          <div class="kanban-headline">
+            To do
+            <button class="kanban-add-button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2"/>
+              <path d="M12 8V16" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16 12.0754L8 12.0754" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+            
+          </div>
+          <div class="kanban-content">
+            <div class="ticket-none">No tasks To do</div>
+          </div>
+        </div>
+        
+        <div class="kanban-column">
+          <div class="kanban-headline">
+            In progress
+            <button class="kanban-add-button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2"/>
+              <path d="M12 8V16" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16 12.0754L8 12.0754" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="kanban-content">
+            <div class="ticket-none">No tasks To do</div>
+          </div>
+        </div>
+
+        <div class="kanban-column">
+          <div class="kanban-headline">
+            Await feedback
+            <button class="kanban-add-button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2"/>
+              <path d="M12 8V16" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16 12.0754L8 12.0754" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="kanban-content">
+            <div class="ticket-none">No tasks To do</div>
+          </div>
+        </div>
+
+        <div class="kanban-column">
+          <div class="kanban-headline">
+            Done
+            <button class="kanban-add-button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="22" height="22" rx="7" stroke="#2A3647" stroke-width="2"/>
+              <path d="M12 8V16" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16 12.0754L8 12.0754" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="kanban-content">
+            <div class="ticket-none">No tasks To do</div>
+          </div>
+        </div>
+      
+      </div>
+
     </div>
   </body>
 </html>

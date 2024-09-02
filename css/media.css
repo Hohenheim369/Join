@@ -1,5 +1,10 @@
 @media screen and (min-width: 1441px) {
   .content {
-    padding-right: calc(96px + (100vw - 1440px));
+    padding-inline: calc(96px + (100vw - 1440px)/2);
   }
+
+  .board {
+    padding-inline: calc(64px + (100vw - 1440px)/2);
+  }
+
 }
