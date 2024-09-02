@@ -15,6 +15,7 @@
   width: 312px;
   height: 48px;
   padding: 0 16px;
+  background-color: white;
   border: 1px solid rgb(168, 168, 168);
   border-radius: 10px;
   display: flex;
@@ -49,11 +50,23 @@
   justify-content: end;
 }
 
+.searchBox button svg {
+  border-radius: 50%;
+}
+
+.searchBox button:hover svg {
+  background-color: rgb(246, 247, 248);
+}
+
 .searchBox button svg path {
   transition: fill 0.1s ease;
 }
 
-.searchBox button:hover svg path {
+.searchBox button:active svg {
+  background-color: transparent;
+}
+
+.searchBox button:active svg path {
   fill: rgb(41, 171, 226);
 }
 
