@@ -64,10 +64,11 @@ textarea {
   margin-bottom: 16px;
 }
 
-::-webkit-resizer {
+/* ::-webkit-resizer {
   background-image: url(../assets/img/png/resizer_icon.png);
   background-size: 100%;
-}
+  margin-left: 10px;
+} */
 
 select {
   height: 48px;
@@ -82,6 +83,9 @@ select {
 }
 
 .urgent_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 56px;
   width: 136px;
   border-radius: 10px;
@@ -92,13 +96,38 @@ select {
   background-color: #ffffff;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   gap: 8px;
+  cursor: pointer;
+}
+.clicked_urgent{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  width: 136px;
+  border-radius: 10px;
+  padding: 16px 10px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  background-color: #ffffff;
+  gap: 8px;
+  cursor: pointer;
+  background-color: #FF3D00;
+  color: #ffffff;
 }
 
 .urgent_button:hover {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
+/* .urgent_button svg path {
+  fill: #ffffff;
+} */
+
 .medium_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 56px;
   width: 136px;
   border-radius: 10px;
@@ -109,6 +138,25 @@ select {
   background-color: #ffffff;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   gap: 8px;
+  cursor: pointer;
+}
+
+.clicked_medium{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  width: 136px;
+  border-radius: 10px;
+  padding: 16px 10px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  background-color: #ffffff;
+  gap: 8px;
+  cursor: pointer;
+  background-color: #FFA800;
+  color: #ffffff;
 }
 
 .medium_button:hover {
@@ -116,6 +164,26 @@ select {
 }
 
 .low_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  width: 136px;
+  border-radius: 10px;
+  padding: 16px 10px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  background-color: white;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  gap: 8px;
+  cursor: pointer;
+}
+
+.clicked_low{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 56px;
   width: 136px;
   border-radius: 10px;
@@ -124,8 +192,10 @@ select {
   font-weight: 400;
   line-height: 24px;
   background-color: #ffffff;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   gap: 8px;
+  cursor: pointer;
+  background-color: #7AE229;
+  color: #ffffff;
 }
 
 .low_button:hover {
@@ -152,16 +222,16 @@ select:not(:-internal-select-author-button) {
   cursor: pointer;
 }
 
-.add_icon{
-    background-image: url(../assets/img/png/Subtasks\ icons11.png);
-    background-repeat: no-repeat;
-    background-position: 95%;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
+.add_icon {
+  background-image: url(../assets/img/png/Subtasks\ icons11.png);
+  background-repeat: no-repeat;
+  background-position: 95%;
+  cursor: pointer;
+  padding: 16px;
+  margin: 0;
 }
 
-.bottom_order{
+.bottom_order {
   width: 976px;
   display: flex;
   justify-content: space-between;
@@ -169,61 +239,68 @@ select:not(:-internal-select-author-button) {
   margin-bottom: 40px;
 }
 
-.bottom_button_order{
+.bottom_button_order {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.clear_button{
+.clear_button {
   width: 110px;
   border-radius: 10px;
-  border: 1px solid #2A3647;
+  border: 1px solid #2a3647;
   height: 56px;
   font-size: 20px;
   line-height: 24px;
   font-weight: 400;
   padding: 16px;
   gap: 4px;
-  color: #2A3647;
+  color: #2a3647;
 }
 
-.clear_button:hover{
-  border-color: #29ABE2;
+.clear_button:hover {
+  border-color: #29abe2;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  color: #29ABE2;
+  color: #29abe2;
 }
 
-.create_task_button{
+.create_task_button {
   width: 183px;
   border-radius: 10px;
-  border: 1px solid #2A3647;
+  border: 1px solid #2a3647;
   height: 56px;
   font-size: 20px;
   line-height: 24px;
   font-weight: 700;
   padding: 16px;
   gap: 4px;
-  background-color: #2A3647;
+  background-color: #2a3647;
   color: #ffffff;
 }
 
-.create_task_button:hover{
-  border-color: #29ABE2;
-  background-color: #29ABE2;
+.create_task_button:hover {
+  border-color: #29abe2;
+  background-color: #29abe2;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   color: #ffffff;
 }
 
-.alert_field{
+.alert_field {
   display: flex;
   align-items: end;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
 }
 
-.close_img{
+.close_img {
   height: 15px;
 }
 
-.check_img{
+.check_img {
   height: 15px;
+}
+
+.clear_button:hover svg path {
+  stroke: #29abe2;
 }
