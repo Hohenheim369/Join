@@ -146,7 +146,7 @@
   align-items: center;
 }
 
-.ticket-todo{
+.ticket-card{
   cursor: pointer;
   width: 100%;
   padding: 16px;
@@ -237,3 +237,6 @@
   align-items: center;  
 }
 
+.d-none{
+  display: none;
+}
