@@ -51,7 +51,3 @@ select:focus{
   outline-style: none;
   box-shadow: none;
 }
-
-.d-none{
-  display: none;
-}
