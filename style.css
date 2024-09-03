@@ -36,3 +36,18 @@ h1 {
 button{
   cursor: pointer;
 }
+
+input:focus{
+  outline-style: none;
+  box-shadow: none;
+}
+
+textarea:focus{
+  outline-style: none;
+  box-shadow: none;
+}
+
+select:focus{
+  outline-style: none;
+  box-shadow: none;
+}
