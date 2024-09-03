@@ -1,0 +1,99 @@
+body{
+    margin: 0px;
+    visibility: hidden;
+}
+
+.d-flex{
+    display: flex;
+}
+
+
+h1{
+    height: 73px;
+    margin: 0px;
+    font-size: 61px;
+    font-weight: 700;
+}
+
+h2{
+    margin: 0px;
+    font-size: 27px;
+    font-weight: 700;
+}
+
+h3{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0px;
+}
+
+tbody{
+    display: flex;
+    gap: 35px;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+tr{
+    display: flex;
+    gap: 35px;
+}
+
+
+.content-help{
+    width: 1014px;
+    padding: 110px 0px 0px 94px;
+    overflow: scroll;
+     height: 82vh;
+}
+
+.content-help::-webkit-scrollbar{
+    display: none;
+}
+
+.help-text{
+    height: 1024px;
+    display: flex;
+    margin-top: 45px;
+    margin-bottom: 45px;
+    gap: 24px;
+    flex-direction: column;
+}
+
+.what-is-join{
+    height: 238px;
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.how-to-use{
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+}
+
+.counter{
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.arrowBack {
+    width: 37px;
+    height: 37px;
+  }
+  
+  .headline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .arrowBack:hover {
+    cursor: pointer;
+  }
+  
+  .overflow{
+    overflow-y: scroll;
+  }
