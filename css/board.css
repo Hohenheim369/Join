@@ -160,7 +160,6 @@
 
 .ticket-category{
   width: fit-content;
-  background-color: rgb(0, 56, 255);
   padding: 4px 16px;
   border-radius: 8px;
   font-size: 16px;
@@ -185,13 +184,13 @@
   color: rgb(168, 168, 168);
 }
 
-.progress-container {
+.ticket-subtasks {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.progress-bar {
+.ticket-subtasks-bar {
   width: 128px;
   height: 8px;
   background-color: rgb(244, 244, 244);
@@ -199,16 +198,42 @@
   overflow: hidden;
 }
 
-.progress-bar::before {
+.ticket-subtasks-bar::before {
   content: '';
+  border-radius: 4px;
   display: block;
-  width: 50%; /* Represents 1/2 completion */
+  width: 66%; /* Represents 1/2 completion */
   height: 100%;
   background-color:rgb(69, 137, 255);
 }
 
-.progress-text {
+.ticket-subtasks-text {
   font-size: 12px;
   font-weight: 400;
   color: black;
 }
+
+.ticket-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-assignees {
+  display: flex;
+}
+
+.assignee {
+  width: 32px;
+  height: 32px;
+  margin-right: -8px; /* Creates overlapping effect */
+  font-size: 12px;
+  font-weight: 400;
+  color: white;
+  border: 1px solid white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
