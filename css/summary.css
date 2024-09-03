@@ -11,12 +11,12 @@ body {
   justify-content: space-between;
 }
 
-.seperator_blue {
+.seperator-blue {
   border: 1.5px solid #29abe2;
   height: 59px;
 }
 
-.seperator_grey {
+.seperator-grey {
   border: 1px solid #d1d1d1;
   height: 102px;
 }
@@ -55,14 +55,14 @@ span {
   box-sizing: unset;
 }
 
-.to-do_done_block {
+.to-do-done-block {
   display: flex;
   width: 560px;
   height: 168px;
   justify-content: space-between;
 }
 
-.to_do_block {
+.to-do-block {
   display: flex;
   background-color: white;
   width: 264px;
@@ -74,25 +74,25 @@ span {
   transition: transform 0.08s ease-in-out;
 }
 
-.to_do_block:hover {
+.to-do-block:hover {
   cursor: pointer;
   background-color: #2a3647;
   transform: scale(1.1);
 }
 
-.to_do_block:hover .circel {
+.to-do-block:hover .circel {
   background-color: white;
 }
 
-.to_do_block:hover .circel svg path {
+.to-do-block:hover .circel svg path {
   fill: #2a3647;
 }
 
-.to_do_block:hover span {
+.to-do-block:hover span {
   color: white;
 }
 
-.done_block {
+.done-block {
   display: flex;
   background-color: white;
   width: 264px;
@@ -104,25 +104,25 @@ span {
   transition: transform 0.08s ease-in-out;
 }
 
-.done_block:hover {
+.done-block:hover {
   cursor: pointer;
   background-color: #2a3647;
   transform: scale(1.1);
 }
 
-.done_block:hover .circel {
+.done-block:hover .circel {
   background-color: white;
 }
 
-.done_block:hover .circel svg path {
+.done-block:hover .circel svg path {
   stroke: #2a3647;
 }
 
-.done_block:hover span {
+.done-block:hover span {
   color: white;
 }
 
-.priority_block {
+.priority-block {
   display: flex;
   background-color: white;
   width: 560px;
@@ -134,29 +134,29 @@ span {
   transition: transform 0.08s ease-in-out;
 }
 
-.priority_block:hover {
+.priority-block:hover {
   cursor: pointer;
   background-color: #2a3647;
   transform: scale(1.1);
 }
 
-.priority_block:hover span {
+.priority-block:hover span {
   color: white;
 }
 
-.priority_and_nummber {
+.priority-and-nummber {
   width: 130px;
   display: flex;
   align-items: center;
   gap: 18px;
 }
 
-.task_block {
+.task-block {
   display: flex;
   justify-content: space-between;
 }
 
-.task_in_block {
+.task-in-block {
   display: flex;
   background-color: white;
   width: 168px;
@@ -168,13 +168,13 @@ span {
   transition: transform 0.08s ease-in-out;
 }
 
-.task_in_block:hover {
+.task-in-block:hover {
   cursor: pointer;
   background-color: #2a3647;
   transform: scale(1.1);
 }
 
-.task_in_block:hover span {
+.task-in-block:hover span {
   color: white;
 }
 
@@ -194,7 +194,7 @@ span {
   justify-content: center;
 }
 
-.circel_priority {
+.circel-priority {
   width: 60px;
   height: 60px;
   border-radius: 100%;
@@ -205,7 +205,7 @@ span {
   background-color: #ff3d00;
 }
 
-.number_of_tasks {
+.number-of-tasks {
   text-align: center;
   font-size: 64px;
   font-weight: 600;
@@ -231,4 +231,16 @@ span {
   flex-direction: column;
   align-items: flex-start;
   gap: 13px;
+}
+
+.width-86{
+  width: 86px;
+}
+
+.font-s16{
+  font-size: 16px;
+}
+
+.font-w400{
+  font-weight: 400;
 }
