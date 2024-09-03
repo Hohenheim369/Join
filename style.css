@@ -3,6 +3,7 @@
   scroll-behavior: smooth;
   border: none;
   margin: 0;
+  font-family: "Inter", normal;
 }
 
 html {
@@ -10,9 +11,9 @@ html {
 }
 
 body {
-  font-family: "Inter", normal;
   height: calc(100% - 96px);
   background-color: rgb(246, 247, 248);
+  color: #2A3647;
 }
 
 .content {
@@ -28,19 +29,8 @@ body {
 h1 {
   font-weight: 700;
   font-size: 61px;
-}
-
-.bg_color {
-  background-color: #f6f7f8;
-}
-
-.font_color {
-  color: #2a3647;
-}
-
-.max_width {
-  max-width: 1440px;
-  margin: auto;
+  line-height: 73.2px;
+  color: #000000;
 }
 
 button{

@@ -1,3 +1,54 @@
+.content-order {
+  display: flex;
+  margin-top: 48px;
+}
+
+.add-task-form {
+  width: 440px;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-child-order {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+label {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.title-input {
+  display: flex;
+  height: 48px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  width: 100%;
+  padding: 12px 21px;
+  background-color: #ffffff;
+  gap: 10px;
+}
+
+input {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  width: 100%;
+}
+
+.field-alert {
+  height: 12px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.4px;
+  color: #ff8190;
+}
+
 .dividing_bar {
   border-left: 1px solid #d1d1d1;
   height: 424px;
@@ -5,50 +56,11 @@
   margin: 0px 48px;
 }
 
-.content_order {
-  display: flex;
-  margin-top: 48px;
-}
-
-.div_order {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  width: 440px;
-}
-
 .div_button_order {
   display: flex;
   align-items: center;
   width: 440px;
   gap: 16px;
-}
-
-.add_task_form {
-  width: 440px;
-  gap: 8px;
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-size: 20px;
-  font-weight: 400;
-  margin-bottom: 8px;
-}
-
-input {
-  height: 48px;
-  border: 1px solid #d1d1d1;
-  border-radius: 10px;
-  width: 100%;
-  padding: 12px 21px;
-  margin-bottom: 16px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  background-color: #ffffff;
 }
 
 textarea {
@@ -64,11 +76,11 @@ textarea {
   margin-bottom: 16px;
 }
 
-/* ::-webkit-resizer {
+::-webkit-resizer {
   background-image: url(../assets/img/png/resizer_icon.png);
   background-size: 100%;
   margin-left: 10px;
-} */
+}
 
 select {
   height: 48px;
@@ -98,7 +110,7 @@ select {
   gap: 8px;
   cursor: pointer;
 }
-.clicked_urgent{
+.clicked_urgent {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,7 +124,7 @@ select {
   background-color: #ffffff;
   gap: 8px;
   cursor: pointer;
-  background-color: #FF3D00;
+  background-color: #ff3d00;
   color: #ffffff;
 }
 
@@ -141,7 +153,7 @@ select {
   cursor: pointer;
 }
 
-.clicked_medium{
+.clicked_medium {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,7 +167,7 @@ select {
   background-color: #ffffff;
   gap: 8px;
   cursor: pointer;
-  background-color: #FFA800;
+  background-color: #ffa800;
   color: #ffffff;
 }
 
@@ -180,7 +192,7 @@ select {
   cursor: pointer;
 }
 
-.clicked_low{
+.clicked_low {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -194,7 +206,7 @@ select {
   background-color: #ffffff;
   gap: 8px;
   cursor: pointer;
-  background-color: #7AE229;
+  background-color: #7ae229;
   color: #ffffff;
 }
 
