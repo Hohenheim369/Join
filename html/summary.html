@@ -6,13 +6,14 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../css/summary.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
-    <link rel="stylesheet" href="../css/desktop-template.css">
+    <link rel="stylesheet" href="../css/desktop-template.css" />
     <script src="../js/summary.js"></script>
     <script src="../js/include.js"></script>
     <title>summary</title>
   </head>
   <body>
-    <div w3-include-html="/assets/templates/desktop_template.html"></div>
+    <div id="desktop_template"></div>
+
     <div class="content">
       <div class="head">
         <h1>Join 360</h1>
@@ -22,25 +23,46 @@
       <div class="d-flex center">
         <div class="content-tasks">
           <div class="to-do-done-block">
-            <div class="to-do-block"> 
+            <div class="to-do-block">
               <div class="circel">
-                <svg width="24.33" height="24.33" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z" fill="white"/>
+                <svg
+                  width="24.33"
+                  height="24.33"
+                  viewBox="0 0 19 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z"
+                    fill="white"
+                  />
                 </svg>
               </div>
               <div class="number-block">
                 <span class="number-of-tasks">1</span>
                 <span>To-do</span>
-              </div>  
+              </div>
             </div>
-            <div class="done-block"> 
+            <div class="done-block">
               <div class="circel">
-                <svg width="29.94" height="22.13" viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg
+                  width="29.94"
+                  height="22.13"
+                  viewBox="0 0 38 30"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408"
+                    stroke="white"
+                    stroke-width="7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
                 </svg>
               </div>
               <div class="number-block">
-                <Span class="number-of-tasks">1</Span>
+                <span class="number-of-tasks">1</span>
                 <span>Done</span>
               </div>
             </div>
@@ -48,15 +70,27 @@
           <div class="priority-block">
             <div class="priority-and-nummber">
               <div class="circel-priority">
-                <svg width="34.19" height="25.12" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19.6528 15.2547C19.4182 15.2551 19.1896 15.1803 19.0007 15.0412L10.7487 8.958L2.49663 15.0412C2.38078 15.1267 2.24919 15.1887 2.10939 15.2234C1.96959 15.2582 1.82431 15.2651 1.68184 15.2437C1.53937 15.2223 1.40251 15.1732 1.27906 15.099C1.15562 15.0247 1.04801 14.927 0.96238 14.8112C0.876751 14.6954 0.814779 14.5639 0.780002 14.4243C0.745226 14.2846 0.738325 14.1394 0.759696 13.997C0.802855 13.7095 0.958545 13.4509 1.19252 13.2781L10.0966 6.70761C10.2853 6.56802 10.5139 6.49268 10.7487 6.49268C10.9835 6.49268 11.212 6.56802 11.4007 6.70761L20.3048 13.2781C20.4908 13.415 20.6286 13.6071 20.6988 13.827C20.7689 14.0469 20.7678 14.2833 20.6955 14.5025C20.6232 14.7216 20.4834 14.9124 20.2962 15.0475C20.1089 15.1826 19.8837 15.2551 19.6528 15.2547Z" fill="white"/>
-                  <path d="M19.6528 9.50568C19.4182 9.50609 19.1896 9.43124 19.0007 9.29214L10.7487 3.20898L2.49663 9.29214C2.26266 9.46495 1.96957 9.5378 1.68184 9.49468C1.39412 9.45155 1.13532 9.29597 0.962385 9.06218C0.789449 8.82838 0.716541 8.53551 0.7597 8.24799C0.802859 7.96048 0.95855 7.70187 1.19252 7.52906L10.0966 0.958588C10.2853 0.818997 10.5139 0.743652 10.7487 0.743652C10.9835 0.743652 11.212 0.818997 11.4007 0.958588L20.3048 7.52906C20.4908 7.66598 20.6286 7.85809 20.6988 8.07797C20.769 8.29785 20.7678 8.53426 20.6955 8.75344C20.6232 8.97262 20.4834 9.16338 20.2962 9.29847C20.1089 9.43356 19.8837 9.50608 19.6528 9.50568Z" fill="white"/>
+                <svg
+                  width="34.19"
+                  height="25.12"
+                  viewBox="0 0 21 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19.6528 15.2547C19.4182 15.2551 19.1896 15.1803 19.0007 15.0412L10.7487 8.958L2.49663 15.0412C2.38078 15.1267 2.24919 15.1887 2.10939 15.2234C1.96959 15.2582 1.82431 15.2651 1.68184 15.2437C1.53937 15.2223 1.40251 15.1732 1.27906 15.099C1.15562 15.0247 1.04801 14.927 0.96238 14.8112C0.876751 14.6954 0.814779 14.5639 0.780002 14.4243C0.745226 14.2846 0.738325 14.1394 0.759696 13.997C0.802855 13.7095 0.958545 13.4509 1.19252 13.2781L10.0966 6.70761C10.2853 6.56802 10.5139 6.49268 10.7487 6.49268C10.9835 6.49268 11.212 6.56802 11.4007 6.70761L20.3048 13.2781C20.4908 13.415 20.6286 13.6071 20.6988 13.827C20.7689 14.0469 20.7678 14.2833 20.6955 14.5025C20.6232 14.7216 20.4834 14.9124 20.2962 15.0475C20.1089 15.1826 19.8837 15.2551 19.6528 15.2547Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M19.6528 9.50568C19.4182 9.50609 19.1896 9.43124 19.0007 9.29214L10.7487 3.20898L2.49663 9.29214C2.26266 9.46495 1.96957 9.5378 1.68184 9.49468C1.39412 9.45155 1.13532 9.29597 0.962385 9.06218C0.789449 8.82838 0.716541 8.53551 0.7597 8.24799C0.802859 7.96048 0.95855 7.70187 1.19252 7.52906L10.0966 0.958588C10.2853 0.818997 10.5139 0.743652 10.7487 0.743652C10.9835 0.743652 11.212 0.818997 11.4007 0.958588L20.3048 7.52906C20.4908 7.66598 20.6286 7.85809 20.6988 8.07797C20.769 8.29785 20.7678 8.53426 20.6955 8.75344C20.6232 8.97262 20.4834 9.16338 20.2962 9.29847C20.1089 9.43356 19.8837 9.50608 19.6528 9.50568Z"
+                    fill="white"
+                  />
                 </svg>
               </div>
               <div class="number-block">
-                <Span class="number-of-tasks">1</Span>
+                <span class="number-of-tasks">1</span>
                 <span class="font-s16">Urgent</span>
-              </div>  
+              </div>
             </div>
             <div class="seperator-grey"></div>
             <div class="deadline">
@@ -67,15 +101,18 @@
           <div class="task-block">
             <div class="task-in-block">
               <span class="number-of-tasks">5</span>
-              <span class="width-86" >Tasks in Board</span>
+              <span class="width-86">Tasks in Board</span>
             </div>
             <div class="task-in-block">
               <span class="number-of-tasks">2</span>
-              <span class="width-86" >Tasks in <br> Progress</span>
+              <span class="width-86"
+                >Tasks in <br />
+                Progress</span
+              >
             </div>
             <div class="task-in-block">
               <span class="number-of-tasks">2</span>
-              <span class="width-86" >Awaiting Feedback</span>
+              <span class="width-86">Awaiting Feedback</span>
             </div>
           </div>
         </div>
