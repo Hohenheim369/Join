@@ -4,9 +4,16 @@
   cursor: pointer;
 }
 
-.add-task-form {
+.add-task-form-left {
   width: 440px;
-  gap: 8px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-task-form-right {
+  width: 440px;
+  gap: 24px;
   display: flex;
   flex-direction: column;
 }
@@ -285,6 +292,42 @@ textarea {
 .prio_img {
   height: 14.51px;
   width: 20px;
+}
+
+.category-select {
+  display: flex;
+  height: 48px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.category-select:hover {
+  border: 1px inset #a8a8a8;
+}
+
+.category-container {
+  position: relative;
+  display: inline-block;
+}
+
+.category-container div {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 12px;
+  right: 15px;
+}
+
+.category-select::placeholder {
+  color: #000000;
 }
 
 .add_icon {

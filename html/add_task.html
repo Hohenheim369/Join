@@ -17,7 +17,7 @@
     <div class="content">
       <h1>Add Task</h1>
       <div class="content-order">
-        <form class="add-task-form">
+        <form class="add-task-form-left">
           <div class="form-child-order">
             <label>Title</label>
             <div>
@@ -62,11 +62,18 @@
           </div>
         </form>
         <div class="dividing-bar"></div>
-        <form class="add-task-form">
+        <form class="add-task-form-right">
           <div class="form-child-order">
             <label>Due date</label>
             <div>
-              <input class="title-input"  required type="text"  placeholder="dd/mm/yyyy" onfocus="(this.type='date')" onblur="(this.type='text')"/>
+              <input
+                class="title-input"
+                required
+                type="text"
+                placeholder="dd/mm/yyyy"
+                onfocus="(this.type='date')"
+                onblur="(this.type='text')"
+              />
             </div>
             <div class="field-alert" id="fieldAlert"></div>
           </div>
@@ -146,9 +153,25 @@
               </span>
             </div>
           </div>
-          <div class="form-child-order drop_down_icon">
+          <div class="form-child-order">
             <label>Category</label>
-            <select name="Category" id="category"></select>
+            <div class="category-container">
+              <input
+                class="category-select"
+                type="text"
+                placeholder="Select task category"
+                id="category"
+                disabled
+              />
+              <div class="hover-circle">
+                <img
+                  onclick="openSelect()"
+                  src="../assets/img/png-old/arrow_drop_down.png"
+                  alt=""
+                />
+              </div>
+              <div></div>
+            </div>
           </div>
           <div class="form-child-order">
             <label>Subtasks</label>
