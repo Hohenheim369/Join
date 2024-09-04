@@ -462,3 +462,7 @@ textarea {
 .clear-button:hover svg path {
   stroke: #29abe2;
 }
+
+.required-sign{
+  color: #FF8190;
+}
