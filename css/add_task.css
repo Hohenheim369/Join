@@ -370,8 +370,8 @@ textarea {
   max-width: 976px;
   display: flex;
   justify-content: space-between;
-  margin-top: 80px;
-  margin-bottom: 40px;
+  padding-top: 138px;
+  padding-bottom: 79px;
 }
 
 .bottom-button-order {
@@ -388,12 +388,25 @@ textarea {
   border-radius: 10px;
   border: 1px solid #2a3647;
   height: 56px;
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 400;
-  padding: 15px;
+  padding: 16px;
   gap: 4px;
   color: #2a3647;
+  background-color: #F6F7F8;
+}
+
+.text-buttons {
+  font-size: 20px;
+  line-height: 24px;
+  width: 50px;
+  font-weight: 400;
+}
+
+.clear-button div {
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .clear-button:hover {
@@ -405,24 +418,30 @@ textarea {
 .create-task-button {
   display: flex;
   align-items: center;
-  
+
   width: 183px;
   border-radius: 10px;
   border: 1px solid #2a3647;
   height: 56px;
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 700;
   padding: 15px;
   gap: 4px;
   background-color: #2a3647;
   color: #ffffff;
 }
 
-.create-task-button div{
+.create-task-button span {
+  width: 123px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 700;
+}
 
+.create-task-button div {
   height: 24px;
   width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .create-task-button:hover {
