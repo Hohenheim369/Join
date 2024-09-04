@@ -244,3 +244,8 @@ span {
 .font-w400{
   font-weight: 400;
 }
+
+.summary-link {
+  background-color: #091931;
+  color: white !important;
+}

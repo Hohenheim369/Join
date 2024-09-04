@@ -470,3 +470,8 @@ textarea {
 .required-sign{
   color: #FF8190;
 }
+
+.add-task-link{
+    background-color: #091931;
+    color: white !important;
+}

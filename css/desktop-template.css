@@ -97,11 +97,11 @@ aside {
 }
 
 /* NICHT VERWENDET */
-/* .content-sidebar {
+.content-sidebar {
   display: flex;
   flex-direction: column;
   align-items: center;
-} */
+}
 
 .icon-bar {
   height: 229px;
