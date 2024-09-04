@@ -82,8 +82,8 @@
             <div class="div-button-order">
               <span
                 onclick="changeColorUrgent()"
-                id="urgentSpan"
-                class="urgent_button"
+                id="urgent_span"
+                class="urgent-button"
               >
                 Urgent
                 <svg
@@ -107,8 +107,8 @@
               </span>
               <span
                 onclick="changeColorMedium()"
-                id="mediumSpan"
-                class="medium_button"
+                id="medium_span"
+                class="medium-button"
               >
                 Medium
                 <svg
@@ -130,7 +130,7 @@
                   />
                 </svg>
               </span>
-              <span onclick="changeColorLow()" id="lowSpan" class="low_button">
+              <span onclick="changeColorLow()" id="low_span" class="low-button">
                 Low
                 <svg
                   width="20"
@@ -175,24 +175,39 @@
           </div>
           <div class="form-child-order">
             <label>Subtasks</label>
-            <input class="add_icon" placeholder="Add new subtask" type="text" />
+            <div class="subtasks-container">
+              <input
+                class="subtasks-select"
+                type="text"
+                placeholder="Add  new subtask"
+                id="subtasks"
+              />
+              <div class="hover-circle">
+                <img
+                  onclick="openSelect()"
+                  src="../assets/img/png-old/Subtasks icons11.png"
+                  alt=""
+                />
+              </div>
+              <div></div>
+            </div>
           </div>
         </form>
       </div>
-      <div class="bottom_order">
-        <span class="alert_field">*This field is required</span>
-        <div class="bottom_button_order">
-          <button class="clear_button">
+      <div class="bottom-order">
+        <span class="alert-field">*This field is required</span>
+        <div class="bottom-button-order">
+          <button class="clear-button">
             Clear
             <svg
-              width="10.49"
-              height="10.49"
-              viewBox="0 0 14 14"
+              width="24"
+              height="24"
+              viewBox="0 0 25 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M7.06917 7.00008L12.3122 12.2431M1.82617 12.2431L7.06917 7.00008L1.82617 12.2431ZM12.3122 1.75708L7.06817 7.00008L12.3122 1.75708ZM7.06817 7.00008L1.82617 1.75708L7.06817 7.00008Z"
+                d="M12.0692 12.0001L17.3122 17.2431M6.82617 17.2431L12.0692 12.0001L6.82617 17.2431ZM17.3122 6.75708L12.0682 12.0001L17.3122 6.75708ZM12.0682 12.0001L6.82617 6.75708L12.0682 12.0001Z"
                 stroke="#2A3647"
                 stroke-width="2"
                 stroke-linecap="round"
@@ -200,23 +215,25 @@
               />
             </svg>
           </button>
-          <button class="create_task_button">
+          <button class="create-task-button">
             Create Task
-            <svg
-              width="15.49"
-              height="11.22"
-              viewBox="0 0 38 30"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408"
-                stroke="white"
-                stroke-width="7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <div>
+              <svg
+                width="15.49"
+                height="11.22"
+                viewBox="0 0 38 30"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.02832 15.0001L15.2571 26.0662L33.9717 3.93408"
+                  stroke="white"
+                  stroke-width="7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
           </button>
         </div>
       </div>

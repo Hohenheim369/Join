@@ -169,7 +169,7 @@ textarea {
   gap: 16px;
 }
 
-.urgent_button {
+.urgent-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,7 +185,7 @@ textarea {
   gap: 8px;
   cursor: pointer;
 }
-.clicked_urgent {
+.clicked-urgent {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -203,15 +203,15 @@ textarea {
   color: #ffffff;
 }
 
-.urgent_button:hover {
+.urgent-button:hover {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-/* .urgent_button svg path {
+/* .urgent-button svg path {
   fill: #ffffff;
 } */
 
-.medium_button {
+.medium-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,7 +228,7 @@ textarea {
   cursor: pointer;
 }
 
-.clicked_medium {
+.clicked-medium {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,11 +246,11 @@ textarea {
   color: #ffffff;
 }
 
-.medium_button:hover {
+.medium-button:hover {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.low_button {
+.low-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -267,7 +267,7 @@ textarea {
   cursor: pointer;
 }
 
-.clicked_low {
+.clicked-low {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -285,11 +285,11 @@ textarea {
   color: #ffffff;
 }
 
-.low_button:hover {
+.low-button:hover {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.prio_img {
+.prio-img {
   height: 14.51px;
   width: 20px;
 }
@@ -330,16 +330,43 @@ textarea {
   color: #000000;
 }
 
-.add_icon {
-  background-image: url(../assets/img/png/Subtasks\ icons11.png);
-  background-repeat: no-repeat;
-  background-position: 95%;
+.subtasks-select {
+  display: flex;
+  height: 48px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
   cursor: pointer;
-  padding: 16px;
-  margin: 0;
 }
 
-.bottom_order {
+.subtasks-select:hover {
+  border: 1px inset #a8a8a8;
+}
+
+.subtasks-container {
+  position: relative;
+  display: inline-block;
+}
+
+.subtasks-container div {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 12px;
+  right: 15px;
+}
+
+.subtasks-select:focus {
+  border: 1px solid #29abe2;
+}
+
+.bottom-order {
   max-width: 976px;
   display: flex;
   justify-content: space-between;
@@ -347,14 +374,16 @@ textarea {
   margin-bottom: 40px;
 }
 
-.bottom_button_order {
+.bottom-button-order {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
 }
 
-.clear_button {
+.clear-button {
+  display: flex;
+  align-items: center;
   width: 110px;
   border-radius: 10px;
   border: 1px solid #2a3647;
@@ -362,18 +391,21 @@ textarea {
   font-size: 20px;
   line-height: 24px;
   font-weight: 400;
-  padding: 16px;
+  padding: 15px;
   gap: 4px;
   color: #2a3647;
 }
 
-.clear_button:hover {
+.clear-button:hover {
   border-color: #29abe2;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   color: #29abe2;
 }
 
-.create_task_button {
+.create-task-button {
+  display: flex;
+  align-items: center;
+  
   width: 183px;
   border-radius: 10px;
   border: 1px solid #2a3647;
@@ -381,20 +413,26 @@ textarea {
   font-size: 20px;
   line-height: 24px;
   font-weight: 700;
-  padding: 16px;
+  padding: 15px;
   gap: 4px;
   background-color: #2a3647;
   color: #ffffff;
 }
 
-.create_task_button:hover {
+.create-task-button div{
+
+  height: 24px;
+  width: 24px;
+}
+
+.create-task-button:hover {
   border-color: #29abe2;
   background-color: #29abe2;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   color: #ffffff;
 }
 
-.alert_field {
+.alert-field {
   display: flex;
   align-items: end;
   font-size: 16px;
@@ -402,14 +440,6 @@ textarea {
   line-height: 20px;
 }
 
-.close_img {
-  height: 15px;
-}
-
-.check_img {
-  height: 15px;
-}
-
-.clear_button:hover svg path {
+.clear-button:hover svg path {
   stroke: #29abe2;
 }
