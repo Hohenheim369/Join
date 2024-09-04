@@ -20,7 +20,7 @@ body {
   justify-content: space-between;
 }
 
-.searchBox {
+.search-box {
   width: 312px;
   height: 48px;
   padding: 0 16px;
@@ -32,7 +32,11 @@ body {
   align-items: center;
 }
 
-.searchBox input {
+.search-box.active {
+  border-color: rgb(41, 171, 226);
+}
+
+.search-box input {
   height: 32px;
   width: 230px;
   padding: 0;
@@ -40,13 +44,13 @@ body {
   font-size: 20px;
 }
 
-.searchBox input::placeholder {
+.search-box input::placeholder {
   font-weight: 400;
   font-size: 20px;
   color: rgb(209, 209, 209);
 }
 
-.searchBox button {
+.search-box button {
   cursor: pointer;
   height: 32px;
   width: 48px;
@@ -59,24 +63,32 @@ body {
   justify-content: end;
 }
 
-.searchBox button svg {
+.search-box button svg {
   border-radius: 50%;
 }
 
-.searchBox button:hover svg {
-  background-color: rgb(246, 247, 248);
+.search-box button:hover svg {
+  background-color: rgb(238, 238, 238);
 }
 
-.searchBox button svg path {
+.search-box button svg path {
   transition: fill 0.1s ease;
 }
 
-.searchBox button:active svg {
+.search-box button:active svg {
   background-color: transparent;
 }
 
-.searchBox button:active svg path {
+.search-box button:active svg path {
   fill: rgb(41, 171, 226);
+}
+
+.wh-24 {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .wh-32 {
@@ -85,6 +97,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.wh-42 {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.font-color-42-54-71{
+  color: rgb(42, 54, 71);
 }
 
 .kanban-board {
@@ -228,9 +252,6 @@ body {
 }
 
 .assignee {
-  width: 32px;
-  height: 32px;
-  margin-right: -8px; /* Creates overlapping effect */
   font-size: 12px;
   font-weight: 400;
   color: white;
@@ -239,6 +260,99 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;  
+}
+
+.m-r-8{
+  margin-right: -8px; /* Creates overlapping effect */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 900;
+}
+
+.single-ticket {
+  width: 525px;
+  background-color: white;
+  padding: 48px 40px;
+  font-size: 20px;
+  color: black;
+  border-radius: 30px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.single-ticket-above{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.single-ticket-category{
+  width: fit-content;
+  padding: 4px 24px;
+  border-radius: 8px;
+  font-size: 23px;
+  font-weight: 400;
+  color: white;
+}
+
+.close-ticket{
+  border-radius: 50%;
+}
+
+.close-ticket:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.single-ticket-title{
+  font-size: 61px;
+  font-weight: 700;
+  color: black;
+}
+
+.single-ticket-date{
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.single-ticket-priority{
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.single-ticket-assigned{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.single-ticket-assignees{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.single-ticket-assignee{
+  width: 100%;
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .d-none{

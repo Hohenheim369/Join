@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Board</title>
-    <link rel="icon" type="image/x-icon" href="../assets/img/png/favicon.png" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../assets/img/png/favicon2.png"
+    />
 
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
@@ -14,14 +18,16 @@
     <link rel="stylesheet" href="../css/media.css" />
 
     <script src="../js/include.js"></script>
+    <script src="../js/board.js"></script>
   </head>
   <body>
     <div id="desktop_template"></div>
-    <div class="content board">
+
+    <section class="content board">
       <div class="board-headline">
         <h1>Board</h1>
         <div class="board-menue">
-          <div class="searchBox">
+          <div class="search-box" id="search_box">
             <input id="search_task" type="text" placeholder="Find Task" />
             <button id="search_button">
               <svg
@@ -149,7 +155,7 @@
             </button>
           </div>
           <div class="kanban-tickets">
-            <div class="ticket-card">
+            <div class="ticket-card" onclick="toggleOverlay()">
               <div class="ticket-category bg-category-blue">User Story</div>
               <div class="ticket-text">
                 <div class="ticket-title">
@@ -166,9 +172,9 @@
 
               <div class="ticket-meta">
                 <div class="ticket-assignees">
-                  <span class="assignee bg-255-122-0">AK</span>
-                  <span class="assignee bg-31-215-193">LS</span>
-                  <span class="assignee bg-70-47-138">SR</span>
+                  <span class="assignee m-r-8 wh-32 bg-255-122-0">AK</span>
+                  <span class="assignee m-r-8 wh-32 bg-31-215-193">LS</span>
+                  <span class="assignee m-r-8 wh-32 bg-70-47-138">SR</span>
                 </div>
                 <img src="../assets/img/png/prio-low.png" alt="Low Priority" />
               </div>
@@ -212,13 +218,12 @@
             </button>
           </div>
           <div class="kanban-tickets">
-
             <div class="ticket-card">
-              <div class="ticket-category bg-category-turquoise">Technical Task</div>
+              <div class="ticket-category bg-category-turquoise">
+                Technical Task
+              </div>
               <div class="ticket-text">
-                <div class="ticket-title">
-                  HTML Base Template Creation
-                </div>
+                <div class="ticket-title">HTML Base Template Creation</div>
                 <div class="ticket-description">
                   Create reusable HTML base templates...
                 </div>
@@ -230,9 +235,9 @@
 
               <div class="ticket-meta">
                 <div class="ticket-assignees">
-                  <span class="assignee bg-252-113-255">DE</span>
-                  <span class="assignee bg-110-82-255">BZ</span>
-                  <span class="assignee bg-147-39-255">AS</span>
+                  <span class="assignee m-r-8 wh-32 bg-252-113-255">DE</span>
+                  <span class="assignee m-r-8 wh-32 bg-110-82-255">BZ</span>
+                  <span class="assignee m-r-8 wh-32 bg-147-39-255">AS</span>
                 </div>
                 <img src="../assets/img/png/prio-high.png" alt="Low Priority" />
               </div>
@@ -241,9 +246,7 @@
             <div class="ticket-card">
               <div class="ticket-category bg-category-blue">User Story</div>
               <div class="ticket-text">
-                <div class="ticket-title">
-                  Daily Kochwelt Recipe
-                </div>
+                <div class="ticket-title">Daily Kochwelt Recipe</div>
                 <div class="ticket-description">
                   Implement daily recipe and portion calculator...
                 </div>
@@ -255,14 +258,16 @@
 
               <div class="ticket-meta">
                 <div class="ticket-assignees">
-                  <span class="assignee bg-255-187-43">EF</span>
-                  <span class="assignee bg-147-39-255">AS</span>
-                  <span class="assignee bg-255-70-70">TW</span>
+                  <span class="assignee m-r-8 wh-32 bg-255-187-43">EF</span>
+                  <span class="assignee m-r-8 wh-32 bg-147-39-255">AS</span>
+                  <span class="assignee m-r-8 wh-32 bg-255-70-70">TW</span>
                 </div>
-                <img src="../assets/img/png/prio-media.png" alt="Low Priority" />
+                <img
+                  src="../assets/img/png/prio-media.png"
+                  alt="Low Priority"
+                />
               </div>
             </div>
-
           </div>
         </div>
 
@@ -306,6 +311,71 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section
+      class="overlay d-none"
+      id="board-ticket-overlay"
+      onclick="toggleOverlay()"
+    >
+      <div class="single-ticket" onclick="bubblingPrevention(event)">
+        <div class="single-ticket-above">
+          <div class="single-ticket-category bg-category-blue">User Story</div>
+          <div class="close-ticket wh-24">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.68193 8.79678L1.78193 13.6968C1.5986 13.8801 1.36527 13.9718 1.08193 13.9718C0.7986 13.9718 0.565267 13.8801 0.381934 13.6968C0.1986 13.5134 0.106934 13.2801 0.106934 12.9968C0.106934 12.7134 0.1986 12.4801 0.381934 12.2968L5.28193 7.39678L0.381934 2.49678C0.1986 2.31344 0.106934 2.08011 0.106934 1.79678C0.106934 1.51344 0.1986 1.28011 0.381934 1.09678C0.565267 0.913444 0.7986 0.821777 1.08193 0.821777C1.36527 0.821777 1.5986 0.913444 1.78193 1.09678L6.68193 5.99678L11.5819 1.09678C11.7653 0.913444 11.9986 0.821777 12.2819 0.821777C12.5653 0.821777 12.7986 0.913444 12.9819 1.09678C13.1653 1.28011 13.2569 1.51344 13.2569 1.79678C13.2569 2.08011 13.1653 2.31344 12.9819 2.49678L8.08193 7.39678L12.9819 12.2968C13.1653 12.4801 13.2569 12.7134 13.2569 12.9968C13.2569 13.2801 13.1653 13.5134 12.9819 13.6968C12.7986 13.8801 12.5653 13.9718 12.2819 13.9718C11.9986 13.9718 11.7653 13.8801 11.5819 13.6968L6.68193 8.79678Z"
+                fill="#2A3647"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="single-ticket-title">
+          Kochwelt Page & Recipe Recommender
+        </div>
+
+        <div>Build start page with recipe recommendation...</div>
+
+        <div class="single-ticket-date">
+          <div class="font-color-42-54-71">Due date:</div>
+          10/05/2023
+        </div>
+
+        <div class="single-ticket-priority">
+          <div class="font-color-42-54-71">Priority:</div>
+          <img src="../assets/img/png/prio-high-text.png" alt="" />
+        </div>
+
+        <div class="single-ticket-assigned">
+          <div class="font-color-42-54-71">Assigned To:</div>
+
+          <div class="single-ticket-assignees">
+            <div class="single-ticket-assignee">
+              <span class="assignee wh-42 bg-255-122-0">EM</span>
+              Alex Kaljuzhin
+            </div>
+
+            <div class="single-ticket-assignee">
+              <span class="assignee wh-42 bg-31-215-193">LS</span>
+              Lars Schumacher
+            </div>
+
+            <div class="single-ticket-assignee">
+              <span class="assignee wh-42 bg-70-47-138">SR</span>
+              Susanne Renken
+            </div>
+          </div>          
+        </div>
+
+
+      </div>
+    </section>
   </body>
 </html>
