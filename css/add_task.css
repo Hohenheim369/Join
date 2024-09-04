@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  width: 100%;
+  width: auto;
 }
 
 label {
@@ -31,7 +31,6 @@ label {
   font-weight: 400;
   line-height: 24px;
   cursor: pointer;
-  display: flex;
   height: 48px;
   border: 1px solid #d1d1d1;
   border-radius: 10px;
@@ -86,7 +85,7 @@ textarea {
 }
 
 ::-webkit-resizer {
-  background-image: url(../assets/img/png/resizer_icon.png);
+  background-image: url(../assets/img/png-old/resizer_icon.png);
   background-size: 100%;
   margin-left: 10px;
 }
@@ -105,16 +104,14 @@ textarea {
   cursor: pointer;
 }
 
+.assigned-select:hover {
+  border: 1px inset #a8a8a8;
+}
+
 .assigned-container {
   position: relative;
   display: inline-block;
 }
-
-/* .assigned-container img {
-  position: absolute;
-  bottom: 20px;
-  right: 18px;
-} */
 
 .assigned-container div {
   position: absolute;
@@ -132,28 +129,36 @@ textarea {
 }
 
 .hover-circle:hover {
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
 }
 
 .assigned-select:focus {
-  border-color: #29abe2;
+  border: 1px solid #29abe2;
 }
 
 .assigned-select::placeholder {
   color: #000000;
 }
 
-.dividing_bar {
+.dividing-bar {
   border-left: 1px solid #d1d1d1;
   height: 424px;
   width: 0px;
   margin: 0px 48px;
 }
 
-.div_button_order {
+::-webkit-calendar-picker-indicator {
+  background-image: url(../assets/img/png-old/calendar_icon.png);
+  background-size: 18px 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.div-button-order {
   display: flex;
   align-items: center;
-  width: 440px;
+  flex-wrap: wrap;
+  width: 100%;
   gap: 16px;
 }
 
@@ -282,13 +287,6 @@ textarea {
   width: 20px;
 }
 
-::-webkit-calendar-picker-indicator {
-  background-image: url(../assets/img/png/calendar_icon.png);
-  background-size: 18px 20px;
-  padding: 0;
-  margin: 0;
-}
-
 .add_icon {
   background-image: url(../assets/img/png/Subtasks\ icons11.png);
   background-repeat: no-repeat;
@@ -299,7 +297,7 @@ textarea {
 }
 
 .bottom_order {
-  width: 976px;
+  max-width: 976px;
   display: flex;
   justify-content: space-between;
   margin-top: 80px;
@@ -309,6 +307,7 @@ textarea {
 .bottom_button_order {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
 }
 

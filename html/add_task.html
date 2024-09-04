@@ -53,7 +53,7 @@
               <div class="hover-circle">
                 <img
                   onclick="openSelect()"
-                  src="../assets/img/png/arrow_drop_down.png"
+                  src="../assets/img/png-old/arrow_drop_down.png"
                   alt=""
                 />
               </div>
@@ -61,17 +61,18 @@
             </div>
           </div>
         </form>
-        <div class="dividing_bar"></div>
+        <div class="dividing-bar"></div>
         <form class="add-task-form">
           <div class="form-child-order">
             <label>Due date</label>
             <div>
-              <input required type="date" />
+              <input class="title-input"  required type="text"  placeholder="dd/mm/yyyy" onfocus="(this.type='date')" onblur="(this.type='text')"/>
             </div>
+            <div class="field-alert" id="fieldAlert"></div>
           </div>
           <div class="form-child-order">
             <label>Prio</label>
-            <div class="div_button_order">
+            <div class="div-button-order">
               <span
                 onclick="changeColorUrgent()"
                 id="urgentSpan"
@@ -145,11 +146,11 @@
               </span>
             </div>
           </div>
-          <div class="div-order drop_down_icon">
+          <div class="form-child-order drop_down_icon">
             <label>Category</label>
             <select name="Category" id="category"></select>
           </div>
-          <div class="div-order">
+          <div class="form-child-order">
             <label>Subtasks</label>
             <input class="add_icon" placeholder="Add new subtask" type="text" />
           </div>
