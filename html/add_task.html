@@ -20,8 +20,14 @@
         <form class="add-task-form">
           <div class="form-child-order">
             <label>Title</label>
-            <div class="title-input">
-              <input id="title_input" required placeholder="Enter a title" type="text" />
+            <div>
+              <input
+                class="title-input"
+                id="title_input"
+                required
+                placeholder="Enter a title"
+                type="text"
+              />
             </div>
             <div class="field-alert" id="fieldAlert"></div>
           </div>
@@ -35,22 +41,35 @@
               ></textarea>
             </div>
           </div>
-          <div class="div-order">
+          <div class="form-child-order">
             <label>Assigned to</label>
-            <select
-              name="AssignedTo"
-              aria-placeholder="Select contacts to assign"
-              id="assignedTo"
-            ></select>
+            <div class="assigned-container">
+              <input
+                class="assigned-select"
+                type="text"
+                placeholder="Select contacts to assign"
+                id="assignedTo"
+              />
+              <div class="hover-circle">
+                <img
+                  onclick="openSelect()"
+                  src="../assets/img/png/arrow_drop_down.png"
+                  alt=""
+                />
+              </div>
+              <div></div>
+            </div>
           </div>
         </form>
         <div class="dividing_bar"></div>
         <form class="add-task-form">
-          <div class="div-order">
+          <div class="form-child-order">
             <label>Due date</label>
-            <input required type="date" />
+            <div>
+              <input required type="date" />
+            </div>
           </div>
-          <div class="div-order">
+          <div class="form-child-order">
             <label>Prio</label>
             <div class="div_button_order">
               <span
