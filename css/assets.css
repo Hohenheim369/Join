@@ -14,10 +14,12 @@ button {
 
 button:hover {
   background-color: rgb(41, 171, 226);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 button:active {
   background-color: rgb(9, 25, 49);
+  border: 1px solid rgb(42, 54, 71);
 }
 
 .bg-category-blue{
