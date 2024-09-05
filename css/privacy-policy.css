@@ -10,6 +10,7 @@ body {
 .content-policy {
   overflow: scroll;
   gap: 21px;
+  width: 1014px;
 }
 
 .content-policy::-webkit-scrollbar {
