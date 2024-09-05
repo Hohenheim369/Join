@@ -53,12 +53,12 @@ header {
 .log-out {
   display: flex;
   flex-direction: column;
-  background-color: var(--gray);
+  background-color: #2A3647;
   padding: 10px;
   border-radius: 20px 0px 20px 20px;
   position: absolute;
-  top: 70px;
-  left: 1180px;
+  top: 69px;
+  left: 915px;
 }
 
 #log_out a {

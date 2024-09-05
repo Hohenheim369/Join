@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     function toggleLogOutVisibility() {
-      let logOutElement = document.getElementById('logOut');
+      let logOutElement = document.getElementById('log_out');
       if (logOutElement) {
         logOutElement.classList.toggle('d-none');
       }
@@ -45,12 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', handleDocumentClick);
   
     function handleDocumentClick(event) {
-      let logOutElement = document.getElementById('logOut');
+      let logOutElement = document.getElementById('log_out');
       let initialsElement = document.getElementById('user_profile_initials');
   
       if (logOutElement && !logOutElement.contains(event.target) &&
           !initialsElement.contains(event.target) &&
-          !event.target.closest('#logOut')) {
+          !event.target.closest('#log_out')) {
         logOutElement.classList.add('d-none');
       }
     }
