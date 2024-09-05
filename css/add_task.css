@@ -165,139 +165,6 @@ textarea {
   margin: 0;
 }
 
-.div-button-order {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 100%;
-  gap: 16px;
-}
-
-.urgent-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 56px;
-  width: 136px;
-  border-radius: 10px;
-  padding: 16px 10px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  background-color: #ffffff;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
-  gap: 8px;
-  cursor: pointer;
-}
-.clicked-urgent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 56px;
-  width: 136px;
-  border-radius: 10px;
-  padding: 16px 10px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  background-color: #ffffff;
-  gap: 8px;
-  cursor: pointer;
-  background-color: #ff3d00;
-  color: #ffffff;
-}
-
-.urgent-button:hover {
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-/* .urgent-button svg path {
-  fill: #ffffff;
-} */
-
-.medium-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 56px;
-  width: 136px;
-  border-radius: 10px;
-  padding: 16px 10px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  background-color: #ffffff;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
-  gap: 8px;
-  cursor: pointer;
-}
-
-.clicked-medium {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 56px;
-  width: 136px;
-  border-radius: 10px;
-  padding: 16px 10px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  background-color: #ffffff;
-  gap: 8px;
-  cursor: pointer;
-  background-color: #ffa800;
-  color: #ffffff;
-}
-
-.medium-button:hover {
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.low-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 56px;
-  width: 136px;
-  border-radius: 10px;
-  padding: 16px 10px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  background-color: white;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
-  gap: 8px;
-  cursor: pointer;
-}
-
-.clicked-low {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 56px;
-  width: 136px;
-  border-radius: 10px;
-  padding: 16px 10px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  background-color: #ffffff;
-  gap: 8px;
-  cursor: pointer;
-  background-color: #7ae229;
-  color: #ffffff;
-}
-
-.low-button:hover {
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.prio-img {
-  height: 14.51px;
-  width: 20px;
-}
-
 .category-select {
   display: flex;
   height: 48px;
@@ -378,83 +245,6 @@ textarea {
   padding-bottom: 79px;
 }
 
-.bottom-button-order {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.clear-button {
-  display: flex;
-  align-items: center;
-  width: 110px;
-  border-radius: 10px;
-  border: 1px solid #2a3647;
-  height: 56px;
-  padding: 16px;
-  gap: 4px;
-  color: #2a3647;
-  background-color: #F6F7F8;
-}
-
-.text-buttons {
-  font-size: 20px;
-  line-height: 24px;
-  width: 50px;
-  font-weight: 400;
-}
-
-.clear-button div {
-  height: 24px;
-  width: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.clear-button:hover {
-  border-color: #29abe2;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  color: #29abe2;
-}
-
-.create-task-button {
-  display: flex;
-  align-items: center;
-
-  width: 183px;
-  border-radius: 10px;
-  border: 1px solid #2a3647;
-  height: 56px;
-  padding: 15px;
-  gap: 4px;
-  background-color: #2a3647;
-  color: #ffffff;
-}
-
-.create-task-button span {
-  width: 123px;
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 700;
-}
-
-.create-task-button div {
-  height: 24px;
-  width: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.create-task-button:hover {
-  border-color: #29abe2;
-  background-color: #29abe2;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  color: #ffffff;
-}
-
 .alert-field {
   display: flex;
   align-items: end;
@@ -463,15 +253,11 @@ textarea {
   line-height: 20px;
 }
 
-.clear-button:hover svg path {
-  stroke: #29abe2;
+.required-sign {
+  color: #ff8190;
 }
 
-.required-sign{
-  color: #FF8190;
-}
-
-.add-task-link{
-    background-color: #091931;
-    color: white !important;
+.add-task-link {
+  background-color: #091931;
+  color: white !important;
 }
