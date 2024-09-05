@@ -261,3 +261,7 @@ textarea {
   background-color: #091931;
   color: white !important;
 }
+
+.add-task-link .box-icons path{
+  fill: white !important;
+}

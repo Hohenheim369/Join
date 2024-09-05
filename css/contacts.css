@@ -282,6 +282,10 @@ h3 {
   color: white !important;
 }
 
+.contacts-link .box-icons path{
+  fill: white !important;
+}
+
 @keyframes slideInFromRight {
   from {
       transform: translateX(100%);

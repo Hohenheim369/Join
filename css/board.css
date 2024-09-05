@@ -364,3 +364,7 @@ body {
   background-color: #091931;
   color: white !important;
 }
+
+.board-link .box-icons path{
+  fill: white !important;
+}
