@@ -204,3 +204,13 @@ DOPPELT
   align-items: center;
   justify-content: flex-start;
 }
+
+/* Standardfarbe für alle SVGs */
+.icon-bar .box-icons img {
+  transition: filter 0.3s;
+}
+
+/* Weißes Bild für den aktiven Link */
+.link-sidebar.active img {
+  filter: brightness(0) invert(1); /* Beispiel für weißes Bild */
+}

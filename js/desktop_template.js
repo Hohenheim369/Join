@@ -55,11 +55,50 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-  
-  function logout() {
+
+  function logOut() {
     // Wert aus dem lokalen Speicher löschen
     localStorage.removeItem('loggedInUserName');
     
   }
   
+  document.addEventListener('DOMContentLoaded', () => {
+    function setActiveLink() {
+      const currentPath = window.location.pathname;
+      const links = document.querySelectorAll('.link-sidebar');
   
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        const img = link.querySelector('img');
+  
+        if (currentPath === href) {
+          link.classList.add('active');
+          // Bild für den aktiven Link ändern
+          img.src = img.src.replace('-grey', '-white'); // Aktive Farbe
+        } else {
+          link.classList.remove('active');
+          // Bild für inaktive Links zurücksetzen
+          img.src = img.src.replace('-white', '-grey'); // Inaktive Farbe
+        }
+      });
+    }
+  
+    // Initialer Aufruf zum Setzen der aktiven Klasse
+    setActiveLink();
+  
+    // Event-Listener für Klicks auf Links
+    document.querySelectorAll('.link-sidebar').forEach(link => {
+      link.addEventListener('click', () => {
+        // Speichern des aktuellen Pfads in localStorage
+        localStorage.setItem('activePage', window.location.pathname);
+      });
+    });
+  
+    // Setze das Bild basierend auf dem gespeicherten Pfad in localStorage
+    window.addEventListener('load', () => {
+      const savedPath = localStorage.getItem('activePage');
+      if (savedPath === window.location.pathname) {
+        setActiveLink();
+      }
+    });
+  });
