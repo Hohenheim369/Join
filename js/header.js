@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     function updateInitialsElement(initials) {
-      let initialsElement = document.getElementById('user-profile-initials');
+      let initialsElement = document.getElementById('user_profile_initials');
       if (initialsElement) {
         initialsElement.innerHTML = `${initials}`;
         initialsElement.addEventListener('click', toggleLogOutVisibility);
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     function handleDocumentClick(event) {
       let logOutElement = document.getElementById('logOut');
-      let initialsElement = document.getElementById('user-profile-initials');
+      let initialsElement = document.getElementById('user_profile_initials');
   
       if (logOutElement && !logOutElement.contains(event.target) &&
           !initialsElement.contains(event.target) &&
