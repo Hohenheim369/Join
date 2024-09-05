@@ -2,22 +2,62 @@ body {
   visibility: hidden;
 }
 
-.board {
-  padding: 80px 64px 0;
-  gap: 55px;
+.wh-24 {
+  width: 24px;
+  height: 24px;
 }
 
-.board-headline {
+.wh-32 {
+  width: 32px;
+  height: 32px;
+}
+
+.wh-42 {
+  width: 42px;
+  height: 42px;
+}
+
+.font-20-blue {
+  font-size: 20px;
+  color: rgb(66, 82, 110);
+}
+
+.font-w-700{
+  font-weight: 700;
+}
+
+.font-c-42-54-71 {
+  color: rgb(42, 54, 71);
+}
+
+.font-c-white {
+  color: white;
+}
+
+.font-c-black {
+  color: black;
+}
+
+.d-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-flex-spbe-center {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.board {
+  padding: 80px 64px 0;
+  gap: 55px;
+}
+
 .board-menue {
   width: 504px;
   height: 48px;
-  display: flex;
-  justify-content: space-between;
 }
 
 .search-box {
@@ -27,9 +67,6 @@ body {
   background-color: white;
   border: 1px solid rgb(168, 168, 168);
   border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .search-box.active {
@@ -45,8 +82,8 @@ body {
 }
 
 .search-box input::placeholder {
-  font-weight: 400;
   font-size: 20px;
+  font-weight: 400;
   color: rgb(209, 209, 209);
 }
 
@@ -59,8 +96,8 @@ body {
   border-radius: 0;
   background: transparent;
   display: flex;
-  align-items: center;
   justify-content: end;
+  align-items: center;
 }
 
 .search-box button svg {
@@ -83,40 +120,10 @@ body {
   fill: rgb(41, 171, 226);
 }
 
-.wh-24 {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.wh-32 {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.wh-42 {
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.font-color-42-54-71{
-  color: rgb(42, 54, 71);
-}
-
 .kanban-board {
-  font-size: 20px;
-  font-weight: 700;
-  color: rgb(66, 82, 110);
   display: flex;
   justify-content: space-between;
+  align-items: start;
 }
 
 .kanban-column {
@@ -126,12 +133,7 @@ body {
   gap: 20px;
 }
 
-.kanban-headline {
-  display: flex;
-  justify-content: space-between;
-}
-
-.kanban-add-button{
+.kanban-add-button {
   padding: 0;
   background-color: transparent;
 }
@@ -145,7 +147,7 @@ body {
   stroke: rgb(41, 171, 226);
 }
 
-.kanban-add-button:active{
+.kanban-add-button:active {
   background-color: transparent;
 }
 
@@ -160,22 +162,17 @@ body {
   gap: 16px;
 }
 
-.ticket-none{
+.ticket-none {
   width: 100%;
   height: 48px;
   background-color: rgb(231, 231, 231);
-  font-family: "Poppins", normal;
-  font-size: 16px;
-  font-weight: 400;
+  font-family: "Open Sans", normal;
   color: rgb(168, 168, 168);
   border: 1px dashed rgb(168, 168, 168);
   border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.ticket-card{
+.ticket-card {
   cursor: pointer;
   width: 100%;
   padding: 16px;
@@ -187,36 +184,24 @@ body {
   gap: 24px;
 }
 
-.ticket-category{
+.ticket-category {
   width: fit-content;
   padding: 4px 16px;
   border-radius: 8px;
-  font-size: 16px;
-  font-weight: 400;
-  color: white;
 }
 
-.ticket-text{
+.ticket-text {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.ticket-title{
-  font-size: 16px;
+.ticket-title {
   color: rgb(42, 54, 71);
 }
 
-.ticket-description{
-  font-size: 16px;
-  font-weight: 400;
+.ticket-description {
   color: rgb(168, 168, 168);
-}
-
-.ticket-subtasks {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .ticket-subtasks-bar {
@@ -228,43 +213,26 @@ body {
 }
 
 .ticket-subtasks-bar::before {
-  content: '';
+  content: "";
   border-radius: 4px;
   display: block;
-  width: 66%; /* Represents 1/2 completion */
+  width: 66%;
   height: 100%;
-  background-color:rgb(69, 137, 255);
+  background-color: rgb(69, 137, 255);
 }
 
 .ticket-subtasks-text {
   font-size: 12px;
-  font-weight: 400;
-  color: black;
-}
-
-.ticket-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.ticket-assignees {
-  display: flex;
 }
 
 .assignee {
   font-size: 12px;
-  font-weight: 400;
-  color: white;
   border: 1px solid white;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;  
 }
 
-.m-r-8{
-  margin-right: -8px; /* Creates overlapping effect */
+.mar-r-8 {
+  margin-right: -8px;
 }
 
 .overlay {
@@ -274,9 +242,6 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 900;
 }
 
@@ -285,7 +250,6 @@ body {
   background-color: white;
   padding: 48px 40px;
   font-size: 20px;
-  color: black;
   border-radius: 30px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
   display: flex;
@@ -293,22 +257,14 @@ body {
   gap: 24px;
 }
 
-.single-ticket-above{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.single-ticket-category{
+.single-ticket-category {
   width: fit-content;
   padding: 4px 24px;
   border-radius: 8px;
   font-size: 23px;
-  font-weight: 400;
-  color: white;
 }
 
-.close-ticket{
+.close-ticket {
   border-radius: 50%;
 }
 
@@ -316,32 +272,30 @@ body {
   background-color: rgb(238, 238, 238);
 }
 
-.single-ticket-title{
+.single-ticket-title {
   font-size: 61px;
-  font-weight: 700;
-  color: black;
 }
 
-.single-ticket-date{
+.single-ticket-date {
   display: flex;
   align-items: center;
   gap: 25px;
 }
 
-.single-ticket-priority{
+.single-ticket-priority {
   display: flex;
   align-items: center;
   gap: 25px;
 }
 
-.single-ticket-list{
+.single-ticket-list {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.single-ticket-lines{
+.single-ticket-lines {
   width: 100%;
   border-radius: 10px;
   display: flex;
@@ -349,7 +303,7 @@ body {
   gap: 4px;
 }
 
-.single-ticket-assignee{
+.single-ticket-assignee {
   width: 100%;
   padding: 7px 16px;
   display: flex;
@@ -357,7 +311,7 @@ body {
   gap: 16px;
 }
 
-.d-none{
+.d-none {
   display: none;
 }
 
@@ -366,6 +320,6 @@ body {
   color: white !important;
 }
 
-.board-link .box-icons path{
+.board-link .box-icons path {
   fill: white !important;
 }

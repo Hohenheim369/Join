@@ -24,10 +24,10 @@
     <div id="desktop_template"></div>
 
     <section class="content board">
-      <div class="board-headline">
+      <div class="d-flex-spbe-center">
         <h1>Board</h1>
-        <div class="board-menue">
-          <div class="search-box" id="search_box">
+        <div class="board-menue d-flex-spbe-center">
+          <div class="search-box d-flex-spbe-center" id="search_box">
             <input id="search_task" type="text" placeholder="Find Task" />
             <button id="search_button">
               <svg
@@ -60,7 +60,7 @@
 
           <button>
             Add Task
-            <div class="wh-32">
+            <div class="wh-32 d-flex-center">
               <svg
                 width="20"
                 height="20"
@@ -80,7 +80,7 @@
 
       <div class="kanban-board">
         <div class="kanban-column">
-          <div class="kanban-headline">
+          <div class="d-flex-spbe-center font-20-blue font-w-700">
             To do
             <button class="kanban-add-button">
               <svg
@@ -115,12 +115,12 @@
             </button>
           </div>
           <div class="kanban-tickets">
-            <div class="ticket-none">No tasks To do</div>
+            <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
 
         <div class="kanban-column">
-          <div class="kanban-headline">
+          <div class="d-flex-spbe-center font-20-blue font-w-700">
             In progress
             <button class="kanban-add-button">
               <svg
@@ -156,25 +156,36 @@
           </div>
           <div class="kanban-tickets">
             <div class="ticket-card" onclick="toggleOverlay()">
-              <div class="ticket-category bg-category-blue">User Story</div>
+              <div class="ticket-category font-c-white bg-category-blue">
+                User Story
+              </div>
               <div class="ticket-text">
-                <div class="ticket-title">
+                <div class="ticket-title font-w-700">
                   Kochwelt Page & Recipe Recommender
                 </div>
                 <div class="ticket-description">
                   Build start page with recipe recommendation...
                 </div>
               </div>
-              <div class="ticket-subtasks">
+              <div class="d-flex-spbe-center">
                 <div class="ticket-subtasks-bar"></div>
-                <span class="ticket-subtasks-text">2/3 Subtasks</span>
+                <span class="ticket-subtasks-text font-c-black">2/3 Subtasks</span>
               </div>
 
-              <div class="ticket-meta">
-                <div class="ticket-assignees">
-                  <span class="assignee m-r-8 wh-32 bg-255-122-0">AK</span>
-                  <span class="assignee m-r-8 wh-32 bg-31-215-193">LS</span>
-                  <span class="assignee m-r-8 wh-32 bg-70-47-138">SR</span>
+              <div class="d-flex-spbe-center">
+                <div class="d-flex-center">
+                  <span
+                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-255-122-0"
+                    >AK</span
+                  >
+                  <span
+                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-31-215-193"
+                    >LS</span
+                  >
+                  <span
+                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-70-47-138"
+                    >SR</span
+                  >
                 </div>
                 <img src="../assets/img/png/prio-low.png" alt="Low Priority" />
               </div>
@@ -183,7 +194,7 @@
         </div>
 
         <div class="kanban-column">
-          <div class="kanban-headline">
+          <div class="d-flex-spbe-center font-20-blue font-w-700">
             Await feedback
             <button class="kanban-add-button">
               <svg
@@ -219,48 +230,68 @@
           </div>
           <div class="kanban-tickets">
             <div class="ticket-card">
-              <div class="ticket-category bg-category-turquoise">
+              <div class="ticket-category font-c-white bg-category-turquoise">
                 Technical Task
               </div>
               <div class="ticket-text">
-                <div class="ticket-title">HTML Base Template Creation</div>
+                <div class="ticket-title font-w-700">HTML Base Template Creation</div>
                 <div class="ticket-description">
                   Create reusable HTML base templates...
                 </div>
               </div>
-              <div class="ticket-subtasks d-none">
+              <div class="d-flex-spbe-center d-none">
                 <div class="ticket-subtasks-bar"></div>
-                <span class="ticket-subtasks-text">2/3 Subtasks</span>
+                <span class="ticket-subtasks-text font-c-black">2/3 Subtasks</span>
               </div>
 
-              <div class="ticket-meta">
-                <div class="ticket-assignees">
-                  <span class="assignee m-r-8 wh-32 bg-252-113-255">DE</span>
-                  <span class="assignee m-r-8 wh-32 bg-110-82-255">BZ</span>
-                  <span class="assignee m-r-8 wh-32 bg-147-39-255">AS</span>
+              <div class="d-flex-spbe-center">
+                <div class="d-flex-center">
+                  <span
+                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-252-113-255"
+                    >DE</span
+                  >
+                  <span
+                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-110-82-255"
+                    >BZ</span
+                  >
+                  <span
+                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-147-39-255"
+                    >AS</span
+                  >
                 </div>
                 <img src="../assets/img/png/prio-high.png" alt="Low Priority" />
               </div>
             </div>
 
             <div class="ticket-card">
-              <div class="ticket-category bg-category-blue">User Story</div>
+              <div class="ticket-category font-c-white bg-category-blue">
+                User Story
+              </div>
               <div class="ticket-text">
-                <div class="ticket-title">Daily Kochwelt Recipe</div>
+                <div class="ticket-title font-w-700">Daily Kochwelt Recipe</div>
                 <div class="ticket-description">
                   Implement daily recipe and portion calculator...
                 </div>
               </div>
-              <div class="ticket-subtasks d-none">
+              <div class="d-flex-spbe-center d-none">
                 <div class="ticket-subtasks-bar"></div>
-                <span class="ticket-subtasks-text">2/3 Subtasks</span>
+                <span class="ticket-subtasks-text font-c-black">2/3 Subtasks</span>
               </div>
 
-              <div class="ticket-meta">
-                <div class="ticket-assignees">
-                  <span class="assignee m-r-8 wh-32 bg-255-187-43">EF</span>
-                  <span class="assignee m-r-8 wh-32 bg-147-39-255">AS</span>
-                  <span class="assignee m-r-8 wh-32 bg-255-70-70">TW</span>
+              <div class="d-flex-spbe-center">
+                <div class="d-flex-center">
+                  <span
+                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-255-187-43"
+                    >EF</span
+                  >
+                  <span
+                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-147-39-255"
+                    >AS</span
+                  >
+                  <span
+                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-255-70-70"
+                    >TW</span
+                  >
                 </div>
                 <img
                   src="../assets/img/png/prio-media.png"
@@ -272,7 +303,7 @@
         </div>
 
         <div class="kanban-column">
-          <div class="kanban-headline">
+          <div class="d-flex-spbe-center font-20-blue font-w-700">
             Done
             <button class="kanban-add-button">
               <svg
@@ -307,21 +338,23 @@
             </button>
           </div>
           <div class="kanban-tickets">
-            <div class="ticket-none">No tasks To do</div>
+            <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
       </div>
     </section>
 
     <section
-      class="overlay d-none"
+      class="overlay d-flex-center d-none"
       id="board-ticket-overlay"
       onclick="toggleOverlay()"
     >
-      <div class="single-ticket" onclick="bubblingPrevention(event)">
-        <div class="single-ticket-above">
-          <div class="single-ticket-category bg-category-blue">User Story</div>
-          <div class="close-ticket wh-24">
+      <div class="single-ticket font-c-black" onclick="bubblingPrevention(event)">
+        <div class="d-flex-spbe-center">
+          <div class="single-ticket-category font-c-white bg-category-blue">
+            User Story
+          </div>
+          <div class="close-ticket wh-24 d-flex-center">
             <svg
               width="14"
               height="14"
@@ -337,62 +370,67 @@
           </div>
         </div>
 
-        <div class="single-ticket-title">
+        <div class="single-ticket-title font-w-700 font-c-black">
           Kochwelt Page & Recipe Recommender
         </div>
 
         <div>Build start page with recipe recommendation...</div>
 
         <div class="single-ticket-date">
-          <div class="font-color-42-54-71">Due date:</div>
+          <div class="font-c-42-54-71">Due date:</div>
           10/05/2023
         </div>
 
         <div class="single-ticket-priority">
-          <div class="font-color-42-54-71">Priority:</div>
+          <div class="font-c-42-54-71">Priority:</div>
           <img src="../assets/img/png/prio-high-text.png" alt="" />
         </div>
 
         <div class="single-ticket-list">
-          <div class="font-color-42-54-71">Assigned To:</div>
+          <div class="font-c-42-54-71">Assigned To:</div>
 
           <div class="single-ticket-lines">
             <div class="single-ticket-assignee">
-              <span class="assignee wh-42 bg-255-122-0">EM</span>
+              <span
+                class="assignee font-c-white wh-42 d-flex-center bg-255-122-0"
+                >EM</span
+              >
               Alex Kaljuzhin
             </div>
 
             <div class="single-ticket-assignee">
-              <span class="assignee wh-42 bg-31-215-193">LS</span>
+              <span
+                class="assignee font-c-white wh-42 d-flex-center bg-31-215-193"
+                >LS</span
+              >
               Lars Schumacher
             </div>
 
             <div class="single-ticket-assignee">
-              <span class="assignee wh-42 bg-70-47-138">SR</span>
+              <span
+                class="assignee font-c-white wh-42 d-flex-center bg-70-47-138"
+                >SR</span
+              >
               Susanne Renken
             </div>
-          </div>          
+          </div>
         </div>
 
-
         <div class="single-ticket-list">
-          <div class="font-color-42-54-71">Subtasks:</div>
+          <div class="font-c-42-54-71">Subtasks:</div>
 
           <div class="single-ticket-lines">
             <div class="single-ticket-assignee">
-              <img src="../assets/img/png/check-button-false.png" alt="">
+              <img src="../assets/img/png/check-button-false.png" alt="" />
               Implement Recipe Recommendatio
             </div>
 
             <div class="single-ticket-assignee">
-              <img src="../assets/img/png/check-button-true.png" alt="">
+              <img src="../assets/img/png/check-button-true.png" alt="" />
               Start Page Layout
             </div>
-
-          </div>          
+          </div>
         </div>
-
-
       </div>
     </section>
   </body>
