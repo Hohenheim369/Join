@@ -72,6 +72,7 @@ span {
   align-items: center;
   gap: 18px;
   transition: transform 0.08s ease-in-out;
+  box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .to-do-block:hover {
@@ -102,6 +103,7 @@ span {
   align-items: center;
   gap: 18px;
   transition: transform 0.08s ease-in-out;
+  box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .done-block:hover {
@@ -132,6 +134,7 @@ span {
   align-items: center;
   gap: 61px;
   transition: transform 0.08s ease-in-out;
+  box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .priority-block:hover {
@@ -166,6 +169,7 @@ span {
   align-items: center;
   justify-content: center;
   transition: transform 0.08s ease-in-out;
+  box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .task-in-block:hover {
