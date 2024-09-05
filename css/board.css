@@ -333,15 +333,16 @@ body {
   gap: 25px;
 }
 
-.single-ticket-assigned{
+.single-ticket-list{
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.single-ticket-assignees{
+.single-ticket-lines{
   width: 100%;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
