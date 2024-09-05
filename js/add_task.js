@@ -1,35 +1,58 @@
-function changeColorUrgent() {
-  let urgentRef = document.getElementById("urgent_span");
-  let urgentSvg1Ref = document.getElementById("urgentSVG1");
-  let urgentSvg2Ref = document.getElementById("urgentSVG2");
-  if (onclick = true) {
-    urgentRef.classList.remove("urgent-button");
-    urgentRef.classList.add("clicked-urgent");
+let urgentButton = document.getElementById("urgent_span");
+let urgentSvg1Ref = document.getElementById("urgent_svg1");
+let urgentSvg2Ref = document.getElementById("urgent_svg2");
+let mediumButton = document.getElementById("medium_span");
+let mediumSVG1Ref = document.getElementById("medium_svg1");
+let mediumSVG2Ref = document.getElementById("medium_svg2");
+let lowButton = document.getElementById("low_span");
+let lowSVG1Ref = document.getElementById("low_svg1");
+let lowSVG2Ref = document.getElementById("low_svg2");
+
+function selectUrgent() {
+  if ((onclick = true)) {
+    switchSelection();
+    urgentButton.classList.remove("urgent-button");
+    urgentButton.classList.add("clicked-urgent");
     urgentSvg1Ref.setAttribute("fill", "#ffffff");
     urgentSvg2Ref.setAttribute("fill", "#ffffff");
   }
 }
 
-function changeColorMedium() {
-  let mediumRef = document.getElementById("medium_span");
-  let mediumSVG1Ref = document.getElementById("mediumSVG1");
-  let mediumSVG2Ref = document.getElementById("mediumSVG2");
-  if (onclick = true) {
-    mediumRef.classList.remove("medium-button");
-    mediumRef.classList.add("clicked-medium");
+function selectMedium() {
+  if ((onclick = true)) {
+    switchSelection();
+    mediumButton.classList.remove("medium-button");
+    mediumButton.classList.add("clicked-medium");
     mediumSVG1Ref.setAttribute("fill", "white");
     mediumSVG2Ref.setAttribute("fill", "white");
   }
 }
 
-function changeColorLow() {
-  let lowRef = document.getElementById("low_span");
-  let lowSVG1Ref = document.getElementById("lowSVG1");
-  let lowSVG2Ref = document.getElementById("lowSVG2");
-  if (onclick = true) {
-    lowRef.classList.remove("low-button");
-    lowRef.classList.add("clicked-low");
+function selectLow() {
+  if ((onclick = true)) {
+    switchSelection();
+    lowButton.classList.remove("low-button");
+    lowButton.classList.add("clicked-low");
     lowSVG1Ref.setAttribute("fill", "white");
     lowSVG2Ref.setAttribute("fill", "white");
   }
+}
+
+function switchSelection() {
+  urgentButton.classList.remove("clicked-urgent");
+  urgentButton.classList.add("urgent-button");
+  urgentSvg1Ref.setAttribute("fill", "#FF3D00");
+  urgentSvg2Ref.setAttribute("fill", "#FF3D00");
+  mediumButton.classList.remove("clicked-medium");
+  mediumButton.classList.add("medium-button");
+  mediumSVG1Ref.setAttribute("fill", "#FFA800");
+  mediumSVG2Ref.setAttribute("fill", "#FFA800");
+  lowButton.classList.remove("clicked-low");
+  lowButton.classList.add("low-button");
+  lowSVG1Ref.setAttribute("fill", "#7AE229");
+  lowSVG2Ref.setAttribute("fill", "#7AE229");
+}
+
+function clearButton(){
+  location.reload();
 }
