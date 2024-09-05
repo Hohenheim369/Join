@@ -24,7 +24,7 @@
               Add new contact
               <img src="../assets/img/png/person_add.png" alt="" />
             </button>
-            <div id="contactList"></div>
+            <div id="contact_list"></div>
           </div>
           <div>
             <div class="text-box">
@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <dialog id="dialog-contacts">
+    <dialog id="dialog_contacts">
       <div class="dialog-left">
         <img
           class="logo-dialog"
@@ -114,7 +114,7 @@
       </div>
     </dialog>
 
-    <dialog id="dialog-edit">
+    <dialog id="dialog_edit">
       <div class="dialog-left">
         <img
           class="logo-dialog"
@@ -125,7 +125,7 @@
         <div class="dialo-text-seperator"></div>
       </div>
       <div class="dialog-right">
-        <div id="bigLetterCircle"></div>
+        <div id="big_letter_circle" class="big-letter-circle"></div>
         <div class="dialog-content-right">
           <img
             onclick="closeDialogEdit()"
@@ -153,19 +153,19 @@
               min="0"
               placeholder="Phone"
             />
-            <div id="button-edit-dialog" class="button-delete-save"></div>
+            <div id="button_edit_dialog" class="button-delete-save"></div>
           </div>
         </div>
       </div>
     </dialog>
 
-    <dialog id="succesfullyCreated">
+    <dialog id="succesfully_created">
       <span>Contacts succesfully created</span>
     </dialog>
 
     <div
       onclick="closeDialog(), closeDialogEdit()"
-      id="grey-background"
+      id="grey_background"
       class="grey-background hidden"
     ></div>
   </body>

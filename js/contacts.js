@@ -6,7 +6,7 @@ const BASE_TASKS_URL =
 
 // Funktion zum Rendern der gesamten Kontaktliste
 function renderContacts() {
-  const contactList = document.getElementById("contactList");
+  const contactList = document.getElementById("contact_list");
   contactList.innerHTML = ""; // Clear previous contents
 
   // Load contacts from Firebase
@@ -76,16 +76,16 @@ function sleep(ms) {
 }
 
 async function openDialog() {
-  const dialogContainer = document.getElementById("dialog-contacts");
+  const dialogContainer = document.getElementById("dialog_contacts");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
-  document.getElementById("grey-background").classList.remove("hidden");
+  document.getElementById("grey_background").classList.remove("hidden");
 }
 
 async function closeDialog() {
-  const dialogContainer = document.getElementById("dialog-contacts");
+  const dialogContainer = document.getElementById("dialog_contacts");
   dialogContainer.classList.remove("dialog-open");
   document.getElementById("grey-background").classList.add("hidden");
   await sleep(300);
@@ -99,7 +99,7 @@ async function openDialogEdit(index) {
   let initials = nameParts.map((part) => part.charAt(0).toUpperCase()).join("");
   currentContactIndex = index;
 
-  const dialogContainer = document.getElementById("dialog-edit");
+  const dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   document.getElementById("inputEditName").value = contact.name;
@@ -111,12 +111,12 @@ async function openDialogEdit(index) {
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
   document.getElementById("grey-background").classList.remove("hidden");
-  document.getElementById("bigLetterCircle").innerHTML =
+  document.getElementById("big_letter_circle").innerHTML =
     generateBigLetterCircle(contact, initials);
 }
 
 async function closeDialogEdit() {
-  const dialogContainer = document.getElementById("dialog-edit");
+  const dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.classList.remove("dialog-open");
   document.getElementById("grey-background").classList.add("hidden");
   await sleep(300);
@@ -125,7 +125,7 @@ async function closeDialogEdit() {
 }
 
 async function openDialogSuccesfully() {
-  const dialogContainer = document.getElementById("succesfullyCreated");
+  const dialogContainer = document.getElementById("succesfully_created");
 
   // Verzögerung von 1 Sekunde, bevor der Dialog angezeigt wird
   setTimeout(async () => {
@@ -198,7 +198,7 @@ function displayContactInfo(index) {
   const contactInfoDiv = document.querySelector(".contacts-info-box");
   contactInfoDiv.innerHTML = "";
   contactInfoDiv.innerHTML = generateContactInfo(contact, initials, index);
-  document.getElementById("button-edit-dialog").innerHTML =
+  document.getElementById("button_edit_dialog").innerHTML =
     generateDeleteButtonDialog(index);
   highlightContact(index);
 }

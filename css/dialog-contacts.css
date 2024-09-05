@@ -1,4 +1,4 @@
-#dialog-contacts {
+#dialog_contacts {
   font-family: "inter", Arial, sans-serif;
   z-index: 99;
   position: fixed;
@@ -14,11 +14,11 @@
   transition: left 0.4s ease-out; /* Transition for the sliding effect */
 }
 
-#dialog-contacts.dialog-open {
+#dialog_contacts.dialog-open {
   left: 50%;
 }
 
-#dialog-edit {
+#dialog_edit {
   font-family: "inter", Arial, sans-serif;
   z-index: 99;
   position: fixed;
@@ -34,7 +34,7 @@
   transition: left 0.4s ease-out; /* Transition for the sliding effect */
 }
 
-#dialog-edit.dialog-open {
+#dialog_edit.dialog-open {
   left: 50%;
 }
 
@@ -265,7 +265,7 @@ button {
   color: #29abe2;
 }
 
-#succesfullyCreated {
+#succesfully_created {
   padding: 0px;
   font-size: 20px;
   width: 326px;
@@ -283,11 +283,11 @@ button {
   margin: 0;
 }
 
-#succesfullyCreated.dialog-open {
+#succesfully_created.dialog-open {
   left: 60%;
 }
 
-.bigLetterCircle {
+.big-letter-circle {
   display: flex;
   width: 120px;
   height: 120px;
