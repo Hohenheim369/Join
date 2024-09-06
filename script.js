@@ -1,0 +1,1 @@
+let BASE_URL = "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/"

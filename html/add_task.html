@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../styles/add-task-buttons.css" />
     <link rel="stylesheet" href="../styles/media.css" />
   </head>
-  <body>
+  <body onload="testload()">
     <div id="desktop_template"></div>
     <div class="content">
       <h1>Add Task</h1>
@@ -222,7 +222,7 @@
           </div>
         </form>
       </div>
-      <div>
+      <div class="space-top"></div>
         <div class="bottom-order">
           <span class="alert-field"
             ><span class="required-sign">*</span>This field is required</span
@@ -254,7 +254,7 @@
             </button>
           </div>
         </div>
-      </div>
+        <div class="space-bottom"></div>
     </div>
     <script src="../scripts/add_task_Buttons.js"></script>
     <script src="../scripts/add_task.js"></script>
