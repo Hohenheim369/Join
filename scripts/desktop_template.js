@@ -98,7 +98,7 @@ document.addEventListener("click", (event) => {
 // }
 
 function updateSidebarIcons() {
-  const currentPage = window.location.pathname.split('/').pop(); // Extrahiere den Dateinamen
+  const currentPage = window.location.pathname.split('/').pop(); // Extrahiere nur den Dateinamen
 
   // Pfade zu den grauen und weißen Icons
   const iconPaths = {
@@ -106,7 +106,7 @@ function updateSidebarIcons() {
       grey: "../assets/img/png/summary-grey.png",
       white: "../assets/img/png/summary-white.png",
     },
-    addTask: {
+    add_task: {
       grey: "../assets/img/png/add-task-grey.png",
       white: "../assets/img/png/add-task-white.png",
     },
@@ -123,7 +123,7 @@ function updateSidebarIcons() {
   // Links zu den relevanten Seiten
   const links = {
     summary: document.querySelector(".summary-link"),
-    addTask: document.querySelector(".add-task-link"),
+    add_task: document.querySelector(".add-task-link"),
     board: document.querySelector(".board-link"),
     contacts: document.querySelector(".contacts-link"),
     privacyPolicy: document.querySelector(".privacy-policy-link"),
@@ -131,30 +131,53 @@ function updateSidebarIcons() {
   };
 
   // Für die Seiten, die Icons ändern müssen
-  const pagesWithIcons = ["summary", "addTask", "board", "contacts"];
+  const pagesWithIcons = ["summary", "add_task", "board", "contacts"];
 
   for (const page of pagesWithIcons) {
     const linkElement = links[page];
-    if (currentPage === `${page.replace(/([A-Z])/g, '_$1').toLowerCase()}.html`) { // Korrigiere die Dateinamen
-      changeIcon(page, iconPaths[page].white); // Stelle sicher, dass changeIcon definiert ist
-      if (linkElement) {
+    const isCurrentPage = currentPage === (page === 'add_task' ? 'add_task.html' : `${page}.html`);
+    
+    if (linkElement) {
+      if (isCurrentPage) {
+        changeIcon(page, iconPaths[page].white);
         linkElement.classList.add("active", "disabled");
-      }
-    } else {
-      if (linkElement) {
-        linkElement.classList.remove("active", "disabled");
-        // Setze das graue Icon, wenn die Seite nicht aktiv ist
+      } else {
         changeIcon(page, iconPaths[page].grey);
+        linkElement.classList.remove("active", "disabled");
       }
     }
   }
+
+  // Für die Seiten, die keine Icons ändern müssen
+  if (currentPage === "privacy-policy.html") {
+    const privacyLinkElement = links.privacyPolicy;
+    if (privacyLinkElement) {
+      privacyLinkElement.classList.add("active", "disabled");
+    }
+  } else if (links.privacyPolicy) {
+    links.privacyPolicy.classList.remove("active", "disabled");
+  }
+
+  if (currentPage === "legal-notice.html") {
+    const legalNoticeLinkElement = links.legalNotice;
+    if (legalNoticeLinkElement) {
+      legalNoticeLinkElement.classList.add("active", "disabled");
+    }
+  } else if (links.legalNotice) {
+    links.legalNotice.classList.remove("active", "disabled");
+  }
 }
 
-// Beispielhafte Definition der changeIcon-Funktion
-function changeIcon(page, iconPath) {
-  const linkElement = document.querySelector(`.${page}-link img`);
+// Funktion zum Ändern des Icons
+function changeIcon(page, newIconPath) {
+  // Ersetze "_" durch "-" im Selektor, weil die Klassen Bindestriche haben
+  const linkElement = document.querySelector(`.${page.replace('_', '-')}-link img`);
+  
   if (linkElement) {
-    linkElement.src = iconPath;
+    console.log(`Changing icon for ${page} to ${newIconPath}`); // Debug-Ausgabe
+    linkElement.src = newIconPath;
+  } else {
+    console.log(`No img element found for ${page}`); // Debug-Ausgabe
   }
 }
 
