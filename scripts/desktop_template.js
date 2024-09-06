@@ -123,7 +123,7 @@ function updateSidebarIcons() {
   // Links zu den relevanten Seiten
   const links = {
     summary: document.querySelector(".summary-link"),
-    addTask: document.querySelector(".addTask-link"),
+    addTask: document.querySelector(".add-task-link"),
     board: document.querySelector(".board-link"),
     contacts: document.querySelector(".contacts-link"),
     privacyPolicy: document.querySelector(".privacy-policy-link"),
