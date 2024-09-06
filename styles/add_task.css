@@ -143,7 +143,7 @@ textarea {
   color: #000000;
 }
 
-.contact-icon-order{
+.contact-icon-order {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -151,12 +151,12 @@ textarea {
   margin-top: 4px;
 }
 
-.contact-icon{
+.contact-icon {
   height: 42px;
   width: 42px;
-  border: 2px solid #FFFFFF;
+  border: 2px solid #ffffff;
   border-radius: 50%;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 400;
   line-height: 14.4px;
@@ -186,8 +186,8 @@ textarea {
   display: inline-block;
 }
 
-.subtasks-placeholder::placeholder{
-  color: #D1D1D1;
+.subtasks-placeholder::placeholder {
+  color: #d1d1d1;
 }
 
 .pos-abs {
@@ -196,9 +196,13 @@ textarea {
   right: 15px;
 }
 
-.list-order{
-  margin-top: 4px;
-  margin-bottom: 4px;
+li {
+  background-color: #29abe2;
+  padding: 6px 0px;
+}
+
+.list-order {
+  margin: 4px 0px;
   font-size: 16px;
   font-weight: 400;
   line-height: 19.2px;
