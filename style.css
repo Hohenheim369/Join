@@ -11,13 +11,13 @@ html {
 }
 
 body {
-  height: 100%;
+  height: calc(100% - 96px);
   background-color: rgb(246, 247, 248);
   color: rgb(42, 54, 71);
 }
 
 .content {
-  height: calc(100% - 96px);
+  height: 100%;
   width: calc(100% - 232px);
   margin-left: 232px;
   margin-top: 96px;
@@ -50,4 +50,48 @@ textarea:focus{
 select:focus{
   outline-style: none;
   box-shadow: none;
+}
+
+.wh-24 {
+  width: 24px;
+  height: 24px;
+}
+
+.wh-32 {
+  width: 32px;
+  height: 32px;
+}
+
+.wh-42 {
+  width: 42px;
+  height: 42px;
+}
+
+.font-20-blue {
+  font-size: 20px;
+  color: rgb(66, 82, 110);
+}
+
+.font-w-700{
+  font-weight: 700;
+}
+
+.font-c-white {
+  color: white;
+}
+
+.font-c-black {
+  color: black;
+}
+
+.d-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-flex-spbe-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

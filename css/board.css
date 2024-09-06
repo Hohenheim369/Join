@@ -2,50 +2,6 @@ body {
   visibility: hidden;
 }
 
-.wh-24 {
-  width: 24px;
-  height: 24px;
-}
-
-.wh-32 {
-  width: 32px;
-  height: 32px;
-}
-
-.wh-42 {
-  width: 42px;
-  height: 42px;
-}
-
-.font-20-blue {
-  font-size: 20px;
-  color: rgb(66, 82, 110);
-}
-
-.font-w-700{
-  font-weight: 700;
-}
-
-.font-c-white {
-  color: white;
-}
-
-.font-c-black {
-  color: black;
-}
-
-.d-flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.d-flex-spbe-center {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .board {
   padding: 80px 64px 0;
   gap: 55px;
