@@ -254,6 +254,17 @@ span {
   color: white !important;
 }
 
-.summary-link .box-icons path{
+.summary-link .box-icons object{
   fill: white !important;
+}
+
+/* Standardfarbe für alle SVGs */
+.icon-bar .box-icons object {
+  fill: #CDCDCD; /* Grau als Standardfarbe */
+  transition: fill 0.3s; /* Sanfter Übergangseffekt */
+}
+
+/* Weißes SVG für den aktiven Link */
+.icon-bar .link-sidebar.active .box-icons object {
+  fill: white; /* Weiß für das aktive SVG */
 }
