@@ -1,51 +1,3 @@
-body {
-  visibility: hidden;
-}
-
-.wh-24 {
-  width: 24px;
-  height: 24px;
-}
-
-.wh-32 {
-  width: 32px;
-  height: 32px;
-}
-
-.wh-42 {
-  width: 42px;
-  height: 42px;
-}
-
-.font-20-blue {
-  font-size: 20px;
-  color: rgb(66, 82, 110);
-}
-
-.font-w-700{
-  font-weight: 700;
-}
-
-.font-c-white {
-  color: white;
-}
-
-.font-c-black {
-  color: black;
-}
-
-.d-flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.d-flex-spbe-center {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .board {
   padding: 80px 64px 0;
   gap: 55px;
@@ -56,7 +8,7 @@ body {
   height: 48px;
 }
 
-.search-box {
+.input-container {
   width: 312px;
   height: 48px;
   padding: 0 16px;
@@ -65,11 +17,11 @@ body {
   border-radius: 10px;
 }
 
-.search-box.active {
+.input-container.active {
   border-color: rgb(41, 171, 226);
 }
 
-.search-box input {
+.input-container input {
   height: 32px;
   width: 230px;
   padding: 0;
@@ -77,13 +29,13 @@ body {
   font-size: 20px;
 }
 
-.search-box input::placeholder {
+.input-container input::placeholder {
   font-size: 20px;
   font-weight: 400;
   color: rgb(209, 209, 209);
 }
 
-.search-box button {
+.input-container button {
   cursor: pointer;
   height: 32px;
   width: 48px;
@@ -96,23 +48,23 @@ body {
   align-items: center;
 }
 
-.search-box button svg {
+.input-container button svg {
   border-radius: 50%;
 }
 
-.search-box button:hover svg {
+.input-container button:hover svg {
   background-color: rgb(238, 238, 238);
 }
 
-.search-box button svg path {
+.input-container button svg path {
   transition: fill 0.1s ease;
 }
 
-.search-box button:active svg {
+.input-container button:active svg {
   background-color: transparent;
 }
 
-.search-box button:active svg path {
+.input-container button:active svg path {
   fill: rgb(41, 171, 226);
 }
 

@@ -11,6 +11,7 @@ html {
 }
 
 body {
+  visibility: hidden;
   height: calc(100% - 96px);
   background-color: rgb(246, 247, 248);
   color: rgb(42, 54, 71);
@@ -33,10 +34,7 @@ h1 {
   color: #000000;
 }
 
-button{
-  cursor: pointer;
-}
-
+/* In assets.css ?*/
 input:focus{
   outline-style: none;
   box-shadow: none;
@@ -50,4 +48,51 @@ textarea:focus{
 select:focus{
   outline-style: none;
   box-shadow: none;
+}
+
+.wh-24 {
+  width: 24px;
+  height: 24px;
+}
+
+.wh-32 {
+  width: 32px;
+  height: 32px;
+}
+
+.wh-42 {
+  width: 42px;
+  height: 42px;
+}
+
+.font-s-20{
+  font-size: 20px;
+}
+
+.font-w-700{
+  font-weight: 700;
+}
+
+.font-c-66-82-110{
+  color: rgb(66, 82, 110);
+}
+
+.font-c-white {
+  color: white;
+}
+
+.font-c-black {
+  color: black;
+}
+
+.d-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-flex-spbe-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
