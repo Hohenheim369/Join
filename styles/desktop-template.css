@@ -53,7 +53,7 @@ header {
 .log-out {
   display: flex;
   flex-direction: column;
-  background-color: #2A3647;
+  background-color: #2a3647;
   padding: 10px;
   border-radius: 20px 0px 20px 20px;
   position: absolute;
@@ -128,24 +128,13 @@ aside {
   box-sizing: border-box;
 }
 
-.box-icons path{
-  fill: #CDCDCD;
+.box-icons path {
+  fill: #cdcdcd;
 }
 
 .link-sidebar:hover {
   cursor: pointer;
   background-color: #2a3d59;
-}
-
-.link-sidebar:active {
-  background-color: #091931;
-  color: white;
-}
-
-DOPPELT
-.link-sidebar.active {
-  background-color: #091931;
-  color: white;
 }
 
 .credit-box {
@@ -191,10 +180,10 @@ DOPPELT
 }
 
 .link-legal-credits.disabled {
-  pointer-events: none; /* Verhindert, dass der Link geklickt werden kann */
-  font-weight: normal; /* Rücksetzen auf normales Gewicht */
-  cursor: default; /* Standard-Mauszeiger */
-  color: #a8a8a8;
+  pointer-events: none !important;
+  font-weight: normal !important;
+  cursor: default !important;
+  color: #a8a8a8 !important;
 }
 
 .credit {
@@ -205,12 +194,21 @@ DOPPELT
   justify-content: flex-start;
 }
 
-/* Standardfarbe für alle SVGs */
-.icon-bar .box-icons img {
-  transition: filter 0.3s;
+/* CSS für inaktive Links */
+.link-sidebar.disabled {
+  pointer-events: none; /* Verhindert, dass der Link geklickt werden kann */
+  background-color: #091931; /* Hintergrundfarbe für inaktive Links */
+  color: #ffffff; /* Textfarbe für inaktive Links */
 }
 
-/* Weißes Bild für den aktiven Link */
-.link-sidebar.active img {
-  filter: brightness(0) invert(1); /* Beispiel für weißes Bild */
+/* Entfernt den Hover-Effekt für inaktive Links */
+.link-sidebar.disabled:hover {
+  cursor: default; /* Standard-Mauszeiger */
+  background-color: #2a3d59; /* Gleiche Hintergrundfarbe wie im normalen Zustand */
+}
+
+.disabled {
+  pointer-events: none; /* Verhindert, dass der Link angeklickt wird */
+  color: grey; /* Oder eine andere Farbe, um den Link als deaktiviert darzustellen */
+  cursor: not-allowed; /* Ändert den Mauszeiger, um anzuzeigen, dass der Link deaktiviert ist */
 }
