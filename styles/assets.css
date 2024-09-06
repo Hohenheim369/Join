@@ -53,6 +53,22 @@ button:active {
   stroke: #091931;
 }
 
+input:focus{
+  outline-style: none;
+  box-shadow: none;
+}
+
+textarea:focus{
+  outline-style: none;
+  box-shadow: none;
+}
+
+select:focus{
+  outline-style: none;
+  box-shadow: none;
+}
+
+
 .bg-category-blue{
   background-color: rgb(0, 56, 255);
 }

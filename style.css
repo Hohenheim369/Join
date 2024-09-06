@@ -34,22 +34,6 @@ h1 {
   color: #000000;
 }
 
-/* In assets.css ?*/
-input:focus{
-  outline-style: none;
-  box-shadow: none;
-}
-
-textarea:focus{
-  outline-style: none;
-  box-shadow: none;
-}
-
-select:focus{
-  outline-style: none;
-  box-shadow: none;
-}
-
 .wh-24 {
   width: 24px;
   height: 24px;
