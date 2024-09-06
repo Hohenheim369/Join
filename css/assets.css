@@ -23,6 +23,48 @@ button:active {
   box-shadow: none;
 }
 
+.clear-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  border-radius: 10px;
+  border: 1px solid #2a3647;
+  height: 56px;
+  /* padding: 16px; */
+  gap: 4px;
+  color: #2a3647;
+  background-color: transparent;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.clear-button svg {
+  padding-left: 4px;
+}
+
+.clear-button:hover {
+  border-color: #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #29abe2;
+  background-color: #ffffff;
+}
+
+.clear-button:hover svg path {
+  stroke: #29abe2;
+}
+
+.clear-button:active{
+  border-color: #091931;
+  color: #091931;
+  box-shadow:none;
+}
+
+.clear-button:active svg path {
+  stroke: #091931;
+}
+
 .bg-category-blue{
   background-color: rgb(0, 56, 255);
 }

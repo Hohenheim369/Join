@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Add Task</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../assets/img/png/favicon2.png"
+    />
     <link rel="stylesheet" href="../css/fonts.css" />
+    <link rel="stylesheet" href="../css/assets.css" />
     <link rel="stylesheet" href="../css/add_task.css" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../css/desktop-template.css" />
-    <link rel="stylesheet" href="../css/add-task-buttons.css">
+    <link rel="stylesheet" href="../css/add-task-buttons.css" />
     <script src="../js/include.js"></script>
   </head>
   <body>
@@ -57,7 +63,11 @@
                   alt=""
                 />
               </div>
-              <div></div>
+            </div>
+            <div class="contact-icon-order">
+              <div class="contact-icon bg-147-39-255"><span>AS</span></div>
+              <div class="contact-icon bg-252-113-255"><span>DE</span></div>
+              <div class="contact-icon bg-255-187-43"><span>EF</span></div>
             </div>
           </div>
         </form>
@@ -190,16 +200,23 @@
                   alt=""
                 />
               </div>
-              <div></div>
+            </div>
+            <div>
+              <ul>
+                <li class="list-order">Contact Form</li>
+                <li class="list-order">Write Legal imprint</li>
+              </ul>
             </div>
           </div>
         </form>
       </div>
       <div class="bottom-order">
-        <span class="alert-field"><span class="required-sign">*</span>This field is required</span>
+        <span class="alert-field"
+          ><span class="required-sign">*</span>This field is required</span
+        >
         <div class="bottom-button-order">
           <button onclick="clearButton()" class="clear-button">
-            <span class="text-buttons">Clear</span>
+            Clear
             <div>
               <svg
                 width="13"
@@ -220,9 +237,7 @@
           </button>
           <button class="create-task-button">
             <span>Create Task</span>
-            <div>
-              <img src="../assets/img/png-old/check.png" alt="" />
-            </div>
+            <img src="../assets/img/png-old/check.png" alt="" />
           </button>
         </div>
       </div>

@@ -114,6 +114,7 @@ textarea {
   font-weight: 400;
   line-height: 24px;
   cursor: pointer;
+  margin-bottom: 4px;
 }
 
 .assigned-select:hover {
@@ -150,6 +151,27 @@ textarea {
 
 .assigned-select::placeholder {
   color: #000000;
+}
+
+.contact-icon-order{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.contact-icon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  width: 42px;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.4px;
 }
 
 .dividing-bar {
@@ -238,12 +260,19 @@ textarea {
   border: 1px solid #29abe2;
 }
 
+.list-order{
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.2px;
+}
+
 .bottom-order {
   max-width: 976px;
   display: flex;
   justify-content: space-between;
-  padding-top: 138px;
-  padding-bottom: 79px;
+  padding: 138px 0px 79px 0px;
 }
 
 .alert-field {
