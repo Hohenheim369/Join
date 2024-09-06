@@ -34,6 +34,7 @@ h1 {
   color: #000000;
 }
 
+/* In assets.css ?*/
 input:focus{
   outline-style: none;
   box-shadow: none;
