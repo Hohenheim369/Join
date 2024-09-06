@@ -164,7 +164,7 @@ textarea {
 
 .dividing-bar {
   border-left: 1px solid #d1d1d1;
-  height: 424px;
+  min-height: 424px;
   width: 0px;
   margin: 0px 48px;
 }
@@ -208,11 +208,14 @@ li {
   line-height: 19.2px;
 }
 
+.space-top {
+  height: 138px;
+}
+
 .bottom-order {
   max-width: 976px;
   display: flex;
   justify-content: space-between;
-  padding: 138px 0px 79px 0px;
 }
 
 .alert-field {
@@ -232,6 +235,6 @@ li {
   color: white !important;
 }
 
-.add-task-link .box-icons path {
-  fill: white !important;
+.space-bottom {
+  height: 77px;
 }
