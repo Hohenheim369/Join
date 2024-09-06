@@ -9,7 +9,8 @@
       rel="icon"
       type="image/x-icon"
       href="../assets/img/png/favicon2.png"
-    />+
+    />
+    +
     <script src="../scripts/desktop_template.js"></script>
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/assets.css" />
@@ -17,7 +18,7 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/desktop-template.css" />
     <link rel="stylesheet" href="../styles/add-task-buttons.css" />
-    <link rel="stylesheet" href="../styles/media.css">
+    <link rel="stylesheet" href="../styles/media.css" />
     <script src="../scripts/include.js"></script>
   </head>
   <body>
@@ -67,9 +68,15 @@
               </div>
             </div>
             <div class="contact-icon-order">
-              <div class="contact-icon d-flex-center bg-147-39-255"><span>AS</span></div>
-              <div class="contact-icon d-flex-center bg-252-113-255"><span>DE</span></div>
-              <div class="contact-icon d-flex-center bg-255-187-43"><span>EF</span></div>
+              <div class="contact-icon d-flex-center bg-147-39-255">
+                <span>AS</span>
+              </div>
+              <div class="contact-icon d-flex-center bg-252-113-255">
+                <span>DE</span>
+              </div>
+              <div class="contact-icon d-flex-center bg-255-187-43">
+                <span>EF</span>
+              </div>
             </div>
           </div>
         </form>
@@ -142,7 +149,11 @@
                   />
                 </svg>
               </span>
-              <span onclick="selectLow()" id="low_span" class="low-button d-flex-center">
+              <span
+                onclick="selectLow()"
+                id="low_span"
+                class="low-button d-flex-center"
+              >
                 Low
                 <svg
                   width="20"
@@ -203,44 +214,46 @@
                 />
               </div>
             </div>
-            <div>
+            <!-- <div>
               <ul>
                 <li class="list-order">Contact Form</li>
                 <li class="list-order">Write Legal imprint</li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </form>
       </div>
-      <div class="bottom-order">
-        <span class="alert-field"
-          ><span class="required-sign">*</span>This field is required</span
-        >
-        <div class="bottom-button-order">
-          <button onclick="clearButton()" class="clear-button">
-            Clear
-            <div class="d-flex-center wh-24">
-              <svg
-                width="13"
-                height="14"
-                viewBox="0 0 13 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.24959 6.99984L11.4926 12.2428M1.00659 12.2428L6.24959 6.99984L1.00659 12.2428ZM11.4926 1.75684L6.24859 6.99984L11.4926 1.75684ZM6.24859 6.99984L1.00659 1.75684L6.24859 6.99984Z"
-                  stroke="#2A3647"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-          </button>
-          <button class="create-task-button">
-            <span>Create Task</span>
-            <img src="../assets/img/png-old/check.png" alt="" />
-          </button>
+      <div>
+        <div class="bottom-order">
+          <span class="alert-field"
+            ><span class="required-sign">*</span>This field is required</span
+          >
+          <div class="bottom-button-order">
+            <button onclick="clearButton()" class="clear-button">
+              Clear
+              <div class="d-flex-center wh-24">
+                <svg
+                  width="13"
+                  height="14"
+                  viewBox="0 0 13 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.24959 6.99984L11.4926 12.2428M1.00659 12.2428L6.24959 6.99984L1.00659 12.2428ZM11.4926 1.75684L6.24859 6.99984L11.4926 1.75684ZM6.24859 6.99984L1.00659 1.75684L6.24859 6.99984Z"
+                    stroke="#2A3647"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </button>
+            <button class="create-task-button">
+              <span>Create Task</span>
+              <img src="../assets/img/png-old/check.png" alt="" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

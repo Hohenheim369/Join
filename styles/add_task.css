@@ -164,7 +164,7 @@ textarea {
 
 .dividing-bar {
   border-left: 1px solid #d1d1d1;
-  height: 424px;
+  min-height: 424px;
   width: 0px;
   margin: 0px 48px;
 }
@@ -213,7 +213,7 @@ li{
   max-width: 976px;
   display: flex;
   justify-content: space-between;
-  padding: 138px 0px 79px 0px;
+  padding: 115px 0px 80px 0px;
 }
 
 .alert-field {
