@@ -11,13 +11,13 @@ html {
 }
 
 body {
-  height: calc(100% - 96px);
+  height: 100%;
   background-color: rgb(246, 247, 248);
   color: rgb(42, 54, 71);
 }
 
 .content {
-  height: 100%;
+  height: calc(100% - 96px);
   width: calc(100% - 232px);
   margin-left: 232px;
   margin-top: 96px;
