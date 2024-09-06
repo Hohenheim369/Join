@@ -34,11 +34,6 @@ h1 {
   color: #000000;
 }
 
-
-button{
-  cursor: pointer;
-}
-
 input:focus{
   outline-style: none;
   box-shadow: none;
@@ -74,8 +69,16 @@ select:focus{
   color: rgb(66, 82, 110);
 }
 
+.font-s-20{
+  font-size: 20px;
+}
+
 .font-w-700{
   font-weight: 700;
+}
+
+.font-c-66-82-110{
+  color: rgb(66, 82, 110);
 }
 
 .font-c-white {
