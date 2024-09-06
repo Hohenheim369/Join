@@ -102,7 +102,7 @@ textarea {
   margin-left: 10px;
 }
 
-.assigned-select {
+.input-select {
   display: flex;
   height: 48px;
   border: 1px solid #d1d1d1;
@@ -114,25 +114,15 @@ textarea {
   font-weight: 400;
   line-height: 24px;
   cursor: pointer;
-  margin-bottom: 4px;
 }
 
-.assigned-select:hover {
+.input-select:hover {
   border: 1px inset #a8a8a8;
 }
 
 .assigned-container {
   position: relative;
   display: inline-block;
-}
-
-.assigned-container div {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  bottom: 12px;
-  right: 15px;
 }
 
 .hover-circle {
@@ -145,11 +135,11 @@ textarea {
   background-color: #eeeeee;
 }
 
-.assigned-select:focus {
+.input-select:focus {
   border: 1px solid #29abe2;
 }
 
-.assigned-select::placeholder {
+.input-select::placeholder {
   color: #000000;
 }
 
@@ -158,12 +148,10 @@ textarea {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: 4px;
 }
 
 .contact-icon{
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 42px;
   width: 42px;
   border: 2px solid #FFFFFF;
@@ -188,58 +176,9 @@ textarea {
   margin: 0;
 }
 
-.category-select {
-  display: flex;
-  height: 48px;
-  border: 1px solid #d1d1d1;
-  border-radius: 10px;
-  width: 100%;
-  padding: 12px 16px;
-  background-color: #ffffff;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  cursor: pointer;
-}
-
-.category-select:hover {
-  border: 1px inset #a8a8a8;
-}
-
 .category-container {
   position: relative;
   display: inline-block;
-}
-
-.category-container div {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  bottom: 12px;
-  right: 15px;
-}
-
-.category-select::placeholder {
-  color: #000000;
-}
-
-.subtasks-select {
-  display: flex;
-  height: 48px;
-  border: 1px solid #d1d1d1;
-  border-radius: 10px;
-  width: 100%;
-  padding: 12px 16px;
-  background-color: #ffffff;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  cursor: pointer;
-}
-
-.subtasks-select:hover {
-  border: 1px inset #a8a8a8;
 }
 
 .subtasks-container {
@@ -247,17 +186,14 @@ textarea {
   display: inline-block;
 }
 
-.subtasks-container div {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  bottom: 12px;
-  right: 15px;
+.subtasks-placeholder::placeholder{
+  color: #D1D1D1;
 }
 
-.subtasks-select:focus {
-  border: 1px solid #29abe2;
+.pos-abs {
+  position: absolute;
+  bottom: 12px;
+  right: 15px;
 }
 
 .list-order{

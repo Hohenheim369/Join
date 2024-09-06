@@ -24,24 +24,11 @@ button:active {
 }
 
 .clear-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 110px;
-  border-radius: 10px;
   border: 1px solid #2a3647;
-  height: 56px;
-  /* padding: 16px; */
-  gap: 4px;
   color: #2a3647;
   background-color: transparent;
   font-size: 20px;
-  line-height: 24px;
   font-weight: 400;
-}
-
-.clear-button svg {
-  padding-left: 4px;
 }
 
 .clear-button:hover {
@@ -56,6 +43,7 @@ button:active {
 }
 
 .clear-button:active{
+  background-color: transparent;
   border-color: #091931;
   color: #091931;
   box-shadow:none;

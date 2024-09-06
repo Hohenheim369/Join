@@ -51,12 +51,12 @@
             <label>Assigned to</label>
             <div class="assigned-container">
               <input
-                class="assigned-select"
+                class="input-select"
                 type="text"
                 placeholder="Select contacts to assign"
                 id="assignedTo"
               />
-              <div class="hover-circle">
+              <div class="hover-circle d-flex-center pos-abs">
                 <img
                   onclick="openSelect()"
                   src="../assets/img/png-old/arrow_drop_down.png"
@@ -65,9 +65,9 @@
               </div>
             </div>
             <div class="contact-icon-order">
-              <div class="contact-icon bg-147-39-255"><span>AS</span></div>
-              <div class="contact-icon bg-252-113-255"><span>DE</span></div>
-              <div class="contact-icon bg-255-187-43"><span>EF</span></div>
+              <div class="contact-icon d-flex-center bg-147-39-255"><span>AS</span></div>
+              <div class="contact-icon d-flex-center bg-252-113-255"><span>DE</span></div>
+              <div class="contact-icon d-flex-center bg-255-187-43"><span>EF</span></div>
             </div>
           </div>
         </form>
@@ -93,7 +93,7 @@
               <span
                 onclick="selectUrgent()"
                 id="urgent_span"
-                class="urgent-button"
+                class="urgent-button d-flex-center"
               >
                 Urgent
                 <svg
@@ -118,7 +118,7 @@
               <span
                 onclick="selectMedium()"
                 id="medium_span"
-                class="clicked-medium"
+                class="clicked-medium d-flex-center"
               >
                 Medium
                 <svg
@@ -140,7 +140,7 @@
                   />
                 </svg>
               </span>
-              <span onclick="selectLow()" id="low_span" class="low-button">
+              <span onclick="selectLow()" id="low_span" class="low-button d-flex-center">
                 Low
                 <svg
                   width="20"
@@ -167,14 +167,14 @@
             <label>Category<span class="required-sign">*</span></label>
             <div class="category-container">
               <input
-                class="category-select"
+                class="input-select"
                 type="text"
                 required
                 placeholder="Select task category"
                 id="category"
                 disabled
               />
-              <div class="hover-circle">
+              <div class="hover-circle d-flex-center pos-abs">
                 <img
                   onclick="openSelect()"
                   src="../assets/img/png-old/arrow_drop_down.png"
@@ -188,12 +188,12 @@
             <label>Subtasks</label>
             <div class="subtasks-container">
               <input
-                class="subtasks-select"
+                class="input-select subtasks-placeholder"
                 type="text"
                 placeholder="Add  new subtask"
                 id="subtasks"
               />
-              <div class="hover-circle">
+              <div class="hover-circle d-flex-center pos-abs">
                 <img
                   onclick="openSelect()"
                   src="../assets/img/png-old/Subtasks icons11.png"
@@ -217,7 +217,7 @@
         <div class="bottom-button-order">
           <button onclick="clearButton()" class="clear-button">
             Clear
-            <div>
+            <div class="d-flex-center wh-24">
               <svg
                 width="13"
                 height="14"
