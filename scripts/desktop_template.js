@@ -98,7 +98,7 @@ document.addEventListener("click", (event) => {
 // }
 
 function updateSidebarIcons() {
-  const currentPage = window.location.pathname;
+  const currentPage = window.location.pathname.split('/').pop(); // Extrahiere den Dateinamen
 
   // Pfade zu den grauen und weißen Icons
   const iconPaths = {
@@ -135,43 +135,31 @@ function updateSidebarIcons() {
 
   for (const page of pagesWithIcons) {
     const linkElement = links[page];
-    if (currentPage.includes(`${page}.html`)) {
-      changeIcon(page, iconPaths[page].white);
+    if (currentPage === `${page.replace(/([A-Z])/g, '_$1').toLowerCase()}.html`) { // Korrigiere die Dateinamen
+      changeIcon(page, iconPaths[page].white); // Stelle sicher, dass changeIcon definiert ist
       if (linkElement) {
         linkElement.classList.add("active", "disabled");
       }
-    } else if (linkElement) {
-      linkElement.classList.remove("active", "disabled");
+    } else {
+      if (linkElement) {
+        linkElement.classList.remove("active", "disabled");
+        // Setze das graue Icon, wenn die Seite nicht aktiv ist
+        changeIcon(page, iconPaths[page].grey);
+      }
     }
-  }
-
-  // Für die Seiten, die keine Icons ändern müssen
-  if (currentPage.includes("privacy-policy.html")) {
-    const privacyLinkElement = links.privacyPolicy;
-    if (privacyLinkElement) {
-      privacyLinkElement.classList.add("active", "disabled");
-    }
-  } else if (links.privacyPolicy) {
-    links.privacyPolicy.classList.remove("active", "disabled");
-  }
-
-  if (currentPage.includes("legal-notice.html")) {
-    const legalNoticeLinkElement = links.legalNotice;
-    if (legalNoticeLinkElement) {
-      legalNoticeLinkElement.classList.add("active", "disabled");
-    }
-  } else if (links.legalNotice) {
-    links.legalNotice.classList.remove("active", "disabled");
   }
 }
 
-// Funktion zum Ändern des Icons
-function changeIcon(linkClass, newIconPath) {
-  const linkElement = document.querySelector(`.${linkClass}-link img`);
+// Beispielhafte Definition der changeIcon-Funktion
+function changeIcon(page, iconPath) {
+  const linkElement = document.querySelector(`.${page}-link img`);
   if (linkElement) {
-    linkElement.src = newIconPath;
+    linkElement.src = iconPath;
   }
 }
+
+// Rufe updateSidebarIcons auf, wenn das DOM vollständig geladen ist
+document.addEventListener("DOMContentLoaded", updateSidebarIcons);
 
 // Funktion zum Laden des Templates
 function loadTemplate() {
