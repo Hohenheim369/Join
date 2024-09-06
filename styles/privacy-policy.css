@@ -54,11 +54,14 @@ h1 {
 .arrowBack:hover {
   cursor: pointer;
 }
+ 
 
-.not-logged-in .icon-box {
+
+ /* die klassen wenn keiner ein geloggt ist  */
+/* .not-logged-in .icon-box {
   display: none !important;
 }
 
 .not-logged-in .box-icons {
   display: none !important;
-}
+} */

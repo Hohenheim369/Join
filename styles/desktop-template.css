@@ -38,7 +38,7 @@ header {
   color: #29abe2;
 }
 .user-profile-initials-box:hover {
-  background-color: var(--background);
+  background-color: rgb(225, 230, 237);
   cursor: pointer;
 }
 
@@ -58,7 +58,7 @@ header {
   border-radius: 20px 0px 20px 20px;
   position: absolute;
   top: 69px;
-  left: 915px;
+  left: calc(100% - 263px);
 }
 
 #log_out a {
@@ -67,9 +67,6 @@ header {
   color: #cdcdcd;
 }
 
-.d-none {
-  display: none;
-}
 
 #log_out a:hover {
   background-color: #2a3d59;
@@ -211,4 +208,12 @@ aside {
   pointer-events: none; /* Verhindert, dass der Link angeklickt wird */
   color: grey; /* Oder eine andere Farbe, um den Link als deaktiviert darzustellen */
   cursor: not-allowed; /* Ändert den Mauszeiger, um anzuzeigen, dass der Link deaktiviert ist */
+}
+
+.d-none {
+  display: none;
+}
+
+.bg-color{
+  background-color: rgb(225, 230, 237) !important;
 }
