@@ -172,10 +172,23 @@
   color: #29abe2;
 }
 
+.clear-button:hover svg path {
+  stroke: #29abe2;
+}
+
+.clear-button:active{
+  border-color: #091931;
+  color: #091931;
+  box-shadow:none;
+}
+
+.clear-button:active svg path {
+  stroke: #091931;
+}
+
 .create-task-button {
   display: flex;
   align-items: center;
-
   width: 183px;
   border-radius: 10px;
   border: 1px solid #2a3647;
@@ -188,7 +201,7 @@
 
 .create-task-button span {
   width: 123px;
-  font-size: 20px;
+  font-size: 21px;
   line-height: 24px;
   font-weight: 700;
 }
@@ -208,6 +221,8 @@
   color: #ffffff;
 }
 
-.clear-button:hover svg path {
-  stroke: #29abe2;
+.create-task-button:active{
+  background-color: #091931;
+  border: 1px solid #2A3647;
+  box-shadow:none;
 }

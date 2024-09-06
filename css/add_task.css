@@ -67,6 +67,7 @@ input:focus::placeholder {
   font-size: 12px;
   font-weight: 400;
   line-height: 14.4px;
+  font-family: "Poppins";
   color: #ff8190;
 }
 
@@ -140,7 +141,7 @@ textarea {
 }
 
 .hover-circle:hover {
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
 .assigned-select:focus {
@@ -262,6 +263,6 @@ textarea {
   color: white !important;
 }
 
-.add-task-link .box-icons path{
+.add-task-link .box-icons path {
   fill: white !important;
 }
