@@ -196,24 +196,26 @@ textarea {
   right: 15px;
 }
 
-li{
+li {
   background-color: #29abe2;
   padding: 6px 0px;
 }
 
-
-.list-order{
+.list-order {
   margin: 4px 0px;
   font-size: 16px;
   font-weight: 400;
   line-height: 19.2px;
 }
 
+.space-top {
+  height: 138px;
+}
+
 .bottom-order {
   max-width: 976px;
   display: flex;
   justify-content: space-between;
-  padding: 115px 0px 80px 0px;
 }
 
 .alert-field {
@@ -231,4 +233,8 @@ li{
 .add-task-link {
   background-color: #091931;
   color: white !important;
+}
+
+.space-bottom {
+  height: 77px;
 }
