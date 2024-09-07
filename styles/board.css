@@ -8,34 +8,7 @@
   height: 48px;
 }
 
-.input-container {
-  width: 312px;
-  height: 48px;
-  padding: 0 16px;
-  background-color: white;
-  border: 1px solid rgb(168, 168, 168);
-  border-radius: 10px;
-}
-
-.input-container.active {
-  border-color: rgb(41, 171, 226);
-}
-
-.input-container input {
-  height: 32px;
-  width: 230px;
-  padding: 0;
-  background: transparent;
-  font-size: 20px;
-}
-
-.input-container input::placeholder {
-  font-size: 20px;
-  font-weight: 400;
-  color: rgb(209, 209, 209);
-}
-
-.input-container button {
+.input-button {
   cursor: pointer;
   height: 32px;
   width: 48px;
@@ -44,32 +17,34 @@
   border-left: 1px solid rgb(209, 209, 209);
   border-radius: 0;
   background: transparent;
+  position: absolute;
+  right: 16px;
   display: flex;
   justify-content: end;
-  align-items: center;
 }
 
-.input-container button svg {
-  border-radius: 50%;
-}
-
-.input-container button:hover {
+.input-button:hover {
   box-shadow: none;
-}
-
-.input-container button:hover svg {
-  background-color: rgb(238, 238, 238);
-}
-
-.input-container button svg path {
-  transition: fill 0.1s ease;
-}
-
-.input-container button:active svg {
   background-color: transparent;
 }
 
-.input-container button:active svg path {
+.input-button svg {
+  border-radius: 50%;
+}
+
+.input-button:hover svg {
+  background-color: rgb(238, 238, 238);
+}
+
+.input-button svg path {
+  transition: fill 0.1s ease;
+}
+
+.input-button:active svg {
+  background-color: transparent;
+}
+
+.input-button:active svg path {
   fill: rgb(41, 171, 226);
 }
 
@@ -205,9 +180,16 @@
 .single-ticket {
   width: 525px;
   background-color: white;
-  padding: 48px 40px;
+  padding: 48px 32px 48px 40px;
   border-radius: 30px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+}
+
+.overflow{
+  max-height: calc(100vh - 112px);
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 8px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -259,7 +241,7 @@
 
 .single-ticket-subtasks {
   width: fit-content;
-  padding: 6px 16px;
+  padding: 4px 16px;
   border-radius: 10px;
   display: flex;
   align-items: center;

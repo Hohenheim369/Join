@@ -30,7 +30,7 @@ body {
 h1 {
   font-weight: 700;
   font-size: 61px;
-  line-height: 73.2px;
+  line-height: 73px;
   color: #000000;
 }
 
@@ -75,6 +75,10 @@ h1 {
 
 .font-c-black {
   color: black;
+}
+
+.pos-rel{
+  position: relative;
 }
 
 .d-flex-center {

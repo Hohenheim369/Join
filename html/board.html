@@ -26,9 +26,9 @@
       <div class="d-flex-spbe-center">
         <h1>Board</h1>
         <div class="board-menue d-flex-spbe-center">
-          <div class="input-container d-flex-spbe-center" id="search_box">
+          <div class="pos-rel d-flex-spbe-center" id="search_box">
             <input id="search_task" type="text" placeholder="Find Task" />
-            <button id="search_button">
+            <button class="input-button" id="search_button">
               <svg
                 width="32"
                 height="32"
@@ -327,136 +327,138 @@
       onclick="toggleOverlay()"
     >
       <div class="single-ticket" onclick="bubblingPrevention(event)">
-        <div class="d-flex-spbe-center">
-          <div class="single-ticket-category font-c-white bg-category-blue">
-            User Story
-          </div>
-          <div
-            class="close-ticket wh-24 d-flex-center"
-            onclick="toggleOverlay()"
-          >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+        <div class="overflow">
+          <div class="d-flex-spbe-center">
+            <div class="single-ticket-category font-c-white bg-category-blue">
+              User Story
+            </div>
+            <div
+              class="close-ticket wh-24 d-flex-center"
+              onclick="toggleOverlay()"
             >
-              <path
-                d="M6.68193 8.79678L1.78193 13.6968C1.5986 13.8801 1.36527 13.9718 1.08193 13.9718C0.7986 13.9718 0.565267 13.8801 0.381934 13.6968C0.1986 13.5134 0.106934 13.2801 0.106934 12.9968C0.106934 12.7134 0.1986 12.4801 0.381934 12.2968L5.28193 7.39678L0.381934 2.49678C0.1986 2.31344 0.106934 2.08011 0.106934 1.79678C0.106934 1.51344 0.1986 1.28011 0.381934 1.09678C0.565267 0.913444 0.7986 0.821777 1.08193 0.821777C1.36527 0.821777 1.5986 0.913444 1.78193 1.09678L6.68193 5.99678L11.5819 1.09678C11.7653 0.913444 11.9986 0.821777 12.2819 0.821777C12.5653 0.821777 12.7986 0.913444 12.9819 1.09678C13.1653 1.28011 13.2569 1.51344 13.2569 1.79678C13.2569 2.08011 13.1653 2.31344 12.9819 2.49678L8.08193 7.39678L12.9819 12.2968C13.1653 12.4801 13.2569 12.7134 13.2569 12.9968C13.2569 13.2801 13.1653 13.5134 12.9819 13.6968C12.7986 13.8801 12.5653 13.9718 12.2819 13.9718C11.9986 13.9718 11.7653 13.8801 11.5819 13.6968L6.68193 8.79678Z"
-                fill="#2A3647"
-              />
-            </svg>
-          </div>
-        </div>
-
-        <h1>Kochwelt Page & Recipe Recommender</h1>
-
-        <div class="font-s-20 font-c-black">
-          Build start page with recipe recommendation...
-        </div>
-
-        <div class="single-ticket-meta font-s-20">
-          Due date:
-          <div class="font-c-black">10/05/2023</div>
-        </div>
-
-        <div class="single-ticket-meta font-s-20">
-          Priority:
-          <img src="../assets/img/png/prio-high-text.png" alt="" />
-        </div>
-
-        <div class="single-ticket-list font-s-20">
-          Assigned To:
-
-          <div class="single-ticket-lines font-s-19 font-c-black">
-            <div class="single-ticket-assignee">
-              <span
-                class="assignee font-c-white wh-42 d-flex-center bg-255-122-0"
-                >EM</span
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-              Alex Kaljuzhin
-            </div>
-
-            <div class="single-ticket-assignee">
-              <span
-                class="assignee font-c-white wh-42 d-flex-center bg-31-215-193"
-                >LS</span
-              >
-              Lars Schumacher
-            </div>
-
-            <div class="single-ticket-assignee">
-              <span
-                class="assignee font-c-white wh-42 d-flex-center bg-70-47-138"
-                >SR</span
-              >
-              Susanne Renken
+                <path
+                  d="M6.68193 8.79678L1.78193 13.6968C1.5986 13.8801 1.36527 13.9718 1.08193 13.9718C0.7986 13.9718 0.565267 13.8801 0.381934 13.6968C0.1986 13.5134 0.106934 13.2801 0.106934 12.9968C0.106934 12.7134 0.1986 12.4801 0.381934 12.2968L5.28193 7.39678L0.381934 2.49678C0.1986 2.31344 0.106934 2.08011 0.106934 1.79678C0.106934 1.51344 0.1986 1.28011 0.381934 1.09678C0.565267 0.913444 0.7986 0.821777 1.08193 0.821777C1.36527 0.821777 1.5986 0.913444 1.78193 1.09678L6.68193 5.99678L11.5819 1.09678C11.7653 0.913444 11.9986 0.821777 12.2819 0.821777C12.5653 0.821777 12.7986 0.913444 12.9819 1.09678C13.1653 1.28011 13.2569 1.51344 13.2569 1.79678C13.2569 2.08011 13.1653 2.31344 12.9819 2.49678L8.08193 7.39678L12.9819 12.2968C13.1653 12.4801 13.2569 12.7134 13.2569 12.9968C13.2569 13.2801 13.1653 13.5134 12.9819 13.6968C12.7986 13.8801 12.5653 13.9718 12.2819 13.9718C11.9986 13.9718 11.7653 13.8801 11.5819 13.6968L6.68193 8.79678Z"
+                  fill="#2A3647"
+                />
+              </svg>
             </div>
           </div>
-        </div>
 
-        <div class="single-ticket-list font-s-20">
-          Subtasks:
+          <h1>Kochwelt Page & Recipe Recommender</h1>
 
-          <div class="single-ticket-lines font-s-16 font-c-black">
-            <div class="single-ticket-subtasks">
-              <img
-                class=""
-                src="../assets/img/png/check-button-false.png"
-                alt=""
-              />
-              <img
-                class="d-none"
-                src="../assets/img/png/check-button-true.png"
-                alt=""
-              />
-              Implement Recipe Recommendatio
-            </div>
-
-            <div class="single-ticket-subtasks">
-              <img
-                class="d-none"
-                src="../assets/img/png/check-button-false.png"
-                alt=""
-              />
-              <img
-                class=""
-                src="../assets/img/png/check-button-true.png"
-                alt=""
-              />
-              Start Page Layout
-            </div>
-          </div>
-        </div>
-
-        <div class="single-ticket-edit">
-          <div class="delete">
-            <img
-              class="img-default"
-              src="../assets/img/png/delete-default.png"
-              alt=""
-            />
-            <img
-              class="img-hover"
-              src="../assets/img/png/delete-hover.png"
-              alt=""
-            />
+          <div class="font-s-20 font-c-black">
+            Build start page with recipe recommendation...
           </div>
 
-          <div class="dividing-line"></div>
+          <div class="single-ticket-meta font-s-20">
+            Due date:
+            <div class="font-c-black">10/05/2023</div>
+          </div>
 
-          <div class="edit">
-            <img
-              class="img-default"
-              src="../assets/img/png/edit-default.png"
-              alt=""
-            />
-            <img
-              class="img-hover"
-              src="../assets/img/png/edit-hover.png"
-              alt=""
-            />
+          <div class="single-ticket-meta font-s-20">
+            Priority:
+            <img src="../assets/img/png/prio-high-text.png" alt="" />
+          </div>
+
+          <div class="single-ticket-list font-s-20">
+            Assigned To:
+
+            <div class="single-ticket-lines font-s-19 font-c-black">
+              <div class="single-ticket-assignee">
+                <span
+                  class="assignee font-c-white wh-42 d-flex-center bg-255-122-0"
+                  >EM</span
+                >
+                Alex Kaljuzhin
+              </div>
+
+              <div class="single-ticket-assignee">
+                <span
+                  class="assignee font-c-white wh-42 d-flex-center bg-31-215-193"
+                  >LS</span
+                >
+                Lars Schumacher
+              </div>
+
+              <div class="single-ticket-assignee">
+                <span
+                  class="assignee font-c-white wh-42 d-flex-center bg-70-47-138"
+                  >SR</span
+                >
+                Susanne Renken
+              </div>
+            </div>
+          </div>
+
+          <div class="single-ticket-list font-s-20">
+            Subtasks:
+
+            <div class="single-ticket-lines font-s-16 font-c-black">
+              <div class="single-ticket-subtasks">
+                <img
+                  class=""
+                  src="../assets/img/png/check-button-false.png"
+                  alt=""
+                />
+                <img
+                  class="d-none"
+                  src="../assets/img/png/check-button-true.png"
+                  alt=""
+                />
+                Implement Recipe Recommendatio
+              </div>
+
+              <div class="single-ticket-subtasks">
+                <img
+                  class="d-none"
+                  src="../assets/img/png/check-button-false.png"
+                  alt=""
+                />
+                <img
+                  class=""
+                  src="../assets/img/png/check-button-true.png"
+                  alt=""
+                />
+                Start Page Layout
+              </div>
+            </div>
+          </div>
+
+          <div class="single-ticket-edit">
+            <div class="delete">
+              <img
+                class="img-default"
+                src="../assets/img/png/delete-default.png"
+                alt=""
+              />
+              <img
+                class="img-hover"
+                src="../assets/img/png/delete-hover.png"
+                alt=""
+              />
+            </div>
+
+            <div class="dividing-line"></div>
+
+            <div class="edit">
+              <img
+                class="img-default"
+                src="../assets/img/png/edit-default.png"
+                alt=""
+              />
+              <img
+                class="img-hover"
+                src="../assets/img/png/edit-hover.png"
+                alt=""
+              />
+            </div>
           </div>
         </div>
       </div>
