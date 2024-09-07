@@ -55,9 +55,27 @@ button:active {
   stroke: #091931;
 }
 
+input{
+  cursor: pointer;
+  width: 100%;
+  height: 48px;
+  font-size: 20px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  padding-inline: 12px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+::placeholder {
+  color: #d1d1d1;
+}
+
 input:focus{
   outline-style: none;
   box-shadow: none;
+  border-color: #29abe2;
 }
 
 textarea:focus{

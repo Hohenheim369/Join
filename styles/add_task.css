@@ -5,7 +5,6 @@ body {
 .content-order {
   display: flex;
   margin-top: 48px;
-  cursor: pointer;
 }
 
 .add-task-form-left {
@@ -34,32 +33,14 @@ label {
   font-weight: 400;
   line-height: 24px;
   margin-bottom: 4px;
-  cursor: pointer;
 }
 
-.title-input {
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  cursor: pointer;
-  height: 48px;
-  border: 1px solid #d1d1d1;
-  border-radius: 10px;
-  width: 100%;
-  padding: 12px 21px;
-  background-color: #ffffff;
+.placeholder-black::placeholder {
+  color: #000000;
 }
 
-input:focus {
-  border-color: #29abe2;
-}
-
-input:focus::placeholder {
+.placeholder-black:focus::placeholder {
   color: transparent;
-}
-
-::placeholder {
-  color: #d1d1d1;
 }
 
 .field-alert {
@@ -71,53 +52,23 @@ input:focus::placeholder {
   color: #ff8190;
 }
 
-.description-textarea {
-  width: 100%;
-  height: 120px;
-  border: 1px solid #d1d1d1;
-  border-radius: 10px;
-  padding: 18px 5px 5px 16px;
-  background-color: #ffffff;
-  overflow: hidden;
-  margin-bottom: 16px;
-}
-
-.description-textarea:active {
+textarea:focus {
   border-color: #29abe2;
 }
 
 textarea {
-  height: 100%;
+  height: 120px;
   width: 100%;
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
-  padding: 0;
+  padding: 18px 16px;
   cursor: pointer;
-}
-
-::-webkit-resizer {
-  background-image: url(../assets/img/png-old/resizer_icon.png);
-  background-size: 100%;
-  margin-left: 10px;
-}
-
-.input-select {
-  display: flex;
-  height: 48px;
+  resize: none;
+  margin-bottom: 16px;
   border: 1px solid #d1d1d1;
   border-radius: 10px;
-  width: 100%;
-  padding: 12px 16px;
   background-color: #ffffff;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 24px;
-  cursor: pointer;
-}
-
-.input-select:hover {
-  border: 1px inset #a8a8a8;
 }
 
 .assigned-container {
@@ -133,14 +84,6 @@ textarea {
 
 .hover-circle:hover {
   background-color: #eeeeee;
-}
-
-.input-select:focus {
-  border: 1px solid #29abe2;
-}
-
-.input-select::placeholder {
-  color: #000000;
 }
 
 .contact-icon-order {

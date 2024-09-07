@@ -10,7 +10,7 @@
       type="image/x-icon"
       href="../assets/img/png/favicon2.png"
     />
-    
+
     <script src="../scripts/desktop_template.js"></script>
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/assets.css" />
@@ -30,7 +30,6 @@
             <label>Title<span class="required-sign">*</span></label>
             <div>
               <input
-                class="title-input"
                 id="title_input"
                 required
                 placeholder="Enter a title"
@@ -41,19 +40,17 @@
           </div>
           <div class="form-child-order">
             <label>Description</label>
-            <div class="description-textarea">
               <textarea
                 name="Description"
                 placeholder="Enter a Description"
                 id="description_textarea"
               ></textarea>
-            </div>
           </div>
           <div class="form-child-order">
             <label>Assigned to</label>
             <div class="assigned-container">
               <input
-                class="input-select"
+                class="placeholder-black"
                 type="text"
                 placeholder="Select contacts to assign"
                 id="assignedTo"
@@ -85,7 +82,6 @@
             <label>Due date<span class="required-sign">*</span></label>
             <div>
               <input
-                class="title-input"
                 required
                 type="text"
                 placeholder="dd/mm/yyyy"
@@ -179,7 +175,7 @@
             <label>Category<span class="required-sign">*</span></label>
             <div class="category-container">
               <input
-                class="input-select"
+                class="placeholder-black"
                 type="text"
                 required
                 placeholder="Select task category"
@@ -199,12 +195,7 @@
           <div class="form-child-order">
             <label>Subtasks</label>
             <div class="subtasks-container">
-              <input
-                class="input-select subtasks-placeholder"
-                type="text"
-                placeholder="Add  new subtask"
-                id="subtasks"
-              />
+              <input type="text" placeholder="Add  new subtask" id="subtasks" />
               <div class="hover-circle d-flex-center pos-abs">
                 <img
                   onclick="openSelect()"
@@ -223,38 +214,38 @@
         </form>
       </div>
       <div class="space-top"></div>
-        <div class="bottom-order">
-          <span class="alert-field"
-            ><span class="required-sign">*</span>This field is required</span
-          >
-          <div class="bottom-button-order">
-            <button onclick="clearButton()" class="clear-button">
-              Clear
-              <div class="d-flex-center wh-24">
-                <svg
-                  width="13"
-                  height="14"
-                  viewBox="0 0 13 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6.24959 6.99984L11.4926 12.2428M1.00659 12.2428L6.24959 6.99984L1.00659 12.2428ZM11.4926 1.75684L6.24859 6.99984L11.4926 1.75684ZM6.24859 6.99984L1.00659 1.75684L6.24859 6.99984Z"
-                    stroke="#2A3647"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-            </button>
-            <button class="create-task-button">
-              <span>Create Task</span>
-              <img src="../assets/img/png-old/check.png" alt="" />
-            </button>
-          </div>
+      <div class="bottom-order">
+        <span class="alert-field"
+          ><span class="required-sign">*</span>This field is required</span
+        >
+        <div class="bottom-button-order">
+          <button onclick="clearButton()" class="clear-button">
+            Clear
+            <div class="d-flex-center wh-24">
+              <svg
+                width="13"
+                height="14"
+                viewBox="0 0 13 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.24959 6.99984L11.4926 12.2428M1.00659 12.2428L6.24959 6.99984L1.00659 12.2428ZM11.4926 1.75684L6.24859 6.99984L11.4926 1.75684ZM6.24859 6.99984L1.00659 1.75684L6.24859 6.99984Z"
+                  stroke="#2A3647"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </button>
+          <button class="create-task-button">
+            <span>Create Task</span>
+            <img src="../assets/img/png-old/check.png" alt="" />
+          </button>
         </div>
-        <div class="space-bottom"></div>
+      </div>
+      <div class="space-bottom"></div>
     </div>
     <script src="../scripts/add_task_Buttons.js"></script>
     <script src="../scripts/add_task.js"></script>
