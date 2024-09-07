@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../styles/desktop-template.css" />
     <link rel="stylesheet" href="../styles/board.css" />
     <link rel="stylesheet" href="../styles/media.css" />
-    
+
     <script src="../scripts/desktop_template.js"></script>
     <script src="../scripts/include.js"></script>
     <script src="../scripts/board.js"></script>
@@ -170,7 +170,9 @@
               </div>
               <div class="d-flex-spbe-center">
                 <div class="ticket-subtasks-bar"></div>
-                <span class="ticket-subtasks-text font-c-black">2/3 Subtasks</span>
+                <span class="ticket-subtasks-text font-c-black"
+                  >2/3 Subtasks</span
+                >
               </div>
 
               <div class="d-flex-spbe-center">
@@ -235,14 +237,18 @@
                 Technical Task
               </div>
               <div class="ticket-text">
-                <div class="ticket-title font-w-700">HTML Base Template Creation</div>
+                <div class="ticket-title font-w-700">
+                  HTML Base Template Creation
+                </div>
                 <div class="ticket-description">
                   Create reusable HTML base templates...
                 </div>
               </div>
               <div class="d-flex-spbe-center d-none">
                 <div class="ticket-subtasks-bar"></div>
-                <span class="ticket-subtasks-text font-c-black">2/3 Subtasks</span>
+                <span class="ticket-subtasks-text font-c-black"
+                  >2/3 Subtasks</span
+                >
               </div>
 
               <div class="d-flex-spbe-center">
@@ -276,7 +282,9 @@
               </div>
               <div class="d-flex-spbe-center d-none">
                 <div class="ticket-subtasks-bar"></div>
-                <span class="ticket-subtasks-text font-c-black">2/3 Subtasks</span>
+                <span class="ticket-subtasks-text font-c-black"
+                  >2/3 Subtasks</span
+                >
               </div>
 
               <div class="d-flex-spbe-center">
@@ -306,37 +314,7 @@
         <div class="kanban-column">
           <div class="d-flex-spbe-center font-s-20 font-w-700 font-c-66-82-110">
             Done
-            <button class="kanban-add-button">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="1"
-                  y="1"
-                  width="22"
-                  height="22"
-                  rx="7"
-                  stroke="#2A3647"
-                  stroke-width="2"
-                />
-                <path
-                  d="M12 8V16"
-                  stroke="#2A3647"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-                <path
-                  d="M16 12.0754L8 12.0754"
-                  stroke="#2A3647"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
-            </button>
+            <div></div>
           </div>
           <div class="kanban-tickets">
             <div class="ticket-none d-flex-center">No tasks To do</div>
@@ -346,7 +324,7 @@
     </section>
 
     <section
-      class="overlay d-flex-center d-none"
+      class="overlay d-flex-center"
       id="board-ticket-overlay"
       onclick="toggleOverlay()"
     >
@@ -355,7 +333,10 @@
           <div class="single-ticket-category font-c-white bg-category-blue">
             User Story
           </div>
-          <div class="close-ticket wh-24 d-flex-center">
+          <div
+            class="close-ticket wh-24 d-flex-center"
+            onclick="toggleOverlay()"
+          >
             <svg
               width="14"
               height="14"
@@ -371,26 +352,26 @@
           </div>
         </div>
 
-        <div class="single-ticket-title font-w-700 font-c-black">
-          Kochwelt Page & Recipe Recommender
+        <h1>Kochwelt Page & Recipe Recommender</h1>
+
+        <div class="font-s-20 font-c-black">
+          Build start page with recipe recommendation...
         </div>
 
-        <div class="font-c-black">Build start page with recipe recommendation...</div>
-
-        <div class="single-ticket-date">
+        <div class="single-ticket-meta font-s-20">
           Due date:
           <div class="font-c-black">10/05/2023</div>
         </div>
 
-        <div class="single-ticket-priority">
+        <div class="single-ticket-meta font-s-20">
           Priority:
           <img src="../assets/img/png/prio-high-text.png" alt="" />
         </div>
 
-        <div class="single-ticket-list">
+        <div class="single-ticket-list font-s-20">
           Assigned To:
 
-          <div class="single-ticket-lines font-c-black">
+          <div class="single-ticket-lines font-s-19 font-c-black">
             <div class="single-ticket-assignee">
               <span
                 class="assignee font-c-white wh-42 d-flex-center bg-255-122-0"
@@ -417,19 +398,67 @@
           </div>
         </div>
 
-        <div class="single-ticket-list">
+        <div class="single-ticket-list font-s-20">
           Subtasks:
 
-          <div class="single-ticket-lines font-c-black">
-            <div class="single-ticket-assignee">
-              <img src="../assets/img/png/check-button-false.png" alt="" />
+          <div class="single-ticket-lines font-s-16 font-c-black">
+            <div class="single-ticket-subtasks">
+              <img
+                class=""
+                src="../assets/img/png/check-button-false.png"
+                alt=""
+              />
+              <img
+                class="d-none"
+                src="../assets/img/png/check-button-true.png"
+                alt=""
+              />
               Implement Recipe Recommendatio
             </div>
 
-            <div class="single-ticket-assignee">
-              <img src="../assets/img/png/check-button-true.png" alt="" />
+            <div class="single-ticket-subtasks">
+              <img
+                class="d-none"
+                src="../assets/img/png/check-button-false.png"
+                alt=""
+              />
+              <img
+                class=""
+                src="../assets/img/png/check-button-true.png"
+                alt=""
+              />
               Start Page Layout
             </div>
+          </div>
+        </div>
+
+        <div class="single-ticket-edit">
+          <div class="delete">
+            <img
+              class="img-default"
+              src="../assets/img/png/delete-default.png"
+              alt=""
+            />
+            <img
+              class="img-hover"
+              src="../assets/img/png/delete-hover.png"
+              alt=""
+            />
+          </div>
+
+          <div class="dividing-line"></div>
+
+          <div class="edit">
+            <img
+              class="img-default"
+              src="../assets/img/png/edit-default.png"
+              alt=""
+            />
+            <img
+              class="img-hover"
+              src="../assets/img/png/edit-hover.png"
+              alt=""
+            />
           </div>
         </div>
       </div>

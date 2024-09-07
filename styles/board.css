@@ -1,5 +1,5 @@
 .board {
-  padding: 80px 64px 0;
+  padding: 80px 64px;
   gap: 55px;
 }
 
@@ -40,6 +40,7 @@
   height: 32px;
   width: 48px;
   padding: 0;
+  border: none;
   border-left: 1px solid rgb(209, 209, 209);
   border-radius: 0;
   background: transparent;
@@ -50,6 +51,10 @@
 
 .input-container button svg {
   border-radius: 50%;
+}
+
+.input-container button:hover {
+  box-shadow: none;
 }
 
 .input-container button:hover svg {
@@ -84,10 +89,13 @@
 .kanban-add-button {
   padding: 0;
   background-color: transparent;
+  border: none;
 }
 
 .kanban-add-button:hover {
   background-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .kanban-add-button:hover svg rect,
@@ -97,6 +105,7 @@
 
 .kanban-add-button:active {
   background-color: transparent;
+  border: none;
 }
 
 .kanban-add-button:active svg rect,
@@ -197,7 +206,6 @@
   width: 525px;
   background-color: white;
   padding: 48px 40px;
-  font-size: 20px;
   border-radius: 30px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
   display: flex;
@@ -220,17 +228,7 @@
   background-color: rgb(238, 238, 238);
 }
 
-.single-ticket-title {
-  font-size: 61px;
-}
-
-.single-ticket-date {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
-.single-ticket-priority {
+.single-ticket-meta {
   display: flex;
   align-items: center;
   gap: 25px;
@@ -257,6 +255,63 @@
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.single-ticket-subtasks {
+  width: fit-content;
+  padding: 6px 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.single-ticket-subtasks img {
+  border-radius: 50%;
+}
+
+.single-ticket-subtasks:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.single-ticket-subtasks:hover img {
+  background-color: rgb(209, 209, 209);
+}
+
+.single-ticket-edit {
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+}
+
+.dividing-line {
+  height: 24px;
+  width: 1px;
+  background-color: rgb(209, 209, 209);
+}
+
+.img-default {
+  display: block;
+}
+
+.img-hover {
+  display: none;
+}
+
+.edit:hover .img-default {
+  display: none;
+}
+
+.edit:hover .img-hover {
+  display: flex;
+}
+
+.delete:hover .img-default {
+  display: none;
+}
+
+.delete:hover .img-hover {
+  display: flex;
 }
 
 .d-none {
