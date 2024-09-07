@@ -87,7 +87,7 @@ async function openDialog() {
 async function closeDialog() {
   const dialogContainer = document.getElementById("dialog_contacts");
   dialogContainer.classList.remove("dialog-open");
-  document.getElementById("grey-background").classList.add("hidden");
+  document.getElementById("grey_background").classList.add("hidden");
   await sleep(300);
   dialogContainer.classList.remove("d-flex");
   dialogContainer.open = false;
@@ -147,7 +147,42 @@ async function openDialogSuccesfully() {
 }
 
 // Funktion zum Hinzufügen eines Kontakts
-function addContact() {
+// function addContact() {
+//   let name = document.getElementById("name").value;
+//   let email = document.getElementById("email").value;
+//   let phone = document.getElementById("phone").value;
+
+//   if (name && email && phone) {
+//     let newId = Date.now(); // Zeitstempel als eindeutige ID
+
+//     let newContact = {
+//       id: newId,
+//       name: name,
+//       email: email,
+//       phone: phone,
+//       color: getRandomColor(), // Zufällige Farbe zuweisen
+//       initials: name
+//         .split(" ")
+//         .map((part) => part.charAt(0).toUpperCase())
+//         .join(""), // Initialen berechnen
+//     };
+
+//     contacts.push(newContact);
+//     saveData(); // Kontakte speichern
+//     storeFirstAndLastNames();
+
+//     // Formular zurücksetzen
+//     document.getElementById("name").value = "";
+//     document.getElementById("email").value = "";
+//     document.getElementById("phone").value = "";
+//     renderContacts();
+//     // Kontaktliste neu rendern
+//   } else {
+//     alert("Bitte füllen Sie alle Felder aus.");
+//   }
+// }
+
+async function addContact() {
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
@@ -167,16 +202,38 @@ function addContact() {
         .join(""), // Initialen berechnen
     };
 
+    // Kontakt zur Firebase-Datenbank hinzufügen
+    try {
+      const response = await fetch(
+        'https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts.json',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newContact),
+        }
+      );
+
+      if (response.ok) {
+        console.log('Neuer Kontakt erfolgreich gespeichert.');
+      } else {
+        console.error('Fehler beim Speichern des Kontakts:', response.status);
+      }
+    } catch (error) {
+      console.error('Fehler beim Speichern in Firebase:', error);
+    }
+
+    // Kontakt lokal in einem Array speichern (optional, falls du das Array auch lokal brauchst)
     contacts.push(newContact);
-    saveData(); // Kontakte speichern
-    storeFirstAndLastNames();
+    saveData(); // Falls du das auch lokal speichern möchtest
+    storeFirstAndLastNames(); // Eventuell zusätzliche Verarbeitung
 
     // Formular zurücksetzen
     document.getElementById("name").value = "";
     document.getElementById("email").value = "";
     document.getElementById("phone").value = "";
-    renderContacts();
-    // Kontaktliste neu rendern
+    renderContacts(); // Kontaktliste neu rendern
   } else {
     alert("Bitte füllen Sie alle Felder aus.");
   }
@@ -446,3 +503,24 @@ function truncate(text, maxLength = 20) {
   }
   return text;
 }
+
+
+// async function deleteAllContacts() {
+//   const firebaseUrl = 'https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts.json'; // URL zu deinem Firebase-Pfad
+
+//   try {
+//     const response = await fetch(firebaseUrl, {
+//       method: 'DELETE', // HTTP DELETE-Methodenanforderung
+//     });
+
+//     if (response.ok) {
+//       console.log("Alle Kontakte wurden erfolgreich gelöscht.");
+//     } else {
+//       console.error("Fehler beim Löschen der Kontakte:", response.status);
+//     }
+//   } catch (error) {
+//     console.error("Fehler:", error);
+//   }
+// }
+
+// deleteAllContacts();

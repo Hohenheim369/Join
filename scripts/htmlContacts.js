@@ -21,8 +21,6 @@ function generateContact(contact, initials, index) {
   function generateContactInfo(contact, initials, index) {
     return `
     <div class="contacts-info">
-               
-              
         <div class="contacts-info-name">
           <div class="big-letter-circle" style="background-color: ${contact.color};">${initials}</div>
           <div class="contact-box-name">
