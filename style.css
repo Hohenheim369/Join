@@ -34,6 +34,17 @@ h1 {
   color: #000000;
 }
 
+a {
+  text-decoration: none;
+  color: rgb(168, 168, 168);
+}
+
+a:hover {
+  cursor: pointer;
+  font-weight: 700;  
+  color: rgb(41, 171, 226);
+}
+
 .wh-24 {
   width: 24px;
   height: 24px;
