@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Board</title>
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="../assets/img/png/favicon2.png"
-    />
+      <link
+        rel="icon"
+        type="image/x-icon"
+        href="../assets/img/png/favicon2.png"
+      />
     <script src="../scripts/desktop_template.js"></script>
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/fonts.css" />
@@ -78,7 +78,7 @@
       </div>
 
       <div class="kanban-board">
-        <div class="kanban-column">
+        <div class="d-flex-column gap-12">
           <div class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110">
             To do
             <button class="kanban-add-button">
@@ -113,12 +113,12 @@
               </svg>
             </button>
           </div>
-          <div class="kanban-tickets">
+          <div class="kanban-tickets d-flex-column">
             <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
 
-        <div class="kanban-column">
+        <div class="d-flex-column gap-12">
           <div class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110">
             In progress
             <button class="kanban-add-button">
@@ -153,12 +153,12 @@
               </svg>
             </button>
           </div>
-          <div class="kanban-tickets">
-            <div class="ticket-card" onclick="toggleOverlay()">
+          <div class="kanban-tickets d-flex-column">
+            <div class="ticket-card d-flex-column gap-24" onclick="toggleOverlay()">
               <div class="ticket-category font-c-white bg-category-blue">
                 User Story
               </div>
-              <div class="ticket-text">
+              <div class="d-flex-column gap-8">
                 <div class="ticket-title font-w-700">
                   Kochwelt Page & Recipe Recommender
                 </div>
@@ -194,7 +194,7 @@
           </div>
         </div>
 
-        <div class="kanban-column">
+        <div class="d-flex-column gap-12">
           <div class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110">
             Await feedback
             <button class="kanban-add-button">
@@ -229,12 +229,12 @@
               </svg>
             </button>
           </div>
-          <div class="kanban-tickets">
-            <div class="ticket-card">
+          <div class="kanban-tickets d-flex-column">
+            <div class="ticket-card d-flex-column gap-24">
               <div class="ticket-category font-c-white bg-category-turquoise">
                 Technical Task
               </div>
-              <div class="ticket-text">
+              <div class="d-flex-column gap-8">
                 <div class="ticket-title font-w-700">
                   HTML Base Template Creation
                 </div>
@@ -268,11 +268,11 @@
               </div>
             </div>
 
-            <div class="ticket-card">
+            <div class="ticket-card d-flex-column gap-24">
               <div class="ticket-category font-c-white bg-category-blue">
                 User Story
               </div>
-              <div class="ticket-text">
+              <div class="d-flex-column gap-8">
                 <div class="ticket-title font-w-700">Daily Kochwelt Recipe</div>
                 <div class="ticket-description">
                   Implement daily recipe and portion calculator...
@@ -309,12 +309,12 @@
           </div>
         </div>
 
-        <div class="kanban-column">
+        <div class="d-flex-column gap-12">
           <div class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110">
             Done
             <div></div>
           </div>
-          <div class="kanban-tickets">
+          <div class="kanban-tickets d-flex-column">
             <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
@@ -327,13 +327,13 @@
       onclick="toggleOverlay()"
     >
       <div class="single-ticket" onclick="bubblingPrevention(event)">
-        <div class="overflow">
+        <div class="overflow d-flex-column gap-24">
           <div class="d-flex-spbe-center">
             <div class="single-ticket-category font-c-white bg-category-blue">
               User Story
             </div>
             <div
-              class="close-ticket wh-24 d-flex-center"
+              class="litte-button wh-24 d-flex-center"
               onclick="toggleOverlay()"
             >
               <svg
@@ -367,10 +367,10 @@
             <img src="../assets/img/png/prio-high-text.png" alt="" />
           </div>
 
-          <div class="single-ticket-list font-s-20">
+          <div class="single-ticket-list d-flex-column gap-8 font-s-20">
             Assigned To:
 
-            <div class="single-ticket-lines font-s-19 font-c-black">
+            <div class="single-ticket-lines d-flex-column gap-4 font-s-19 font-c-black">
               <div class="single-ticket-assignee">
                 <span
                   class="assignee font-c-white wh-42 d-flex-center bg-255-122-0"
@@ -397,10 +397,10 @@
             </div>
           </div>
 
-          <div class="single-ticket-list font-s-20">
+          <div class="single-ticket-list d-flex-column gap-8 font-s-20">
             Subtasks:
 
-            <div class="single-ticket-lines font-s-16 font-c-black">
+            <div class="single-ticket-lines d-flex-column gap-4 font-s-16 font-c-black">
               <div class="single-ticket-subtasks">
                 <img
                   class=""

@@ -52,6 +52,14 @@ button:active {
   stroke: #091931;
 }
 
+.litte-button {
+  border-radius: 50%;
+}
+
+.litte-button:hover {
+  background-color: rgb(238, 238, 238);
+}
+
 input{
   cursor: pointer;
   width: 100%;
