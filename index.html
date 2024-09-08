@@ -15,9 +15,10 @@
     <link rel="stylesheet" href="/styles/assets.css" />
     <link rel="stylesheet" href="/styles/access.css" />
 
+    <script src="/script.js"></script>
     <script src="/scripts/access.js"></script>
   </head>
-  <body>
+  <body onload="initAccess()">
     <img class="img-logo" src="/assets/img/png/favicon2.png" alt="" />
 
     <div id="change_access" class="change-access d-flex-spbe-center">
@@ -26,12 +27,11 @@
     </div>
 
     <div class="legal d-flex-spbe-center">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Legal notice</a>
+      <a onclick="openLegal('/html/privacy-policy.html')">Privacy Policy</a>
+      <a onclick="openLegal('/html/legal_notice.html')">Legal notice</a>
     </div>
 
     <form id="Login" class="access-window w-652 d-flex-column-center gap-32">
-
       <div class="d-flex-column-center gap-16">
         <h1>Log in</h1>
         <div class="blue-line"></div>
@@ -39,32 +39,58 @@
 
       <div class="w-100 d-flex-column-center gap-20">
         <div class="w-100 d-flex-column-center gap-32">
-          <div class="w-100 d-flex-center pos-rel">
+          <div class="w-100 d-flex-column pos-rel">
             <input type="e-mail" placeholder="Email" required />
-            <img class="pos-abs right-21 cursor-p" src="/assets/img/png/mail.png" />
+            <img
+              class="pos-abs top12-right21 cursor-p"
+              src="/assets/img/png/mail.png"
+            />
           </div>
 
-          <div class="w-100 d-flex-center pos-rel">
-            <input id="login_password_field" type="password" placeholder="Password" required />
+          <div class="w-100 d-flex-column gap-8 pos-rel">
+            <input
+              id="login_password_field"
+              type="password"
+              placeholder="Password"
+              required
+            />
             <img
               id="login_lock_icon"
-              class="pos-abs right-21 cursor-p"
+              class="pos-abs top12-right21 cursor-p"
               src="/assets/img/png/lock.png"
               alt="Lock icon"
             />
             <img
               id="login_toggle_password"
-              class="pos-abs right-21 d-none cursor-p"
+              class="pos-abs top12-right21 d-none cursor-p"
               src="/assets/img/png/visibility_off.png"
               alt="Toggle password visibility"
             />
+            <div class="font-s-12 font-c-255-129-144">Check your email and password. Please try again.</div>
           </div>
+          
         </div>
 
         <div class="remember w-100 gap-8">
-            <img id="check_off" class="litte-button" src="/assets/img/png/check-button-false.png" alt="">
-            Remember me
+          <img
+            onclick="toggleCheckButton(`check_off`)"
+            id="check_off"
+            class="litte-button"
+            src="/assets/img/png/check-button-false.png"
+            alt=""
+          />
+          Remember me
         </div>
+      </div>
+      <div class="login-buttons d-flex-spbe-center">
+        <button type="submit">Log in</button>
+        <button
+          type="button"
+          onclick="loginAsGuest()"
+          class="clear-button guest-button"
+        >
+          Guest Log in
+        </button>
       </div>
     </form>
 
@@ -82,7 +108,6 @@
         <h1>Sign up</h1>
         <div class="blue-line"></div>
       </div>
-
     </form>
   </body>
 </html>

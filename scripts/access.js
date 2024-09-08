@@ -1,3 +1,7 @@
+function initAccess(){
+  LoginPasswordField();
+}
+
 function toggleAccessWindow() {
   let logIn = document.getElementById("Login");
   let signUp = document.getElementById("Signup");
@@ -8,7 +12,7 @@ function toggleAccessWindow() {
   changeAccess.classList.toggle("d-none");
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+function LoginPasswordField() {
   const passwordField = document.getElementById("login_password_field");
   const lockIcon = document.getElementById("login_lock_icon");
   const togglePassword = document.getElementById("login_toggle_password");
@@ -16,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
 
   updateVisibility(passwordField, lockIcon, togglePassword);
-});
+};
 
 function setupPasswordFieldInteractions(passwordField,lockIcon,togglePassword) {
   passwordField.addEventListener("input", () =>
@@ -55,6 +59,6 @@ function hidePassword(passwordField, togglePassword) {
   togglePassword.src = "/assets/img/png/visibility_off.png";
 }
 
-function checkOff (){
-  const checkButton = document.getElementById("check_off");
+function loginAsGuest() {
+  window.location.href = '/html/summary.html';
 }
