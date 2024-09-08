@@ -74,7 +74,7 @@ function generateContact(contact, initials, index) {
     Save
     <img
       class="check-icon-button"
-      src="./assets/img/png/check.png"
+      src="../assets/img/png/check.png"
       alt="check"
     />
   </button>

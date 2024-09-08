@@ -20,25 +20,23 @@
     <title>contacts</title>
   </head>
   <body>
-    <div class="d-flex">
-      <div id="desktop_template"></div>
-      <div class="content">
-        <div class="d-flex">
-          <div class="contact-box">
-            <button onclick="openDialog()" class="add-contact">
-              Add new contact
-              <img src="../assets/img/png/person_add.png" alt="" />
-            </button>
-            <div id="contact_list"></div>
+    <div id="desktop_template"></div>
+    <div class="content">
+      <div class="d-flex">
+        <div class="contact-box">
+          <button onclick="openDialog()" class="add-contact">
+            Add new contact
+            <img src="../assets/img/png/person_add.png" alt="" />
+          </button>
+          <div id="contact_list"></div>
+        </div>
+        <div>
+          <div class="text-box">
+            <h1>Contacts</h1>
+            <div class="text-seperator"></div>
+            <span class="info-text">Better with a Team</span>
           </div>
-          <div>
-            <div class="text-box">
-              <h1>Contacts</h1>
-              <div class="text-seperator"></div>
-              <span class="info-text">Better with a Team</span>
-            </div>
-            <div class="contacts-info-box"></div>
-          </div>
+          <div class="contacts-info-box"></div>
         </div>
       </div>
     </div>
@@ -102,7 +100,8 @@
                     stroke="#2A3647"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"ƒ
+                    stroke-linejoin="round"
+                    ƒ
                   />
                 </svg>
               </button>
@@ -124,7 +123,7 @@
       <div class="dialog-left">
         <img
           class="logo-dialog"
-          src="./assets/img/png/Join logo vector.png"
+          src="../assets/img/png/Join logo vector.png"
           alt=""
         />
         <h2>Edit contact</h2>
@@ -136,7 +135,7 @@
           <img
             onclick="closeDialogEdit()"
             class="close-cross"
-            src="./assets/img/png/close.png"
+            src="../assets/img/png/close.png"
             alt=""
           />
           <div class="input-fields-contacts">
