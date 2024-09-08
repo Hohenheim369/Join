@@ -98,10 +98,10 @@ async function openDialogEdit(index) {
   let nameParts = contact.name.split(" ");
   let initials = nameParts.map((part) => part.charAt(0).toUpperCase()).join("");
   currentContactIndex = index;
-
   const dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
+  document.getElementById("grey_background").classList.remove("hidden");
   document.getElementById("inputEditName").value = contact.name;
   document.getElementById("inputEditEmail").value = contact.email;
   document.getElementById("inputEditPhone").value = contact.phone;
@@ -110,7 +110,7 @@ async function openDialogEdit(index) {
   document.getElementById("inputEditPhone").dataset.index = index;
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
-  document.getElementById("grey-background").classList.remove("hidden");
+  
   document.getElementById("big_letter_circle").innerHTML =
     generateBigLetterCircle(contact, initials);
 }
@@ -118,7 +118,7 @@ async function openDialogEdit(index) {
 async function closeDialogEdit() {
   const dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.classList.remove("dialog-open");
-  document.getElementById("grey-background").classList.add("hidden");
+  document.getElementById("grey_background").classList.add("hidden");
   await sleep(300);
   dialogContainer.classList.remove("d-flex");
   dialogContainer.open = false;

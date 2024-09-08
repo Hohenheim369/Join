@@ -54,9 +54,9 @@
 }
 
 .dialog-right {
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   background-color: white;
-  width: 745px;
+  /* width: 745px; */
   display: flex;
   border-radius: 30px;
   align-items: center;
@@ -95,17 +95,34 @@ h2 {
   height: 120px;
 }
 
-.close-cross {
-  position: absolute;
+.cross {
+  /* position: absolute;
   top: 45px;
-  right: 45px;
+  right: 45px; */
   width: 13.15px;
   height: 13.15px;
 }
 
-.close-cross:hover {
-  cursor: pointer;
+.close-cross {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 45px;
+  right: 45px;
+  justify-content: center;
+  align-items: center;
 }
+
+.close-cross:hover{
+  cursor: pointer;
+  background-color: #EEEEEE;
+  border-radius: 15px;
+}
+
+/* .cross:hover {
+  background-color: grey;
+} */
 
 .dialog-content-right {
   display: flex;
@@ -113,7 +130,6 @@ h2 {
 }
 
 .input-fields-contacts {
-  height: 215px;
   width: 422px;
   display: flex;
   flex-direction: column;
@@ -122,22 +138,22 @@ h2 {
 }
 
 .input-name {
-  background-size: 24px;
-  background-position: 387px 12px;
+  background-size: 16px;
+  background-position: 380px 17px;
   background-repeat: no-repeat;
   background-image: url(../assets/img/png/person.png);
 }
 
 .input-email {
-  background-size: 24px;
-  background-position: 387px 12px;
+  background-size: 20px 20px;
+  background-position: 378px 16px;
   background-repeat: no-repeat;
   background-image: url(../assets/img/png/mail.png);
 }
 
 .input-phone {
-  background-size: 24px;
-  background-position: 387px 12px;
+  background-size: 18px;
+  background-position: 378px 16px;
   background-repeat: no-repeat;
   background-image: url(../assets/img/png/call.png);
 }
@@ -155,15 +171,15 @@ input {
 }
 
 input:focus {
-  border: 2px solid #29abe2;
+  border: 1px solid #29abe2;
 }
 
 .button-contacts {
   display: flex;
   width: 364px;
-  height: 57px;
   gap: 10px;
   justify-content: space-between;
+  padding-top: 48px;
 }
 
 button {
