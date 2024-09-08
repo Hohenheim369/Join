@@ -54,12 +54,9 @@
 }
 
 .dialog-right {
-  /* justify-content: space-evenly; */
   background-color: white;
-  /* width: 745px; */
   display: flex;
   border-radius: 30px;
-  align-items: center;
 }
 
 .logo-dialog {
@@ -91,14 +88,13 @@ h2 {
 }
 
 .unknown-user {
+  margin-top: 204px;
+  margin-left: 83px;
   width: 120px;
   height: 120px;
 }
 
 .cross {
-  /* position: absolute;
-  top: 45px;
-  right: 45px; */
   width: 13.15px;
   height: 13.15px;
 }
@@ -125,8 +121,9 @@ h2 {
 } */
 
 .dialog-content-right {
-  display: flex;
-  flex-direction: column;
+  margin-left: 72px;
+    display: flex;
+    flex-direction: column;
 }
 
 .input-fields-contacts {
@@ -135,6 +132,7 @@ h2 {
   flex-direction: column;
   gap: 32px;
   justify-content: space-between;
+  margin-top: 137px;
 }
 
 .input-name {
@@ -303,17 +301,18 @@ button {
   left: 60%;
 }
 
-.big-letter-circle {
+.edit-big-letter-circle {
   display: flex;
   width: 120px;
   height: 120px;
-  background-color: blueviolet;
   border-radius: 70px;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 47px;
   font-weight: 500;
+  margin-left: 83px;
+  margin-top: 204px;
 }
 
 .backgroundColor {

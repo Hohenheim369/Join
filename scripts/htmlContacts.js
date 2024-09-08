@@ -60,7 +60,7 @@ function generateContact(contact, initials, index) {
   
   function generateBigLetterCircle(contact, initials) {
     return `
-      <div class="big-letter-circle" style="background-color: ${contact.color}";>${initials}
+      <div class="edit-big-letter-circle" style="background-color: ${contact.color}";>${initials}
       </div>
       `;
   }

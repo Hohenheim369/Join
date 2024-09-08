@@ -162,11 +162,9 @@ h1 {
 
 .big-letter-circle {
   color: white;
-  background-color: #ff7a00;
   font-size: 47px;
   font-weight: 500;
   display: flex;
-  border: 3px solid;
   border-radius: 90px;
   width: 120px;
   height: 120px;
