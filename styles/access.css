@@ -56,6 +56,16 @@ body {
   background-color: rgb(41, 171, 226);
 }
 
+.right-21{
+  right: 21px;
+}
+
+.remember{
+  padding-left: 39px;
+  display: flex;
+  align-items: center;
+}
+
 .d-none {
   display: none;
 }

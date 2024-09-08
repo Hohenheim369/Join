@@ -20,7 +20,7 @@
   <body>
     <img class="img-logo" src="/assets/img/png/favicon2.png" alt="" />
 
-    <div  id="change_access" class="change-access d-flex-spbe-center">
+    <div id="change_access" class="change-access d-flex-spbe-center">
       <div class="font-s-20 font-c-black">Not a Join user?</div>
       <button class="font-s-16" onclick="toggleAccessWindow()">Sign up</button>
     </div>
@@ -30,20 +30,59 @@
       <a href="#">Legal notice</a>
     </div>
 
-    <div id="Log_in" class="access-window w-652 d-flex-column-center gap-32">
+    <form id="Login" class="access-window w-652 d-flex-column-center gap-32">
+
       <div class="d-flex-column-center gap-16">
         <h1>Log in</h1>
         <div class="blue-line"></div>
       </div>
-    </div>
 
-    <div  id="Sign_up" class="access-window w-598 d-flex-column-center gap-32 d-none">
-        <img class="litte-button wh-32 d-flex-center arrow" onclick="toggleAccessWindow()" src="/assets/img/png/arrow-left-line.png" alt="">
+      <div class="w-100 d-flex-column-center gap-20">
+        <div class="w-100 d-flex-column-center gap-32">
+          <div class="w-100 d-flex-center pos-rel">
+            <input type="e-mail" placeholder="Email" required />
+            <img class="pos-abs right-21 cursor-p" src="/assets/img/png/mail.png" />
+          </div>
+
+          <div class="w-100 d-flex-center pos-rel">
+            <input id="login_password_field" type="password" placeholder="Password" required />
+            <img
+              id="login_lock_icon"
+              class="pos-abs right-21 cursor-p"
+              src="/assets/img/png/lock.png"
+              alt="Lock icon"
+            />
+            <img
+              id="login_toggle_password"
+              class="pos-abs right-21 d-none cursor-p"
+              src="/assets/img/png/visibility_off.png"
+              alt="Toggle password visibility"
+            />
+          </div>
+        </div>
+
+        <div class="remember w-100 gap-8">
+            <img id="check_off" class="litte-button" src="/assets/img/png/check-button-false.png" alt="">
+            Remember me
+        </div>
+      </div>
+    </form>
+
+    <form
+      id="Signup"
+      class="access-window w-598 d-flex-column-center gap-32 d-none"
+    >
+      <img
+        class="litte-button wh-32 d-flex-center arrow"
+        onclick="toggleAccessWindow()"
+        src="/assets/img/png/arrow-left-line.png"
+        alt=""
+      />
       <div class="d-flex-column-center gap-16">
         <h1>Sign up</h1>
         <div class="blue-line"></div>
       </div>
-    </div>
 
+    </form>
   </body>
 </html>

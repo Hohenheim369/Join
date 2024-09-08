@@ -1,3 +1,7 @@
+.cursor-p{
+  cursor: pointer;
+}
+
 button {
   cursor: pointer;
   height: 100%;
@@ -53,6 +57,7 @@ button:active {
 }
 
 .litte-button {
+  cursor: pointer;
   border-radius: 50%;
 }
 
@@ -91,6 +96,10 @@ textarea:focus{
 select:focus{
   outline-style: none;
   box-shadow: none;
+}
+
+form{
+  width: 100%;
 }
 
 ::-webkit-scrollbar {
