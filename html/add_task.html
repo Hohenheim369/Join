@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../styles/add-task-buttons.css" />
     <link rel="stylesheet" href="../styles/media.css" />
   </head>
-  <body onload="testload()">
+  <body>
     <div id="desktop_template"></div>
     <div class="content">
       <h1>Add Task</h1>
@@ -53,7 +53,7 @@
                 class="placeholder-black"
                 type="text"
                 placeholder="Select contacts to assign"
-                id="assignedTo"
+                id="assigned_to"
               />
               <div class="hover-circle d-flex-center pos-abs">
                 <img
@@ -83,6 +83,7 @@
             <div>
               <input
                 required
+                id="due_date"
                 type="text"
                 placeholder="dd/mm/yyyy"
                 onfocus="(this.type='date')"
@@ -179,7 +180,7 @@
                 type="text"
                 required
                 placeholder="Select task category"
-                id="category"
+                id="category_input"
                 disabled
               />
               <div class="hover-circle d-flex-center pos-abs">
@@ -195,7 +196,7 @@
           <div class="form-child-order">
             <label>Subtasks</label>
             <div class="subtasks-container">
-              <input type="text" placeholder="Add  new subtask" id="subtasks" />
+              <input type="text" placeholder="Add  new subtask" id="subtasks_input" />
               <div class="hover-circle d-flex-center pos-abs">
                 <img
                   onclick="openSelect()"
@@ -239,7 +240,7 @@
               </svg>
             </div>
           </button>
-          <button class="create-task-button">
+          <button onclick="createTask()" class="create-task-button">
             <span>Create Task</span>
             <img src="../assets/img/png-old/check.png" alt="" />
           </button>
