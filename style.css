@@ -41,8 +41,12 @@ a {
 
 a:hover {
   cursor: pointer;
-  font-weight: 700;  
+  font-weight: 700;
   color: rgb(41, 171, 226);
+}
+
+.w-100 {
+  width: 100%;
 }
 
 .wh-24 {
@@ -60,23 +64,27 @@ a:hover {
   height: 42px;
 }
 
-.font-s-16{
+.font-s-12 {
+  font-size: 12px;
+}
+
+.font-s-16 {
   font-size: 16px;
 }
 
-.font-s-19{
+.font-s-19 {
   font-size: 19px;
 }
 
-.font-s-20{
+.font-s-20 {
   font-size: 20px;
 }
 
-.font-w-700{
+.font-w-700 {
   font-weight: 700;
 }
 
-.font-c-66-82-110{
+.font-c-66-82-110 {
   color: rgb(66, 82, 110);
 }
 
@@ -88,8 +96,16 @@ a:hover {
   color: black;
 }
 
-.pos-rel{
+.font-c-255-129-144 {
+  color: rgb(255, 129, 144);
+}
+
+.pos-rel {
   position: relative;
+}
+
+.pos-abs {
+  position: absolute;
 }
 
 .d-flex-center {
@@ -104,12 +120,12 @@ a:hover {
   align-items: center;
 }
 
-.d-flex-column{
+.d-flex-column {
   display: flex;
   flex-direction: column;
 }
 
-.d-flex-column-center{
+.d-flex-column-center {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -129,6 +145,10 @@ a:hover {
 
 .gap-16 {
   gap: 16px;
+}
+
+.gap-20 {
+  gap: 20px;
 }
 
 .gap-24 {

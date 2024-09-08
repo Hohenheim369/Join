@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="../styles/desktop-template.css" />
     <link rel="stylesheet" href="../styles/board.css" />
     <link rel="stylesheet" href="../styles/media.css" />
+
+    <script src="/script.js"></script>
     <script src="../scripts/desktop_template.js"></script>
     <script src="../scripts/include.js"></script>
     <script src="../scripts/board.js"></script>
@@ -367,7 +369,7 @@
             <img src="../assets/img/png/prio-high-text.png" alt="" />
           </div>
 
-          <div class="single-ticket-list d-flex-column gap-8 font-s-20">
+          <div class="w-100 d-flex-column gap-8 font-s-20">
             Assigned To:
 
             <div class="single-ticket-lines d-flex-column gap-4 font-s-19 font-c-black">
@@ -397,42 +399,24 @@
             </div>
           </div>
 
-          <div class="single-ticket-list d-flex-column gap-8 font-s-20">
+          <div class="w-100 d-flex-column gap-8 font-s-20">
             Subtasks:
 
             <div class="single-ticket-lines d-flex-column gap-4 font-s-16 font-c-black">
               <div class="single-ticket-subtasks">
-                <img
-                  class=""
-                  src="../assets/img/png/check-button-false.png"
-                  alt=""
-                />
-                <img
-                  class="d-none"
-                  src="../assets/img/png/check-button-true.png"
-                  alt=""
-                />
+                <img onclick="toggleCheckButton(`todo_1_subtask_1`)" id="todo_1_subtask_1" class="litte-button" src="/assets/img/png/check-button-false.png" alt="">
                 Implement Recipe Recommendatio
               </div>
 
               <div class="single-ticket-subtasks">
-                <img
-                  class="d-none"
-                  src="../assets/img/png/check-button-false.png"
-                  alt=""
-                />
-                <img
-                  class=""
-                  src="../assets/img/png/check-button-true.png"
-                  alt=""
-                />
+                <img onclick="toggleCheckButton(`todo_1_subtask_2`)" id="todo_1_subtask_2" class="litte-button" src="/assets/img/png/check-button-false.png" alt="">
                 Start Page Layout
               </div>
             </div>
           </div>
 
           <div class="single-ticket-edit">
-            <div class="delete">
+            <div class="delete cursor-p">
               <img
                 class="img-default"
                 src="../assets/img/png/delete-default.png"
@@ -447,7 +431,7 @@
 
             <div class="dividing-line"></div>
 
-            <div class="edit">
+            <div class="edit cursor-p">
               <img
                 class="img-default"
                 src="../assets/img/png/edit-default.png"

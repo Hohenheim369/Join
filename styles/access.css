@@ -56,6 +56,21 @@ body {
   background-color: rgb(41, 171, 226);
 }
 
+.remember{
+  padding-left: 39px;
+  display: flex;
+  align-items: center;
+}
+
+.login-buttons{
+  width: 322px;
+  height: 48px;
+}
+
+.guest-button{
+  font-weight: 700;
+}
+
 .d-none {
   display: none;
 }
