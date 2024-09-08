@@ -136,8 +136,7 @@ aside {
 
 .credit-box {
   width: 100%;
-  height: 317px;
-  padding-top: 243px;
+  padding-top: 210px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
