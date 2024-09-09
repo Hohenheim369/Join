@@ -295,3 +295,34 @@ function disableLink(link) {
   localStorage.setItem(link.id + "_disabled", "true"); // Speichere den Status im Local Storage
   link.removeEventListener("click", handleClick); // Entferne den Event-Listener, um weitere Klicks zu verhindern
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Funktion, um URL-Parameter auszulesen
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Überprüfe den Parameter hideIcons, aber erst nach dem Laden des Templates
+  document.addEventListener("loadTemplated", function () {
+    const hideIcons = getQueryParam("hideIcons");
+
+    if (hideIcons === "true") {
+      // Füge die "d-none" Klasse zu den gewünschten Elementen hinzu
+      const headerIcons = document.getElementById("header_icons");
+      const iconBar = document.getElementById("icon_bar");
+
+      if (headerIcons) {
+        console.log("header_icons gefunden, füge d-none hinzu");
+        headerIcons.classList.add("d-none");
+        document.getElementById("arrow_back").classList.add("d-none")
+      }
+
+      if (iconBar) {
+        console.log("icon_bar gefunden, füge d-none hinzu");
+        iconBar.classList.add("d-none");
+        document.getElementById("arrow_back").classList.add("d-none")
+      }
+    }
+  });
+});

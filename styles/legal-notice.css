@@ -65,12 +65,16 @@ span {
   color: #a8a8a8;
 }
 
-.arrowBack {
+.arrow-back {
   left: 1307px;
   top: 225px;
   position: absolute;
   width: 37px;
   height: 37px;
+}
+
+.arrow-back:hover {
+  cursor: pointer;
 }
 
 .headline {
@@ -79,9 +83,7 @@ span {
   justify-content: space-between;
 }
 
-.arrowBack:hover {
-  cursor: pointer;
-}
+
 
  /* die klassen wenn keiner ein geloggt ist  */
 /* .not-logged-in .icon-box {

@@ -9,21 +9,10 @@ function toggleCheckButton(CheckButtonId) {
   }.png`;
 }
 
-function openLegal(LinkToSide){
-  // Öffne den Link in einem neuen Tab
-  window.open(LinkToSide, '_blank');
+function openLegal(LinkToSide) {
+  // Füge den Parameter ?hideIcons=true zur URL hinzu
+  const urlWithParam = LinkToSide + '?hideIcons=true';
   
-  // Stelle sicher, dass die Seite geladen ist und die Elemente vorhanden sind
-  document.addEventListener("DOMContentLoaded", function() {
-      // Füge die "d-none" Klasse zu den gewünschten Elementen hinzu
-      const headerIcons = document.getElementById('header_icons');
-      const iconBar = document.getElementById('icon_bar');
-
-      if (headerIcons && iconBar) {
-          headerIcons.classList.add("d-none");
-          iconBar.classList.add("d-none");
-      } else {
-          console.error('Die Elemente wurden nicht gefunden.');
-      }
-  });
+  // Öffne den Link mit dem Parameter in einem neuen Tab
+  window.open(urlWithParam, '_blank');
 }

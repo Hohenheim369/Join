@@ -36,12 +36,16 @@ h1 {
   color: #a8a8a8;
 }
 
-.arrowBack {
+.arrow-back {
   left: 1307px;
   top: 225px;
   position: absolute;
   width: 37px;
   height: 37px;
+}
+
+.arrow-back:hover {
+  cursor: pointer;
 }
 
 
@@ -51,9 +55,7 @@ h1 {
   justify-content: space-between;
 }
 
-.arrowBack:hover {
-  cursor: pointer;
-}
+
  
 
 
