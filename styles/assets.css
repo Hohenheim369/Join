@@ -93,6 +93,10 @@ input:focus{
   border-color: #29abe2;
 }
 
+.input-red-border{  
+  border-color: #29abe2;
+}
+
 textarea:focus{
   outline-style: none;
   box-shadow: none;
