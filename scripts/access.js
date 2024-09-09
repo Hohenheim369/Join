@@ -1,7 +1,9 @@
-function initAccess(){
+function initAccess() {
   loginPasswordField();
   signupPasswordField();
-  signupConfirmPasswordField()
+  signupConfirmPasswordField();
+
+  loadData();
 }
 
 function toggleAccessWindow() {
@@ -15,14 +17,14 @@ function toggleAccessWindow() {
 }
 
 function loginPasswordField() {
-  const passwordField = document.getElementById("login_password_field");
+  const passwordField = document.getElementById("login_password");
   const lockIcon = document.getElementById("login_lock_icon");
   const togglePassword = document.getElementById("login_toggle_password");
 
   setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
 
   updateVisibility(passwordField, lockIcon, togglePassword);
-};
+}
 
 function signupPasswordField() {
   const passwordField = document.getElementById("signup_password_field");
@@ -32,19 +34,27 @@ function signupPasswordField() {
   setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
 
   updateVisibility(passwordField, lockIcon, togglePassword);
-};
+}
 
 function signupConfirmPasswordField() {
-  const passwordField = document.getElementById("signup_confirm_password_field");
+  const passwordField = document.getElementById(
+    "signup_confirm_password_field"
+  );
   const lockIcon = document.getElementById("signup_confirm_lock_icon");
-  const togglePassword = document.getElementById("signup_confirm_toggle_password");
+  const togglePassword = document.getElementById(
+    "signup_confirm_toggle_password"
+  );
 
   setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
 
   updateVisibility(passwordField, lockIcon, togglePassword);
-};
+}
 
-function setupPasswordFieldInteractions(passwordField,lockIcon,togglePassword) {
+function setupPasswordFieldInteractions(
+  passwordField,
+  lockIcon,
+  togglePassword
+) {
   passwordField.addEventListener("input", () =>
     updateVisibility(passwordField, lockIcon, togglePassword)
   );
@@ -81,6 +91,44 @@ function hidePassword(passwordField, togglePassword) {
   togglePassword.src = "/assets/img/png/visibility_off.png";
 }
 
+// Muss noch bearbeitet werden
 function loginAsGuest() {
-  window.location.href = '/html/summary.html';
+  window.location.href = "/html/summary.html";
+}
+
+const BASE_URL_S =
+  "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
+
+async function loadData() {
+  console.log("test");
+  let response = await fetch(BASE_URL_S + ".json");
+  let responseToJson = await response.json();
+  console.log(responseToJson);
+  let JsonLength = Object.keys(responseToJson).length;
+  console.log(JsonLength);
+  let newTaskId = responseToJson[JsonLength].id;
+  console.log(newTaskId);
+}
+
+
+
+async function addUser() {
+  let name = document.getElementById("login_password").value;
+  let email = document.getElementById("login_email_field").value;
+
+  let newUser = {
+    name: name,
+    email: email,
+  };
+
+  const response = await fetch(
+    'https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/user.json',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    }
+  );
 }

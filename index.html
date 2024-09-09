@@ -33,7 +33,7 @@
 
     <form
       id="Login"
-      class="access-window w-652 d-flex-column-center gap-32 d-none"
+      class="access-window w-652 d-flex-column-center gap-32"
     >
       <div class="d-flex-column-center gap-16">
         <h1>Log in</h1>
@@ -43,7 +43,7 @@
       <div class="w-100 d-flex-column-center gap-20">
         <div class="w-100 d-flex-column-center gap-32">
           <div class="w-100 d-flex-column pos-rel">
-            <input type="e-mail" placeholder="Email" required />
+            <input id="login_email_field" type="e-mail" placeholder="Email" required />
             <img
               class="pos-abs top12-right21 cursor-p"
               src="/assets/img/png/mail.png"
@@ -52,7 +52,7 @@
 
           <div class="w-100 d-flex-column gap-8 pos-rel">
             <input
-              id="login_password_field"
+              id="login_password"
               type="password"
               placeholder="Password"
               required
@@ -88,7 +88,7 @@
       </div>
 
       <div class="login-buttons d-flex-spbe-center">
-        <button type="submit">Log in</button>
+        <button onclick="addUser()" type="submit">Log in</button>
         <button
           type="button"
           onclick="loginAsGuest()"
@@ -99,7 +99,7 @@
       </div>
     </form>
 
-    <form id="Signup" class="access-window w-598 d-flex-column-center gap-32">
+    <form id="Signup" class="access-window w-598 d-flex-column-center gap-32 d-none">
       <img
         class="litte-button wh-32 d-flex-center arrow"
         onclick="toggleAccessWindow()"
