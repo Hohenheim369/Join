@@ -31,7 +31,10 @@
       <a onclick="openLegal('/html/legal_notice.html')">Legal notice</a>
     </div>
 
-    <form id="Login" class="access-window w-652 d-flex-column-center gap-32">
+    <form
+      id="Login"
+      class="access-window w-652 d-flex-column-center gap-32 d-none"
+    >
       <div class="d-flex-column-center gap-16">
         <h1>Log in</h1>
         <div class="blue-line"></div>
@@ -66,9 +69,10 @@
               src="/assets/img/png/visibility_off.png"
               alt="Toggle password visibility"
             />
-            <div class="font-s-12 font-c-255-129-144">Check your email and password. Please try again.</div>
+            <div class="font-s-12 font-c-255-129-144">
+              Check your email and password. Please try again.
+            </div>
           </div>
-          
         </div>
 
         <div class="remember w-100 gap-8">
@@ -82,6 +86,7 @@
           Remember me
         </div>
       </div>
+
       <div class="login-buttons d-flex-spbe-center">
         <button type="submit">Log in</button>
         <button
@@ -94,20 +99,97 @@
       </div>
     </form>
 
-    <form
-      id="Signup"
-      class="access-window w-598 d-flex-column-center gap-32 d-none"
-    >
+    <form id="Signup" class="access-window w-598 d-flex-column-center gap-32">
       <img
         class="litte-button wh-32 d-flex-center arrow"
         onclick="toggleAccessWindow()"
         src="/assets/img/png/arrow-left-line.png"
         alt=""
       />
+
       <div class="d-flex-column-center gap-16">
         <h1>Sign up</h1>
         <div class="blue-line"></div>
       </div>
+
+      <div class="w-100 d-flex-column-center gap-16">
+        <div class="w-100 d-flex-column-center gap-24">
+          <div class="w-100 d-flex-column pos-rel">
+            <input type="e-mail" placeholder="Email" required />
+            <img
+              class="pos-abs top12-right21 cursor-p"
+              src="/assets/img/png/mail.png"
+            />
+          </div>
+
+          <div class="w-100 d-flex-column pos-rel">
+            <input type="e-mail" placeholder="Name" required />
+            <img
+              class="pos-abs top12-right21 cursor-p"
+              src="/assets/img/png/person.png"
+            />
+          </div>
+
+          <div class="w-100 d-flex-column gap-8 pos-rel">
+            <input
+              id="signup_password_field"
+              type="password"
+              placeholder="Password"
+              required
+            />
+            <img
+              id="signup_lock_icon"
+              class="pos-abs top12-right21 cursor-p"
+              src="/assets/img/png/lock.png"
+              alt="Lock icon"
+            />
+            <img
+              id="signup_toggle_password"
+              class="pos-abs top12-right21 d-none cursor-p"
+              src="/assets/img/png/visibility_off.png"
+              alt="Toggle password visibility"
+            />
+          </div>
+
+          <div class="w-100 d-flex-column gap-8 pos-rel">
+            <input
+              id="signup_confirm_password_field"
+              type="Confirm password"
+              placeholder="Password"
+              required
+            />
+            <img
+              id="signup_confirm_lock_icon"
+              class="pos-abs top12-right21 cursor-p"
+              src="/assets/img/png/lock.png"
+              alt="Lock icon"
+            />
+            <img
+              id="signup_confirm_toggle_password"
+              class="pos-abs top12-right21 d-none cursor-p"
+              src="/assets/img/png/visibility_off.png"
+              alt="Toggle password visibility"
+            />
+            <div class="font-s-12 font-c-255-129-144">
+              Check your email and password. Please try again.
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex-center gap-4">
+          <img
+            onclick="toggleCheckButton(`signup_check_off`)"
+            id="signup_check_off"
+            class="litte-button"
+            src="/assets/img/png/check-button-false.png"
+            alt=""
+          />
+          <div class="font-c-168-168-168">I accept the</div>
+          <a class="link-privacy-policy" onclick="openLegal('/html/legal_notice.html')">Legal notice</a>
+        </div>
+      </div>
+
+      <button class="h-48" type="submit">Sign up</button>
     </form>
   </body>
 </html>
