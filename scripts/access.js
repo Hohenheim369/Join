@@ -110,25 +110,26 @@ async function loadData() {
   console.log(newTaskId);
 }
 
-
-
-async function addUser() {
+function addUser() {
   let name = document.getElementById("login_password").value;
   let email = document.getElementById("login_email_field").value;
 
-  let newUser = {
-    name: name,
-    email: email,
-  };
-
-  const response = await fetch(
-    'https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/user.json',
+  postTitle(
+    `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/users/`,
     {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newUser),
+      firstname: name,
+      email: email,
     }
   );
+}
+
+async function postTitle(path, title = {}) {
+  let response = await fetch(path + ".json", {
+    method: "POST",
+    header: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(title),
+  });
+  return (responseToJson = await response.json());
 }
