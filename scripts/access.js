@@ -103,7 +103,7 @@ async function loadData() {
   console.log("test");
   let response = await fetch(BASE_URL_S + ".json");
   let responseToJson = await response.json();
-  console.log(responseToJson);
+  console.log(responseToJson);  
   let JsonLength = Object.keys(responseToJson).length;
   console.log(JsonLength);
   let newTaskId = responseToJson[JsonLength].id;
