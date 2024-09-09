@@ -108,6 +108,10 @@ a:hover {
   position: absolute;
 }
 
+.d-none{
+  display: none;
+}
+
 .d-flex-center {
   display: flex;
   justify-content: center;

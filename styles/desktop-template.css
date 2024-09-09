@@ -216,3 +216,7 @@ aside {
 .bg-color{
   background-color: rgb(225, 230, 237) !important;
 }
+
+a:hover{
+  font-weight: 400;
+}
