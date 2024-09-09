@@ -1,5 +1,7 @@
 function initAccess(){
-  LoginPasswordField();
+  loginPasswordField();
+  signupPasswordField();
+  signupConfirmPasswordField()
 }
 
 function toggleAccessWindow() {
@@ -12,10 +14,30 @@ function toggleAccessWindow() {
   changeAccess.classList.toggle("d-none");
 }
 
-function LoginPasswordField() {
+function loginPasswordField() {
   const passwordField = document.getElementById("login_password_field");
   const lockIcon = document.getElementById("login_lock_icon");
   const togglePassword = document.getElementById("login_toggle_password");
+
+  setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
+
+  updateVisibility(passwordField, lockIcon, togglePassword);
+};
+
+function signupPasswordField() {
+  const passwordField = document.getElementById("signup_password_field");
+  const lockIcon = document.getElementById("signup_lock_icon");
+  const togglePassword = document.getElementById("signup_toggle_password");
+
+  setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
+
+  updateVisibility(passwordField, lockIcon, togglePassword);
+};
+
+function signupConfirmPasswordField() {
+  const passwordField = document.getElementById("signup_confirm_password_field");
+  const lockIcon = document.getElementById("signup_confirm_lock_icon");
+  const togglePassword = document.getElementById("signup_confirm_toggle_password");
 
   setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
 

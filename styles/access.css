@@ -71,6 +71,20 @@ body {
   font-weight: 700;
 }
 
+.link-privacy-policy{
+  color: rgb(41, 171, 226);
+}
+
+.link-privacy-policy:hover{
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.h-48{
+  height: 48px;
+}
+
 .d-none {
   display: none;
 }
