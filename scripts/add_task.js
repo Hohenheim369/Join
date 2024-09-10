@@ -1,36 +1,42 @@
-let tasksindex = 3;
-let tasks = {};
 //for testing reasons my own database
-
-let TEST_URL = `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${tasksindex}/`;
+let TEST_URL = `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/`;
 
 async function loadTasks() {
-  console.log("test");
-  let response = await fetch(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/.json`);
+  let response = await fetch(
+    `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/.json`
+  );
   let responseToJson = await response.json();
-  console.log(responseToJson);
-
-  let JsonLength = Object.keys(responseToJson).length;
-  console.log(JsonLength);
-
-  let keys = Object.keys(responseToJson);
-  let lastKey = keys[keys.length - 1];
-  let newTaskId = responseToJson[lastKey].id;
-  console.log(newTaskId);
-  newTaskId++;
+  let newTaskId;
+  if (responseToJson == null) {
+    newTaskId = 1;
+  } else {
+    newTaskId = idCount(responseToJson);
+  }
   return newTaskId;
 }
 
+function idCount(responseToJson) {
+  let keys = Object.keys(responseToJson);
+  let lastKey = keys[keys.length - 1];
+  let countID = responseToJson[lastKey].id;
+  countID++;
+  return countID;
+}
+
 async function createTask() {
-  tasksindex++;
-  // let assignedindex = 1;
-  // let subtasksindex = 1;
   let title = document.getElementById("title_input").value;
   let description = document.getElementById("description_textarea").value;
   let dueDate = document.getElementById("due_date").value;
   let taskId = await loadTasks();
+  let subTasks = [
+    { name: "hallo", done: false },
+    { name: "Lars1", done: false },
+  ];
+  let assignedTo = [5, 8];
   postTitle(
-    `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${tasksindex}/`,
+    `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${
+      taskId - 1
+    }/`,
     {
       title: title,
       description: description,
@@ -38,18 +44,10 @@ async function createTask() {
       priority: "TestUrgent",
       category: "TestUserStory1",
       id: taskId,
+      subtasks: subTasks,
+      assigned: assignedTo,
     }
   );
-  // postAssignedTO(
-  //   `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${tasksindex}/assigned/${assignedindex}/`,
-  //   { name: "Testassigned1Name" }
-  // );  
-  // assignedindex++;
-  // postSubtasks(
-  //   `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${tasksindex}/subtasks/${subtasksindex}/`,
-  //   { Title: "TestSubTitle1" }
-  // );
-  // subtasksindex++;
 }
 
 async function postTitle(path, title = {}) {
@@ -62,25 +60,3 @@ async function postTitle(path, title = {}) {
   });
   return (responseToJson = await response.json());
 }
-
-// async function postAssignedTO(path, data = {}) {
-//   let response = await fetch(path + ".json", {
-//     method: "PUT",
-//     header: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   });
-//   return (responseToJson = await response.json());
-// }
-
-// async function postSubtasks(path, data1 = {}) {
-//   let response = await fetch(path + ".json", {
-//     method: "PUT",
-//     header: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data1),
-//   });
-//   return (responseToJson = await response.json());
-// }
