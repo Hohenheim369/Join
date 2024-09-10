@@ -1,17 +1,24 @@
-function openSelect() {
-    return `<div class="assigned-container">
-              <input
-                class="placeholder-black"
-                type="text"
-                placeholder="Select contacts to assign"
-                id="assigned_to"
-              />
-              <div class="hover-circle d-flex-center pos-abs">
-                <img
-                  onclick="openSelect()"
-                  src="../assets/img/png-old/arrow_drop_down.png"
-                  alt=""
-                />
-              </div>
-            </div>`
+function showAssignedContact(){
+  return  `<div class="padding-7-16 font-s-20 gap-16">
+            <div class="contact-icon d-flex-center bg-147-39-255">
+                <span>LS</span>
+            </div>
+            <span>Lars Schumacher</span>
+            <span>(You)</span>
+          </div>
+          <div class="padding-7-16 font-s-20 gap-16">
+            <div class="contact-icon d-flex-center bg-147-39-255">
+                <span>FL</span>
+            </div>
+            <span>FirstName LastName</span>
+          </div>`
+}
+
+function showCategory(){
+  return  `<div class="padding-7-16 font-s-20">
+            <span>Technical Task</span>
+          </div>
+          <div class="padding-7-16 font-s-20">
+            <span>User Story</span>
+          </div>`
 }

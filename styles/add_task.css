@@ -80,6 +80,7 @@ textarea {
   height: 24px;
   width: 24px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .hover-circle:hover {
@@ -115,6 +116,8 @@ textarea {
 ::-webkit-calendar-picker-indicator {
   background-image: url(../assets/img/png-old/calendar_icon.png);
   background-size: 18px 20px;
+  position: absolute;
+  right: 16px;
   padding: 0;
   margin: 0;
 }
@@ -181,4 +184,29 @@ li {
 
 .space-bottom {
   height: 77px;
+}
+
+.select-field {
+  width: 100%;
+  background-color: #ffffff;
+  max-height: 168px;
+  position: absolute;
+  overflow-y: scroll;
+  border-radius: 10px;
+  box-shadow: 0px 8px 14px 1px rgba(0, 0, 0, 0.1);
+}
+
+.padding-7-16 {
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+}
+
+.category-field {
+  width: 100%;
+  background-color: #ffffff;
+  max-height: 96px;
+  position: absolute;
+  border-radius: 10px;
+  box-shadow: 0px 8px 14px 1px rgba(0, 0, 0, 0.1);
 }

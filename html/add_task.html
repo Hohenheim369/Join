@@ -41,27 +41,44 @@
           </div>
           <div class="form-child-order">
             <label>Description</label>
-              <textarea
-                name="Description"
-                placeholder="Enter a Description"
-                id="description_textarea"
-              ></textarea>
+            <textarea
+              name="Description"
+              placeholder="Enter a Description"
+              id="description_textarea"
+            ></textarea>
           </div>
           <div class="form-child-order">
             <label>Assigned to</label>
-            <div class="assigned-container">
-              <input
-                class="placeholder-black"
-                type="text"
-                placeholder="Select contacts to assign"
-                id="assigned_to"
-              />
-              <div class="hover-circle d-flex-center pos-abs">
-                <img
-                  onclick="openSelect()"
-                  src="../assets/img/png-old/arrow_drop_down.png"
-                  alt=""
+            <div id="assigned_contant" class="assigned-container">
+              <div id="assigned_inactiv">
+                <input
+                  class="placeholder-black"
+                  type="text"
+                  placeholder="Select contacts to assign"
                 />
+                <div class="hover-circle d-flex-center pos-abs">
+                  <img
+                    onclick="openSelect()"
+                    src="../assets/img/png-old/arrow_drop_down.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div id="assigned_activ" class="d-none">
+                <input
+                  class="placeholder-black"
+                  type="search"
+                  placeholder="Select contacts to assign"
+                  id="assigned_to"
+                />
+                <div class="hover-circle d-flex-center pos-abs">
+                  <img
+                    onclick="closeSelect()"
+                    src="../assets/img/png-old/Property 1=Variant4.png"
+                    alt=""
+                  />
+                </div>
+                <div id="contact_contant" class="select-field"></div>
               </div>
             </div>
             <div class="contact-icon-order">
@@ -82,13 +99,11 @@
           <div class="form-child-order">
             <label>Due date<span class="required-sign">*</span></label>
             <div>
-              <input
+              <input class="pos-rel"
                 required
                 id="due_date"
-                type="text"
-                placeholder="dd/mm/yyyy"
-                onfocus="(this.type='date')"
-                onblur="(this.type='text')"
+                type="date"
+             
               />
             </div>
             <div class="field-alert" id="fieldAlert"></div>
@@ -175,29 +190,47 @@
           </div>
           <div class="form-child-order">
             <label>Category<span class="required-sign">*</span></label>
-            <div class="category-container">
-              <input
-                class="placeholder-black"
-                type="text"
-                required
-                placeholder="Select task category"
-                id="category_input"
-                disabled
-              />
-              <div class="hover-circle d-flex-center pos-abs">
-                <img
-                  onclick="openSelect()"
-                  src="../assets/img/png-old/arrow_drop_down.png"
-                  alt=""
+            <div id="category_contant" class="category-container">
+              <div id="category_inactiv">
+                <input
+                  class="placeholder-black"
+                  type="text"
+                  placeholder="Select task category"
                 />
+                <div class="hover-circle d-flex-center pos-abs">
+                  <img
+                    onclick="openSelectCategory()"
+                    src="../assets/img/png-old/arrow_drop_down.png"
+                    alt=""
+                  />
+                </div>
               </div>
-              <div></div>
+              <div id="category_activ" class="d-none">
+                <input
+                  class="placeholder-black"
+                  type="search"
+                  placeholder="Select task category"
+                  id="category"
+                />
+                <div class="hover-circle d-flex-center pos-abs">
+                  <img
+                    onclick="closeSelectCategory()"
+                    src="../assets/img/png-old/Property 1=Variant4.png"
+                    alt=""
+                  />
+                </div>
+                <div id="category_task_contant" class="category-field"></div>
+              </div>
             </div>
           </div>
           <div class="form-child-order">
             <label>Subtasks</label>
             <div class="subtasks-container">
-              <input type="text" placeholder="Add  new subtask" id="subtasks_input" />
+              <input
+                type="text"
+                placeholder="Add  new subtask"
+                id="subtasks_input"
+              />
               <div class="hover-circle d-flex-center pos-abs">
                 <img
                   onclick="openSelect()"

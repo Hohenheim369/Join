@@ -56,3 +56,33 @@ function switchSelection() {
 function clearButton(){
   location.reload();
 }
+
+function openSelect() {
+  if (onclick = true) {
+    document.getElementById('assigned_inactiv').classList.add('d-none');
+    document.getElementById('assigned_activ').classList.remove('d-none');
+    document.getElementById('contact_contant').innerHTML = showAssignedContact();
+  }
+}
+
+function closeSelect(){
+  if (onclick = true) {
+    document.getElementById('assigned_activ').classList.add('d-none');
+    document.getElementById('assigned_inactiv').classList.remove('d-none');
+  }
+}
+
+function openSelectCategory() {
+  if (onclick = true) {
+    document.getElementById('category_inactiv').classList.add('d-none');
+    document.getElementById('category_activ').classList.remove('d-none');
+    document.getElementById('category_task_contant').innerHTML = showCategory();
+  }
+}
+
+function closeSelectCategory(){
+  if (onclick = true) {
+    document.getElementById('category_activ').classList.add('d-none');
+    document.getElementById('category_inactiv').classList.remove('d-none');
+  }
+}
