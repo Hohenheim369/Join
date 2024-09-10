@@ -87,7 +87,7 @@ function hidePassword(passwordField, togglePassword) {
 
 // Muss noch bearbeitet werden
 function loginAsGuest() {
-  window.location.href = "/html/summary.html";
+  window.location.href = "./html/summary.html";
 }
 
 const BASE_URL_S =

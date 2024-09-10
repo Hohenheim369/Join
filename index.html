@@ -7,19 +7,19 @@
     <link
       rel="icon"
       type="image/x-icon"
-      href="../assets/img/png/favicon2.png"
+      href="./assets/img/png/favicon2.png"
     />
 
-    <link rel="stylesheet" href="/style.css" />
-    <link rel="stylesheet" href="/styles/fonts.css" />
-    <link rel="stylesheet" href="/styles/assets.css" />
-    <link rel="stylesheet" href="/styles/access.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./styles/fonts.css" />
+    <link rel="stylesheet" href="./styles/assets.css" />
+    <link rel="stylesheet" href="./styles/access.css" />
 
-    <script src="/script.js"></script>
-    <script src="/scripts/access.js"></script>
+    <script src="./script.js"></script>
+    <script src="./scripts/access.js"></script>
   </head>
   <body onload="initAccess()">
-    <img class="img-logo" src="/assets/img/png/favicon2.png" alt="" />
+    <img class="img-logo" src="./assets/img/png/favicon2.png" alt="" />
 
     <div id="change_access" class="change-access d-flex-spbe-center">
       <div class="font-s-20 font-c-black">Not a Join user?</div>
@@ -27,8 +27,8 @@
     </div>
 
     <div class="legal d-flex-spbe-center">
-      <a onclick="openLegal('/html/privacy-policy.html')">Privacy Policy</a>
-      <a onclick="openLegal('/html/legal_notice.html')">Legal notice</a>
+      <a onclick="openLegal('./html/privacy-policy.html')">Privacy Policy</a>
+      <a onclick="openLegal('./html/legal_notice.html')">Legal notice</a>
     </div>
 
     <form
@@ -46,7 +46,7 @@
             <input id="login_email_field" type="e-mail" placeholder="Email" required />
             <img
               class="pos-abs top12-right21 cursor-p"
-              src="/assets/img/png/mail.png"
+              src="./assets/img/png/mail.png"
             />
           </div>
 
@@ -60,13 +60,13 @@
             <img
               id="login_lock_icon"
               class="pos-abs top12-right21 cursor-p"
-              src="/assets/img/png/lock.png"
+              src="./assets/img/png/lock.png"
               alt="Lock icon"
             />
             <img
               id="login_toggle_password"
               class="pos-abs top12-right21 d-none cursor-p"
-              src="/assets/img/png/visibility_off.png"
+              src="./assets/img/png/visibility_off.png"
               alt="Toggle password visibility"
             />
             <div class="font-s-12 font-c-255-129-144">
@@ -80,7 +80,7 @@
             onclick="toggleCheckButton(`check_off`)"
             id="check_off"
             class="litte-button"
-            src="/assets/img/png/check-button-false.png"
+            src="./assets/img/png/check-button-false.png"
             alt=""
           />
           Remember me
@@ -103,7 +103,7 @@
       <img
         class="litte-button wh-32 d-flex-center arrow"
         onclick="toggleAccessWindow()"
-        src="/assets/img/png/arrow-left-line.png"
+        src="./assets/img/png/arrow-left-line.png"
         alt=""
       />
 
@@ -118,7 +118,7 @@
             <input id="signup_email" type="e-mail" placeholder="Email" required />
             <img
               class="pos-abs top12-right21 cursor-p"
-              src="/assets/img/png/mail.png"
+              src="./assets/img/png/mail.png"
             />
           </div>
 
@@ -126,7 +126,7 @@
             <input id="signup_name" type="text" placeholder="Name" required />
             <img
               class="pos-abs top12-right21 cursor-p"
-              src="/assets/img/png/person.png"
+              src="./assets/img/png/person.png"
             />
           </div>
 
@@ -140,13 +140,13 @@
             <img
               id="signup_lock_icon"
               class="pos-abs top12-right21 cursor-p"
-              src="/assets/img/png/lock.png"
+              src="./assets/img/png/lock.png"
               alt="Lock icon"
             />
             <img
               id="signup_toggle_password"
               class="pos-abs top12-right21 d-none cursor-p"
-              src="/assets/img/png/visibility_off.png"
+              src="./assets/img/png/visibility_off.png"
               alt="Toggle password visibility"
             />
           </div>
@@ -161,13 +161,13 @@
             <img
               id="signup_c_lock_icon"
               class="pos-abs top12-right21 cursor-p"
-              src="/assets/img/png/lock.png"
+              src="./assets/img/png/lock.png"
               alt="Lock icon"
             />
             <img
               id="signup_c_toggle_password"
               class="pos-abs top12-right21 d-none cursor-p"
-              src="/assets/img/png/visibility_off.png"
+              src="./assets/img/png/visibility_off.png"
               alt="Toggle password visibility"
             />
             <div class="font-s-12 font-c-255-129-144">
@@ -181,11 +181,11 @@
             onclick="toggleCheckButton(`signup_check_off`)"
             id="signup_check_off"
             class="litte-button"
-            src="/assets/img/png/check-button-false.png"
+            src="./assets/img/png/check-button-false.png"
             alt=""
           />
           <div class="font-c-168-168-168">I accept the</div>
-          <a class="link-privacy-policy" onclick="openLegal('/html/legal_notice.html')">Legal notice</a>
+          <a class="link-privacy-policy" onclick="openLegal('./html/legal_notice.html')">Legal notice</a>
         </div>
       </div>
 
