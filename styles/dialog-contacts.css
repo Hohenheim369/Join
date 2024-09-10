@@ -136,6 +136,7 @@ h2 {
 }
 
 .input-name {
+  width: 422px;
   background-size: 16px;
   background-position: 380px 17px;
   background-repeat: no-repeat;
@@ -143,6 +144,7 @@ h2 {
 }
 
 .input-email {
+  width: 422px;
   background-size: 20px 20px;
   background-position: 378px 16px;
   background-repeat: no-repeat;
@@ -150,6 +152,7 @@ h2 {
 }
 
 .input-phone {
+  width: 422px;
   background-size: 18px;
   background-position: 378px 16px;
   background-repeat: no-repeat;
@@ -319,3 +322,16 @@ button {
   background-color: #2a3647 !important;
   color: white;
 }
+
+.field-alert {
+  padding-left: 18px;
+  padding-top: 2px;
+  text-align: left;
+  height: 12px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.4px;
+  font-family: "Poppins";
+  color: #ff8190;
+}
+

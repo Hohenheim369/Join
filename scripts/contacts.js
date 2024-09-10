@@ -95,6 +95,8 @@ async function closeDialog() {
   await sleep(300);
   dialogContainer.classList.remove("d-flex");
   dialogContainer.open = false;
+  clearForm();
+  
 }
 
 async function openDialogEdit(index) {
@@ -126,6 +128,7 @@ async function closeDialogEdit() {
   await sleep(300);
   dialogContainer.classList.remove("d-flex");
   dialogContainer.open = false;
+  clearEditForm();
 }
 
 async function openDialogSuccesfully() {
@@ -337,56 +340,92 @@ function highlightContact(index) {
   document.getElementById(`contact${index}`).style.color = "white";
 }
 
-function setError(inputElement, message) {
-  inputElement.dataset.originalPlaceholder = inputElement.placeholder;
-  inputElement.placeholder = message;
+// Setzt die Fehlermeldung in das entsprechende Div anstatt in das Input-Feld
+function setError(inputElement, message, alertElementId) {
+  const alertElement = document.getElementById(alertElementId);
+  alertElement.innerText = message;
+  alertElement.style.display = "block"; // Fehlermeldung sichtbar machen
   inputElement.classList.add("error");
 }
 
-function clearError(inputElement) {
-  if (inputElement.dataset.originalPlaceholder) {
-    inputElement.placeholder = inputElement.dataset.originalPlaceholder;
-  }
+// Entfernt die Fehlermeldung und versteckt das Div
+function clearError(inputElement, alertElementId) {
+  const alertElement = document.getElementById(alertElementId);
+  alertElement.innerText = ""; 
+  alertElement.style.display = "none"; // Fehlermeldung verstecken
   inputElement.classList.remove("error");
+}
+
+function clearForm() {
+  // Alle relevanten Input-Felder holen
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const phoneInput = document.getElementById("phone");
+
+  // Alle Input-Felder leeren
+  nameInput.value = "";
+  emailInput.value = "";
+  phoneInput.value = "";
+
+  clearError(nameInput, "field_alert_name");
+  clearError(emailInput, "field_alert_email");
+  clearError(phoneInput, "field_alert_phone");
+}
+
+function clearEditForm() {
+  // Alle relevanten Input-Felder holen
+  const nameEditInput = document.getElementById("inputEditName");
+  const emailEditInput = document.getElementById("inputEditEmail");
+  const phoneEditInput = document.getElementById("inputEditPhone");
+
+  // Alle Input-Felder leeren
+  nameEditInput.value = "";
+  emailEditInput.value = "";
+  phoneEditInput.value = "";
+
+  clearError(nameEditInput, "edit_field_alert_name");
+  clearError(emailEditInput, "edit_field_alert_email");
+  clearError(phoneEditInput, "edit_field_alert_phone");
 }
 
 function validateForm() {
   let isValid = true;
 
-  // Vor- und Nachname Validierung (erlaubt Umlaute und Leerzeichen, erfordert mindestens zwei Wörter)
+  // Vor- und Nachname Validierung (mindestens zwei Wörter, erlaubt Umlaute, Leerzeichen, und weitere Wörter)
   const nameInput = document.getElementById("name");
   if (
-    !nameInput.value.match(/^[A-Za-zÄäÖöÜüß]+\s+[A-Za-zÄäÖöÜüß]+$/) ||
+    !nameInput.value.match(/^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/) || 
     nameInput.value.length > 23
   ) {
     setError(
-      nameInput,
-      "Ungültiger Name oder zu lang (Max Mustermann, max. 23 Zeichen)"
+      nameInput, 
+      "Ungültiger Name oder zu lang (mindestens zwei Wörter, max. 23 Zeichen)", 
+      "field_alert_name"
     );
     isValid = false;
     nameInput.value = "";
   } else {
-    clearError(nameInput);
+    clearError(nameInput, "field_alert_name");
   }
 
   // Email Validierung (überprüft auf gültiges E-Mail-Format, keine Einschränkung auf bestimmte Endungen)
   const emailInput = document.getElementById("email");
   if (!emailInput.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    setError(emailInput, "Ungültige E-Mail (test@test.de)");
+    setError(emailInput, "Ungültige E-Mail (test@test.de)", "field_alert_email");
     isValid = false;
     emailInput.value = "";
   } else {
-    clearError(emailInput);
+    clearError(emailInput, "field_alert_email");
   }
 
   // Telefonnummer Validierung (nur Zahlen erlaubt)
   const phoneInput = document.getElementById("phone");
   if (!phoneInput.value.match(/^\d+$/)) {
-    setError(phoneInput, "Ungültige Telefonnummer 0176 123 123");
+    setError(phoneInput, "Ungültige Telefonnummer 0176 123 123", "field_alert_phone");
     isValid = false;
     phoneInput.value = "";
   } else {
-    clearError(phoneInput);
+    clearError(phoneInput, "field_alert_phone");
   }
 
   if (isValid) {
@@ -402,37 +441,35 @@ function validateEditForm() {
   // Vor- und Nachname Validierung (erlaubt Umlaute und Leerzeichen, erfordert mindestens zwei Wörter)
   const nameInput = document.getElementById("inputEditName");
   if (
-    !nameInput.value.match(/^[A-Za-zÄäÖöÜüß]+\s+[A-Za-zÄäÖöÜüß]+$/) ||
+    !nameInput.value.match(/^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/) || 
     nameInput.value.length > 23
   ) {
     setError(
-      nameInput,
-      "Ungültiger Name oder zu lang (Max Mustermann, max. 23 Zeichen)"
+      nameInput, 
+      "Ungültiger Name oder zu lang (mindestens zwei Wörter, max. 23 Zeichen)", 
+      "edit_field_alert_name"
     );
     isValid = false;
-    nameInput.value = "";
   } else {
-    clearError(nameInput);
+    clearError(nameInput, "edit_field_alert_name");
   }
 
   // Email Validierung (überprüft auf gültiges E-Mail-Format, keine Einschränkung auf bestimmte Endungen)
-  const emailInput = document.getElementById("inputEditEmail");
+  const emailInput = document.getElementById("email");
   if (!emailInput.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    setError(emailInput, "Ungültige E-Mail");
+    setError(emailInput, "Ungültige E-Mail (test@test.de)", "edit_field_alert_email");
     isValid = false;
-    emailInput.value = "";
   } else {
-    clearError(emailInput);
+    clearError(emailInput, "edit_field_alert_email");
   }
 
   // Telefonnummer Validierung (nur Zahlen erlaubt)
-  const phoneInput = document.getElementById("inputEditPhone");
+  const phoneInput = document.getElementById("phone");
   if (!phoneInput.value.match(/^\d+$/)) {
-    setError(phoneInput, "Ungültige Telefonnummer 0176 123 123");
+    setError(phoneInput, "Ungültige Telefonnummer 0176 123 123", "edit_field_alert_phone");
     isValid = false;
-    phoneInput.value = "";
   } else {
-    clearError(phoneInput);
+    clearError(phoneInput, "edit_field_alert_phone");
   }
 
   if (isValid) {

@@ -63,27 +63,34 @@
             <img class="cross" src="../assets/img/png/close.png" alt="" />
           </div>
           <div class="input-fields-contacts">
-            <input
-              id="name"
-              class="input-name"
-              type="text"
-              placeholder="Name"
-            />
-
-            <input
-              id="email"
-              class="input-email"
-              type="email"
-              placeholder="Email"
-            />
-            <input
-              id="phone"
-              class="input-phone"
-              type="number"
-              min="0"
-              placeholder="Phone"
-            />
-            
+            <div>
+              <input
+                id="name"
+                class="input-name"
+                type="text"
+                placeholder="Name"
+              />
+              <div class="field-alert" id="field_alert_name"></div>
+            </div>
+            <div>
+              <input
+                id="email"
+                class="input-email"
+                type="email"
+                placeholder="Email"
+              />
+              <div class="field-alert" id="field_alert_email"></div>
+            </div>
+            <div>
+              <input
+                id="phone"
+                class="input-phone"
+                type="number"
+                min="0"
+                placeholder="Phone"
+              />
+              <div class="field-alert" id="field_alert_phone"></div>
+            </div>
           </div>
 
           <div class="button-contacts">
@@ -130,36 +137,40 @@
         <div class="dialo-text-seperator"></div>
       </div>
       <div class="dialog-right">
-        <div id="big_letter_circle" ></div>
+        <div id="big_letter_circle"></div>
         <div class="dialog-content-right">
           <div onclick="closeDialogEdit()" class="close-cross">
-            <img
-              
-              class="cross"
-              src="../assets/img/png/close.png"
-              alt=""
-            />
+            <img class="cross" src="../assets/img/png/close.png" alt="" />
           </div>
           <div class="input-fields-contacts">
-            <input
-              id="inputEditName"
-              class="input-name"
-              type="text"
-              placeholder="Name"
-            />
-            <input
-              id="inputEditEmail"
-              class="input-email"
-              type="email"
-              placeholder="Email"
-            />
-            <input
-              id="inputEditPhone"
-              class="input-phone"
-              type="number"
-              min="0"
-              placeholder="Phone"
-            />
+            <div>
+              <input
+                id="inputEditName"
+                class="input-name"
+                type="text"
+                placeholder="Name"
+              />
+              <div class="field-alert" id="edit_field_alert_name"></div>
+            </div>
+            <div>
+              <input
+                id="inputEditEmail"
+                class="input-email"
+                type="email"
+                placeholder="Email"
+              />
+              <div class="field-alert" id="edit_field_alert_email"></div>
+            </div>
+            <div>
+              <input
+                id="inputEditPhone"
+                class="input-phone"
+                type="number"
+                min="0"
+                placeholder="Phone"
+              />
+              <div class="field-alert" id="edit_field_alert_phone"></div>
+            </div>
             <div id="button_edit_dialog" class="button-delete-save"></div>
           </div>
         </div>
