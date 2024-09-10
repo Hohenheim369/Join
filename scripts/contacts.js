@@ -2,7 +2,7 @@ let contacts = [];
 let initials = [];
 
 const BASE_TASKS_URL =
-  "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/";
+  "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
 // Funktion zum Rendern der gesamten Kontaktliste
 function renderContacts() {
@@ -15,7 +15,7 @@ function renderContacts() {
     .then((data) => {
       if (data) {
         // Convert contacts to an array
-        contacts = Object.values(data);
+        contacts = Object.values(data).filter(contact => contact !== null); // Filter out null values
 
         // Update initials array
         initials = contacts.map((contact) => {
@@ -265,20 +265,21 @@ function deleteContact(index) {
   let contactToDelete = contacts[index];
   if (!contactToDelete) return; // Ensure the contact exists
 
-  let contactId = contactToDelete.id; // ID of the contact to delete
+  let contactId = index; // ID des zu löschenden Kontakts
 
   console.log(`Attempting to delete contact with ID ${contactId}`);
 
-  fetch(`${BASE_TASKS_URL}/${contactId}.json`, {
+  fetch(`https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`, {
     method: "DELETE",
   })
     .then((response) => {
       if (response.ok) {
-        contacts.splice(index, 1); // Remove the contact from the array
-        storeFirstAndLastNames(); // Update any necessary data
-        renderContacts(); // Update the display
+        contacts.splice(index, 1); // Entferne den Kontakt aus dem Array
+        saveData();
+        storeFirstAndLastNames(); // Aktualisiere notwendige Daten
+        renderContacts(); // Aktualisiere die Anzeige
         document.querySelector(".contacts-info-box").innerHTML = "";
-        console.log("Contact successfully deleted");
+        console.log("Contact successfully deleted from Firebase");
       } else {
         console.error("Error deleting contact:", response.statusText);
       }
@@ -286,6 +287,7 @@ function deleteContact(index) {
     .catch((error) => {
       console.error("Error deleting contact:", error);
     });
+    
 }
 
 function saveData() {
@@ -311,8 +313,8 @@ function loadData() {
     .then((response) => response.json())
     .then((data) => {
       if (data) {
-        contacts = Object.values(data);
-        initials = contacts.map((contact) => contact.initials);
+        contacts = Object.values(data).filter(contact => contact !== null && contact !== undefined);
+        initials = contacts.map(contact => contact.initials);
         storeFirstAndLastNames();
         renderContacts(); // Kontakte nach dem Laden rendern
       } else {
@@ -345,7 +347,7 @@ function editContact() {
   contacts[index] = updatedContact;
 
   // Speichere die aktualisierten Daten in localStorage
-  localStorage.setItem("contacts", JSON.stringify(contacts));
+  saveData();
   storeFirstAndLastNames();
   renderContacts();
   closeDialogEdit();
@@ -356,6 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadData(); // Stellen sicher, dass Daten geladen sind
 });
 
+// der contact der getarget wurde der die bg c ändern soll //
 function highlightContact(index) {
   const contacts = document.getElementsByClassName("contacts");
   for (let i = 0; i < contacts.length; i++) {
@@ -363,7 +366,7 @@ function highlightContact(index) {
     contacts[i].style.color = "black";
   }
   document.getElementById(`contact${index}`).style.backgroundColor =
-    "var(--gray)";
+    "#27364a";
   document.getElementById(`contact${index}`).style.color = "white";
 }
 
