@@ -115,32 +115,63 @@ const BASE_URL_S =
 //   return countID;
 // }
 
-function addUser() {
+// function addUser() {
+//   let email = document.getElementById("signup_email").value;
+//   let name = document.getElementById("signup_name").value;
+//   let password = document.getElementById("signup_password").value;
+//   let cPassword = document.getElementById("signup_c_password").value;
+//   let userId = 3;
+
+//   if (password == cPassword) {
+//     putUser(
+//       `https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/`,
+//       {
+//         user_name: name,
+//         user_email: email,
+//         user_password: password,
+//         user_id: userId,
+//       }
+//     );
+//   } else {
+//     alert("Hier stimmt etwas nicht...");
+//   }
+// }
+
+// async function putUser(path, user = {}) {
+//   let response = await fetch(path + ".json", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(user),
+//   });
+//   return (responseToJson = await response.json());
+// }
+
+
+async function addUser() {
   let email = document.getElementById("signup_email").value;
   let name = document.getElementById("signup_name").value;
   let password = document.getElementById("signup_password").value;
   let cPassword = document.getElementById("signup_c_password").value;
   let userId = 3;
 
-  if (password == cPassword) {
-    putUser(`https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/`, {
-      user_name: name,
-      user_email: email,
-      user_password: password,
-      user_id: userId,
-    });
-  } else {
-    alert("Hier stimmt etwas nicht...");
-  }
-}
+  let user = {
+    user_name: name,
+    user_email: email,
+    user_password: password,
+    user_id: userId,
+  };
 
-async function putUser(path, user = {}) {
-  let response = await fetch(path + ".json", {
-    method: "POST",
-    header: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
+  let response = await fetch(
+    "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/.json",
+    {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    }
+  );
   return (responseToJson = await response.json());
 }

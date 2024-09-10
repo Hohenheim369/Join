@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", updateSidebarIcons);
 
 // Funktion zum Laden des Templates
 function loadTemplate() {
-  fetch("./assets/templates/desktop_template.html")
+  fetch("../assets/templates/desktop_template.html")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Netzwerkantwort war nicht okay");
