@@ -93,85 +93,80 @@ function loginAsGuest() {
 const BASE_URL_S =
   "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
 
-// async function getNewUserId() {
-//   let response = await fetch(
-//     `https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/.json`
-//   );
-//   let responseToJson = await response.json();
-//   let newUserId;
-//   if (responseToJson == null) {
-//     newUserId = 1;
-//   } else {
-//     newUserId = countId(responseToJson);
-//   }
-//   return newUserId;
-// }
+async function getNewUserId() {
+  let response = await fetch(
+    `https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/.json`
+  );
+  let responseToJson = await response.json();
+  let newUserId;
+  if (responseToJson == null) {
+    newUserId = 1;
+  } else {
+    newUserId = countId(responseToJson);
+  }
+  return newUserId;
+}
 
-// function countId(responseToJson) {
-//   let keys = Object.keys(responseToJson);
-//   let lastKey = keys[keys.length - 1];
-//   let countID = responseToJson[lastKey].id;
-//   countID++;
-//   return countID;
-// }
-
-// function addUser() {
-//   let email = document.getElementById("signup_email").value;
-//   let name = document.getElementById("signup_name").value;
-//   let password = document.getElementById("signup_password").value;
-//   let cPassword = document.getElementById("signup_c_password").value;
-//   let userId = 3;
-
-//   if (password == cPassword) {
-//     putUser(
-//       `https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/`,
-//       {
-//         user_name: name,
-//         user_email: email,
-//         user_password: password,
-//         user_id: userId,
-//       }
-//     );
-//   } else {
-//     alert("Hier stimmt etwas nicht...");
-//   }
-// }
-
-// async function putUser(path, user = {}) {
-//   let response = await fetch(path + ".json", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(user),
-//   });
-//   return (responseToJson = await response.json());
-// }
-
+function countId(responseToJson) {
+  let keys = Object.keys(responseToJson);
+  let lastKey = keys[keys.length - 1];
+  let countID = responseToJson[lastKey].user_id;
+  countID++;
+  return countID;
+}
 
 async function addUser() {
-  let email = document.getElementById("signup_email").value;
-  let name = document.getElementById("signup_name").value;
-  let password = document.getElementById("signup_password").value;
-  let cPassword = document.getElementById("signup_c_password").value;
-  let userId = 3;
+  const email = document.getElementById("signup_email").value.trim();
+  const name = document.getElementById("signup_name").value.trim();
+  const password = document.getElementById("signup_password").value;
+  const cPassword = document.getElementById("signup_c_password").value;
+  const userId = await getNewUserId();
 
-  let user = {
-    user_name: name,
-    user_email: email,
-    user_password: password,
-    user_id: userId,
-  };
+  if (!email || !name || !password || !cPassword) {
+    console.log("Please fill in all fields.");
+    return;
+  }
 
-  let response = await fetch(
-    "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/.json",
-    {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
+  if (password !== cPassword) {
+    console.log("Passwords do not match.");
+    return;
+  }
+
+  try {
+    const result = await postData(`${BASE_URL_S}users/${userId-1}/`, {
+      user_name: name,
+      user_email: email,
+      user_password: password, // In practice, the password should be hashed
+      user_id: userId,
+    });
+
+    if (result) {
+      // Firebase returns a "name" property when the entry is successfully created
+      console.log("Registration successful!");
+      // Here you could perform additional actions, e.g., reset the form or redirect the user
+    } else {
+      console.log(
+        "There was a problem with the registration. Please try again."
+      );
     }
-  );
-  return (responseToJson = await response.json());
+  } catch (error) {
+    console.error("Error during registration:", error);
+    console.log("An error occurred. Please try again later.");
+  }
+}
+
+async function postData(path = "", data = {}) {
+  const response = await fetch(path + ".json", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return await response.json();
 }
