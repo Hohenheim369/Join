@@ -2,8 +2,6 @@ function initAccess() {
   loginPasswordField();
   signupPasswordField();
   signupConfirmPasswordField();
-
-  loadData();
 }
 
 function toggleAccessWindow() {
@@ -27,7 +25,7 @@ function loginPasswordField() {
 }
 
 function signupPasswordField() {
-  const passwordField = document.getElementById("signup_password_field");
+  const passwordField = document.getElementById("signup_password");
   const lockIcon = document.getElementById("signup_lock_icon");
   const togglePassword = document.getElementById("signup_toggle_password");
 
@@ -37,13 +35,9 @@ function signupPasswordField() {
 }
 
 function signupConfirmPasswordField() {
-  const passwordField = document.getElementById(
-    "signup_confirm_password_field"
-  );
-  const lockIcon = document.getElementById("signup_confirm_lock_icon");
-  const togglePassword = document.getElementById(
-    "signup_confirm_toggle_password"
-  );
+  const passwordField = document.getElementById("signup_c_password");
+  const lockIcon = document.getElementById("signup_c_lock_icon");
+  const togglePassword = document.getElementById("signup_c_toggle_password");
 
   setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
 
@@ -99,37 +93,54 @@ function loginAsGuest() {
 const BASE_URL_S =
   "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
 
-async function loadData() {
-  console.log("test");
-  let response = await fetch(BASE_URL_S + ".json");
-  let responseToJson = await response.json();
-  console.log(responseToJson);  
-  let JsonLength = Object.keys(responseToJson).length;
-  console.log(JsonLength);
-  let newTaskId = responseToJson[JsonLength].id;
-  console.log(newTaskId);
-}
+// async function getNewUserId() {
+//   let response = await fetch(
+//     `https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/.json`
+//   );
+//   let responseToJson = await response.json();
+//   let newUserId;
+//   if (responseToJson == null) {
+//     newUserId = 1;
+//   } else {
+//     newUserId = countId(responseToJson);
+//   }
+//   return newUserId;
+// }
+
+// function countId(responseToJson) {
+//   let keys = Object.keys(responseToJson);
+//   let lastKey = keys[keys.length - 1];
+//   let countID = responseToJson[lastKey].id;
+//   countID++;
+//   return countID;
+// }
 
 function addUser() {
-  let name = document.getElementById("login_password").value;
-  let email = document.getElementById("login_email_field").value;
+  let email = document.getElementById("signup_email").value;
+  let name = document.getElementById("signup_name").value;
+  let password = document.getElementById("signup_password").value;
+  let cPassword = document.getElementById("signup_c_password").value;
+  let userId = 3;
 
-  postTitle(
-    `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/users/`,
-    {
-      firstname: name,
-      email: email,
-    }
-  );
+  if (password == cPassword) {
+    putUser(`https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/`, {
+      user_name: name,
+      user_email: email,
+      user_password: password,
+      user_id: userId,
+    });
+  } else {
+    alert("Hier stimmt etwas nicht...");
+  }
 }
 
-async function postTitle(path, title = {}) {
+async function putUser(path, user = {}) {
   let response = await fetch(path + ".json", {
     method: "POST",
     header: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(title),
+    body: JSON.stringify(user),
   });
   return (responseToJson = await response.json());
 }

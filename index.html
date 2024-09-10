@@ -88,7 +88,7 @@
       </div>
 
       <div class="login-buttons d-flex-spbe-center">
-        <button onclick="addUser()" type="submit">Log in</button>
+        <button type="submit">Log in</button>
         <button
           type="button"
           onclick="loginAsGuest()"
@@ -115,7 +115,7 @@
       <div class="w-100 d-flex-column-center gap-16">
         <div class="w-100 d-flex-column-center gap-24">
           <div class="w-100 d-flex-column pos-rel">
-            <input type="e-mail" placeholder="Email" required />
+            <input id="signup_email" type="e-mail" placeholder="Email" required />
             <img
               class="pos-abs top12-right21 cursor-p"
               src="/assets/img/png/mail.png"
@@ -123,7 +123,7 @@
           </div>
 
           <div class="w-100 d-flex-column pos-rel">
-            <input type="e-mail" placeholder="Name" required />
+            <input id="signup_name" type="text" placeholder="Name" required />
             <img
               class="pos-abs top12-right21 cursor-p"
               src="/assets/img/png/person.png"
@@ -132,7 +132,7 @@
 
           <div class="w-100 d-flex-column gap-8 pos-rel">
             <input
-              id="signup_password_field"
+              id="signup_password"
               type="password"
               placeholder="Password"
               required
@@ -153,19 +153,19 @@
 
           <div class="w-100 d-flex-column gap-8 pos-rel">
             <input
-              id="signup_confirm_password_field"
-              type="Confirm password"
-              placeholder="Password"
+              id="signup_c_password"
+              type="password"
+              placeholder="Confirm Password"
               required
             />
             <img
-              id="signup_confirm_lock_icon"
+              id="signup_c_lock_icon"
               class="pos-abs top12-right21 cursor-p"
               src="/assets/img/png/lock.png"
               alt="Lock icon"
             />
             <img
-              id="signup_confirm_toggle_password"
+              id="signup_c_toggle_password"
               class="pos-abs top12-right21 d-none cursor-p"
               src="/assets/img/png/visibility_off.png"
               alt="Toggle password visibility"
@@ -189,7 +189,7 @@
         </div>
       </div>
 
-      <button class="h-48" type="submit">Sign up</button>
+      <button onclick="addUser()" class="h-48" type="submit">Sign up</button>
     </form>
   </body>
 </html>
