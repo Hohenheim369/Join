@@ -4,6 +4,10 @@ let initials = [];
 const BASE_TASKS_URL =
   "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
+document.addEventListener("DOMContentLoaded", () => {
+  loadData(); // Stellen sicher, dass Daten geladen sind
+});
+
 // Funktion zum Rendern der gesamten Kontaktliste
 function renderContacts() {
   const contactList = document.getElementById("contact_list");
@@ -15,7 +19,7 @@ function renderContacts() {
     .then((data) => {
       if (data) {
         // Convert contacts to an array
-        contacts = Object.values(data).filter(contact => contact !== null); // Filter out null values
+        contacts = Object.values(data).filter((contact) => contact !== null); // Filter out null values
 
         // Update initials array
         initials = contacts.map((contact) => {
@@ -62,13 +66,13 @@ function renderContacts() {
 
 // Funktion zum Berechnen und Speichern der Initialen
 function updateInitials() {
-  initials = contacts.map(contact => {
-      let nameParts = contact.name.split(' ');
-      return nameParts.map(part => part.charAt(0).toUpperCase()).join('');
+  initials = contacts.map((contact) => {
+    let nameParts = contact.name.split(" ");
+    return nameParts.map((part) => part.charAt(0).toUpperCase()).join("");
   });
 
   // Initialen im localStorage speichern
-  localStorage.setItem('initials', JSON.stringify(initials));
+  localStorage.setItem("initials", JSON.stringify(initials));
 }
 
 function sleep(ms) {
@@ -110,7 +114,7 @@ async function openDialogEdit(index) {
   document.getElementById("inputEditPhone").dataset.index = index;
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
-  
+
   document.getElementById("big_letter_circle").innerHTML =
     generateBigLetterCircle(contact, initials);
 }
@@ -146,42 +150,6 @@ async function openDialogSuccesfully() {
   }, 300); // 1000 Millisekunden = 1 Sekunde
 }
 
-// Funktion zum Hinzufügen eines Kontakts
-// function addContact() {
-//   let name = document.getElementById("name").value;
-//   let email = document.getElementById("email").value;
-//   let phone = document.getElementById("phone").value;
-
-//   if (name && email && phone) {
-//     let newId = Date.now(); // Zeitstempel als eindeutige ID
-
-//     let newContact = {
-//       id: newId,
-//       name: name,
-//       email: email,
-//       phone: phone,
-//       color: getRandomColor(), // Zufällige Farbe zuweisen
-//       initials: name
-//         .split(" ")
-//         .map((part) => part.charAt(0).toUpperCase())
-//         .join(""), // Initialen berechnen
-//     };
-
-//     contacts.push(newContact);
-//     saveData(); // Kontakte speichern
-//     storeFirstAndLastNames();
-
-//     // Formular zurücksetzen
-//     document.getElementById("name").value = "";
-//     document.getElementById("email").value = "";
-//     document.getElementById("phone").value = "";
-//     renderContacts();
-//     // Kontaktliste neu rendern
-//   } else {
-//     alert("Bitte füllen Sie alle Felder aus.");
-//   }
-// }
-
 async function addContact() {
   let name = document.getElementById("name").value;
   let email = document.getElementById("email").value;
@@ -205,23 +173,23 @@ async function addContact() {
     // Kontakt zur Firebase-Datenbank hinzufügen
     try {
       const response = await fetch(
-        'https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts.json',
+        "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts.json",
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(newContact),
         }
       );
 
       if (response.ok) {
-        console.log('Neuer Kontakt erfolgreich gespeichert.');
+        console.log("Neuer Kontakt erfolgreich gespeichert.");
       } else {
-        console.error('Fehler beim Speichern des Kontakts:', response.status);
+        console.error("Fehler beim Speichern des Kontakts:", response.status);
       }
     } catch (error) {
-      console.error('Fehler beim Speichern in Firebase:', error);
+      console.error("Fehler beim Speichern in Firebase:", error);
     }
 
     // Kontakt lokal in einem Array speichern (optional, falls du das Array auch lokal brauchst)
@@ -269,9 +237,12 @@ function deleteContact(index) {
 
   console.log(`Attempting to delete contact with ID ${contactId}`);
 
-  fetch(`https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`, {
-    method: "DELETE",
-  })
+  fetch(
+    `https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`,
+    {
+      method: "DELETE",
+    }
+  )
     .then((response) => {
       if (response.ok) {
         contacts.splice(index, 1); // Entferne den Kontakt aus dem Array
@@ -287,7 +258,6 @@ function deleteContact(index) {
     .catch((error) => {
       console.error("Error deleting contact:", error);
     });
-    
 }
 
 function saveData() {
@@ -313,8 +283,10 @@ function loadData() {
     .then((response) => response.json())
     .then((data) => {
       if (data) {
-        contacts = Object.values(data).filter(contact => contact !== null && contact !== undefined);
-        initials = contacts.map(contact => contact.initials);
+        contacts = Object.values(data).filter(
+          (contact) => contact !== null && contact !== undefined
+        );
+        initials = contacts.map((contact) => contact.initials);
         storeFirstAndLastNames();
         renderContacts(); // Kontakte nach dem Laden rendern
       } else {
@@ -348,15 +320,11 @@ function editContact() {
 
   // Speichere die aktualisierten Daten in localStorage
   saveData();
+  loadData();
   storeFirstAndLastNames();
-  renderContacts();
   closeDialogEdit();
   displayContactInfo(index);
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadData(); // Stellen sicher, dass Daten geladen sind
-});
 
 // der contact der getarget wurde der die bg c ändern soll //
 function highlightContact(index) {
@@ -365,8 +333,7 @@ function highlightContact(index) {
     contacts[i].style.backgroundColor = "";
     contacts[i].style.color = "black";
   }
-  document.getElementById(`contact${index}`).style.backgroundColor =
-    "#27364a";
+  document.getElementById(`contact${index}`).style.backgroundColor = "#27364a";
   document.getElementById(`contact${index}`).style.color = "white";
 }
 
@@ -485,19 +452,22 @@ function storeFirstAndLastNames() {
   contactsCanBeAssigned.lastname = [];
 
   // Process each contact
-  contacts.forEach(contact => {
-    let nameParts = contact.name.split(' ');
+  contacts.forEach((contact) => {
+    let nameParts = contact.name.split(" ");
     if (nameParts.length > 1) {
       contactsCanBeAssigned.firstname.push(nameParts[0]);
-      contactsCanBeAssigned.lastname.push(nameParts.slice(1).join(' '));
+      contactsCanBeAssigned.lastname.push(nameParts.slice(1).join(" "));
     } else {
       contactsCanBeAssigned.firstname.push(nameParts[0]);
-      contactsCanBeAssigned.lastname.push('');
+      contactsCanBeAssigned.lastname.push("");
     }
   });
 
   // Save the separated names to local storage
-  localStorage.setItem('contactsCanBeAssigned', JSON.stringify(contactsCanBeAssigned));
+  localStorage.setItem(
+    "contactsCanBeAssigned",
+    JSON.stringify(contactsCanBeAssigned)
+  );
 }
 
 function truncate(text, maxLength = 20) {
@@ -506,24 +476,3 @@ function truncate(text, maxLength = 20) {
   }
   return text;
 }
-
-
-// async function deleteAllContacts() {
-//   const firebaseUrl = 'https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts.json'; // URL zu deinem Firebase-Pfad
-
-//   try {
-//     const response = await fetch(firebaseUrl, {
-//       method: 'DELETE', // HTTP DELETE-Methodenanforderung
-//     });
-
-//     if (response.ok) {
-//       console.log("Alle Kontakte wurden erfolgreich gelöscht.");
-//     } else {
-//       console.error("Fehler beim Löschen der Kontakte:", response.status);
-//     }
-//   } catch (error) {
-//     console.error("Fehler:", error);
-//   }
-// }
-
-// deleteAllContacts();
