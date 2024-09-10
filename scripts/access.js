@@ -93,10 +93,23 @@ function loginAsGuest() {
 const BASE_URL_S =
   "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
 
+async function addUser() {
+  const email = document.getElementById("signup_email").value.trim();
+  const name = document.getElementById("signup_name").value.trim();
+  const password = document.getElementById("signup_password").value;
+  const cPassword = document.getElementById("signup_c_password").value;
+  const userId = await getNewUserId();
+  let acceptedLegal = isLegalAccepted();
+
+  if (!validateInputs(email, name, password, cPassword, acceptedLegal)) {
+    return;
+  }
+
+  await performRegistrationWithErrorHandling(name, email, password, userId);
+}
+
 async function getNewUserId() {
-  let response = await fetch(
-    `https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/users/.json`
-  );
+  let response = await fetch(`${BASE_URL_S}users/.json`);
   let responseToJson = await response.json();
   let newUserId;
   if (responseToJson == null) {
@@ -115,40 +128,43 @@ function countId(responseToJson) {
   return countID;
 }
 
-async function addUser() {
-  const email = document.getElementById("signup_email").value.trim();
-  const name = document.getElementById("signup_name").value.trim();
-  const password = document.getElementById("signup_password").value;
-  const cPassword = document.getElementById("signup_c_password").value;
-  const userId = await getNewUserId();
+function isLegalAccepted() {
+  const checkButton = document.getElementById("signup_check_off");
+  const isChecked = checkButton.src.includes("true");
+  return isChecked;
+}
 
+function validateInputs(email, name, password, cPassword, acceptedLegal) {
   if (!email || !name || !password || !cPassword) {
     console.log("Please fill in all fields.");
-    return;
+    return false;
   }
-
   if (password !== cPassword) {
     console.log("Passwords do not match.");
-    return;
+    //Hinweistext und change borderColor
+    return false;
   }
+  if (!acceptedLegal) {
+    console.log("Please accept the Legal notice.");
+    return false;
+  }
+  return true;
+}
 
+async function performRegistrationWithErrorHandling(
+  name,
+  email,
+  password,
+  userId
+) {
   try {
-    const result = await postData(`${BASE_URL_S}users/${userId-1}/`, {
+    const result = await postData(`${BASE_URL_S}users/${userId - 1}/`, {
       user_name: name,
       user_email: email,
-      user_password: password, // In practice, the password should be hashed
+      user_password: password,
       user_id: userId,
     });
-
-    if (result) {
-      // Firebase returns a "name" property when the entry is successfully created
-      console.log("Registration successful!");
-      // Here you could perform additional actions, e.g., reset the form or redirect the user
-    } else {
-      console.log(
-        "There was a problem with the registration. Please try again."
-      );
-    }
+    handleRegistrationResult(result);
   } catch (error) {
     console.error("Error during registration:", error);
     console.log("An error occurred. Please try again later.");
@@ -167,6 +183,23 @@ async function postData(path = "", data = {}) {
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-
   return await response.json();
+}
+
+function handleRegistrationResult(result) {
+  if (result) {
+    console.log("Registration successful!");
+    resetForm();
+    // ToDos an dieser Stelle: Felder zurück setzen, Seite neu laden
+  } else {
+    console.log("There was a problem with the registration. Please try again.");
+  }
+}
+
+function resetForm() {
+  document.getElementById("signup_email").value = "";
+  document.getElementById("signup_name").value = "";
+  document.getElementById("signup_password").value = "";
+  document.getElementById("signup_c_password").value = "";
+  toggleCheckButton(`signup_check_off`);
 }
