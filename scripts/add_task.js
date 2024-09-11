@@ -2,9 +2,7 @@
 let TEST_URL = `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/`;
 
 async function loadTasks() {
-  let response = await fetch(
-    `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/.json`
-  );
+  let response = await fetch(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/.json`);
   let responseToJson = await response.json();
   let newTaskId;
   if (responseToJson == null) {
@@ -18,9 +16,9 @@ async function loadTasks() {
 function idCount(responseToJson) {
   let keys = Object.keys(responseToJson);
   let lastKey = keys[keys.length - 1];
-  let countID = responseToJson[lastKey].id;
-  countID++;
-  return countID;
+  let countId = responseToJson[lastKey].id;
+  countId++;
+  return countId;
 }
 
 async function createTask() {
@@ -33,10 +31,22 @@ async function createTask() {
     { name: "Lars1", done: false },
   ];
   let assignedTo = [5, 8];
-  postTitle(
-    `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${
-      taskId - 1
-    }/`,
+  putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo);
+}
+
+async function tasksArray(path, title = {}) {
+  let response = await fetch(path + ".json", {
+    method: "PUT",
+    header: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(title),
+  });
+  return (responseToJson = await response.json());
+}
+
+function putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo){
+  tasksArray(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId - 1}/`,
     {
       title: title,
       description: description,
@@ -50,13 +60,9 @@ async function createTask() {
   );
 }
 
-async function postTitle(path, title = {}) {
-  let response = await fetch(path + ".json", {
-    method: "PUT",
-    header: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(title),
-  });
-  return (responseToJson = await response.json());
+async function getContacts(){
+  let response = await fetch(`https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/.json`);
+  let responseToJson = await response.json();
+  console.log(responseToJson);
+
 }
