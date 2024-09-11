@@ -100,6 +100,7 @@ async function addUser() {
   const cPassword = document.getElementById("signup_c_password").value;
   const userId = await getNewUserId();
   let acceptedLegal = isLegalAccepted();
+  //Initialen ermitteln und übergeben
 
   if (!validateInputs(email, name, password, cPassword, acceptedLegal)) {
     return;
@@ -120,14 +121,6 @@ async function getNewUserId() {
   return newUserId;
 }
 
-function countId(responseToJson) {
-  let keys = Object.keys(responseToJson);
-  let lastKey = keys[keys.length - 1];
-  let countID = responseToJson[lastKey].user_id;
-  countID++;
-  return countID;
-}
-
 function isLegalAccepted() {
   const checkButton = document.getElementById("signup_check_off");
   const isChecked = checkButton.src.includes("true");
@@ -141,7 +134,7 @@ function validateInputs(email, name, password, cPassword, acceptedLegal) {
   }
   if (password !== cPassword) {
     console.log("Passwords do not match.");
-    //Hinweistext und change borderColor
+    //Hinweistext und change bordercolor
     return false;
   }
   if (!acceptedLegal) {
@@ -159,10 +152,11 @@ async function performRegistrationWithErrorHandling(
 ) {
   try {
     const result = await postData(`${BASE_URL_S}users/${userId - 1}/`, {
-      user_name: name,
-      user_email: email,
-      user_password: password,
-      user_id: userId,
+      name: name,
+      email: email,
+      password: password,
+      id: userId,
+      color: "#ffffff",
     });
     handleRegistrationResult(result);
   } catch (error) {

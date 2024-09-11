@@ -1,6 +1,19 @@
 let BASE_URL =
   "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/";
 
+let activUser = {
+  name: "Lars Schumacher",
+
+}
+
+function countId(responseToJson) {
+  let keys = Object.keys(responseToJson);
+  let lastKey = keys[keys.length - 1];
+  let countId = responseToJson[lastKey].user_id;
+  countId++;
+  return countId;
+}
+
 function toggleCheckButton(CheckButtonId) {
   const checkButton = document.getElementById(CheckButtonId);
   const isChecked = checkButton.src.includes("true");
