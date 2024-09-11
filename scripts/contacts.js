@@ -378,10 +378,10 @@ function clearEditForm() {
   const emailEditInput = document.getElementById("inputEditEmail");
   const phoneEditInput = document.getElementById("inputEditPhone");
 
-  // Alle Input-Felder leeren
-  nameEditInput.value = "";
-  emailEditInput.value = "";
-  phoneEditInput.value = "";
+  // // Alle Input-Felder leeren
+  // nameEditInput.value = "";
+  // emailEditInput.value = "";
+  // phoneEditInput.value = "";
 
   clearError(nameEditInput, "edit_field_alert_name");
   clearError(emailEditInput, "edit_field_alert_email");
@@ -455,7 +455,7 @@ function validateEditForm() {
   }
 
   // Email Validierung (überprüft auf gültiges E-Mail-Format, keine Einschränkung auf bestimmte Endungen)
-  const emailInput = document.getElementById("email");
+  const emailInput = document.getElementById("inputEditEmail");
   if (!emailInput.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
     setError(emailInput, "Ungültige E-Mail (test@test.de)", "edit_field_alert_email");
     isValid = false;
@@ -464,7 +464,7 @@ function validateEditForm() {
   }
 
   // Telefonnummer Validierung (nur Zahlen erlaubt)
-  const phoneInput = document.getElementById("phone");
+  const phoneInput = document.getElementById("inputEditPhone");
   if (!phoneInput.value.match(/^\d+$/)) {
     setError(phoneInput, "Ungültige Telefonnummer 0176 123 123", "edit_field_alert_phone");
     isValid = false;
