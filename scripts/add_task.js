@@ -8,17 +8,9 @@ async function loadTasks() {
   if (responseToJson == null) {
     newTaskId = 1;
   } else {
-    newTaskId = idCount(responseToJson);
+    newTaskId = countId(responseToJson);
   }
   return newTaskId;
-}
-
-function idCount(responseToJson) {
-  let keys = Object.keys(responseToJson);
-  let lastKey = keys[keys.length - 1];
-  let countId = responseToJson[lastKey].id;
-  countId++;
-  return countId;
 }
 
 async function createTask() {

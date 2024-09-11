@@ -9,7 +9,7 @@ let activUser = {
 function countId(responseToJson) {
   let keys = Object.keys(responseToJson);
   let lastKey = keys[keys.length - 1];
-  let countId = responseToJson[lastKey].user_id;
+  let countId = responseToJson[lastKey].id;
   countId++;
   return countId;
 }
