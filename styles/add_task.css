@@ -106,6 +106,11 @@ textarea {
   line-height: 14.4px;
 }
 
+.contact-list:hover{
+  border-radius: 10px;
+  background-color: #EEEEEE;
+}
+
 .dividing-bar {
   border-left: 1px solid #d1d1d1;
   min-height: 424px;

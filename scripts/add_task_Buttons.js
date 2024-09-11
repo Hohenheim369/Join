@@ -60,9 +60,8 @@ function clearButton(){
 function openSelect() {
   if (onclick = true) {
     document.getElementById('assigned_inactiv').classList.add('d-none');
-    getContacts();
+    // getContacts();
     document.getElementById('assigned_activ').classList.remove('d-none');
-    document.getElementById('contact_contant').innerHTML = showAssignedContact();
   }
 }
 

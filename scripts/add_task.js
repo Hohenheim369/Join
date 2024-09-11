@@ -26,19 +26,19 @@ async function createTask() {
   putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo);
 }
 
-async function tasksArray(path, title = {}) {
-  let response = await fetch(path + ".json", {
-    method: "PUT",
-    header: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(title),
-  });
-  return (responseToJson = await response.json());
-}
+// async function tasksArray(path, title = {}) {
+//   let response = await fetch(path + ".json", {
+//     method: "PUT",
+//     header: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(title),
+//   });
+//   return (responseToJson = await response.json());
+// }
 
 function putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo){
-  tasksArray(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId - 1}/`,
+  postData(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId - 1}/`,
     {
       title: title,
       description: description,
@@ -53,8 +53,19 @@ function putTasksContent(title, description, dueDate, taskId, subTasks, assigned
 }
 
 async function getContacts(){
+  document.getElementById('contact_contant').innerHTML = "";
   let response = await fetch(`https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/.json`);
-  let responseToJson = await response.json();
-  console.log(responseToJson);
+  let contacts = await response.json();
+  for (let contactsIndex = 0; contactsIndex < contacts.length; contactsIndex++) {
+    let eachContact = contacts[contactsIndex];
+    console.log(eachContact.name);
+    document.getElementById('contact_contant').innerHTML += showAssignedContact(eachContact);
+  }
+}
 
+function addContactToTask(CheckButtonId,CheckTaskButton, bgChange){
+  toggleCheckButton(CheckButtonId, CheckTaskButton);
+   let colorChange = document.getElementById(bgChange);
+   colorChange.classList.toggle('assigned-color-change');
+   colorChange.classList.toggle('contact-list');
 }

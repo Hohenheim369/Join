@@ -138,6 +138,12 @@ form{
   background-color: rgb(31, 215, 193);
 }
 
+.assigned-color-change{
+  background-color: #091931;
+  color: #ffffff;
+  border-radius: 10px;
+}
+
 .bg-255-122-0 {
   background-color: rgb(255, 122, 0);
 }

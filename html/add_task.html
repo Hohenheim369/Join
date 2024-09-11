@@ -22,7 +22,7 @@
     <script src="../scripts/add_task_template.js"></script>
     <script src="../script.js"></script>
   </head>
-  <body>
+  <body onload="getContacts()">
     <div id="desktop_template"></div>
     <div class="content">
       <h1>Add Task</h1>
@@ -51,15 +51,15 @@
           <div class="form-child-order">
             <label>Assigned to</label>
             <div id="assigned_contant" class="assigned-container">
-              <div id="assigned_inactiv">
+              <div id="assigned_inactiv" onclick="openSelect()">
                 <input
+                  disabled
                   class="placeholder-black"
                   type="text"
                   placeholder="Select contacts to assign"
                 />
                 <div class="hover-circle d-flex-center pos-abs">
                   <img
-                    onclick="openSelect()"
                     src="../assets/img/png-old/arrow_drop_down.png"
                     alt=""
                   />
@@ -192,15 +192,15 @@
           <div class="form-child-order">
             <label>Category<span class="required-sign">*</span></label>
             <div id="category_contant" class="category-container">
-              <div id="category_inactiv">
+              <div id="category_inactiv" onclick="openSelectCategory()">
                 <input
+                  disabled
                   class="placeholder-black"
                   type="text"
                   placeholder="Select task category"
                 />
                 <div class="hover-circle d-flex-center pos-abs">
                   <img
-                    onclick="openSelectCategory()"
                     src="../assets/img/png-old/arrow_drop_down.png"
                     alt=""
                   />
@@ -208,6 +208,7 @@
               </div>
               <div id="category_activ" class="d-none">
                 <input
+                  disabled
                   class="placeholder-black"
                   type="search"
                   placeholder="Select task category"

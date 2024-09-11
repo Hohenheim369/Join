@@ -14,10 +14,25 @@ function countId(responseToJson) {
   return countId;
 }
 
-function toggleCheckButton(CheckButtonId) {
+async function postData(path = "", data = {}) {
+  const response = await fetch(path + ".json", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();
+}
+
+function toggleCheckButton(CheckButtonId, CheckTaskButton) {
   const checkButton = document.getElementById(CheckButtonId);
   const isChecked = checkButton.src.includes("true");
-  checkButton.src = `/assets/img/png/check-button-${
+  checkButton.src = `/assets/img/png/check-${CheckTaskButton}-${
     isChecked ? "false" : "true"
   }.png`;
 }
