@@ -93,8 +93,12 @@ input:focus{
   border-color: #29abe2;
 }
 
-.input-red-border{  
+.border-alert{  
   border-color: rgb(255, 0, 31);
+}
+
+.bg-alert{
+  background-color: rgb(255, 129, 144);;
 }
 
 textarea:focus{
