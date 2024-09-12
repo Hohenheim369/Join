@@ -4,11 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join</title>
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="./assets/img/png/favicon2.png"
-    />
+    <link rel="icon" type="image/x-icon" href="./assets/img/png/favicon2.png" />
 
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./styles/fonts.css" />
@@ -23,7 +19,7 @@
 
     <div id="change_access" class="change-access d-flex-spbe-center">
       <div class="font-s-20 font-c-black">Not a Join user?</div>
-      <button class="font-s-16" onclick="toggleAccessWindow()">Sign up</button>
+      <button class="font-s-16" onclick="toggleAccessWindow(), resetForm()">Sign up</button>
     </div>
 
     <div class="legal d-flex-spbe-center">
@@ -31,10 +27,7 @@
       <a onclick="openLegal('./html/legal_notice.html')">Legal notice</a>
     </div>
 
-    <form
-      id="Login"
-      class="access-window w-652 d-flex-column-center gap-32"
-    >
+    <form id="Login" class="access-window w-652 d-flex-column-center gap-32">
       <div class="d-flex-column-center gap-16">
         <h1>Log in</h1>
         <div class="blue-line"></div>
@@ -43,7 +36,12 @@
       <div class="w-100 d-flex-column-center gap-20">
         <div class="w-100 d-flex-column-center gap-32">
           <div class="w-100 d-flex-column pos-rel">
-            <input id="login_email_field" type="e-mail" placeholder="Email" required />
+            <input
+              id="login_email_field"
+              type="e-mail"
+              placeholder="Email"
+              required
+            />
             <img
               class="pos-abs top12-right21 cursor-p"
               src="./assets/img/png/mail.png"
@@ -99,7 +97,11 @@
       </div>
     </form>
 
-    <form onsubmit="addUser(); return false" id="Signup" class="access-window w-598 d-flex-column-center gap-32 d-none">
+    <form
+      onsubmit="signUpProcess(); return false"
+      id="Signup"
+      class="access-window w-598 d-flex-column-center gap-32 d-none"
+    >
       <img
         class="litte-button wh-32 d-flex-center arrow"
         onclick="toggleAccessWindow()"
@@ -115,7 +117,12 @@
       <div class="w-100 d-flex-column-center gap-16">
         <div class="w-100 d-flex-column-center gap-24">
           <div class="w-100 d-flex-column pos-rel">
-            <input id="signup_email" type="email" placeholder="Email" required />
+            <input
+              id="signup_email"
+              type="email"
+              placeholder="Email"
+              required
+            />
             <img
               class="pos-abs top12-right21 cursor-p"
               src="./assets/img/png/mail.png"
@@ -170,22 +177,24 @@
               src="./assets/img/png/visibility_off.png"
               alt="Toggle password visibility"
             />
-            <div class="font-s-12 font-c-255-129-144">
-              Your passwords don't match. Please try again.
-            </div>
+            <div id="notice_field" class="font-s-12 font-c-255-129-144 d-flex-column gap-8"></div>
           </div>
         </div>
 
         <div class="d-flex-center gap-4">
           <img
-            onclick="toggleCheckButton(`signup_check_off`, 'button')"
+            onclick="toggleCheckButton(`signup_check_off`, 'button'), removeNoticeButtonBg()"
             id="signup_check_off"
             class="litte-button"
             src="./assets/img/png/check-button-false.png"
             alt=""
           />
           <div class="font-c-168-168-168">I accept the</div>
-          <a class="link-privacy-policy" onclick="openLegal('./html/legal_notice.html')">Legal notice</a>
+          <a
+            class="link-privacy-policy"
+            onclick="openLegal('./html/legal_notice.html')"
+            >Legal notice</a
+          >
         </div>
       </div>
 

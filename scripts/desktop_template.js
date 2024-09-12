@@ -1,27 +1,171 @@
+document.addEventListener("DOMContentLoaded", () => {
+  // Lade das Template und warte, bis es fertig ist
+  loadTemplate().then(() => {
+    // Setze die Sichtbarkeit des Bodys auf sichtbar
+    document.body.style.visibility = "visible";
+    // Aktualisiere die Sidebar-Icons nach dem Laden des Templates
+    updateSidebarIcons();
+    // Füge die Event-Listener für die Links hinzu
+    initializeLinks();
+    // Überprüfe den Parameter hideIcons, aber erst nach dem Laden des Templates
+    const hideIcons = getQueryParam("hideIcons");
+    if (hideIcons === "true") {
+      hideElement("header_icons");
+      hideElement("icon_bar");
+    }
+  });
+});
+
 document.addEventListener("click", (event) => {
   const logOutElement = document.getElementById("log_out");
   const initialsElement = document.getElementById("user_profile_initials");
 
-  // Öffnen/Schließen des log_out-Menüs bei Klick auf user_profile_initials
   if (initialsElement.contains(event.target)) {
-    event.stopPropagation(); // Verhindert, dass das Klick-Ereignis sich ausbreitet
-    logOutElement.classList.toggle("d-none"); // Ein-/Ausblenden des log_out-Elements
-    initialsElement.classList.toggle("bg-color"); // Hinzufügen/Entfernen der Hintergrundfarbe
+    event.stopPropagation(); // Klick auf Initialen
+    logOutElement.classList.toggle("d-none");
+    initialsElement.classList.toggle("bg-color");
+  } else if (
+    !logOutElement.classList.contains("d-none") &&
+    !logOutElement.contains(event.target)
+  ) {
+    logOutElement.classList.add("d-none"); // Klick außerhalb
+    initialsElement.classList.remove("bg-color");
+  }
+});
+
+async function loadTemplate() {
+  try {
+    const response = await fetch("../assets/templates/desktop_template.html");
+    if (!response.ok) {
+      throw new Error("Netzwerkantwort war nicht okay");
+    }
+
+    const data = await response.text();
+    document.getElementById("desktop_template").innerHTML = data;
+
+    // Custom Event "loadTemplated" auslösen, nachdem das Template geladen wurde
+    const event = new Event("loadTemplated");
+    document.dispatchEvent(event);
+  } catch (error) {
+    console.error("Fehler beim Laden des Templates:", error);
+  }
+}
+
+function updateSidebarIcons() {
+  const currentPage = window.location.pathname.split("/").pop();
+  const iconPages = ["summary", "board", "contacts", "add_task"];
+
+  iconPages.forEach(page => updateIcon(page, currentPage));
+  updatePageState("privacy-policy.html", ".privacy-policy-link", currentPage);
+  updatePageState("legal-notice.html", ".legal-notice-link", currentPage);
+}
+
+function updateIcon(page, currentPage) {
+  const linkElement = document.querySelector(`.${page}-link`);
+  const iconElement = linkElement?.querySelector('img'); // Annahme: Es gibt ein <img>-Element im Link
+  const isCurrentPage = currentPage === `${page}.html` || currentPage === `${page.replace('_', '-')}.html`; // Abdeckung von add_task
+
+  if (linkElement && iconElement) {
+    const iconColor = isCurrentPage ? "white" : "grey";
+    iconElement.src = `../assets/img/png/${page}-${iconColor}.png`; // Aktualisiere das Icon
+    linkElement.classList.toggle("active", isCurrentPage);
+    linkElement.classList.toggle("disabled", isCurrentPage);
+  }
+}
+
+function updatePageState(page, selector, currentPage) {
+  const linkElement = document.querySelector(selector);
+  if (linkElement) {
+    linkElement.classList.toggle("active", currentPage === page);
+    linkElement.classList.toggle("disabled", currentPage === page);
+  }
+}
+
+function initializeLinks() {
+  handleLink("policy_link", "privacy-policy.html", handleClick);
+  handleLink("legal_link", "legal_notice.html", handleClickLegal);
+}
+
+function handleLink(id, page, clickHandler) {
+  const link = document.getElementById(id);
+  if (!link) {
+    console.error(`Element mit ID "${id}" nicht gefunden.`);
+    return;
   }
 
-  // Schließen des log_out-Menüs bei Klick außerhalb des Menüs
-  document.addEventListener("click", (event) => {
-    // Schließen nur, wenn log_out sichtbar ist und Klick nicht auf log_out oder user_profile_initials war
-    if (
-      !logOutElement.classList.contains("d-none") &&
-      !logOutElement.contains(event.target) &&
-      !initialsElement.contains(event.target)
-    ) {
-      logOutElement.classList.add("d-none"); // Versteckt log_out-Element
-      initialsElement.classList.remove("bg-color"); // Entfernt Hintergrundfarbe
-    }
-  });
-});
+  if (window.location.pathname.includes(page)) {
+    disableLink(link);
+  } else {
+    setupLink(link, clickHandler);
+  }
+}
+
+function setupLink(link, clickHandler) {
+  if (localStorage.getItem(link.id + "_disabled") === "true") {
+    localStorage.removeItem(link.id + "_disabled");
+    link.classList.remove("disabled");
+  }
+  link.addEventListener("click", clickHandler);
+}
+
+function disableLink(link) {
+  link.classList.add("disabled");
+  link.removeEventListener("click", handleClick);
+  link.removeEventListener("click", handleClickLegal);
+}
+
+function handleClick(event) {
+  event.preventDefault(); // Verhindert die Standardaktion des Links
+  var policyLink = document.getElementById("policy_link");
+  if (policyLink) {
+    disableLink(policyLink);
+
+    // Verzögere den Seitenwechsel, um sicherzustellen, dass der Status gespeichert wird
+    setTimeout(() => {
+      window.location.href = policyLink.href;
+    }, 100); // 100 ms Verzögerung
+  }
+}
+
+function handleClickLegal(event) {
+  event.preventDefault(); // Verhindert die Standardaktion des Links
+  var legalLink = document.getElementById("legal_link");
+  if (legalLink) {
+    disableLink(legalLink);
+
+    // Verzögere den Seitenwechsel, um sicherzustellen, dass der Status gespeichert wird
+    setTimeout(() => {
+      window.location.href = legalLink.href;
+    }, 100); // 100 ms Verzögerung
+  }
+}
+
+function disableLink(link) {
+  link.classList.add("disabled"); // Füge die 'disabled'-Klasse hinzu
+  localStorage.setItem(link.id + "_disabled", "true"); // Speichere den Status im Local Storage
+  link.removeEventListener("click", handleClick); // Entferne den Event-Listener, um weitere Klicks zu verhindern
+}
+
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+function hideElement(id) {
+  const element = document.getElementById(id);
+  if (element) {
+    console.log(`${id} gefunden, füge d-none hinzu`);
+    element.classList.add("d-none");
+    hideArrowBack();
+  }
+}
+
+function hideArrowBack() {
+  const arrowBack = document.getElementById("arrow_back");
+  if (arrowBack) {
+    arrowBack.classList.add("d-none");
+  }
+}
 
 // document.addEventListener("DOMContentLoaded", () => {
 // Event-Listener für die Includes-Loaded-Verarbeitung
@@ -96,233 +240,3 @@ document.addEventListener("click", (event) => {
 // function logOut() {
 //   localStorage.removeItem("loggedInUserName");
 // }
-
-function updateSidebarIcons() {
-  const currentPage = window.location.pathname.split('/').pop(); // Extrahiere nur den Dateinamen
-
-  // Pfade zu den grauen und weißen Icons
-  const iconPaths = {
-    summary: {
-      grey: "../assets/img/png/summary-grey.png",
-      white: "../assets/img/png/summary-white.png",
-    },
-    add_task: {
-      grey: "../assets/img/png/add-task-grey.png",
-      white: "../assets/img/png/add-task-white.png",
-    },
-    board: {
-      grey: "../assets/img/png/board-grey.png",
-      white: "../assets/img/png/board-white.png",
-    },
-    contacts: {
-      grey: "../assets/img/png/contacts-grey.png",
-      white: "../assets/img/png/contacts-white.png",
-    },
-  };
-
-  // Links zu den relevanten Seiten
-  const links = {
-    summary: document.querySelector(".summary-link"),
-    add_task: document.querySelector(".add-task-link"),
-    board: document.querySelector(".board-link"),
-    contacts: document.querySelector(".contacts-link"),
-    privacyPolicy: document.querySelector(".privacy-policy-link"),
-    legalNotice: document.querySelector(".legal-notice-link"),
-  };
-
-  // Für die Seiten, die Icons ändern müssen
-  const pagesWithIcons = ["summary", "add_task", "board", "contacts"];
-
-  for (const page of pagesWithIcons) {
-    const linkElement = links[page];
-    const isCurrentPage = currentPage === (page === 'add_task' ? 'add_task.html' : `${page}.html`);
-    
-    if (linkElement) {
-      if (isCurrentPage) {
-        changeIcon(page, iconPaths[page].white);
-        linkElement.classList.add("active", "disabled");
-      } else {
-        changeIcon(page, iconPaths[page].grey);
-        linkElement.classList.remove("active", "disabled");
-      }
-    }
-  }
-
-  // Für die Seiten, die keine Icons ändern müssen
-  if (currentPage === "privacy-policy.html") {
-    const privacyLinkElement = links.privacyPolicy;
-    if (privacyLinkElement) {
-      privacyLinkElement.classList.add("active", "disabled");
-    }
-  } else if (links.privacyPolicy) {
-    links.privacyPolicy.classList.remove("active", "disabled");
-  }
-
-  if (currentPage === "legal-notice.html") {
-    const legalNoticeLinkElement = links.legalNotice;
-    if (legalNoticeLinkElement) {
-      legalNoticeLinkElement.classList.add("active", "disabled");
-    }
-  } else if (links.legalNotice) {
-    links.legalNotice.classList.remove("active", "disabled");
-  }
-}
-
-// Funktion zum Ändern des Icons
-function changeIcon(page, newIconPath) {
-  // Ersetze "_" durch "-" im Selektor, weil die Klassen Bindestriche haben
-  const linkElement = document.querySelector(`.${page.replace('_', '-')}-link img`);
-  
-  if (linkElement) {
-    console.log(`Changing icon for ${page} to ${newIconPath}`); // Debug-Ausgabe
-    linkElement.src = newIconPath;
-  } else {
-    console.log(`No img element found for ${page}`); // Debug-Ausgabe
-  }
-}
-
-// Rufe updateSidebarIcons auf, wenn das DOM vollständig geladen ist
-document.addEventListener("DOMContentLoaded", updateSidebarIcons);
-
-// Funktion zum Laden des Templates
-function loadTemplate() {
-  fetch("../assets/templates/desktop_template.html")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Netzwerkantwort war nicht okay");
-      }
-      return response.text();
-    })
-    .then((data) => {
-      document.getElementById("desktop_template").innerHTML = data;
-
-      // Custom Event "loadTemplated" auslösen, nachdem das Template geladen wurde
-      const event = new Event("loadTemplated");
-      document.dispatchEvent(event);
-    })
-    .catch((error) => {
-      console.error("Fehler beim Laden des Templates:", error);
-    });
-}
-
-// Template beim Laden der Seite einbinden
-window.addEventListener("DOMContentLoaded", loadTemplate);
-
-// Sobald das Template geladen ist, die Sichtbarkeit des Bodys auf sichtbar setzen
-document.addEventListener("loadTemplated", () => {
-  document.body.style.visibility = "visible";
-
-  // Aktualisiere die Sidebar-Icons nach dem Laden des Templates
-  updateSidebarIcons();
-
-  // Füge die Event-Listener für die Links hinzu
-  initializeLinks();
-});
-
-function initializeLinks() {
-  var policyLink = document.getElementById("policy_link");
-  var legalLink = document.getElementById("legal_link");
-
-  // Privacy Policy Link
-  if (policyLink) {
-    if (window.location.pathname.includes("privacy-policy.html")) {
-      // Deaktiviere den Link, wenn du auf der Privacy Policy-Seite bist
-      disableLink(policyLink);
-    } else {
-      // Andernfalls setze den Link in den Standardzustand und füge den Klick-Event-Listener hinzu
-      if (localStorage.getItem("policy_link_disabled") === "true") {
-        // Falls der Link im Local Storage als deaktiviert gespeichert ist, wiederherstellen
-        localStorage.removeItem("policy_link_disabled");
-        policyLink.classList.remove("disabled");
-        policyLink.addEventListener("click", handleClick);
-      } else {
-        policyLink.addEventListener("click", handleClick);
-      }
-    }
-  } else {
-    console.error('Element mit ID "policy_link" nicht gefunden.');
-  }
-
-  // Legal Notice Link
-  if (legalLink) {
-    if (window.location.pathname.includes("legal_notice.html")) {
-      // Deaktiviere den Link, wenn du auf der Legal Notice-Seite bist
-      disableLink(legalLink);
-    } else {
-      // Andernfalls setze den Link in den Standardzustand und füge den Klick-Event-Listener hinzu
-      if (localStorage.getItem("legal_link_disabled") === "true") {
-        // Falls der Link im Local Storage als deaktiviert gespeichert ist, wiederherstellen
-        localStorage.removeItem("legal_link_disabled");
-        legalLink.classList.remove("disabled");
-        legalLink.addEventListener("click", handleClickLegal);
-      } else {
-        legalLink.addEventListener("click", handleClickLegal);
-      }
-    }
-  } else {
-    console.error('Element mit ID "legal_link" nicht gefunden.');
-  }
-}
-
-function handleClick(event) {
-  event.preventDefault(); // Verhindert die Standardaktion des Links
-  var policyLink = document.getElementById("policy_link");
-  if (policyLink) {
-    disableLink(policyLink);
-
-    // Verzögere den Seitenwechsel, um sicherzustellen, dass der Status gespeichert wird
-    setTimeout(() => {
-      window.location.href = policyLink.href;
-    }, 100); // 100 ms Verzögerung
-  }
-}
-
-function handleClickLegal(event) {
-  event.preventDefault(); // Verhindert die Standardaktion des Links
-  var legalLink = document.getElementById("legal_link");
-  if (legalLink) {
-    disableLink(legalLink);
-
-    // Verzögere den Seitenwechsel, um sicherzustellen, dass der Status gespeichert wird
-    setTimeout(() => {
-      window.location.href = legalLink.href;
-    }, 100); // 100 ms Verzögerung
-  }
-}
-
-function disableLink(link) {
-  link.classList.add("disabled"); // Füge die 'disabled'-Klasse hinzu
-  localStorage.setItem(link.id + "_disabled", "true"); // Speichere den Status im Local Storage
-  link.removeEventListener("click", handleClick); // Entferne den Event-Listener, um weitere Klicks zu verhindern
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Funktion, um URL-Parameter auszulesen
-  function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-  }
-
-  // Überprüfe den Parameter hideIcons, aber erst nach dem Laden des Templates
-  document.addEventListener("loadTemplated", function () {
-    const hideIcons = getQueryParam("hideIcons");
-
-    if (hideIcons === "true") {
-      // Füge die "d-none" Klasse zu den gewünschten Elementen hinzu
-      const headerIcons = document.getElementById("header_icons");
-      const iconBar = document.getElementById("icon_bar");
-
-      if (headerIcons) {
-        console.log("header_icons gefunden, füge d-none hinzu");
-        headerIcons.classList.add("d-none");
-        document.getElementById("arrow_back").classList.add("d-none")
-      }
-
-      if (iconBar) {
-        console.log("icon_bar gefunden, füge d-none hinzu");
-        iconBar.classList.add("d-none");
-        document.getElementById("arrow_back").classList.add("d-none")
-      }
-    }
-  });
-});

@@ -90,25 +90,101 @@ function loginAsGuest() {
   window.location.href = "./html/summary.html";
 }
 
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
+
 const BASE_URL_S =
   "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
 
-async function addUser() {
-  const email = document.getElementById("signup_email").value.trim();
-  const name = document.getElementById("signup_name").value.trim();
-  const password = document.getElementById("signup_password").value;
-  const cPassword = document.getElementById("signup_c_password").value;
-  const userId = await getNewUserId();
-  let acceptedLegal = isLegalAccepted();
-  //Initialen ermitteln und übergeben
+// 1.  Form validieren-----------------------------------------------
+function removeNoticeButtonBg(){
+  const checkButton = document.getElementById("signup_check_off");    
+  checkButton.classList.remove('bg-alert');
+}
 
-  if (!validateInputs(email, name, password, cPassword, acceptedLegal)) {
-    return;
+function isLegalAccepted() {
+  const checkButton = document.getElementById("signup_check_off");
+  const isChecked = checkButton.src.includes("true");
+  return isChecked;
+}
+
+function validateEmail(email, noticeField) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValidEmail = emailRegex.test(email);
+
+  if (!isValidEmail) {
+    console.log("Invalid email format.");
+    noticeField.innerHTML += `<div>Please enter a valid email address.</div>`;
+    document.getElementById("signup_email").classList.add('border-alert');
   }
 
-  await performRegistrationWithErrorHandling(name, email, password, userId);
+  return isValidEmail;
 }
-//global outsourced if finished 
+
+function checkPasswordMatch(password, cPassword, noticeField) {
+  if (password !== cPassword) {
+    console.log("Passwords do not match.");
+    noticeField.innerHTML += `<div>Your passwords don't match. Please try again.</div>`;
+    return false;
+  }
+  return true;
+}
+
+function checkPasswordComplexity(password, noticeField) {
+  const complexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,}$/;
+  
+  if (!complexityRegex.test(password)) {
+    console.log("Password does not meet complexity requirements.");
+    noticeField.innerHTML += `<div>Your password must be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.</div>`;
+    return false;
+  }
+  return true;
+}
+
+function validatePassword(password, cPassword, noticeField) {
+  let isValidPassword = true;
+  const passwordField = document.getElementById("signup_password");
+  const cPasswordField = document.getElementById("signup_c_password");
+
+  if (!checkPasswordComplexity(password, noticeField)) {
+    passwordField.classList.add('border-alert');
+    isValidPassword = false;
+  }
+
+  if (!checkPasswordMatch(password, cPassword, noticeField)) {
+    passwordField.classList.add('border-alert');
+    cPasswordField.classList.add('border-alert');
+    isValidPassword = false;
+  }
+  return isValidPassword;
+}
+
+function validateInputs(email, password, cPassword) {
+  const noticeField = document.getElementById("notice_field");
+  noticeField.innerHTML = "";
+
+  let isValid = true;
+  let acceptedLegal = isLegalAccepted();
+
+  isValid = validateEmail(email, noticeField);
+
+  isValid = validatePassword(password, cPassword, noticeField);
+  
+  if (!acceptedLegal) {
+    const checkButton = document.getElementById("signup_check_off");
+    console.log("Please accept the Legal notice.");
+    noticeField.innerHTML += `<div>Please accept the Legal notice.</div>`;
+    checkButton.classList.add('bg-alert');
+    isValid = false;
+  }
+
+  if (!isValid) {
+    throw new Error("Error in validation");
+  }
+
+  return true;
+}
+
 async function getNewUserId() {
   let response = await fetch(`${BASE_URL_S}users/.json`);
   let responseToJson = await response.json();
@@ -121,35 +197,18 @@ async function getNewUserId() {
   return newUserId;
 }
 
-function isLegalAccepted() {
-  const checkButton = document.getElementById("signup_check_off");
-  const isChecked = checkButton.src.includes("true");
-  return isChecked;
+function handleRegistrationResult(result) {
+  if (result) {
+    console.log("Registration successful!");
+  } else {
+    console.log("There was a problem with the registration. Please try again.");
+  }
 }
 
-function validateInputs(email, name, password, cPassword, acceptedLegal) {
-  if (!email || !name || !password || !cPassword) {
-    console.log("Please fill in all fields.");
-    return false;
-  }
-  if (password !== cPassword) {
-    console.log("Passwords do not match.");
-    //Hinweistext und change bordercolor
-    return false;
-  }
-  if (!acceptedLegal) {
-    console.log("Please accept the Legal notice.");
-    return false;
-  }
-  return true;
-}
+async function addUser(email, name, password) {
+  const userId = await getNewId();
+  //Initialen ermitteln und übergeben
 
-async function performRegistrationWithErrorHandling(
-  name,
-  email,
-  password,
-  userId
-) {
   try {
     const result = await postData(`${BASE_URL_S}users/${userId - 1}/`, {
       name: name,
@@ -165,6 +224,21 @@ async function performRegistrationWithErrorHandling(
   }
 }
 
+async function postData(path = "", data = {}) {
+  const response = await fetch(path + ".json", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();
+}
+
 function handleRegistrationResult(result) {
   if (result) {
     console.log("Registration successful!");
@@ -177,8 +251,48 @@ function handleRegistrationResult(result) {
 
 function resetForm() {
   document.getElementById("signup_email").value = "";
+  document.getElementById("signup_email").classList.remove('border-alert');
+
   document.getElementById("signup_name").value = "";
+
   document.getElementById("signup_password").value = "";
+  document.getElementById("signup_password").classList.remove('border-alert');
+
   document.getElementById("signup_c_password").value = "";
-  toggleCheckButton(`signup_check_off`);
+  document.getElementById("signup_c_password").classList.remove('border-alert');
+
+  document.getElementById(signup_check_off).src = `/assets/img/png/check-button-false.png`;
 }
+
+
+// 4.  zu login-----------------------------------------------------------
+
+
+
+// HAUPTFUNKTION----------------------------------------------------------
+// HAUPTFUNKTION----------------------------------------------------------
+// HAUPTFUNKTION----------------------------------------------------------
+
+async function signUpProcess() {
+  const email = document.getElementById("signup_email").value.trim();
+  const name = document.getElementById("signup_name").value.trim();
+  const password = document.getElementById("signup_password").value;
+  const cPassword = document.getElementById("signup_c_password").value;
+
+  // 1.  Form validieren
+  validateInputs(email, name, password, cPassword)
+
+  // 2.  pushen der User
+  addUser(email, name, password);
+
+  // 3.  Form reset
+  resetForm();
+
+  // 4.  zu login
+}
+
+
+
+
+
+
