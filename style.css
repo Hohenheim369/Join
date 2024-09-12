@@ -14,6 +14,7 @@ body {
   height: calc(100% - 96px);
   background-color: rgb(246, 247, 248);
   color: rgb(42, 54, 71);
+  visibility: hidden;
 }
 
 .content {
