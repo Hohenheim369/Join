@@ -59,9 +59,13 @@
 }
 
 .kanban-add-button {
-  padding: 0;
+  padding: 0px;
   background-color: transparent;
   border: none;
+}
+
+.kanban-add-button svg {
+  padding: 0px 2px 0px 0px; 
 }
 
 .kanban-add-button:hover {
