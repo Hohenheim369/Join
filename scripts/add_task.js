@@ -1,8 +1,9 @@
 //for testing reasons my own database
-let TEST_URL = `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/`;
-
+let TEST_URL = `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/`;
+let selectedContacts = [];
+//global outsourced if finished 
 async function loadTasks() {
-  let response = await fetch(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/.json`);
+  let response = await fetch(`${TEST_URL}tasks/.json`);
   let responseToJson = await response.json();
   let newTaskId;
   if (responseToJson == null) {
@@ -26,19 +27,8 @@ async function createTask() {
   putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo);
 }
 
-// async function tasksArray(path, title = {}) {
-//   let response = await fetch(path + ".json", {
-//     method: "PUT",
-//     header: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(title),
-//   });
-//   return (responseToJson = await response.json());
-// }
-
 function putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo){
-  postData(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId - 1}/`,
+  postData(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId-1}/`,
     {
       title: title,
       description: description,
@@ -52,20 +42,51 @@ function putTasksContent(title, description, dueDate, taskId, subTasks, assigned
   );
 }
 
-async function getContacts(){
+async function getContacts() {
   document.getElementById('contact_contant').innerHTML = "";
   let response = await fetch(`https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/.json`);
   let contacts = await response.json();
-  for (let contactsIndex = 0; contactsIndex < contacts.length; contactsIndex++) {
-    let eachContact = contacts[contactsIndex];
-    console.log(eachContact.name);
-    document.getElementById('contact_contant').innerHTML += showAssignedContact(eachContact);
+  window.allContacts = contacts;
+  displayContacts(contacts);
+}
+
+function displayContacts(contacts) {
+  document.getElementById('contact_contant').innerHTML = "";
+  for (let contact of contacts) {
+      document.getElementById('contact_contant').innerHTML += showAssignedContactList(contact);
+      document.querySelector(`#bg_task_${contact.id}`).addEventListener('click', () => addContactAssigned(contact.name));
   }
 }
 
-function addContactToTask(CheckButtonId,CheckTaskButton, bgChange){
+document.getElementById('assigned_to').addEventListener('input', searchContact);
+
+function searchContact() {
+  let searContact = document.getElementById('assigned_to').value.toLowerCase();
+  let filteredContacts = window.allContacts.filter(contact => 
+      contact.name.toLowerCase().includes(searContact));
+  displayContacts(filteredContacts);
+}
+
+function addContactAssigned(contactName) {
+  if (!selectedContacts.includes(contactName)) {
+      selectedContacts.push(contactName);
+      updateSelectedContactsDisplay();
+  }
+}
+
+function updateSelectedContactsDisplay() {
+  const selectedDiv = document.getElementById('selected_contacts');
+  selectedDiv.innerHTML = "";
+  selectedContacts.forEach(name => {
+      const nameDiv = document.createElement('div');
+      nameDiv.textContent = name;
+      selectedDiv.appendChild(nameDiv);
+  });
+}
+
+function addContactToTask(CheckButtonId, CheckTaskButton, bgChange) {
   toggleCheckButton(CheckButtonId, CheckTaskButton);
-   let colorChange = document.getElementById(bgChange);
-   colorChange.classList.toggle('assigned-color-change');
-   colorChange.classList.toggle('contact-list');
+  let colorChange = document.getElementById(bgChange);
+  colorChange.classList.toggle('assigned-color-change');
+  colorChange.classList.toggle('contact-list');
 }

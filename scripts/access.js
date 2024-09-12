@@ -108,7 +108,7 @@ async function addUser() {
 
   await performRegistrationWithErrorHandling(name, email, password, userId);
 }
-
+//global outsourced if finished 
 async function getNewUserId() {
   let response = await fetch(`${BASE_URL_S}users/.json`);
   let responseToJson = await response.json();
@@ -163,21 +163,6 @@ async function performRegistrationWithErrorHandling(
     console.error("Error during registration:", error);
     console.log("An error occurred. Please try again later.");
   }
-}
-
-async function postData(path = "", data = {}) {
-  const response = await fetch(path + ".json", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return await response.json();
 }
 
 function handleRegistrationResult(result) {
