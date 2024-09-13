@@ -1,5 +1,6 @@
 body {
   margin: 0px;
+  visibility: hidden;
 }
 
 .d-flex {
@@ -9,7 +10,6 @@ body {
 .content-policy {
   overflow: scroll;
   gap: 21px;
-  width: 1014px;
 }
 
 .content-policy::-webkit-scrollbar {
@@ -48,18 +48,13 @@ h1 {
   cursor: pointer;
 }
 
-
 .headline {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-
- 
-
-
- /* die klassen wenn keiner ein geloggt ist  */
+/* die klassen wenn keiner ein geloggt ist  */
 /* .not-logged-in .icon-box {
   display: none !important;
 }

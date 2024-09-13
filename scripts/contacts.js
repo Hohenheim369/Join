@@ -403,13 +403,25 @@ async function validateForm() {
   const nameInput = document.getElementById("name");
   const emailInput = document.getElementById("email");
   const phoneInput = document.getElementById("phone");
-  const nameValid = validateInput(nameInput, /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/, 
-    "Ungültiger Name oder zu lang (mindestens zwei Wörter, max. 23 Zeichen)", 
-    "field_alert_name", 23);
-  const emailValid = validateInput(emailInput, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 
-    "Ungültige E-Mail (test@test.de)", "field_alert_email");
-  const phoneValid = validateInput(phoneInput, /^\d+$/, 
-    "Ungültige Telefonnummer 0176 123 123", "field_alert_phone");
+  const nameValid = validateInput(
+    nameInput,
+    /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
+    "Ungültiger Name oder zu lang (mindestens zwei Wörter, max. 23 Zeichen)",
+    "field_alert_name",
+    23
+  );
+  const emailValid = validateInput(
+    emailInput,
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    "Ungültige E-Mail (test@test.de)",
+    "field_alert_email"
+  );
+  const phoneValid = validateInput(
+    phoneInput,
+    /^\d+$/,
+    "Ungültige Telefonnummer 0176 123 123",
+    "field_alert_phone"
+  );
   if (nameValid && emailValid && phoneValid) {
     await addContact();
     closeDialog();
@@ -421,18 +433,29 @@ function validateEditForm() {
   const nameInput = document.getElementById("inputEditName");
   const emailInput = document.getElementById("inputEditEmail");
   const phoneInput = document.getElementById("inputEditPhone");
-  const nameValid = validateInput(nameInput, /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/, 
-    "Ungültiger Name oder zu lang (mindestens zwei Wörter, max. 23 Zeichen)", 
-    "edit_field_alert_name", 23);
-  const emailValid = validateInput(emailInput, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 
-    "Ungültige E-Mail (test@test.de)", "edit_field_alert_email");
-  const phoneValid = validateInput(phoneInput, /^\d+$/, 
-    "Ungültige Telefonnummer 0176 123 123", "edit_field_alert_phone");
+  const nameValid = validateInput(
+    nameInput,
+    /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
+    "Ungültiger Name oder zu lang (mindestens zwei Wörter, max. 23 Zeichen)",
+    "edit_field_alert_name",
+    23
+  );
+  const emailValid = validateInput(
+    emailInput,
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    "Ungültige E-Mail (test@test.de)",
+    "edit_field_alert_email"
+  );
+  const phoneValid = validateInput(
+    phoneInput,
+    /^\d+$/,
+    "Ungültige Telefonnummer 0176 123 123",
+    "edit_field_alert_phone"
+  );
   if (nameValid && emailValid && phoneValid) {
     editContact();
   }
 }
-
 
 function storeFirstAndLastNames() {
   // Reset the storage arrays
