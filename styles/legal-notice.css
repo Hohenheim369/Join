@@ -28,7 +28,6 @@ span {
   gap: 30px;
   color: black;
   overflow-y: scroll;
-  width: 1014px;
 }
 
 .content-legal-notice::-webkit-scrollbar {
@@ -66,11 +65,10 @@ span {
 }
 
 .arrow-back {
-  left: 1307px;
+  left: calc(100% - 139px);
   top: 225px;
   position: absolute;
   width: 37px;
-  height: 37px;
 }
 
 .arrow-back:hover {

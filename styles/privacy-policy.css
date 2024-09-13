@@ -37,11 +37,10 @@ h1 {
 }
 
 .arrow-back {
-  left: 1307px;
+  left: calc(100% - 139px);
   top: 225px;
   position: absolute;
   width: 37px;
-  height: 37px;
 }
 
 .arrow-back:hover {
