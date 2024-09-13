@@ -1,71 +1,49 @@
-let contacts = [];
-let initials = [];
-let contactsCanBeAssigned = {
-  firstname: [],
-  lastname: [],
-};
-let currentContactIndex;
-
 const BASE_TASKS_URL =
   "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
+async function fetchContactsFromFirebase() {
+  const response = await fetch(BASE_TASKS_URL + ".json");
+  const data = await response.json();
+  return data;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  loadData(); // Stellen sicher, dass Daten geladen sind
+  renderContent(); // Stellen sicher, dass Daten geladen sind
 });
 
-function renderContacts() {
+async function renderContent() {
   const contactList = document.getElementById("contact_list");
-  contactList.innerHTML = ""; // Clear previous contents
+  contactList.innerHTML = ""; // Vorherigen Inhalt löschen
+  const data = await fetchContactsFromFirebase(); // Daten von Firebase abrufen
+  const contacts = Object.values(data);
+  const groupedContacts = groupContacts(contacts); // Kontakte nach Initialen gruppieren
+  renderContactsList(groupedContacts, contactList); // Kontaktliste rendern
+}
 
-  // Load contacts from Firebase
-  fetch(BASE_TASKS_URL + ".json")
-    .then((response) => response.json())
-    .then((data) => handleData(data, contactList))
-    .catch((error) => {
-      console.error("Error loading data:", error);
+function renderContactsList(groupedContacts, contactList) {
+  const sortedInitials = Object.keys(groupedContacts).sort(); // Initialen alphabetisch sortieren
+  sortedInitials.forEach((initial) => {
+    renderLetterBox(initial, contactList); // Buchstaben-Box für Initiale rendern
+    groupedContacts[initial].forEach(({ contact, index }) => {
+      const contactHtml = generateContact(contact); // Kontakt-HTML generieren
+      contactList.innerHTML += contactHtml; // Kontakt zum DOM hinzufügen
     });
-}
-
-function handleData(data, contactList) {
-  if (data) {
-    contacts = filterContacts(data);
-    initials = generateInitials(contacts);
-    const groupedContacts = groupContacts(contacts);
-
-    const sortedInitials = Object.keys(groupedContacts).sort();
-    sortedInitials.forEach((initial) => {
-      const letterBoxHtml = generateLetterBox(initial);
-      contactList.innerHTML += letterBoxHtml;
-      addContactsToList(groupedContacts[initial], contactList);
-    });
-  } else {
-    console.log("No contacts found.");
-  }
-}
-
-function filterContacts(data) {
-  return Object.values(data).filter((contact) => contact !== null);
-}
-
-function generateInitials(contacts) {
-  return contacts.map((contact) => {
-    let nameParts = contact.name.split(" ");
-    return nameParts.map((part) => part.charAt(0).toUpperCase()).join("");
   });
+}
+
+// Buchstabenbox (Initialen) rendern
+function renderLetterBox(initial, contactList) {
+  const letterBoxHtml = generateLetterBox(initial);
+  contactList.innerHTML += letterBoxHtml;
 }
 
 function groupContacts(contacts) {
   return contacts.reduce((acc, contact, index) => {
-    let nameParts = contact.name.split(" ");
-    let initials = nameParts
-      .map((part) => part.charAt(0).toUpperCase())
-      .join("");
-    let firstInitial = initials.charAt(0);
-
+    let firstInitial = contact.initials.charAt(0).toUpperCase(); // Verwende die gespeicherten Initialen
     if (!acc[firstInitial]) {
       acc[firstInitial] = [];
     }
-    acc[firstInitial].push({ contact, initials, index });
+    acc[firstInitial].push({ contact, initials: contact.initials, index });
     return acc;
   }, {});
 }
@@ -77,16 +55,135 @@ function addContactsToList(contactGroup, contactList) {
   });
 }
 
-// Funktion zum Berechnen und Speichern der Initialen
-function updateInitials() {
-  initials = contacts.map((contact) => {
-    let nameParts = contact.name.split(" ");
-    return nameParts.map((part) => part.charAt(0).toUpperCase()).join("");
-  });
+async function validateForm() {
+  const nameValid = validateInput(
+    document.getElementById("name"),
+    /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
+    "(min. two words, max. 23 chars)",
+    "field_alert_name",
+    23
+  );
+  const emailValid = validateInput(
+    document.getElementById("email"),
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    "Invalid email (test@test.de)",
+    "field_alert_email"
+  );
+  if (nameValid && emailValid) {
+    await addContact();
+    closeDialog();
+    await openDialogSuccessfully();
+  }
 }
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+async function validateEditForm(contactId) {
+  const inputs = [
+    {
+      id: "inputEditName",
+      regex: /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
+      alert: "edit_field_alert_name",
+      message: "(min. two words, max. 23 chars)",
+      maxLength: 23,
+    },
+    {
+      id: "inputEditEmail",
+      regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      alert: "edit_field_alert_email",
+      message: "Invalid email (test@test.de)",
+    },
+  ];
+  const valid = inputs.every(({ id, regex, alert, message, maxLength }) =>
+    validateInput(document.getElementById(id), regex, message, alert, maxLength)
+  );
+  if (valid) editContact(contactId);
+}
+
+async function addContact() {
+  const name = getInputValue("name");
+  const email = getInputValue("email");
+  const phone = getInputValue("phone");
+
+  if (name && email && phone) {
+    const newContact = createContact(name, email, phone);
+    await addContactToFirebase(newContact);
+    resetForm();
+    renderContent();
+  } else {
+    alert("Bitte füllen Sie alle Felder aus.");
+  }
+}
+
+function createContact(name, email, phone) {
+  return {
+    id: Date.now(),
+    name: name,
+    email: email,
+    phone: phone,
+    color: getRandomColor(),
+    initials: (() => {
+      const parts = name.split(" "); // Den Namen in Teile aufsplitten
+      const firstInitial = parts[0].charAt(0).toUpperCase(); // Erster Buchstabe des ersten Wortes
+      const lastInitial =
+        parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : ""; // Erster Buchstabe des letzten Wortes, falls es mehr als ein Wort gibt
+      return firstInitial + lastInitial; // Initialen zusammenfügen und zurückgeben
+    })(),
+  };
+}
+
+function getRandomColor() {
+  const darkLetters = "0123456789ABC"; // Beschränke auf dunklere Farbtöne
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += darkLetters[Math.floor(Math.random() * darkLetters.length)];
+  }
+  return color;
+}
+
+async function addContactToFirebase(contact) {
+  const response = await fetch(`${BASE_TASKS_URL}/${contact.id}.json`, {
+    method: "PUT", // Verwende PUT, um ein bestimmtes Objekt zu aktualisieren oder hinzuzufügen
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contact),
+  });
+  const data = await response.json();
+}
+
+// der contact der getarget wurde der die bg c ändern soll //
+function highlightContact(contact) {
+  const contacts = document.getElementsByClassName("contacts");
+  for (let i = 0; i < contacts.length; i++) {
+    contacts[i].style.backgroundColor = "";
+    contacts[i].style.color = "black";
+  }
+  document.getElementById(`contact${contact.id}`).style.backgroundColor =
+    "#27364a";
+  document.getElementById(`contact${contact.id}`).style.color = "white";
+}
+
+async function displayContactInfo(contactId) {
+  // Daten von Firebase abrufen
+  const data = await fetchContactsFromFirebase();
+  // Finde den Kontakt mit der übergebenen ID
+  const contacts = Object.values(data);
+  const contact = contacts.find((c) => c.id === contactId);
+  const contactInfoDiv = document.querySelector(".contacts-info-box");
+  contactInfoDiv.innerHTML = ""; // Vorherigen Inhalt leeren
+  contactInfoDiv.innerHTML = generateContactInfo(contact); // Kontaktdetails anzeigen
+  document.getElementById("button_edit_dialog").innerHTML =
+    generateDeleteButtonDialog(contact); // Löschen-Button anzeigen
+  highlightContact(contact); // Kontakt hervorheben
+}
+
+async function deleteContact(contactId) {
+  // Lösche den Kontakt von Firebase
+  const response = await fetch(`${BASE_TASKS_URL}/${contactId}.json`, {
+    method: "DELETE",
+  });
+  // Aktualisiere die Kontaktliste nach dem Löschen
+  await renderContent(); // Render die aktualisierte Kontaktliste
+  document.querySelector(".contacts-info-box").innerHTML = ""; // Leere die Detailansicht
 }
 
 async function openDialog() {
@@ -108,52 +205,58 @@ async function closeDialog() {
   clearForm();
 }
 
-async function openDialogEdit(index) {
-  const contact = contacts[index];
-  const initials = getInitials(contact);
-
-  updateCurrentContactIndex(index);
-  showEditDialog();
-  populateFormFields(contact, index);
-  await sleep(10);
-  finalizeDialog();
-
-  updateBigLetterCircle(contact, initials);
-}
-
-function getInitials(contact) {
-  const nameParts = contact.name.split(" ");
-  return nameParts.map((part) => part.charAt(0).toUpperCase()).join("");
-}
-
-function updateCurrentContactIndex(index) {
-  currentContactIndex = index;
-}
-
-function showEditDialog() {
+async function openDialogEdit(contactId) {
   const dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   document.getElementById("grey_background").classList.remove("hidden");
+  const response = await fetch(`${BASE_TASKS_URL}/${contactId}.json`);
+  const contact = await response.json();
+  populateFormFields(contact);
+  await sleep(10);
+  dialogContainer.classList.add("dialog-open");
+  updateBigLetterCircle(contact);
 }
 
-function populateFormFields(contact, index) {
+function populateFormFields(contact) {
   document.getElementById("inputEditName").value = contact.name;
   document.getElementById("inputEditEmail").value = contact.email;
   document.getElementById("inputEditPhone").value = contact.phone;
-  document.getElementById("inputEditName").dataset.index = index;
-  document.getElementById("inputEditEmail").dataset.index = index;
-  document.getElementById("inputEditPhone").dataset.index = index;
 }
 
-function finalizeDialog() {
-  const dialogContainer = document.getElementById("dialog_edit");
-  dialogContainer.classList.add("dialog-open");
-}
-
-function updateBigLetterCircle(contact, initials) {
+function updateBigLetterCircle(contact) {
   document.getElementById("big_letter_circle").innerHTML =
-    generateBigLetterCircle(contact, initials);
+    generateBigLetterCircle(contact);
+}
+
+async function editContact(contactId) {
+  const response = await fetch(`${BASE_TASKS_URL}/${contactId}.json`);
+  const existingContact = await response.json();
+  const updatedName = document.getElementById("inputEditName").value;
+  const updatedEmail = document.getElementById("inputEditEmail").value;
+  const updatedPhone = document.getElementById("inputEditPhone").value;
+  const updatedInitials = calculateInitials(updatedName);
+  const updatedContact = {
+    ...existingContact, // Behalte die bestehenden Werte
+    name: updatedName,
+    email: updatedEmail,
+    phone: updatedPhone,
+    initials: updatedInitials,
+  };
+  await addContactToFirebase(updatedContact);
+  closeDialogEdit();
+  await renderContent();
+  displayContactInfo(contactId);
+}
+
+function calculateInitials(name) {
+  const names = name.split(" "); // Den Namen in Wörter aufteilen
+  if (names.length === 1) {
+    return names[0].charAt(0).toUpperCase(); // Wenn es nur ein Wort gibt, nimm den ersten Buchstaben
+  }
+  const firstInitial = names[0].charAt(0).toUpperCase(); // Erster Buchstabe des ersten Wortes
+  const lastInitial = names[names.length - 1].charAt(0).toUpperCase(); // Erster Buchstabe des letzten Wortes
+  return firstInitial + lastInitial; // Initialen zurückgeben
 }
 
 async function closeDialogEdit() {
@@ -182,67 +285,8 @@ async function openDialogSuccessfully() {
   }, 300); // 1000 Millisekunden = 1 Sekunde
 }
 
-async function addContact() {
-  const name = getInputValue("name");
-  const email = getInputValue("email");
-  const phone = getInputValue("phone");
-
-  if (name && email && phone) {
-    const newContact = createContact(name, email, phone);
-    await saveContactToFirebase(newContact);
-    updateLocalStorage(newContact);
-    resetForm();
-    renderContacts();
-  } else {
-    alert("Bitte füllen Sie alle Felder aus.");
-  }
-}
-
 function getInputValue(id) {
   return document.getElementById(id).value;
-}
-
-function createContact(name, email, phone) {
-  return {
-    id: Date.now(),
-    name: name,
-    email: email,
-    phone: phone,
-    color: getRandomColor(),
-    initials: name
-      .split(" ")
-      .map((part) => part.charAt(0).toUpperCase())
-      .join(""),
-  };
-}
-
-async function saveContactToFirebase(contact) {
-  try {
-    const response = await fetch(
-      "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts.json",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(contact),
-      }
-    );
-
-    if (response.ok) {
-      console.log("Neuer Kontakt erfolgreich gespeichert.");
-    } else {
-      console.error("Fehler beim Speichern des Kontakts:", response.status);
-    }
-  } catch (error) {
-    console.error("Fehler beim Speichern in Firebase:", error);
-  }
-}
-
-function updateLocalStorage(contact) {
-  contacts.push(contact);
-  saveData(); // Falls du das auch lokal speichern möchtest
-  storeFirstAndLastNames(); // Eventuell zusätzliche Verarbeitung
 }
 
 function resetForm() {
@@ -251,105 +295,6 @@ function resetForm() {
   document.getElementById("phone").value = "";
 }
 
-function getRandomColor() {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
-function displayContactInfo(index) {
-  const contact = contacts[index];
-  let nameParts = contact.name.split(" ");
-  let initials = nameParts.map((part) => part.charAt(0).toUpperCase()).join("");
-  const contactInfoDiv = document.querySelector(".contacts-info-box");
-  contactInfoDiv.innerHTML = "";
-  contactInfoDiv.innerHTML = generateContactInfo(contact, initials, index);
-  document.getElementById("button_edit_dialog").innerHTML =
-    generateDeleteButtonDialog(index);
-  highlightContact(index);
-}
-
-// Funktion zum Löschen eines Kontakts
-function deleteContact(index) {
-  let contactToDelete = contacts[index];
-  if (!contactToDelete) return; // Ensure the contact exists
-  let contactId = index; // ID des zu löschenden Kontakts
-  fetch(
-    `https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`,
-    {
-      method: "DELETE",
-    }
-  ).then((response) => {
-    if (response.ok) {
-      contacts.splice(index, 1); // Entferne den Kontakt aus dem Array
-      saveData();
-      storeFirstAndLastNames(); // Aktualisiere notwendige Daten
-      renderContacts(); // Aktualisiere die Anzeige
-      document.querySelector(".contacts-info-box").innerHTML = "";
-    }
-  });
-}
-
-function saveData() {
-  fetch(BASE_TASKS_URL + ".json", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(contacts),
-  }).then((response) => response.json());
-}
-
-// Funktion zum Laden von Kontakten und Initialen aus dem localStorage
-function loadData() {
-  fetch(BASE_TASKS_URL + ".json")
-    .then((response) => response.json())
-    .then((data) => {
-      if (data) {
-        contacts = Object.values(data).filter(
-          (contact) => contact !== null && contact !== undefined
-        );
-        initials = contacts.map((contact) => contact.initials);
-        storeFirstAndLastNames();
-        renderContacts(); // Kontakte nach dem Laden rendern
-      }
-    });
-}
-
-function editContact() {
-  const index = document.getElementById("inputEditName").dataset.index;
-  const updatedName = document.getElementById("inputEditName").value;
-  const updatedEmail = document.getElementById("inputEditEmail").value;
-  const updatedPhone = document.getElementById("inputEditPhone").value;
-  const updatedContact = {
-    ...contacts[index],
-    name: updatedName,
-    email: updatedEmail,
-    phone: updatedPhone,
-  };
-  contacts[index] = updatedContact;
-  saveData();
-  loadData();
-  storeFirstAndLastNames();
-  closeDialogEdit();
-  displayContactInfo(index);
-}
-
-// der contact der getarget wurde der die bg c ändern soll //
-function highlightContact(index) {
-  const contacts = document.getElementsByClassName("contacts");
-  for (let i = 0; i < contacts.length; i++) {
-    contacts[i].style.backgroundColor = "";
-    contacts[i].style.color = "black";
-  }
-  document.getElementById(`contact${index}`).style.backgroundColor = "#27364a";
-  document.getElementById(`contact${index}`).style.color = "white";
-}
-
-// Setzt die Fehlermeldung in das entsprechende Div anstatt in das Input-Feld
 function setError(inputElement, message, alertElementId) {
   const alertElement = document.getElementById(alertElementId);
   alertElement.innerText = message;
@@ -357,7 +302,6 @@ function setError(inputElement, message, alertElementId) {
   inputElement.classList.add("error");
 }
 
-// Entfernt die Fehlermeldung und versteckt das Div
 function clearError(inputElement, alertElementId) {
   const alertElement = document.getElementById(alertElementId);
   alertElement.innerText = "";
@@ -399,84 +343,13 @@ function validateInput(input, regex, errorMsg, errorId, maxLength) {
   return valid;
 }
 
-async function validateForm() {
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const phoneInput = document.getElementById("phone");
-  const nameValid = validateInput(
-    nameInput,
-    /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
-    "Ungültiger Name oder zu lang (mindestens zwei Wörter, max. 23 Zeichen)",
-    "field_alert_name",
-    23
-  );
-  const emailValid = validateInput(
-    emailInput,
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    "Ungültige E-Mail (test@test.de)",
-    "field_alert_email"
-  );
-  const phoneValid = validateInput(
-    phoneInput,
-    /^\d+$/,
-    "Ungültige Telefonnummer 0176 123 123",
-    "field_alert_phone"
-  );
-  if (nameValid && emailValid && phoneValid) {
-    await addContact();
-    closeDialog();
-    await openDialogSuccessfully();
-  }
-}
-
-function validateEditForm() {
-  const nameInput = document.getElementById("inputEditName");
-  const emailInput = document.getElementById("inputEditEmail");
-  const phoneInput = document.getElementById("inputEditPhone");
-  const nameValid = validateInput(
-    nameInput,
-    /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
-    "Ungültiger Name oder zu lang (mindestens zwei Wörter, max. 23 Zeichen)",
-    "edit_field_alert_name",
-    23
-  );
-  const emailValid = validateInput(
-    emailInput,
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    "Ungültige E-Mail (test@test.de)",
-    "edit_field_alert_email"
-  );
-  const phoneValid = validateInput(
-    phoneInput,
-    /^\d+$/,
-    "Ungültige Telefonnummer 0176 123 123",
-    "edit_field_alert_phone"
-  );
-  if (nameValid && emailValid && phoneValid) {
-    editContact();
-  }
-}
-
-function storeFirstAndLastNames() {
-  // Reset the storage arrays
-  contactsCanBeAssigned.firstname = [];
-  contactsCanBeAssigned.lastname = [];
-  // Process each contact
-  contacts.forEach((contact) => {
-    let nameParts = contact.name.split(" ");
-    if (nameParts.length > 1) {
-      contactsCanBeAssigned.firstname.push(nameParts[0]);
-      contactsCanBeAssigned.lastname.push(nameParts.slice(1).join(" "));
-    } else {
-      contactsCanBeAssigned.firstname.push(nameParts[0]);
-      contactsCanBeAssigned.lastname.push("");
-    }
-  });
-}
-
 function truncate(text, maxLength = 20) {
   if (text.length > maxLength) {
     return text.substring(0, maxLength) + "...";
   }
   return text;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
