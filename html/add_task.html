@@ -52,12 +52,7 @@
             <label>Assigned to</label>
             <div id="assigned_contant" class="assigned-container">
               <div id="assigned_inactiv" onclick="openSelect()">
-                <input
-                  disabled
-                  class="placeholder-black"
-                  type="text"
-                  placeholder="Select contacts to assign"
-                />
+                <div class="div-input">Select contacts to assign</div>
                 <div class="hover-circle d-flex-center pos-abs">
                   <img
                     src="../assets/img/png-old/arrow_drop_down.png"
@@ -194,12 +189,9 @@
             <label>Category<span class="required-sign">*</span></label>
             <div id="category_contant" class="category-container">
               <div id="category_inactiv" onclick="openSelectCategory()">
-                <input
-                  disabled
-                  class="placeholder-black"
-                  type="text"
-                  placeholder="Select task category"
-                />
+                <div id="category" class="div-input">
+                  Select task category
+              </div>
                 <div class="hover-circle d-flex-center pos-abs">
                   <img
                     src="../assets/img/png-old/arrow_drop_down.png"
@@ -207,17 +199,12 @@
                   />
                 </div>
               </div>
-              <div id="category_activ" class="d-none">
-                <input
-                  disabled
-                  class="placeholder-black"
-                  type="search"
-                  placeholder="Select task category"
-                  id="category"
-                />
+              <div id="category_activ" class="d-none" onclick="closeSelectCategory()">
+                <div class="div-input">
+                  Select task category
+              </div>
                 <div class="hover-circle d-flex-center pos-abs">
                   <img
-                    onclick="closeSelectCategory()"
                     src="../assets/img/png-old/Property 1=Variant4.png"
                     alt=""
                   />
@@ -236,7 +223,7 @@
               />
               <div class="hover-circle d-flex-center pos-abs">
                 <img
-                  onclick="openSelect()"
+                  onclick="addSubtasks()"
                   src="../assets/img/png-old/Subtasks icons11.png"
                   alt=""
                 />

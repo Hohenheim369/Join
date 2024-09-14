@@ -19,23 +19,24 @@ async function createTask() {
   let title = document.getElementById("title_input").value;
   let description = document.getElementById("description_textarea").value;
   let dueDate = document.getElementById("due_date").value;
+  let categorySeleced = document.getElementById("category").innerText;
   let taskId = await loadTasks();
   let subTasks = [
     { name: "hallo", done: false },
     { name: "Lars1", done: false },
   ];
   let assignedTo = [5, 8];
-  putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo);
+  putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo, categorySeleced);
 }
 
-function putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo){
+function putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo, categorySeleced){
   postData(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId-1}/`,
     {
       title: title,
       description: description,
       date: dueDate,
       priority: selectedPrio,
-      category: "TestUserStory1",
+      category: categorySeleced,
       id: taskId,
       subtasks: subTasks,
       assigned: assignedTo,
@@ -96,3 +97,16 @@ function addContactToTask(CheckButtonId, CheckTaskButton, bgChange) {
 function handleSelectedPriority(priority) {
   selectedPrio = `${priority}`;
 }
+
+function selectCategory(category) {
+  document.getElementById("category").innerText = category;
+  closeSelectCategory();
+}
+
+document.addEventListener('click', function(event) {
+  const categoryActiv = document.getElementById('category_activ');
+  const categoryInactiv = document.getElementById('category_inactiv');
+  if (!categoryActiv.contains(event.target) && !categoryInactiv.contains(event.target)) {
+      closeSelectCategory();
+  }
+});

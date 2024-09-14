@@ -12,10 +12,10 @@ function showAssignedContactList(contact){
 }
 
 function showCategory(){
-  return  `<div class="contact-list padding-7-16 font-s-20 cursor-p">
+  return  `<div class="contact-list padding-7-16 font-s-20 cursor-p"  onclick="selectCategory('Technical Task')">
             <span>Technical Task</span>
           </div>
-          <div class="contact-list padding-7-16 font-s-20 cursor-p">
+          <div class="contact-list padding-7-16 font-s-20 cursor-p" onclick="selectCategory('User Story')">
             <span>User Story</span>
           </div>`
 }
