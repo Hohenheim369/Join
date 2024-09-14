@@ -1,6 +1,7 @@
 //for testing reasons my own database
 let TEST_URL = `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/`;
 let selectedContacts = [];
+let selectedPrio;
 //global outsourced if finished 
 async function loadTasks() {
   let response = await fetch(`${TEST_URL}tasks/.json`);
@@ -33,7 +34,7 @@ function putTasksContent(title, description, dueDate, taskId, subTasks, assigned
       title: title,
       description: description,
       date: dueDate,
-      priority: "TestUrgent",
+      priority: selectedPrio,
       category: "TestUserStory1",
       id: taskId,
       subtasks: subTasks,
@@ -55,6 +56,7 @@ function displayContacts(contacts) {
   for (let contact of contacts) {
       document.getElementById('contact_contant').innerHTML += showAssignedContactList(contact);
       document.querySelector(`#bg_task_${contact.id}`).addEventListener('click', () => addContactAssigned(contact.name));
+      console.log(contact);
   }
 }
 
@@ -89,4 +91,8 @@ function addContactToTask(CheckButtonId, CheckTaskButton, bgChange) {
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle('assigned-color-change');
   colorChange.classList.toggle('contact-list');
+}
+
+function handleSelectedPriority(priority) {
+  selectedPrio = `${priority}`;
 }
