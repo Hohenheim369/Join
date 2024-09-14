@@ -15,6 +15,7 @@ body {
   background-color: rgb(246, 247, 248);
   color: rgb(42, 54, 71);
   visibility: hidden;
+  overflow: hidden;
 }
 
 .content {

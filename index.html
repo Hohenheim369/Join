@@ -15,11 +15,19 @@
     <script src="./scripts/access.js"></script>
   </head>
   <body onload="initAccess()">
-    <img class="img-logo" src="./assets/img/png/favicon2.png" alt="" />
+
+    <div class="logo-container">
+        <img class="img-logo" src="./assets/img/png/logo-big.png" alt="" />
+    </div>
 
     <div id="change_access" class="change-access d-flex-spbe-center">
       <div class="font-s-20 font-c-black">Not a Join user?</div>
-      <button class="font-s-16" onclick="toggleAccessWindow(), resetFormInputs(), resetFormBorders()">Sign up</button>
+      <button
+        class="font-s-16"
+        onclick="toggleAccessWindow(), resetFormInputs(), resetFormBorders()"
+      >
+        Sign up
+      </button>
     </div>
 
     <div class="legal d-flex-spbe-center">
@@ -177,7 +185,10 @@
               src="./assets/img/png/visibility_off.png"
               alt="Toggle password visibility"
             />
-            <div id="notice_field" class="font-s-12 font-c-255-129-144 d-flex-column gap-8"></div>
+            <div
+              id="notice_field"
+              class="font-s-12 font-c-255-129-144 d-flex-column gap-8"
+            ></div>
           </div>
         </div>
 

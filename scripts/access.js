@@ -4,6 +4,25 @@ function initAccess() {
   signupConfirmPasswordField();
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  const logoContainer = document.querySelector('.logo-container');
+  const logo = document.querySelector('.img-logo');
+
+  setTimeout(() => {
+      logo.style.width = '100px';
+      logo.style.height = '122px';
+      logo.style.top = '80px';
+      logo.style.left = '77px';
+      logo.style.transform = 'none';
+      logoContainer.style.backgroundColor = 'transparent';
+  }, 500);
+
+  setTimeout(() => {
+      logoContainer.style.pointerEvents = 'none';
+      logo.style.zIndex = '1001';
+  }, 2000);
+});
+
 function toggleAccessWindow() {
   let logIn = document.getElementById("Login");
   let signUp = document.getElementById("Signup");
