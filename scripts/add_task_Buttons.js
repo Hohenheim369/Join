@@ -118,3 +118,17 @@ function closeSelectCategory() {
     document.getElementById("category_inactiv").classList.remove("d-none");
   }
 }
+
+function openSubtasks(){
+  if ((onclick = true)) {
+    document.getElementById("subtasks_inactiv").classList.add("d-none");
+    document.getElementById("subtasks_activ").classList.remove("d-none");
+    document.getElementById("category_task_contant").innerHTML = showCategory();
+  }
+}
+
+function addSubtasks(){
+  let subtasksInput = document.getElementById('subtasks_input').value
+  
+  document.getElementById('subtasks_list')
+}

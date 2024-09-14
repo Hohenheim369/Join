@@ -19,3 +19,8 @@ function showCategory(){
             <span>User Story</span>
           </div>`
 }
+
+function addSubtasksToList(){
+  return  `<li class="list-order">Contact Form</li>
+          <li class="list-order">Write Legal imprint</li>`
+}

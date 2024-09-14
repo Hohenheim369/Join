@@ -54,16 +54,12 @@
               <div id="assigned_inactiv" onclick="openSelect()">
                 <div class="div-input">Select contacts to assign</div>
                 <div class="hover-circle d-flex-center pos-abs">
-                  <img
-                    src="../assets/img/png-old/arrow_drop_down.png"
-                    alt=""
-                  />
+                  <img src="../assets/img/png-old/arrow_drop_down.png" alt="" />
                 </div>
               </div>
               <div id="assigned_activ" class="d-none">
                 <input
                   oninput="searchContact()"
-                  class="placeholder-black"
                   type="text"
                   placeholder="Select contacts to assign"
                   id="assigned_to"
@@ -96,12 +92,7 @@
           <div class="form-child-order">
             <label>Due date<span class="required-sign">*</span></label>
             <div>
-              <input class="pos-rel"
-                required
-                id="due_date"
-                type="date"
-             
-              />
+              <input class="pos-rel" required id="due_date" type="date" />
             </div>
             <div class="field-alert" id="fieldAlert"></div>
           </div>
@@ -189,20 +180,17 @@
             <label>Category<span class="required-sign">*</span></label>
             <div id="category_contant" class="category-container">
               <div id="category_inactiv" onclick="openSelectCategory()">
-                <div id="category" class="div-input">
-                  Select task category
-              </div>
+                <div id="category" class="div-input">Select task category</div>
                 <div class="hover-circle d-flex-center pos-abs">
-                  <img
-                    src="../assets/img/png-old/arrow_drop_down.png"
-                    alt=""
-                  />
+                  <img src="../assets/img/png-old/arrow_drop_down.png" alt="" />
                 </div>
               </div>
-              <div id="category_activ" class="d-none" onclick="closeSelectCategory()">
-                <div class="div-input">
-                  Select task category
-              </div>
+              <div
+                id="category_activ"
+                class="d-none"
+                onclick="closeSelectCategory()"
+              >
+                <div class="div-input">Select task category</div>
                 <div class="hover-circle d-flex-center pos-abs">
                   <img
                     src="../assets/img/png-old/Property 1=Variant4.png"
@@ -215,26 +203,45 @@
           </div>
           <div class="form-child-order">
             <label>Subtasks</label>
-            <div class="subtasks-container">
-              <input
-                type="text"
-                placeholder="Add  new subtask"
-                id="subtasks_input"
-              />
-              <div class="hover-circle d-flex-center pos-abs">
-                <img
-                  onclick="addSubtasks()"
-                  src="../assets/img/png-old/Subtasks icons11.png"
-                  alt=""
+            <div id="subtasks_contant" class="subtasks-container">
+              <div id="subtasks_inactiv" onclick="openSubtasks()">
+                <div class="div-input placeholder-gey">Add new subtask</div>
+                <div class="hover-circle d-flex-center pos-abs">
+                  <img
+                    src="../assets/img/png-old/Subtasks icons11.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div id="subtasks_activ" class="d-none">
+                <input
+                  oninput="createSubtask()"
+                  type="text"
+                  placeholder="Add new subtask"
+                  id="subtasks_input"
                 />
+                <div class="d-flex-center pos-abs gap-4">
+                  <div class="hover-circle d-flex-center">
+                    <img
+                      onclick="cancelSubtasks()"
+                      src="../assets/img/png/subtasks-cancel.png"
+                      alt=""
+                    />
+                  </div>
+                  <div class="dividing-border"></div>
+                  <div class="hover-circle d-flex-center">
+                    <img
+                      onclick="addSubtasks()"
+                      src="../assets/img/png/subtasks-checkmark.png"
+                      alt=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-            <!-- <div>
-              <ul>
-                <li class="list-order">Contact Form</li>
-                <li class="list-order">Write Legal imprint</li>
-              </ul>
-            </div> -->
+            <div>
+              <ul id="subtasks_list"></ul>
+            </div>
           </div>
         </form>
       </div>
