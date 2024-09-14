@@ -1,5 +1,5 @@
 .board {
-  padding: 80px 64px;
+  padding: 80px 50px;
   gap: 55px;
 }
 
@@ -168,7 +168,7 @@
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 900;
+  z-index: 1002;
 }
 
 .single-ticket {

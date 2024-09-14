@@ -4,7 +4,7 @@
   }
 
   .board {
-    padding-inline: calc(64px + (100vw - 1440px)/2);
+    padding-inline: calc(50px + (100vw - 1440px)/2);
   }
 
 }

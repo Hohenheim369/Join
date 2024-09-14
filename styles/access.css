@@ -100,6 +100,39 @@ body {
   height: 48px;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1002;
+  opacity: 0;
+  transition: background-color 0.5s ease;
+}
+
+.overlay.active {
+  display: flex;
+}
+
+.overlay.visible {
+  opacity: 1;
+}
+
+.signup-message{
+  width: 312px;
+  height: 74px;
+  border-radius: 20px;
+  background-color: rgb(42, 54, 71);
+  transform: translateY(100vh);
+  transition: transform 0.5s ease;
+}
+
+.overlay.visible .signup-message {
+  transform: translateY(0);
+}
+
 .d-none {
   display: none;
 }
