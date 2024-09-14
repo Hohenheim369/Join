@@ -186,7 +186,6 @@ function handleRegistrationResult(result) {
 
 async function addUser(email, name, password, initials) {
   const userId = await getNewId();
-  //Initialen ermitteln und übergeben
 
   try {
     const result = await postData(`${BASE_URL_S}users/${userId - 1}/`, {
@@ -196,6 +195,7 @@ async function addUser(email, name, password, initials) {
       password: password,
       id: userId,
       color: "#ffffff",
+      tasks: "1-3",
     });
     handleRegistrationResult(result);
   } catch (error) {
@@ -260,7 +260,6 @@ function showSuccessfullySignedUp() {
     }, 50);
   });
 }
-
 
 async function signUpProcess() {
   const email = document.getElementById("signup_email").value.trim();
