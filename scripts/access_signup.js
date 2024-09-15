@@ -1,18 +1,5 @@
-// Muss noch bearbeitet werden
-function loginAsGuest() {
-  window.location.href = "./html/summary.html";
-}
-
-// ------------------------------------------------------------------
-// ------------------------------------------------------------------
-// ------------------------------------------------------------------
-// ------------------------------------------------------------------
-
 const BASE_URL_S =
   "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
-
-// ------------------------------------------------------------------
-// ------------------------------------------------------------------
 
 
 function removeNoticeButtonBg() {
@@ -37,15 +24,61 @@ function validateLegalAcceptance(noticeField) {
   }
   return true;
 }
-
-function validateEmail(email, noticeField) {
+async function checkEmailFormat(email, noticeField) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     console.log("Invalid email format.");
     noticeField.innerHTML += `<div>Please enter a valid email address.</div>`;
-    document.getElementById("signup_email").classList.add("border-alert");
     return false;
   }
+  return true;
+}
+
+async function fetchSignInUsers() {
+  const response = await fetch(`${BASE_URL_S}users.json`);
+  return await response.json();
+}
+
+async function isEmailRegistered(email) {
+  const users = await fetchSignInUsers();
+  return Object.values(users).some(user => user.email === email);
+}
+
+async function handleExistingEmail(noticeField) {
+  console.log("Email already exists.");
+  noticeField.innerHTML += `<div>This email address is already registered.</div>`;
+  return false;
+}
+
+async function handleEmailCheckError(error, noticeField) {
+  console.error("Error checking email existence:", error);
+  noticeField.innerHTML += `<div>An error occurred. Please try again later.</div>`;
+  return false;
+}
+
+async function checkEmailExists(email, noticeField) {
+  try {
+    return await isEmailRegistered(email) 
+      ? await handleExistingEmail(noticeField) 
+      : true;
+  } catch (error) {
+    return await handleEmailCheckError(error, noticeField);
+  }
+}
+
+async function validateEmail(email, noticeField) {
+  const emailField = document.getElementById("signup_email");
+  
+  if (!await checkEmailFormat(email, noticeField)) {
+    emailField.classList.add("border-alert");
+    return false;
+  }
+  
+  if (!await checkEmailExists(email, noticeField)) {
+    emailField.classList.add("border-alert");
+    return false;
+  }
+  
   return true;
 }
 
@@ -125,7 +158,7 @@ function validatePassword(password, cPassword, noticeField) {
   return isValidPassword;
 }
 
-function validateInputs(email, name, password, cPassword) {
+async function validateInputs(email, name, password, cPassword) {
   const noticeField = document.getElementById("notice_field");
   noticeField.innerHTML = "";
 
@@ -136,7 +169,7 @@ function validateInputs(email, name, password, cPassword) {
     () => validateLegalAcceptance(noticeField),
   ];
 
-  const results = validations.map((validation) => validation());
+  const results = await Promise.all(validations.map(validation => validation()));
   const isValid = results.every((result) => result === true);
 
   if (!isValid) {
@@ -184,6 +217,21 @@ function handleRegistrationResult(result) {
   }
 }
 
+async function postData(path = "", data = {}) {
+  const response = await fetch(path + ".json", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();
+}
+
 async function addUser(email, name, password, initials) {
   const userId = await getNewId();
 
@@ -202,21 +250,6 @@ async function addUser(email, name, password, initials) {
     console.error("Error during registration:", error);
     console.log("An error occurred. Please try again later.");
   }
-}
-
-async function postData(path = "", data = {}) {
-  const response = await fetch(path + ".json", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return await response.json();
 }
 
 function handleRegistrationResult(result) {
@@ -257,7 +290,7 @@ function showSuccessfullySignedUp() {
         overlay.classList.add('d-none');
         resolve();
       }, 1000);
-    }, 50);
+    },50);
   });
 }
 
@@ -268,11 +301,11 @@ async function signUpProcess() {
   const cPassword = document.getElementById("signup_c_password").value;
 
   resetFormBorders();
-  validateInputs(email, name, password, cPassword);
+  await validateInputs(email, name, password, cPassword);
 
   const initials = getUserInitials(name);
 
-  addUser(email, name, password, initials);
+  await addUser(email, name, password, initials);
   resetFormInputs();
   resetFormBorders();
   await showSuccessfullySignedUp();
