@@ -23,10 +23,10 @@ async function createTask() {
   let categorySeleced = document.getElementById("category").innerText;
   let taskId = await loadTasks();
   let assignedTo = [5, 8];
-  putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo, categorySeleced);
+  putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced);
 }
 
-function putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo, categorySeleced){
+function putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced){
   postData(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId-1}/`,
     {
       title: title,
@@ -109,14 +109,12 @@ document.addEventListener('click', function(event) {
 });
 
 function saveChangesOnClickOutside(input, li, index) {
-  changeSubtasksImgs(index);
   input.addEventListener("focusout", function () {
       handleInputBlur(input, li, index);
   });
   input.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
           handleInputBlur(input, li, index);
-          changeSubtasksImgsBack(index);
       }
   });
 }
@@ -128,6 +126,7 @@ function editSubtask(li, index) {
   li.appendChild(input); 
   input.focus(); 
   saveChangesOnClickOutside(input, li, index);
+  toggleSubtasksImgs(index);
 }
 
 function createInputField(value) {
@@ -145,6 +144,7 @@ function handleInputBlur(input, li, index) {
   } else {
       removeSubtask(li, index);
   }
+  toggleSubtasksImgs(index);
 }
 
 function saveChanges(newValue, li, index) {

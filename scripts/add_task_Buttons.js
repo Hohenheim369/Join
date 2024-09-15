@@ -130,7 +130,7 @@ function openSubtasks() {
 function addSubtasks() {
   let subtasksInput = document.getElementById("subtasks_input").value;
   if (subtasksInput.trim() !== "") {
-    subTasks.push(subtasksInput);
+    subTasks.push({subTaskName:subtasksInput, done:false});
     let ids = subTasks.length;
     document.getElementById("subtasks_list").innerHTML += addSubtasksToList(
       subtasksInput,
@@ -149,12 +149,7 @@ function deleteSubtask(id) {
   subTasks.splice(id, 1);
 }
 
-function changeSubtasksImgs(id) {
-  document.getElementById(`list_imgs_activ_${id}`).classList.add("d-none");
-  document.getElementById(`list_imgs_inactiv_${id}`).classList.remove("d-none");
-}
-
-function changeSubtasksImgsBack(id) {
-  document.getElementById(`list_imgs_activ_${id}`).classList.remove("d-none");
-  document.getElementById(`list_imgs_inactiv_${id}`).classList.add("d-none");
+function toggleSubtasksImgs(id) {
+  document.getElementById(`list_imgs_activ_${id}`).classList.toggle("d-none");
+  document.getElementById(`list_imgs_inactiv_${id}`).classList.toggle("d-none");
 }
