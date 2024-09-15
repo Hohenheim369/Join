@@ -24,6 +24,7 @@ function validateLegalAcceptance(noticeField) {
   }
   return true;
 }
+
 async function checkEmailFormat(email, noticeField) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
@@ -41,28 +42,25 @@ async function fetchSignInUsers() {
 
 async function isEmailRegistered(email) {
   const users = await fetchSignInUsers();
-  return Object.values(users).some(user => user.email === email);
-}
-
-async function handleExistingEmail(noticeField) {
-  console.log("Email already exists.");
-  noticeField.innerHTML += `<div>This email address is already registered.</div>`;
-  return false;
-}
-
-async function handleEmailCheckError(error, noticeField) {
-  console.error("Error checking email existence:", error);
-  noticeField.innerHTML += `<div>An error occurred. Please try again later.</div>`;
-  return false;
+  if (!users) {
+    return false;
+  }
+  return Object.values(users).some(user => user && user.email === email);
 }
 
 async function checkEmailExists(email, noticeField) {
   try {
-    return await isEmailRegistered(email) 
-      ? await handleExistingEmail(noticeField) 
-      : true;
+    const emailExists = await isEmailRegistered(email);
+    if (emailExists) {
+      console.log("Email already exists.");
+      noticeField.innerHTML += `<div>This email address is already registered.</div>`;
+      return false;
+    }
+    return true;
   } catch (error) {
-    return await handleEmailCheckError(error, noticeField);
+    console.error("Error checking email existence:", error);
+    noticeField.innerHTML += `<div>An error occurred. Please try again later.</div>`;
+    return false;
   }
 }
 
@@ -232,24 +230,33 @@ async function postData(path = "", data = {}) {
   return await response.json();
 }
 
+function createUserData(name, initials, email, password, userId) {
+  return {
+    name,
+    initials,
+    email,
+    password,
+    id: userId,
+    color: "#ffffff",
+    tasks: [1, 2, 3]
+  };
+}
+
 async function addUser(email, name, password, initials) {
   const userId = await getNewId();
+  const userData = createUserData(name, initials, email, password, userId);
 
   try {
-    const result = await postData(`${BASE_URL_S}users/${userId - 1}/`, {
-      name: name,
-      initials: initials,
-      email: email,
-      password: password,
-      id: userId,
-      color: "#ffffff",
-      tasks: "1-3",
-    });
+    const result = await postData(`${BASE_URL_S}users/${userId - 1}/`, userData);
     handleRegistrationResult(result);
   } catch (error) {
-    console.error("Error during registration:", error);
-    console.log("An error occurred. Please try again later.");
+    handleRegistrationError(error);
   }
+}
+
+function handleRegistrationError(error) {
+  console.error("Error during registration:", error);
+  console.log("An error occurred. Please try again later.");
 }
 
 function handleRegistrationResult(result) {
