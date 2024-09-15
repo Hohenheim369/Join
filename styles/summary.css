@@ -1,14 +1,18 @@
 body {
   background-color: #f5f6f7;
   visibility: hidden;
-  height: unset; /* überprüfen ob es nötig ist */
 }
 
+/* .content {       
+  height: 100vh;
+} */
+
 .head {
-  width: 625px;
+  width: clamp(223px, 100%, 625px);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 56px;
 }
 
 .seperator-blue {
@@ -47,9 +51,8 @@ span {
 
 .content-tasks {
   display: flex;
-  padding-top: 56px;
-  height: 562px;
-  width: 560px;
+  height: clamp(384px, 57vh, 562px);
+  width: clamp(396px, 100%, 560px);
   flex-direction: column;
   justify-content: space-between;
   box-sizing: unset;
@@ -57,16 +60,16 @@ span {
 
 .to-do-done-block {
   display: flex;
-  width: 560px;
-  height: 168px;
+  height: clamp(110px, 100%, 169px);
+  width: clamp(396px, 100%, 560px);
   justify-content: space-between;
 }
 
-.to-do-block {
+.upper-task-block {
   display: flex;
   background-color: white;
-  width: 264px;
-  height: 168px;
+  height: clamp(110px, 100%, 168px);
+  width: clamp(186px, 100%, 264px);
   border-radius: 30px;
   justify-content: center;
   align-items: center;
@@ -75,60 +78,41 @@ span {
   box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
 }
 
-.to-do-block:hover {
+.upper-task-block:hover {
   cursor: pointer;
   background-color: #2a3647;
   transform: scale(1.1);
 }
 
-.to-do-block:hover .circel {
+.upper-task-block:hover .circel {
   background-color: white;
+  transform: scale(1);
 }
 
-.to-do-block:hover .circel svg path {
-  fill: #2a3647;
+.upper-task-block:hover .edit img {
+  content: url("../assets/img/png/editBlue.png"); /* Ändert das Bild beim Hover */
+  transform: scale(1);
 }
 
-.to-do-block:hover span {
+.upper-task-block:hover .check img {
+  content: url("../assets/img/png/check-blue-summary.png"); /* Ändert das Bild beim Hover */
+  transform: scale(1);
+}
+
+.upper-task-block:hover span {
   color: white;
 }
 
-.done-block {
-  display: flex;
-  background-color: white;
-  width: 264px;
-  height: 168px;
-  border-radius: 30px;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-  transition: transform 0.08s ease-in-out;
-  box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
-}
-
-.done-block:hover {
-  cursor: pointer;
-  background-color: #2a3647;
-  transform: scale(1.1);
-}
-
-.done-block:hover .circel {
-  background-color: white;
-}
-
-.done-block:hover .circel svg path {
-  stroke: #2a3647;
-}
-
-.done-block:hover span {
-  color: white;
+.check {
+  width: 30px;
+  height: 23px;
 }
 
 .priority-block {
   display: flex;
   background-color: white;
-  width: 560px;
-  height: 168px;
+  width: clamp(396px, 100%, 560px);
+  height: clamp(110px, 100%, 169px);
   border-radius: 30px;
   justify-content: center;
   align-items: center;
@@ -148,7 +132,7 @@ span {
 }
 
 .priority-and-nummber {
-  width: 130px;
+  width: clamp(108px, 100%, 130px);
   display: flex;
   align-items: center;
   gap: 18px;
@@ -162,8 +146,8 @@ span {
 .task-in-block {
   display: flex;
   background-color: white;
-  width: 168px;
-  height: 168px;
+  width: clamp(116px, 100%, 168px);
+  height: clamp(116px, 168px, 168px);
   border-radius: 30px;
   flex-direction: column;
   align-items: center;
@@ -189,8 +173,8 @@ span {
 }
 
 .circel {
-  width: 69px;
-  height: 69px;
+  width: clamp(40px, 100%, 69px);
+  height: clamp(40px, 100%, 69px);
   border-radius: 100%;
   background-color: #2a3647;
   display: flex;
@@ -237,19 +221,31 @@ span {
   gap: 13px;
 }
 
-.width-86{
+.width-86 {
   width: 86px;
 }
 
-.font-s16{
+.font-s16 {
   font-size: 16px;
 }
 
-.font-w400{
+.font-w400 {
   font-weight: 400;
 }
 
-.summary-link  {
+.summary-link {
   background-color: #091931;
   color: white !important;
+}
+
+.p-top-56 {
+  padding-top: 56px;
+}
+
+.m-r-32 {
+  margin-right: clamp(24px, 6%, 32px);
+}
+
+.logo-mobile{
+  display: none;
 }

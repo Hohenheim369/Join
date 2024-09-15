@@ -1,0 +1,87 @@
+@media screen and (max-width: 428px) {
+  header {
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 20px 16px;
+  }
+
+  header span {
+    display: none;
+  }
+
+  .icon-box{
+    width: unset;
+  }
+
+  .icon-box a{
+    display: none;
+  }
+
+  .logo-mobile{
+    display: block;
+  }
+
+  aside {
+    width: clamp(428px, 100%, 600px);
+    height: 80px;
+    bottom: 0px;
+    top: unset;
+    padding: 0px 16px;
+  }
+
+  .icon-bar {
+    height: 80px;
+    gap: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .box-icons {
+    width: 76px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: unset;
+    padding: 0;
+    box-sizing: border-box;
+    flex-direction: column;
+    font-size: 14px;
+  }
+
+  .logo-sidebar {
+    display: none;
+  }
+
+  .credit-box {
+    display: none;
+  }
+
+  .summary-link {
+    padding: 15px 0px;
+    display: flex;
+    border-radius: 16px;
+    gap: 10px;
+  }
+
+  .add_task-link {
+    padding: 15px 0px;
+    display: flex;
+    border-radius: 16px;
+    gap: 10px;
+  }
+
+  .board-link {
+    padding: 15px 0px;
+    display: flex;
+    border-radius: 16px;
+    gap: 10px;
+  }
+
+  .contacts-link {
+    padding: 15px 0px;
+    display: flex;
+    border-radius: 16px;
+    gap: 10px;
+  }
+}

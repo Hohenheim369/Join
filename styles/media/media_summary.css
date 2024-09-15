@@ -1,0 +1,42 @@
+@media screen and (max-width: 428px) {
+  .content {
+    height: calc( 100% - 160px);
+    width: 100%; /*muss weil keine sidebar mehr da ist links  */
+    margin: 80px 0px 192px;
+    padding: 48px 16px 0px;
+  }
+
+  body {
+    height: 100%;
+  }
+
+  /* #desktop_template {
+    display: none;
+  } */
+
+  .head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 40px;
+  }
+
+  h1 {
+    font-size: 47px;
+  }
+
+  h2 {
+    order: 0;
+    font-size: 20px;
+  }
+
+  .seperator-blue {
+    order: 1;
+    width: 59px;
+    height: 1px;
+  }
+
+  .greeting {
+    display: none;
+  }
+}
