@@ -215,7 +215,6 @@
               </div>
               <div id="subtasks_activ" class="d-none">
                 <input
-                  oninput="createSubtask()"
                   type="text"
                   placeholder="Add new subtask"
                   id="subtasks_input"
@@ -231,7 +230,7 @@
                   <div class="dividing-border"></div>
                   <div class="hover-circle d-flex-center">
                     <img
-                      onclick="addSubtasks()"
+                      onclick="addSubtasks(subTasks)"
                       src="../assets/img/png/subtasks-checkmark.png"
                       alt=""
                     />

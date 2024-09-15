@@ -127,8 +127,20 @@ function openSubtasks(){
   }
 }
 
-function addSubtasks(){
+function addSubtasks(id){ 
   let subtasksInput = document.getElementById('subtasks_input').value
-  
-  document.getElementById('subtasks_list')
+  if (subtasksInput.trim() !== "") {
+    subTasks.push(subtasksInput)
+    let ids = subTasks.length
+    document.getElementById('subtasks_list').innerHTML += addSubtasksToList(subtasksInput, ids);
+    document.getElementById('subtasks_input').value = "";
+}
+}
+
+function cancelSubtasks(){
+  document.getElementById('subtasks_input').value = "";
+}
+
+function deleteSubtask(id){
+  document.getElementById(`listItem_${id}`).innerHTML = ``;
 }

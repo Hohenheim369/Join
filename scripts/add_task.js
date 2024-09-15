@@ -2,6 +2,7 @@
 let TEST_URL = `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/`;
 let selectedContacts = [];
 let selectedPrio;
+let subTasks = [];
 //global outsourced if finished 
 async function loadTasks() {
   let response = await fetch(`${TEST_URL}tasks/.json`);
@@ -21,10 +22,6 @@ async function createTask() {
   let dueDate = document.getElementById("due_date").value;
   let categorySeleced = document.getElementById("category").innerText;
   let taskId = await loadTasks();
-  let subTasks = [
-    { name: "hallo", done: false },
-    { name: "Lars1", done: false },
-  ];
   let assignedTo = [5, 8];
   putTasksContent(title, description, dueDate, taskId, subTasks, assignedTo, categorySeleced);
 }
@@ -110,3 +107,28 @@ document.addEventListener('click', function(event) {
       closeSelectCategory();
   }
 });
+
+function editSubtask(li){
+  const currentText = li.innerText;
+
+    // Erstelle ein Eingabefeld mit dem aktuellen Text als Value
+    const input = document.createElement("input");
+    input.type = "text";
+    input.classList.add("subtasks-input");
+    input.classList.add("font-s-16");
+    input.value = currentText;
+
+    // Füge einen Event Listener hinzu, um das Element zu speichern, wenn Enter gedrückt wird
+    input.addEventListener("blur", function() {
+        if (input.value.trim() !== "") {
+            li.innerText = input.value; // Aktualisiere den Text des Listenelements
+        } else {
+            li.remove(); // Entferne das Element, wenn es leer ist
+        }
+    });
+
+    // Ersetze das Listenelement durch das Eingabefeld
+    li.innerHTML = ""; // Leere den Inhalt des Listenelements
+    li.appendChild(input); // Füge das Eingabefeld hinzu
+    input.focus(); // Setze den Fokus auf das Eingabefeld
+}

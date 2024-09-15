@@ -164,15 +164,21 @@ textarea {
 
 li {
   background-color: transparent;
-  padding: 6px 0px;
+  align-content: center;
   cursor: pointer;
+  padding: 0px 6px;
+  margin: 4px 0px;
+  height: 32px;
 }
 
-.list-order {
-  margin: 4px 0px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19.2px;
+li:hover{
+  background-color: #EEEEEE;
+}
+
+.imgs-pos{
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
 }
 
 .space-top {
@@ -248,4 +254,20 @@ li {
 .dividing-border{
   border-left: 1px solid #D1D1D1;
   height: 24px;
+}
+
+.subtasks-input{
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  padding: 0px;
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+}
+
+.subtasks-input:focus{
+  border-bottom: 1px solid #005DFF;
 }

@@ -20,7 +20,13 @@ function showCategory(){
           </div>`
 }
 
-function addSubtasksToList(){
-  return  `<li class="list-order">Contact Form</li>
-          <li class="list-order">Write Legal imprint</li>`
+function addSubtasksToList(subtasksInput, id){
+  return  `<div id="listItem_${id}" class="pos-rel">
+            <li ondblclick="editSubtask(this)">${subtasksInput}</li>
+            <div class="d-flex-center gap-4 pos-abs imgs-pos">
+              <img onclick="editSubtask()" src="../assets/img/png/subtasks-edit.png" alt="">
+              <div class="dividing-border"></div>
+              <img onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
+            </div>
+          </div>`
 }
