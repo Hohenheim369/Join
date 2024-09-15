@@ -31,7 +31,6 @@ function renderContactsList(groupedContacts, contactList) {
   });
 }
 
-// Buchstabenbox (Initialen) rendern
 function renderLetterBox(initial, contactList) {
   const letterBoxHtml = generateLetterBox(initial);
   contactList.innerHTML += letterBoxHtml;
@@ -50,7 +49,7 @@ function groupContacts(contacts) {
 
 function addContactsToList(contactGroup, contactList) {
   contactGroup.forEach(({ contact, initials, index }) => {
-    const contactHtml = generateContact(contact, initials, index);
+    const contactHtml = generateContact(contact);
     contactList.innerHTML += contactHtml;
   });
 }
@@ -120,13 +119,7 @@ function createContact(name, email, phone) {
     email: email,
     phone: phone,
     color: getRandomColor(),
-    initials: (() => {
-      const parts = name.split(" "); // Den Namen in Teile aufsplitten
-      const firstInitial = parts[0].charAt(0).toUpperCase(); // Erster Buchstabe des ersten Wortes
-      const lastInitial =
-        parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : ""; // Erster Buchstabe des letzten Wortes, falls es mehr als ein Wort gibt
-      return firstInitial + lastInitial; // Initialen zusammenfügen und zurückgeben
-    })(),
+    initials: calculateInitials(name),
   };
 }
 
@@ -150,7 +143,6 @@ async function addContactToFirebase(contact) {
   const data = await response.json();
 }
 
-// der contact der getarget wurde der die bg c ändern soll //
 function highlightContact(contact) {
   const contacts = document.getElementsByClassName("contacts");
   for (let i = 0; i < contacts.length; i++) {
