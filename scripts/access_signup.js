@@ -1,7 +1,6 @@
 const BASE_URL_S =
   "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
 
-
 function removeNoticeButtonBg() {
   const checkButton = document.getElementById("signup_check_off");
   checkButton.classList.remove("bg-alert");
@@ -45,7 +44,7 @@ async function isEmailRegistered(email) {
   if (!users) {
     return false;
   }
-  return Object.values(users).some(user => user && user.email === email);
+  return Object.values(users).some((user) => user && user.email === email);
 }
 
 async function checkEmailExists(email, noticeField) {
@@ -66,17 +65,17 @@ async function checkEmailExists(email, noticeField) {
 
 async function validateEmail(email, noticeField) {
   const emailField = document.getElementById("signup_email");
-  
-  if (!await checkEmailFormat(email, noticeField)) {
+
+  if (!(await checkEmailFormat(email, noticeField))) {
     emailField.classList.add("border-alert");
     return false;
   }
-  
-  if (!await checkEmailExists(email, noticeField)) {
+
+  if (!(await checkEmailExists(email, noticeField))) {
     emailField.classList.add("border-alert");
     return false;
   }
-  
+
   return true;
 }
 
@@ -167,7 +166,9 @@ async function validateInputs(email, name, password, cPassword) {
     () => validateLegalAcceptance(noticeField),
   ];
 
-  const results = await Promise.all(validations.map(validation => validation()));
+  const results = await Promise.all(
+    validations.map((validation) => validation())
+  );
   const isValid = results.every((result) => result === true);
 
   if (!isValid) {
@@ -238,7 +239,7 @@ function createUserData(name, initials, email, password, userId) {
     password,
     id: userId,
     color: "#ffffff",
-    tasks: [1, 2, 3]
+    tasks: [1, 2, 3],
   };
 }
 
@@ -247,7 +248,10 @@ async function addUser(email, name, password, initials) {
   const userData = createUserData(name, initials, email, password, userId);
 
   try {
-    const result = await postData(`${BASE_URL_S}users/${userId - 1}/`, userData);
+    const result = await postData(
+      `${BASE_URL_S}users/${userId - 1}/`,
+      userData
+    );
     handleRegistrationResult(result);
   } catch (error) {
     handleRegistrationError(error);
@@ -286,18 +290,18 @@ function resetFormBorders() {
 
 function showSuccessfullySignedUp() {
   return new Promise((resolve) => {
-    const overlay = document.getElementById('successfully_signed_up');
-    overlay.classList.remove('d-none');
-    overlay.classList.add('active');
-    
+    const overlay = document.getElementById("successfully_signed_up");
+    overlay.classList.remove("d-none");
+    overlay.classList.add("active");
+
     setTimeout(() => {
-      overlay.classList.add('visible');
+      overlay.classList.add("visible");
       setTimeout(() => {
-        overlay.classList.remove('active', 'visible');
-        overlay.classList.add('d-none');
+        overlay.classList.remove("active", "visible");
+        overlay.classList.add("d-none");
         resolve();
       }, 1000);
-    },50);
+    }, 50);
   });
 }
 
