@@ -39,7 +39,6 @@ tr {
 }
 
 .content-help {
-  width: 1014px;
   overflow: scroll;
 }
 
@@ -75,12 +74,11 @@ tr {
   font-weight: 700;
 }
 
-.arrowBack {
-  left: 1307px;
+.arrow-back {
+  left: calc(100% - 139px);
   top: 225px;
   position: absolute;
   width: 37px;
-  height: 37px;
 }
 
 .headline {
@@ -89,6 +87,6 @@ tr {
   justify-content: space-between;
 }
 
-.arrowBack:hover {
+.arrow-back:hover {
   cursor: pointer;
 }
