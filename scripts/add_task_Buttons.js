@@ -119,7 +119,7 @@ function closeSelectCategory() {
   }
 }
 
-function openSubtasks(){
+function openSubtasks() {
   if ((onclick = true)) {
     document.getElementById("subtasks_inactiv").classList.add("d-none");
     document.getElementById("subtasks_activ").classList.remove("d-none");
@@ -127,20 +127,34 @@ function openSubtasks(){
   }
 }
 
-function addSubtasks(id){ 
-  let subtasksInput = document.getElementById('subtasks_input').value
+function addSubtasks() {
+  let subtasksInput = document.getElementById("subtasks_input").value;
   if (subtasksInput.trim() !== "") {
-    subTasks.push(subtasksInput)
-    let ids = subTasks.length
-    document.getElementById('subtasks_list').innerHTML += addSubtasksToList(subtasksInput, ids);
-    document.getElementById('subtasks_input').value = "";
-}
+    subTasks.push(subtasksInput);
+    let ids = subTasks.length;
+    document.getElementById("subtasks_list").innerHTML += addSubtasksToList(
+      subtasksInput,
+      ids - 1
+    );
+    document.getElementById("subtasks_input").value = "";
+  }
 }
 
-function cancelSubtasks(){
-  document.getElementById('subtasks_input').value = "";
+function cancelSubtasks() {
+  document.getElementById("subtasks_input").value = "";
 }
 
-function deleteSubtask(id){
-  document.getElementById(`listItem_${id}`).innerHTML = ``;
+function deleteSubtask(id) {
+  document.getElementById(`listItem_${id}`).remove();
+  subTasks.splice(id, 1);
+}
+
+function changeSubtasksImgs(id) {
+  document.getElementById(`list_imgs_activ_${id}`).classList.add("d-none");
+  document.getElementById(`list_imgs_inactiv_${id}`).classList.remove("d-none");
+}
+
+function changeSubtasksImgsBack(id) {
+  document.getElementById(`list_imgs_activ_${id}`).classList.remove("d-none");
+  document.getElementById(`list_imgs_inactiv_${id}`).classList.add("d-none");
 }

@@ -20,13 +20,18 @@ function showCategory(){
           </div>`
 }
 
-function addSubtasksToList(subtasksInput, id){
+function addSubtasksToList(subtasksInput, id) {
   return  `<div id="listItem_${id}" class="pos-rel">
-            <li ondblclick="editSubtask(this)">${subtasksInput}</li>
-            <div class="d-flex-center gap-4 pos-abs imgs-pos">
-              <img onclick="editSubtask()" src="../assets/img/png/subtasks-edit.png" alt="">
+            <li ondblclick="editSubtask(this, ${id})">${subtasksInput}</li>
+            <div id="list_imgs_activ_${id}" class="d-flex-center gap-4 pos-abs imgs-pos">
+              <img onclick="editSubtask(document.querySelector('#listItem_${id} li'), ${id})" src="../assets/img/png/subtasks-edit.png" alt="">
               <div class="dividing-border"></div>
               <img onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
             </div>
-          </div>`
+            <div id="list_imgs_inactiv_${id}" class="d-flex-center gap-4 pos-abs imgs-pos d-none">
+              <img onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
+              <div class="dividing-border"></div>
+              <img onclick="saveChangesOnClickOutside(${id})" src="../assets/img/png/subtasks-checkmark.png" alt="">
+            </div>
+          </div>` 
 }

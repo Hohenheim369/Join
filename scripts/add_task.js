@@ -108,27 +108,51 @@ document.addEventListener('click', function(event) {
   }
 });
 
-function editSubtask(li){
+function saveChangesOnClickOutside(input, li, index) {
+  changeSubtasksImgs(index);
+  input.addEventListener("focusout", function () {
+      handleInputBlur(input, li, index);
+  });
+  input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+          handleInputBlur(input, li, index);
+          changeSubtasksImgsBack(index);
+      }
+  });
+}
+
+function editSubtask(li, index) {
   const currentText = li.innerText;
+  const input = createInputField(currentText);
+  li.innerHTML = ""; 
+  li.appendChild(input); 
+  input.focus(); 
+  saveChangesOnClickOutside(input, li, index);
+}
 
-    // Erstelle ein Eingabefeld mit dem aktuellen Text als Value
-    const input = document.createElement("input");
-    input.type = "text";
-    input.classList.add("subtasks-input");
-    input.classList.add("font-s-16");
-    input.value = currentText;
+function createInputField(value) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.classList.add("subtasks-input");
+  input.classList.add("font-s-16");
+  input.value = value;
+  return input;
+}
 
-    // Füge einen Event Listener hinzu, um das Element zu speichern, wenn Enter gedrückt wird
-    input.addEventListener("blur", function() {
-        if (input.value.trim() !== "") {
-            li.innerText = input.value; // Aktualisiere den Text des Listenelements
-        } else {
-            li.remove(); // Entferne das Element, wenn es leer ist
-        }
-    });
+function handleInputBlur(input, li, index) {
+  if (input.value.trim() !== "") {
+      saveChanges(input.value, li, index);
+  } else {
+      removeSubtask(li, index);
+  }
+}
 
-    // Ersetze das Listenelement durch das Eingabefeld
-    li.innerHTML = ""; // Leere den Inhalt des Listenelements
-    li.appendChild(input); // Füge das Eingabefeld hinzu
-    input.focus(); // Setze den Fokus auf das Eingabefeld
+function saveChanges(newValue, li, index) {
+  li.innerText = newValue;
+  subTasks[index] = newValue;
+}
+
+function removeSubtask(li, index) {
+  li.parentNode.remove();
+  subTasks.splice(index, 1);
 }
