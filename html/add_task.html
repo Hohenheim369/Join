@@ -204,22 +204,28 @@
           <div class="form-child-order">
             <label>Subtasks</label>
             <div id="subtasks_contant" class="subtasks-container">
-              <div id="subtasks_inactiv" onclick="openSubtasks()">
-                <div class="div-input placeholder-gey">Add new subtask</div>
-                <div class="hover-circle d-flex-center pos-abs">
+              <div id="subtasks_inactiv">
+                <input
+                  onclick="openSubtasks()"
+                  type="text"
+                  placeholder="Add new subtask"
+                  id="subtasks_input"
+                />
+                <!-- <div class="div-input placeholder-gey">Add new subtask</div> -->
+                <div
+                  onclick="openSubtasks()"
+                  id="subtasks_inactiv_img"
+                  class="hover-circle d-flex-center pos-abs"
+                >
                   <img
                     src="../assets/img/png-old/Subtasks icons11.png"
                     alt=""
                   />
                 </div>
-              </div>
-              <div id="subtasks_activ" class="d-none">
-                <input
-                  type="text"
-                  placeholder="Add new subtask"
-                  id="subtasks_input"
-                />
-                <div class="d-flex-center pos-abs gap-4">
+                <div
+                  id="subtasks_activ_img"
+                  class="d-flex-center pos-abs gap-4 d-none"
+                >
                   <div class="hover-circle d-flex-center">
                     <img
                       onclick="cancelSubtasks()"
@@ -247,8 +253,7 @@
       <div class="space-top"></div>
       <div class="bottom-order">
         <span class="alert-field"
-          ><span class="required-sign">*</span>This field is required</span
-        >
+          ><span class="required-sign">*</span>This field is required</span>
         <div class="bottom-button-order">
           <button onclick="clearButton()" class="clear-button">
             Clear
@@ -276,7 +281,7 @@
           </button>
         </div>
       </div>
-      <div class="space-bottom"></div>
+      <div id="task_added_overlay" class="add-task-overlay d-flex-center d-none"></div>
     </div>
     <script src="../scripts/add_task_Buttons.js"></script>
     <script src="../scripts/add_task.js"></script>

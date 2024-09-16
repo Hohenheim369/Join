@@ -24,6 +24,7 @@ async function createTask() {
   let taskId = await loadTasks();
   let assignedTo = [5, 8];
   putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced);
+  document.getElementById('task_added_overlay').innerHTML += taskAddedToBoard ();
 }
 
 function putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced){
@@ -103,19 +104,16 @@ function selectCategory(category) {
 document.addEventListener('click', function(event) {
   const categoryActiv = document.getElementById('category_activ');
   const categoryInactiv = document.getElementById('category_inactiv');
-  if (!categoryActiv.contains(event.target) && !categoryInactiv.contains(event.target)) {
+  const subtasksActiv = document.getElementById('subtasks_inactiv');
+  if (!categoryActiv.contains(event.target) && !categoryInactiv.contains(event.target) && !subtasksActiv.contains(event.target)) {
       closeSelectCategory();
+      cancelSubtasks();
   }
 });
 
 function saveChangesOnClickOutside(input, li, index) {
   input.addEventListener("focusout", function () {
       handleInputBlur(input, li, index);
-  });
-  input.addEventListener("keydown", function (event) {
-      if (event.key === "Enter") {
-          handleInputBlur(input, li, index);
-      }
   });
 }
 

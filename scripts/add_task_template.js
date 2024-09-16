@@ -12,10 +12,10 @@ function showAssignedContactList(contact){
 }
 
 function showCategory(){
-  return  `<div class="contact-list padding-7-16 font-s-20 cursor-p"  onclick="selectCategory('Technical Task')">
+  return  `<div class="category-list padding-7-16 font-s-20 cursor-p"  onclick="selectCategory('Technical Task')">
             <span>Technical Task</span>
           </div>
-          <div class="contact-list padding-7-16 font-s-20 cursor-p" onclick="selectCategory('User Story')">
+          <div class="category-list padding-7-16 font-s-20 cursor-p" onclick="selectCategory('User Story')">
             <span>User Story</span>
           </div>`
 }
@@ -34,4 +34,12 @@ function addSubtasksToList(subtasksInput, id) {
               <img onclick="saveChangesOnClickOutside(${id})" src="../assets/img/png/subtasks-checkmark.png" alt="">
             </div>
           </div>` 
+}
+
+function taskAddedToBoard (){
+  document.getElementById('task_added_overlay').classList.remove('d-none')
+  return  `<div class="font-s-20 added-overlay d-flex-center gap-10">
+            <span>Task added to board</span>
+            <img src="../assets/img/png/board-white.png" alt="">
+          </div>`
 }

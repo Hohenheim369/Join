@@ -36,7 +36,7 @@ label {
 }
 
 .placeholder-gey {
-  color: #D1D1D1;
+  color: #d1d1d1;
 }
 
 .field-alert {
@@ -74,8 +74,8 @@ textarea {
   border-radius: 10px;
 }
 
-.assigned-container:hover{
-  border: 1px solid #A8A8A8;
+.assigned-container:hover {
+  border: 1px solid #a8a8a8;
 }
 
 .hover-circle {
@@ -108,9 +108,9 @@ textarea {
   line-height: 14.4px;
 }
 
-.contact-list:hover{
+.contact-list:hover {
   border-radius: 10px;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
 .dividing-bar {
@@ -136,8 +136,18 @@ textarea {
   border-radius: 10px;
 }
 
-.category-container:hover{
-  border: 1px solid #A8A8A8;
+.category-container:hover {
+  border: 1px solid #a8a8a8;
+}
+
+.category-list {
+  height: 54px;
+  background-color: #FFFFFF;
+}
+
+.category-list:hover {
+  background-color: #eeeeee;
+  border-radius: 10px;
 }
 
 .subtasks-container {
@@ -148,8 +158,8 @@ textarea {
   border-radius: 10px;
 }
 
-.subtasks-container:hover{
-  border: 1px solid #A8A8A8;
+.subtasks-container:hover {
+  border: 1px solid #a8a8a8;
 }
 
 .subtasks-placeholder::placeholder {
@@ -162,6 +172,11 @@ textarea {
   right: 15px;
 }
 
+ul{
+  max-height: 112px;
+  overflow-y: auto;
+}
+
 li {
   background-color: transparent;
   align-content: center;
@@ -171,11 +186,11 @@ li {
   height: 32px;
 }
 
-li:hover{
-  background-color: #EEEEEE;
+li:hover {
+  background-color: #eeeeee;
 }
 
-.imgs-pos{
+.imgs-pos {
   top: 10px;
   right: 15px;
   cursor: pointer;
@@ -239,7 +254,7 @@ li:hover{
   z-index: 1;
 }
 
-.div-input{
+.div-input {
   cursor: pointer;
   width: 100%;
   height: 48px;
@@ -251,16 +266,16 @@ li:hover{
   align-items: center;
 }
 
-.dividing-border{
-  border-left: 1px solid #D1D1D1;
+.dividing-border {
+  border-left: 1px solid #d1d1d1;
   height: 24px;
 }
 
-.subtasks-input{
+.subtasks-input {
   cursor: pointer;
   width: 100%;
   height: 100%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 0px;
   border: 0;
   border-radius: 0;
@@ -268,6 +283,28 @@ li:hover{
   align-items: center;
 }
 
-.subtasks-input:focus{
-  border-bottom: 1px solid #005DFF;
+.subtasks-input:focus {
+  border-bottom: 1px solid #005dff;
+}
+
+.added-overlay{
+  height: 74px;
+  width: 326px;
+  background-color: #2A3647;
+  color: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+}
+
+#task_added_overlay{
+    z-index: 10;
+    position: fixed;
+    top: 50%;
+    left: 150%; /* Start off-screen */
+    transform: translate(-50%, -50%);
+    transition: left 0.4s ease-out; /* Transition for the sliding effect */
+}
+
+#task_added_overlay.add-task-overlay{
+  left: 50%;
 }

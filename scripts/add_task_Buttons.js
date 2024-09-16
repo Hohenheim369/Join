@@ -121,13 +121,14 @@ function closeSelectCategory() {
 
 function openSubtasks() {
   if ((onclick = true)) {
-    document.getElementById("subtasks_inactiv").classList.add("d-none");
-    document.getElementById("subtasks_activ").classList.remove("d-none");
-    document.getElementById("category_task_contant").innerHTML = showCategory();
+    document.getElementById("subtasks_inactiv_img").classList.add("d-none");
+    document.getElementById("subtasks_activ_img").classList.remove("d-none");
   }
 }
 
 function addSubtasks() {
+  document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
+  document.getElementById("subtasks_activ_img").classList.add("d-none");
   let subtasksInput = document.getElementById("subtasks_input").value;
   if (subtasksInput.trim() !== "") {
     subTasks.push({subTaskName:subtasksInput, done:false});
@@ -141,6 +142,8 @@ function addSubtasks() {
 }
 
 function cancelSubtasks() {
+  document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
+  document.getElementById("subtasks_activ_img").classList.add("d-none");
   document.getElementById("subtasks_input").value = "";
 }
 
