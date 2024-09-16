@@ -1,10 +1,6 @@
 const BASE_URL_S =
   "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
 
-function removeNoticeButtonBg() {
-  const checkButton = document.getElementById("signup_check_off");
-  checkButton.classList.remove("bg-alert");
-}
 
 function isLegalAccepted() {
   const checkButton = document.getElementById("signup_check_off");
@@ -34,13 +30,8 @@ async function checkEmailFormat(email, noticeField) {
   return true;
 }
 
-async function fetchSignInUsers() {
-  const response = await fetch(`${BASE_URL_S}users.json`);
-  return await response.json();
-}
-
 async function isEmailRegistered(email) {
-  const users = await fetchSignInUsers();
+  const users = await fetchUsers();
   if (!users) {
     return false;
   }
@@ -58,7 +49,6 @@ async function checkEmailExists(email, noticeField) {
     return true;
   } catch (error) {
     console.error("Error checking email existence:", error);
-    noticeField.innerHTML += `<div>An error occurred. Please try again later.</div>`;
     return false;
   }
 }
@@ -66,16 +56,16 @@ async function checkEmailExists(email, noticeField) {
 async function validateEmail(email, noticeField) {
   const emailField = document.getElementById("signup_email");
 
-  if (!(await checkEmailFormat(email, noticeField))) {
-    emailField.classList.add("border-alert");
-    return false;
-  }
-
   if (!(await checkEmailExists(email, noticeField))) {
     emailField.classList.add("border-alert");
     return false;
   }
 
+  if (!(await checkEmailFormat(email, noticeField))) {
+    emailField.classList.add("border-alert");
+    return false;
+  }
+ 
   return true;
 }
 
@@ -155,21 +145,14 @@ function validatePassword(password, cPassword, noticeField) {
   return isValidPassword;
 }
 
-async function validateInputs(email, name, password, cPassword) {
-  const noticeField = document.getElementById("notice_field");
-  noticeField.innerHTML = "";
+async function validateInputs(email, name, password, cPassword) {  
+  const noticeField = document.getElementById("signup_notice_field");
+  const isEmailValid = await validateEmail(email, noticeField);
 
-  const validations = [
-    () => validateEmail(email, noticeField),
-    () => validateName(name, noticeField),
-    () => validatePassword(password, cPassword, noticeField),
-    () => validateLegalAcceptance(noticeField),
-  ];
-
-  const results = await Promise.all(
-    validations.map((validation) => validation())
-  );
-  const isValid = results.every((result) => result === true);
+  const isNameValid = validateName(name, noticeField);
+  const isPasswordValid = validatePassword(password, cPassword, noticeField);
+  const isLegalAccepted = validateLegalAcceptance(noticeField);
+  const isValid = isEmailValid && isNameValid && isPasswordValid && isLegalAccepted;
 
   if (!isValid) {
     throw new Error("Error in validation");
@@ -240,6 +223,7 @@ function createUserData(name, initials, email, password, userId) {
     id: userId,
     color: "#ffffff",
     tasks: [1, 2, 3],
+    contacts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   };
 }
 
@@ -271,7 +255,7 @@ function handleRegistrationResult(result) {
   }
 }
 
-function resetFormInputs() {
+function resetSignupFormInputs() {
   document.getElementById("signup_email").value = "";
   document.getElementById("signup_name").value = "";
   document.getElementById("signup_password").value = "";
@@ -282,7 +266,10 @@ function resetFormInputs() {
   ).src = `/assets/img/png/check-button-false.png`;
 }
 
-function resetFormBorders() {
+function resetSignupAlert() {
+  const noticeField = document.getElementById("signup_notice_field");
+  noticeField.innerHTML = "";
+
   document.getElementById("signup_email").classList.remove("border-alert");
   document.getElementById("signup_password").classList.remove("border-alert");
   document.getElementById("signup_c_password").classList.remove("border-alert");
@@ -300,7 +287,7 @@ function showSuccessfullySignedUp() {
         overlay.classList.remove("active", "visible");
         overlay.classList.add("d-none");
         resolve();
-      }, 1000);
+      }, 1500);
     }, 50);
   });
 }
@@ -311,14 +298,13 @@ async function signUpProcess() {
   const password = document.getElementById("signup_password").value;
   const cPassword = document.getElementById("signup_c_password").value;
 
-  resetFormBorders();
+  resetSignupAlert();
   await validateInputs(email, name, password, cPassword);
 
   const initials = getUserInitials(name);
 
   await addUser(email, name, password, initials);
-  resetFormInputs();
-  resetFormBorders();
+  resetSignupFormInputs();
   await showSuccessfullySignedUp();
   toggleAccessWindow();
 }

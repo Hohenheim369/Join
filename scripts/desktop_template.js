@@ -237,6 +237,6 @@ function hideArrowBack() {
 
 // });
 
-// function logOut() {
-//   localStorage.removeItem("loggedInUserName");
-// }
+function logOut() {
+  localStorage.removeItem("activeUser");
+}

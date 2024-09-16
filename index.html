@@ -8,25 +8,24 @@
 
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./styles/fonts.css" />
-    <link rel="stylesheet" href="./styles/assets.css" />    
+    <link rel="stylesheet" href="./styles/assets.css" />
     <link rel="stylesheet" href="./styles/access.css" />
 
-    <script src="./script.js"></script>    
+    <script src="./script.js"></script>
     <script src="./scripts/access_events.js"></script>
     <script src="./scripts/access_login.js"></script>
     <script src="./scripts/access_signup.js"></script>
   </head>
   <body onload="initAccess()">
-
     <div class="logo-container">
-        <img class="img-logo" src="./assets/img/png/logo-big.png" alt="" />
+      <img class="img-logo" src="./assets/img/png/logo-big.png" alt="" />
     </div>
 
     <div id="change_access" class="change-access d-flex-spbe-center">
       <div class="font-s-20 font-c-black">Not a Join user?</div>
       <button
         class="font-s-16"
-        onclick="toggleAccessWindow(), resetFormInputs(), resetFormBorders()"
+        onclick="toggleAccessWindow(), resetSignupFormInputs(), resetSignupAlert(), removeNoticeButtonBg()"
       >
         Sign up
       </button>
@@ -37,7 +36,11 @@
       <a onclick="openLegal('./html/legal_notice.html')">Legal notice</a>
     </div>
 
-    <form id="Login" class="access-window w-652 d-flex-column-center gap-32">
+    <form
+      id="Login"
+      onsubmit="loginAsUser(); return false"
+      class="access-window w-652 d-flex-column-center gap-32"
+    >
       <div class="d-flex-column-center gap-16">
         <h1>Log in</h1>
         <div class="blue-line"></div>
@@ -47,7 +50,7 @@
         <div class="w-100 d-flex-column-center gap-32">
           <div class="w-100 d-flex-column pos-rel">
             <input
-              id="login_email_field"
+              id="login_email"
               type="e-mail"
               placeholder="Email"
               required
@@ -77,16 +80,17 @@
               src="./assets/img/png/visibility_off.png"
               alt="Toggle password visibility"
             />
-            <div class="font-s-12 font-c-255-129-144">
-              Check your email and password. Please try again.
-            </div>
+            <div
+              id="login_notice_field"
+              class="font-s-12 font-c-255-129-144"
+            ></div>
           </div>
         </div>
 
         <div class="remember w-100 gap-8">
           <img
-            onclick="toggleCheckButton('check_off', 'button')"
-            id="check_off"
+            onclick="toggleCheckButton('login_check_off', 'button'), removeNoticeButtonBg(`login_check_off`)"
+            id="login_check_off"
             class="litte-button"
             src="./assets/img/png/check-button-false.png"
             alt=""
@@ -188,7 +192,7 @@
               alt="Toggle password visibility"
             />
             <div
-              id="notice_field"
+              id="signup_notice_field"
               class="font-s-12 font-c-255-129-144 d-flex-column gap-8"
             ></div>
           </div>
@@ -196,7 +200,7 @@
 
         <div class="d-flex-center gap-4">
           <img
-            onclick="toggleCheckButton(`signup_check_off`, 'button'), removeNoticeButtonBg()"
+            onclick="toggleCheckButton(`signup_check_off`, 'button'), removeNoticeButtonBg(`signup_check_off`)"
             id="signup_check_off"
             class="litte-button"
             src="./assets/img/png/check-button-false.png"
@@ -214,7 +218,9 @@
       <button class="h-48" type="submit">Sign up</button>
     </form>
     <div id="successfully_signed_up" class="overlay d-flex-center d-none">
-      <div class="signup-message d-flex-center font-s-20 font-c-white">You Signed Up successfully</div>
+      <div class="signup-message d-flex-center font-s-20 font-c-white">
+        You Signed Up successfully
+      </div>
     </div>
   </body>
 </html>

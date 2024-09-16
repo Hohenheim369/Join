@@ -32,6 +32,12 @@ function initAccess() {
     signUp.classList.toggle("d-none");
     changeAccess.classList.toggle("d-none");
   }
+
+  function removeNoticeButtonBg(CheckButtonId) {
+    const checkButton = document.getElementById(CheckButtonId);
+    checkButton.classList.remove("bg-alert");
+  }
+  
   
   function loginPasswordField() {
     const passwordField = document.getElementById("login_password");
