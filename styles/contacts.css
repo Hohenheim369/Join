@@ -10,6 +10,7 @@ body {
 
 .content {
   padding: 0px;
+  padding-inline: unset !important;
 }
 
 .contact-box {
@@ -35,7 +36,7 @@ body {
   align-items: center;
   justify-content: center;
   color: white;
-  background-color: #2A3647;
+  background-color: #2a3647;
   font-size: 21px;
   font-weight: 700;
   border: 0px;
@@ -70,12 +71,10 @@ body {
   background-color: #f4f4f4a6;
 }
 
-
-
-.contacts:target{
+.contacts:target {
   background-color: #2a3647;
   color: white;
-} 
+}
 
 .letter-circle {
   border: 2px solid white;
@@ -280,12 +279,12 @@ h3 {
 
 @keyframes slideInFromRight {
   from {
-      transform: translateX(100%);
-      opacity: 0;
+    transform: translateX(100%);
+    opacity: 0;
   }
   to {
-      transform: translateX(0);
-      opacity: 1;
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
@@ -297,7 +296,7 @@ h3 {
   border-color: red;
 }
 
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }

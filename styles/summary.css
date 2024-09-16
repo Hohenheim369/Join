@@ -246,6 +246,3 @@ span {
   margin-right: clamp(24px, 6%, 32px);
 }
 
-.logo-mobile{
-  display: none;
-}

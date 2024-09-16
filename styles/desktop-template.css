@@ -220,3 +220,7 @@ aside {
 a:hover{
   font-weight: 400;
 }
+
+.logo-mobile{
+  display: none;
+}
