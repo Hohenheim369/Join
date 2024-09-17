@@ -1,6 +1,3 @@
-const BASE_URL_S =
-  "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
-
 function removeNoticeButtonBg() {
   const checkButton = document.getElementById("signup_check_off");
   checkButton.classList.remove("bg-alert");
