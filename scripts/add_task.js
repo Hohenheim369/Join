@@ -3,18 +3,19 @@ let TEST_URL = `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebaseda
 let selectedContacts = [];
 let selectedPrio;
 let subTasks = [];
-//global outsourced if finished 
-async function loadTasks() {
-  let response = await fetch(`${TEST_URL}tasks/.json`);
-  let responseToJson = await response.json();
-  let newTaskId;
-  if (responseToJson == null) {
-    newTaskId = 1;
-  } else {
-    newTaskId = countId(responseToJson);
-  }
-  return newTaskId;
-}
+
+//global outsourced if finished -> ist outgesourced
+// async function loadTasks() {
+//   let response = await fetch(`${TEST_URL}tasks/.json`);
+//   let responseToJson = await response.json();
+//   let newTaskId;
+//   if (responseToJson == null) {
+//     newTaskId = 1;
+//   } else {
+//     newTaskId = countId(responseToJson);
+//   }
+//   return newTaskId;
+// }
 
 async function createTask() {
   //add function to check if all required fields are filled
@@ -22,7 +23,7 @@ async function createTask() {
   let description = document.getElementById("description_textarea").value;
   let dueDate = document.getElementById("due_date").value;
   let categorySeleced = document.getElementById("category").innerText;
-  let taskId = await loadTasks();
+  let taskId = await getNewId('tasks'); //Habe ich geändert - Gruß Susanne
   let assignedTo = [5, 8];
   putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced);
   openAddTaskDialog();
@@ -42,7 +43,7 @@ function sleep(ms) {
 }
 
 function putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced){
-  postData(`https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId-1}/`,
+  postData(`tasks/${taskId-1}/`, //Habe ich geändert - Gruß Susanne
     {
       title: title,
       description: description,
