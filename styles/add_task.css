@@ -142,7 +142,7 @@ textarea {
 
 .category-list {
   height: 54px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .category-list:hover {
@@ -172,7 +172,7 @@ textarea {
   right: 15px;
 }
 
-ul{
+ul {
   max-height: 112px;
   overflow-y: auto;
 }
@@ -287,24 +287,36 @@ li:hover {
   border-bottom: 1px solid #005dff;
 }
 
-.added-overlay{
+.added-overlay {
   height: 74px;
   width: 326px;
-  background-color: #2A3647;
-  color: #FFFFFF;
+  background-color: #2a3647;
+  color: #ffffff;
   border-radius: 20px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
-#task_added_overlay{
-    z-index: 10;
-    position: fixed;
-    top: 50%;
-    left: 150%; /* Start off-screen */
-    transform: translate(-50%, -50%);
-    transition: left 0.4s ease-out; /* Transition for the sliding effect */
+#task_added_overlay {
+  position: absolute;
+  bottom: -100px; /* Startposition außerhalb des Sichtfelds */
+  left: 50%;
+  transform: translateX(-50%);
+  transition: bottom 0.5s ease; /* Animationseffekt */
 }
 
-#task_added_overlay.add-task-overlay{
-  left: 50%;
+#task_added_overlay.visible {
+  bottom: 50%; /* Endposition in der Mitte des Bildschirms */
+}
+
+.hover-circle-subtask {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.hover-circle-subtask:hover {
+  background-color: #eeeeee;
+  transition: ease-in-out;
+  transform: scale(1.1);
 }

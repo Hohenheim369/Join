@@ -17,6 +17,7 @@ async function loadTasks() {
 }
 
 async function createTask() {
+  //add function to check if all required fields are filled
   let title = document.getElementById("title_input").value;
   let description = document.getElementById("description_textarea").value;
   let dueDate = document.getElementById("due_date").value;
@@ -24,7 +25,20 @@ async function createTask() {
   let taskId = await loadTasks();
   let assignedTo = [5, 8];
   putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced);
-  document.getElementById('task_added_overlay').innerHTML += taskAddedToBoard ();
+  openAddTaskDialog();
+  await sleep(1500);
+  window.location.href = "../html/board.html";
+}
+
+async function openAddTaskDialog(){
+  document.getElementById('task_added_overlay').innerHTML = taskAddedToBoard ();
+  await sleep(10);
+  const slidingDiv = document.getElementById('task_added_overlay');
+  slidingDiv.classList.toggle('visible');
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced){
@@ -105,7 +119,8 @@ document.addEventListener('click', function(event) {
   const categoryActiv = document.getElementById('category_activ');
   const categoryInactiv = document.getElementById('category_inactiv');
   const subtasksActiv = document.getElementById('subtasks_inactiv');
-  if (!categoryActiv.contains(event.target) && !categoryInactiv.contains(event.target) && !subtasksActiv.contains(event.target)) {
+  const subTasksList = document.getElementById('subtasks_list');
+  if (!categoryActiv.contains(event.target) && !categoryInactiv.contains(event.target) && !subtasksActiv.contains(event.target) && !subTasksList.contains(event.target)) {
       closeSelectCategory();
       cancelSubtasks();
   }
