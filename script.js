@@ -1,13 +1,13 @@
 const BASE_URL =
   "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/";
 
-async function fetchUsers() {
-  const response = await fetch(`${BASE_URL_S}users.json`);
+async function fetchData(path = "") {
+  const response = await fetch(`${BASE_URL}/${path}/.json`);
   return await response.json();
 }
 
 async function postData(path = "", data = {}) {
-  const response = await fetch(path + ".json", {
+  const response = await fetch(`${BASE_URL}/${path}/.json`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -19,6 +19,26 @@ async function postData(path = "", data = {}) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   return await response.json();
+}
+
+async function getNewId(path = "") {
+  let response = await fetch(`${BASE_URL}/${path}/.json`);
+  let responseToJson = await response.json();
+  let newUserId;
+  if (responseToJson == null) {
+    newUserId = 1;
+  } else {
+    newUserId = countId(responseToJson);
+  }
+  return newUserId;
+}
+
+function countId(responseToJson) {
+  let keys = Object.keys(responseToJson);
+  let lastKey = keys[keys.length - 1];
+  let countId = responseToJson[lastKey].id;
+  countId++;
+  return countId;
 }
 
 function getActiveUser() {
@@ -36,14 +56,6 @@ function getActiveUser() {
 }
 
 let activeUser = getActiveUser();
-
-function countId(responseToJson) {
-  let keys = Object.keys(responseToJson);
-  let lastKey = keys[keys.length - 1];
-  let countId = responseToJson[lastKey].id;
-  countId++;
-  return countId;
-}
 
 function toggleCheckButton(CheckButtonId, CheckTaskButton) {
   const checkButton = document.getElementById(CheckButtonId);

@@ -33,10 +33,7 @@ function initAccess() {
     changeAccess.classList.toggle("d-none");
   }
 
-  function removeNoticeButtonBg(CheckButtonId) {
-    const checkButton = document.getElementById(CheckButtonId);
-    checkButton.classList.remove("bg-alert");
-  }
+  
   
   
   function loginPasswordField() {

@@ -1,22 +1,9 @@
 const BASE_URL_S =
   "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
 
-function isLegalAccepted() {
+function removeNoticeButtonBg() {
   const checkButton = document.getElementById("signup_check_off");
-  const isChecked = checkButton.src.includes("true");
-  return isChecked;
-}
-
-function validateLegalAcceptance(noticeField) {
-  const acceptedLegal = isLegalAccepted();
-  if (!acceptedLegal) {
-    const checkButton = document.getElementById("signup_check_off");
-    console.log("Please accept the Legal notice.");
-    noticeField.innerHTML += `<div>Please accept the Legal notice.</div>`;
-    checkButton.classList.add("bg-alert");
-    return false;
-  }
-  return true;
+  checkButton.classList.remove("bg-alert");
 }
 
 async function checkEmailFormat(email, noticeField) {
@@ -30,7 +17,7 @@ async function checkEmailFormat(email, noticeField) {
 }
 
 async function isEmailRegistered(email) {
-  const users = await fetchUsers();
+  const users = await fetchData('users');
   if (!users) {
     return false;
   }
@@ -144,13 +131,32 @@ function validatePassword(password, cPassword, noticeField) {
   return isValidPassword;
 }
 
+function isLegalAccepted() {
+  const checkButton = document.getElementById("signup_check_off");
+  const isChecked = checkButton.src.includes("true");
+  return isChecked;
+}
+
+function validateLegalAcceptance(noticeField) {
+  const acceptedLegal = isLegalAccepted();
+  if (!acceptedLegal) {
+    const checkButton = document.getElementById("signup_check_off");
+    console.log("Please accept the Legal notice.");
+    noticeField.innerHTML += `<div>Please accept the Legal notice.</div>`;
+    checkButton.classList.add("bg-alert");
+    return false;
+  }
+  return true;
+}
+
 async function validateInputs(email, name, password, cPassword) {
   const noticeField = document.getElementById("signup_notice_field");
-  const isEmailValid = await validateEmail(email, noticeField);
 
+  const isEmailValid = await validateEmail(email, noticeField);
   const isNameValid = validateName(name, noticeField);
   const isPasswordValid = validatePassword(password, cPassword, noticeField);
   const isLegalAccepted = validateLegalAcceptance(noticeField);
+
   const isValid =
     isEmailValid && isNameValid && isPasswordValid && isLegalAccepted;
 
@@ -179,39 +185,12 @@ function getUserInitials(name) {
   }
 }
 
-async function getNewId() {
-  let response = await fetch(`${BASE_URL_S}users/.json`);
-  let responseToJson = await response.json();
-  let newUserId;
-  if (responseToJson == null) {
-    newUserId = 1;
-  } else {
-    newUserId = countId(responseToJson);
-  }
-  return newUserId;
-}
-
 function handleRegistrationResult(result) {
   if (result) {
     console.log("Registration successful!");
   } else {
     console.log("There was a problem with the registration. Please try again.");
   }
-}
-
-async function postData(path = "", data = {}) {
-  const response = await fetch(path + ".json", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return await response.json();
 }
 
 function createUserData(name, initials, email, password, userId) {
@@ -228,12 +207,12 @@ function createUserData(name, initials, email, password, userId) {
 }
 
 async function addUser(email, name, password, initials) {
-  const userId = await getNewId();
+  const userId = await getNewId('users');
   const userData = createUserData(name, initials, email, password, userId);
 
   try {
     const result = await postData(
-      `${BASE_URL_S}users/${userId - 1}/`,
+      `users/${userId - 1}/`,
       userData
     );
     handleRegistrationResult(result);

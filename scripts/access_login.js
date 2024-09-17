@@ -23,6 +23,13 @@ async function loadUserData(user) {
   };
 }
 
+async function loadRememberMeData(user) {
+  return {
+    email: user.email,
+    password: user.password,
+  };
+}
+
 function resetLoginAlert() {
   const noticeField = document.getElementById("login_notice_field");
   noticeField.innerHTML = "";
@@ -37,18 +44,25 @@ function resetLoginFormInputs() {
 
   let legalButton = document.getElementById("login_check_off");
   legalButton.src = `/assets/img/png/check-button-false.png`;
-  legalButton.classList.remove("bg-alert");
 }
 
-
-
+function isRememberMeChecked() {
+  const checkButton = document.getElementById("login_check_off");
+  const isChecked = checkButton.src.includes("true");
+  return isChecked;
+}
 
 async function handleSuccessfulLogin(user) {
+  if(isRememberMeChecked()){
+    const saveDAta = await loadRememberMeData(user);
+    localStorage.setItem('rememberMeData', JSON.stringify(saveDAta));
+  }
+
   const userData = await loadUserData(user);
-  console.log(userData);
   
   localStorage.setItem('activeUser', JSON.stringify(userData));
-  // window.location.href = "./html/board.html";
+  resetLoginFormInputs();
+  window.location.href = "./html/summary.html";
 }
 
 function handleLoginError() {
@@ -60,19 +74,16 @@ function handleLoginError() {
 }
 
 async function loginAsUser() {
+  const loginEmail = document.getElementById("login_email").value.trim();
+  const loginPassword = document.getElementById("login_password").value;
+
+  const users = await fetchData('users');
+  const user = users.find(user => user.email === loginEmail);
+
   resetLoginAlert();
 
-  const email = document.getElementById("login_email").value.trim();
-  const password = document.getElementById("login_password").value;
-
-  const users = await fetchUsers();
-  const user = users.find(user => user.email === email);
-  console.log(user.password); //Muss gelöscht werden!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- 
-  
-  if (user && user.password === password) {
-    await handleSuccessfulLogin(user);
-    resetLoginFormInputs();
+  if (user && user.password === loginPassword) {
+    await handleSuccessfulLogin(user);    
   } else {
     handleLoginError();
   }
