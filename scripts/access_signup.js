@@ -1,7 +1,6 @@
 const BASE_URL_S =
   "https://joinsusanne-default-rtdb.europe-west1.firebasedatabase.app/";
 
-
 function isLegalAccepted() {
   const checkButton = document.getElementById("signup_check_off");
   const isChecked = checkButton.src.includes("true");
@@ -65,7 +64,7 @@ async function validateEmail(email, noticeField) {
     emailField.classList.add("border-alert");
     return false;
   }
- 
+
   return true;
 }
 
@@ -145,14 +144,15 @@ function validatePassword(password, cPassword, noticeField) {
   return isValidPassword;
 }
 
-async function validateInputs(email, name, password, cPassword) {  
+async function validateInputs(email, name, password, cPassword) {
   const noticeField = document.getElementById("signup_notice_field");
   const isEmailValid = await validateEmail(email, noticeField);
 
   const isNameValid = validateName(name, noticeField);
   const isPasswordValid = validatePassword(password, cPassword, noticeField);
   const isLegalAccepted = validateLegalAcceptance(noticeField);
-  const isValid = isEmailValid && isNameValid && isPasswordValid && isLegalAccepted;
+  const isValid =
+    isEmailValid && isNameValid && isPasswordValid && isLegalAccepted;
 
   if (!isValid) {
     throw new Error("Error in validation");
@@ -261,9 +261,9 @@ function resetSignupFormInputs() {
   document.getElementById("signup_password").value = "";
   document.getElementById("signup_c_password").value = "";
 
-  document.getElementById(
-    "signup_check_off"
-  ).src = `/assets/img/png/check-button-false.png`;
+  let legalButton = document.getElementById("signup_check_off");
+  legalButton.src = `/assets/img/png/check-button-false.png`;
+  legalButton.classList.remove("bg-alert");
 }
 
 function resetSignupAlert() {
