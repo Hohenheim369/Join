@@ -55,7 +55,6 @@ span {
   width: clamp(396px, 100%, 560px);
   flex-direction: column;
   justify-content: space-between;
-  box-sizing: unset;
 }
 
 .to-do-done-block {
@@ -244,5 +243,10 @@ span {
 
 .m-r-32 {
   margin-right: clamp(24px, 6%, 32px);
+}
+
+.m-t-b-32 {
+  margin-top: clamp(24px, 6%, 32px);
+  margin-bottom: clamp(24px, 6%, 32px);
 }
 
