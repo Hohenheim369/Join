@@ -34,21 +34,13 @@ document.addEventListener("click", (event) => {
 });
 
 async function loadTemplate() {
-  try {
     const response = await fetch("../assets/templates/desktop_template.html");
-    if (!response.ok) {
-      throw new Error("Netzwerkantwort war nicht okay");
-    }
-
     const data = await response.text();
     document.getElementById("desktop_template").innerHTML = data;
 
     // Custom Event "loadTemplated" auslösen, nachdem das Template geladen wurde
     const event = new Event("loadTemplated");
     document.dispatchEvent(event);
-  } catch (error) {
-    console.error("Fehler beim Laden des Templates:", error);
-  }
 }
 
 function updateSidebarIcons() {
