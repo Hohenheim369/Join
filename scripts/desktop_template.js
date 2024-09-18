@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Lade das Template und warte, bis es fertig ist
   loadTemplate().then(() => {
+    // initialien im header einfügen
+    updateInitialsElement();
     // Setze die Sichtbarkeit des Bodys auf sichtbar
     document.body.style.visibility = "visible";
     // Aktualisiere die Sidebar-Icons nach dem Laden des Templates
@@ -166,30 +168,31 @@ function hideArrowBack() {
 //   handleUserProfile();
 // }
 
-// function handleUserProfile() {
-//   let loggedInUserName = localStorage.getItem("loggedInUserName");
-//   if (loggedInUserName) {
-//     console.log("Logged-in user name:", loggedInUserName);
-//     let initials = getInitials(loggedInUserName);
-//     updateInitialsElement(initials);
-//   } else {
-//     console.log("No logged-in user name found");
-//   }
-// }
+function getInitialsFromLocalStorage() {
+  let activeUser = localStorage.getItem('activeUser');
+  if (activeUser) {
+    // In ein JSON-Objekt umwandeln
+    const loggedInUser = JSON.parse(activeUser);
+    // Initialen abrufen
+    return loggedInUser.initials;
+  }
+}
+
+function updateInitialsElement() {
+  let initialsElement = document.getElementById("user_profile_initials");
+  let initials = getInitialsFromLocalStorage();
+
+  if (initialsElement) {
+    initialsElement.innerHTML = `${initials}`;
+  }
+}
 
 // function getInitials(userName) {
 //   let nameParts = userName.split(" ");
 //   return nameParts.map(part => part.charAt(0).toUpperCase()).join("");
 // }
 
-// function updateInitialsElement(initials) {
-//   let initialsElement = document.getElementById("user_profile_initials");
-//   if (initialsElement) {
-//     initialsElement.innerHTML = `${initials}`;
-//     initialsElement.addEventListener("click", toggleLogOutVisibility);
-//   }
-//   console.log(initials);
-// }
+
 
 // function handleDocumentClick(event) {
 //   let logOutElement = document.getElementById("log_out");
