@@ -1,21 +1,7 @@
-//for testing reasons my own database
-let TEST_URL = `https://remotestorage-6ae7b-default-rtdb.europe-west1.firebasedatabase.app/`;
 let selectedContacts = [];
 let selectedPrio;
-let subTasks = [];
-
-//global outsourced if finished -> ist outgesourced
-// async function loadTasks() {
-//   let response = await fetch(`${TEST_URL}tasks/.json`);
-//   let responseToJson = await response.json();
-//   let newTaskId;
-//   if (responseToJson == null) {
-//     newTaskId = 1;
-//   } else {
-//     newTaskId = countId(responseToJson);
-//   }
-//   return newTaskId;
-// }
+// let subTasks = [];
+let counter = 0;
 
 async function createTask() {
   //add function to check if all required fields are filled
@@ -23,27 +9,28 @@ async function createTask() {
   let description = document.getElementById("description_textarea").value;
   let dueDate = document.getElementById("due_date").value;
   let categorySeleced = document.getElementById("category").innerText;
-  let taskId = await getNewId('tasks'); //Habe ich geändert - Gruß Susanne
+  let taskId = await getNewId('tasks');
   let assignedTo = [5, 8];
+  // let subTask = createSubtasks();
   putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced);
-  openAddTaskDialog();
-  await sleep(1500);
-  window.location.href = "../html/board.html";
+  // openAddTaskDialog();
+  // await sleep(1500);
+  // window.location.href = "../html/board.html";
 }
 
-async function openAddTaskDialog(){
-  document.getElementById('task_added_overlay').innerHTML = taskAddedToBoard ();
-  await sleep(10);
-  const slidingDiv = document.getElementById('task_added_overlay');
-  slidingDiv.classList.toggle('visible');
-}
+// async function openAddTaskDialog(){
+//   document.getElementById('task_added_overlay').innerHTML = taskAddedToBoard ();
+//   await sleep(10);
+//   const slidingDiv = document.getElementById('task_added_overlay');
+//   slidingDiv.classList.toggle('visible');
+// }
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced){
-  postData(`tasks/${taskId-1}/`, //Habe ich geändert - Gruß Susanne
+  postData(`tasks/${taskId-1}/`,
     {
       title: title,
       description: description,
@@ -116,40 +103,54 @@ function selectCategory(category) {
   closeSelectCategory();
 }
 
-document.addEventListener('click', function(event) {
+let clickListenerActive = false;
+
+function toggleClickListener() {
+    const categoryActiv = document.getElementById('category_activ');
+    const categoryInactiv = document.getElementById('category_inactiv');
+    const subtasksActiv = document.getElementById('subtasks_inactiv');
+    const subTasksList = document.getElementById(`subtasks_list`);
+    if (categoryActiv || categoryInactiv || subtasksActiv || subTasksList) {
+        if (!clickListenerActive) {
+            document.addEventListener('click', handleDocumentClick);
+            clickListenerActive = true;
+        }
+    } else {
+        if (clickListenerActive) {
+            document.removeEventListener('click', handleDocumentClick);
+            clickListenerActive = false;
+        }
+    }
+}
+
+function handleDocumentClick(event) {
   const categoryActiv = document.getElementById('category_activ');
   const categoryInactiv = document.getElementById('category_inactiv');
   const subtasksActiv = document.getElementById('subtasks_inactiv');
-  const subTasksList = document.getElementById('subtasks_list');
-  if (!categoryActiv.contains(event.target) && !categoryInactiv.contains(event.target) && !subtasksActiv.contains(event.target) && !subTasksList.contains(event.target)) {
+  const subTasksList = document.getElementById(`subtasks_list`);
+  if (!categoryActiv.contains(event.target) && 
+      !categoryInactiv.contains(event.target) && 
+      !subtasksActiv.contains(event.target)&&
+      !subTasksList.contains(event.target)){
       closeSelectCategory();
       cancelSubtasks();
+      toggleClickListener();
   }
-});
-
-function saveChangesOnClickOutside(input, li, index) {
-  input.addEventListener("focusout", function () {
-      handleInputBlur(input, li, index);
-  });
 }
 
-function editSubtask(li, index) {
-  const currentText = li.innerText;
-  const input = createInputField(currentText);
-  li.innerHTML = ""; 
-  li.appendChild(input); 
-  input.focus(); 
-  saveChangesOnClickOutside(input, li, index);
+function saveChangesOnClickOutside(index) {
+  let subInput = document.getElementById(`input_subtask_${index}`).value;
+  document.getElementById(`list_subtask_${index}`).innerText = subInput;
   toggleSubtasksImgs(index);
 }
 
-function createInputField(value) {
-  const input = document.createElement("input");
-  input.type = "text";
-  input.classList.add("subtasks-input");
-  input.classList.add("font-s-16");
-  input.value = value;
-  return input;
+
+function editSubtask(li, index) {
+  const currentText = li.innerText;
+  let subInput = document.getElementById(`input_subtask_${index}`);
+  subInput.value = currentText; 
+  toggleSubtasksImgs(index);
+  subInput.focus();
 }
 
 function handleInputBlur(input, li, index) {
@@ -157,8 +158,9 @@ function handleInputBlur(input, li, index) {
       saveChanges(input.value, li, index);
   } else {
       removeSubtask(li, index);
+      return
   }
-  toggleSubtasksImgs(index);
+  toggleClickListener();
 }
 
 function saveChanges(newValue, li, index) {

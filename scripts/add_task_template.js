@@ -22,12 +22,13 @@ function showCategory(){
 
 function addSubtasksToList(subtasksInput, id) {
   return  `<div id="listItem_${id}" class="pos-rel">
-            <li ondblclick="editSubtask(this, ${id})">${subtasksInput}</li>
+            <li id="list_subtask_${id}" ondblclick="editSubtask(this, ${id})">${subtasksInput}</li>
             <div id="list_imgs_activ_${id}" class="d-flex-center gap-4 pos-abs imgs-pos">
               <img class="hover-circle-subtask" onclick="editSubtask(document.querySelector('#listItem_${id} li'), ${id})" src="../assets/img/png/subtasks-edit.png" alt="">
               <div class="dividing-border"></div>
               <img class="hover-circle-subtask" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
             </div>
+            <input id="input_subtask_${id}" type="text" class="subtasks-input font-s-16 d-none">
             <div id="list_imgs_inactiv_${id}" class="d-flex-center gap-4 pos-abs imgs-pos d-none">
               <img class="hover-circle-subtask" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
               <div class="dividing-border"></div>

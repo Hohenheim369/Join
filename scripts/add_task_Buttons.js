@@ -109,6 +109,7 @@ function openSelectCategory() {
     document.getElementById("category_inactiv").classList.add("d-none");
     document.getElementById("category_activ").classList.remove("d-none");
     document.getElementById("category_task_contant").innerHTML = showCategory();
+    toggleClickListener();
   }
 }
 
@@ -131,7 +132,7 @@ function addSubtasks() {
   document.getElementById("subtasks_activ_img").classList.add("d-none");
   let subtasksInput = document.getElementById("subtasks_input").value;
   if (subtasksInput.trim() !== "") {
-    subTasks.push({subTaskName:subtasksInput, done:false});
+    subTasks.push({ subTaskName: subtasksInput, done: false });
     let ids = subTasks.length;
     document.getElementById("subtasks_list").innerHTML += addSubtasksToList(
       subtasksInput,
@@ -155,4 +156,6 @@ function deleteSubtask(id) {
 function toggleSubtasksImgs(id) {
   document.getElementById(`list_imgs_activ_${id}`).classList.toggle("d-none");
   document.getElementById(`list_imgs_inactiv_${id}`).classList.toggle("d-none");
+  document.getElementById(`list_subtask_${id}`).classList.toggle("d-none");
+  document.getElementById(`input_subtask_${id}`).classList.toggle("d-none");
 }
