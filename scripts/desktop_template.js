@@ -10,11 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Füge die Event-Listener für die Links hinzu
     initializeLinks();
     // Überprüfe den Parameter hideIcons, aber erst nach dem Laden des Templates
-    const hideIcons = getQueryParam("hideIcons");
-    if (hideIcons === "true") {
-      hideElement("header_icons");
-      hideElement("icon_bar");
-    }
+    hideIcons();
   });
 });
 
@@ -227,6 +223,19 @@ function updateInitialsElement() {
 //   }
 
 // });
+
+function hideIcons() {
+  const activeUser = localStorage.getItem("activeUser");
+  if (!activeUser) {
+    const elementsToHide = ["icon_bar", "header_icons"]; // Füge hier die IDs der Elemente hinzu, die du verstecken möchtest
+    elementsToHide.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.style.setProperty("display", "none", "important"); // Element ausblenden
+      }
+    });
+  }
+}
 
 function logOut() {
   localStorage.removeItem("activeUser");

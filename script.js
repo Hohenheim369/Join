@@ -66,12 +66,11 @@ function toggleCheckButton(CheckButtonId, CheckTaskButton) {
 }
 
 function openLegal(LinkToSide) {
-  // Füge den Parameter ?hideIcons=true zur URL hinzu
-  const urlWithParam = LinkToSide + "?hideIcons=true";
-
-  // Öffne den Link mit dem Parameter in einem neuen Tab
-  window.open(urlWithParam, "_blank");
+  let targetUrl = LinkToSide;
+  window.open(targetUrl, "_blank");
 }
+
+
 
 function goBack() {
   window.history.back();
