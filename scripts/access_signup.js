@@ -3,7 +3,7 @@ function removeNoticeButtonBg() {
   checkButton.classList.remove("bg-alert");
 }
 
-async function checkEmailFormat(email, noticeField) {
+function checkEmailFormat(email, noticeField) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     console.log("Invalid email format.");
@@ -18,7 +18,7 @@ async function isEmailRegistered(email) {
   if (!users) {
     return false;
   }
-  return Object.values(users).some((user) => user && user.email === email);
+  return Object.values(users).some((user) => user && user.email.toLowerCase() === email.toLowerCase());
 }
 
 async function checkEmailExists(email, noticeField) {
@@ -44,7 +44,7 @@ async function validateEmail(email, noticeField) {
     return false;
   }
 
-  if (!(await checkEmailFormat(email, noticeField))) {
+  if (!(checkEmailFormat(email, noticeField))) {
     emailField.classList.add("border-alert");
     return false;
   }
