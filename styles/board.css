@@ -28,24 +28,12 @@
   background-color: transparent;
 }
 
-.input-button svg {
-  border-radius: 50%;
+.magnifying-glass:hover {
+  content: url("../assets/img/png/magnifying-glass-hover.png");
 }
 
-.input-button:hover svg {
-  background-color: rgb(238, 238, 238);
-}
-
-.input-button svg path {
-  transition: fill 0.1s ease;
-}
-
-.input-button:active svg {
-  background-color: transparent;
-}
-
-.input-button:active svg path {
-  fill: rgb(41, 171, 226);
+.magnifying-glass:active {
+  content: url("../assets/img/png/magnifying-glass-active.png");
 }
 
 .kanban-board {
@@ -58,35 +46,16 @@
   margin: 0 16px 0 8px;
 }
 
-.kanban-add-button {
-  padding: 0px;
-  background-color: transparent;
-  border: none;
+.add-board-btn {
+  cursor: pointer;
 }
 
-.kanban-add-button svg {
-  padding: 0px 2px 0px 0px; 
+.add-board-btn:hover {
+  content: url("../assets/img/png/add-board-hover.png");
 }
 
-.kanban-add-button:hover {
-  background-color: transparent;
-  border: none;
-  box-shadow: none;
-}
-
-.kanban-add-button:hover svg rect,
-.kanban-add-button:hover svg path {
-  stroke: rgb(41, 171, 226);
-}
-
-.kanban-add-button:active {
-  background-color: transparent;
-  border: none;
-}
-
-.kanban-add-button:active svg rect,
-.kanban-add-button:active svg path {
-  stroke: rgb(9, 25, 49);
+.add-board-btn:active {
+  content: url("../assets/img/png/add-board-active.png");
 }
 
 .kanban-tickets {
@@ -253,28 +222,12 @@
   background-color: rgb(209, 209, 209);
 }
 
-.img-default {
-  display: block;
+.img-delete:hover {
+  content: url("../assets/img/png/delete-hover.png");
 }
 
-.img-hover {
-  display: none;
-}
-
-.edit:hover .img-default {
-  display: none;
-}
-
-.edit:hover .img-hover {
-  display: flex;
-}
-
-.delete:hover .img-default {
-  display: none;
-}
-
-.delete:hover .img-hover {
-  display: flex;
+.img-edit:hover {
+  content: url("../assets/img/png/edit-hover.png");
 }
 
 .d-none {
