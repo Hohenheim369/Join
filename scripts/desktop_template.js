@@ -39,8 +39,8 @@ async function loadTemplate() {
     document.getElementById("desktop_template").innerHTML = data;
 
     // Custom Event "loadTemplated" auslösen, nachdem das Template geladen wurde
-    const event = new Event("loadTemplated");
-    document.dispatchEvent(event);
+    // const event = new Event("loadTemplated");
+    // // document.dispatchEvent(event);
 }
 
 function updateSidebarIcons() {
