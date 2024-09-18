@@ -19,6 +19,7 @@
     <script src="../script.js"></script>
     <script src="../scripts/desktop_template.js"></script>
     <script src="../scripts/board_basic.js"></script>
+    <script src="../scripts/board_template.js"></script>
   </head>
   <body onload="renderTasksInBoard()">
     <div id="desktop_template"></div>
@@ -29,14 +30,18 @@
           <div class="pos-rel d-flex-spbe-center" id="search_box">
             <input id="search_task" type="text" placeholder="Find Task" />
             <button class="input-button" id="search_button">
-              <img class="magnifying-glass" src="../assets/img/png/magnifying-glass-default.png" alt="">
+              <img
+                class="magnifying-glass"
+                src="../assets/img/png/magnifying-glass-default.png"
+                alt=""
+              />
             </button>
           </div>
 
           <button>
             Add Task
             <div class="wh-32 d-flex-center">
-              <img src="../assets/img/png/add.png" alt="">
+              <img src="../assets/img/png/add.png" alt="" />
             </div>
           </button>
         </div>
@@ -54,7 +59,7 @@
               alt=""
             />
           </div>
-          <div class="kanban-tickets d-flex-column">
+          <div id="kanban_todo" class="kanban-tickets d-flex-column">
             <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
@@ -64,50 +69,14 @@
             class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110"
           >
             In progress
-            <img class="add-board-btn" src="../assets/img/png/add-board-default.png" alt="">
+            <img
+              class="add-board-btn"
+              src="../assets/img/png/add-board-default.png"
+              alt=""
+            />
           </div>
-          <div class="kanban-tickets d-flex-column">
-            <div
-              draggable="true"
-              class="ticket-card d-flex-column gap-24"
-              onclick="toggleOverlay()"
-            >
-              <div class="ticket-category font-c-white bg-category-blue">
-                User Story
-              </div>
-              <div class="d-flex-column gap-8">
-                <div class="ticket-title font-w-700">
-                  Kochwelt Page & Recipe Recommender
-                </div>
-                <div class="ticket-description">
-                  Build start page with recipe recommendation...
-                </div>
-              </div>
-              <div class="d-flex-spbe-center">
-                <div class="ticket-subtasks-bar"></div>
-                <span class="ticket-subtasks-text font-c-black"
-                  >2/3 Subtasks</span
-                >
-              </div>
-
-              <div class="d-flex-spbe-center">
-                <div class="d-flex-center">
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-255-122-0"
-                    >AK</span
-                  >
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-31-215-193"
-                    >LS</span
-                  >
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-70-47-138"
-                    >SR</span
-                  >
-                </div>
-                <img src="../assets/img/png/prio-low.png" alt="Low Priority" />
-              </div>
-            </div>
+          <div id="kanban_inprogress" class="kanban-tickets d-flex-column">
+            <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
 
@@ -116,85 +85,14 @@
             class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110"
           >
             Await feedback
-            <img class="add-board-btn" src="../assets/img/png/add-board-default.png" alt="">
+            <img
+              class="add-board-btn"
+              src="../assets/img/png/add-board-default.png"
+              alt=""
+            />
           </div>
-          <div class="kanban-tickets d-flex-column">
-            <div draggable="true" class="ticket-card d-flex-column gap-24">
-              <div class="ticket-category font-c-white bg-category-turquoise">
-                Technical Task
-              </div>
-              <div class="d-flex-column gap-8">
-                <div class="ticket-title font-w-700">
-                  HTML Base Template Creation
-                </div>
-                <div class="ticket-description">
-                  Create reusable HTML base templates...
-                </div>
-              </div>
-              <div class="d-flex-spbe-center d-none">
-                <div class="ticket-subtasks-bar"></div>
-                <span class="ticket-subtasks-text font-c-black"
-                  >2/3 Subtasks</span
-                >
-              </div>
-
-              <div class="d-flex-spbe-center">
-                <div class="d-flex-center">
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-252-113-255"
-                    >DE</span
-                  >
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-110-82-255"
-                    >BZ</span
-                  >
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-147-39-255"
-                    >AS</span
-                  >
-                </div>
-                <img src="../assets/img/png/prio-high.png" alt="Low Priority" />
-              </div>
-            </div>
-
-            <div draggable="true" class="ticket-card d-flex-column gap-24">
-              <div class="ticket-category font-c-white bg-category-blue">
-                User Story
-              </div>
-              <div class="d-flex-column gap-8">
-                <div class="ticket-title font-w-700">Daily Kochwelt Recipe</div>
-                <div class="ticket-description">
-                  Implement daily recipe and portion calculator...
-                </div>
-              </div>
-              <div class="d-flex-spbe-center d-none">
-                <div class="ticket-subtasks-bar"></div>
-                <span class="ticket-subtasks-text font-c-black"
-                  >2/3 Subtasks</span
-                >
-              </div>
-
-              <div class="d-flex-spbe-center">
-                <div class="d-flex-center">
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-255-187-43"
-                    >EF</span
-                  >
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-147-39-255"
-                    >AS</span
-                  >
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-255-70-70"
-                    >TW</span
-                  >
-                </div>
-                <img
-                  src="../assets/img/png/prio-media.png"
-                  alt="Low Priority"
-                />
-              </div>
-            </div>
+          <div id="kanban_awaitfeedback" class="kanban-tickets d-flex-column">
+            <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
 
@@ -205,7 +103,7 @@
             Done
             <div></div>
           </div>
-          <div class="kanban-tickets d-flex-column">
+          <div id="kanban_done" class="kanban-tickets d-flex-column">
             <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
@@ -227,7 +125,7 @@
               class="litte-button wh-24 d-flex-center"
               onclick="toggleOverlay()"
             >
-            <img src="../assets/img/png/close.png" alt="">
+              <img src="../assets/img/png/close.png" alt="" />
             </div>
           </div>
 
@@ -244,7 +142,7 @@
 
           <div class="single-ticket-meta font-s-20">
             Priority:
-            <img src="../assets/img/png/prio-high-text.png" alt="" />
+            <img src="../assets/img/png/prio-low-text.png" alt="" />
           </div>
 
           <div class="w-100 d-flex-column gap-8 font-s-20">
