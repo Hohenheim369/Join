@@ -82,7 +82,7 @@ async function loginAsUser() {
   const loginPassword = document.getElementById("login_password").value;
 
   const users = await fetchData('users');
-  const user = users.find(user => user.email === loginEmail);
+  const user = users.find(user => user.email.toLowerCase() === loginEmail.toLowerCase());
 
   resetLoginAlert();
 
