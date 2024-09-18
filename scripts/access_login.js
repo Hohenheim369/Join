@@ -58,6 +58,10 @@ async function handleSuccessfulLogin(user) {
     localStorage.setItem('rememberMeData', JSON.stringify(saveDAta));
   }
 
+  if(!isRememberMeChecked()){
+    localStorage.removeItem("rememberMeData");
+  }
+
   const userData = await loadUserData(user);
   
   localStorage.setItem('activeUser', JSON.stringify(userData));
