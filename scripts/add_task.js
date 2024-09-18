@@ -1,7 +1,15 @@
 let selectedContacts = [];
 let selectedPrio;
-// let subTasks = [];
-let counter = 0;
+let subTasks = [];
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   loadTaskTemplate();
+// });
+// async function loadTaskTemplate() {
+//   const response = await fetch("../assets/templates/task_form.html");
+//   const data = await response.text();
+//   document.getElementById("add_task_template").innerHTML = data;
+// }
 
 async function createTask() {
   //add function to check if all required fields are filled
@@ -10,20 +18,19 @@ async function createTask() {
   let dueDate = document.getElementById("due_date").value;
   let categorySeleced = document.getElementById("category").innerText;
   let taskId = await getNewId('tasks');
-  let assignedTo = [5, 8];
-  // let subTask = createSubtasks();
+  let assignedTo = [1, 5, 7, 9];
   putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced);
-  // openAddTaskDialog();
-  // await sleep(1500);
-  // window.location.href = "../html/board.html";
+  openAddTaskDialog();
+  await sleep(1500);
+  window.location.href = "../html/board.html";
 }
 
-// async function openAddTaskDialog(){
-//   document.getElementById('task_added_overlay').innerHTML = taskAddedToBoard ();
-//   await sleep(10);
-//   const slidingDiv = document.getElementById('task_added_overlay');
-//   slidingDiv.classList.toggle('visible');
-// }
+async function openAddTaskDialog(){
+  document.getElementById('task_added_overlay').innerHTML = taskAddedToBoard ();
+  await sleep(10);
+  const slidingDiv = document.getElementById('task_added_overlay');
+  slidingDiv.classList.toggle('visible');
+}
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -40,6 +47,7 @@ function putTasksContent(title, description, dueDate, taskId, assignedTo, catego
       id: taskId,
       subtasks: subTasks,
       assigned: assignedTo,
+      status: "todo",
     }
   );
 }
@@ -142,6 +150,7 @@ function saveChangesOnClickOutside(index) {
   let subInput = document.getElementById(`input_subtask_${index}`).value;
   document.getElementById(`list_subtask_${index}`).innerText = subInput;
   toggleSubtasksImgs(index);
+  handleInputBlur(subInput, index);
 }
 
 
@@ -153,9 +162,10 @@ function editSubtask(li, index) {
   subInput.focus();
 }
 
-function handleInputBlur(input, li, index) {
-  if (input.value.trim() !== "") {
-      saveChanges(input.value, li, index);
+function handleInputBlur(li, index) {
+  let input = document.getElementById(`list_subtask_${index}`).innerText
+  if (input.trim() !== "") {
+      saveChanges(li, index);
   } else {
       removeSubtask(li, index);
       return
@@ -163,8 +173,8 @@ function handleInputBlur(input, li, index) {
   toggleClickListener();
 }
 
-function saveChanges(newValue, li, index) {
-  li.innerText = newValue;
+function saveChanges(subtasksInput, index) {
+  let newValue = { subTaskName: subtasksInput, done: false }
   subTasks[index] = newValue;
 }
 
