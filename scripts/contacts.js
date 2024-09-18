@@ -1,11 +1,5 @@
-const BASE_TASKS_URL =
+const BASE_CONTACTS_URL =
   "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts";
-
-async function fetchContactsFromFirebase() {
-  const response = await fetch(BASE_TASKS_URL + ".json");
-  const data = await response.json();
-  return data;
-}
 
 document.addEventListener("DOMContentLoaded", () => {
   renderContent(); // Stellen sicher, dass Daten geladen sind
@@ -14,10 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
 async function renderContent() {
   const contactList = document.getElementById("contact_list");
   contactList.innerHTML = ""; // Vorherigen Inhalt löschen
-  const data = await fetchContactsFromFirebase(); // Daten von Firebase abrufen
-  const contacts = Object.values(data);
-  const groupedContacts = groupContacts(contacts); // Kontakte nach Initialen gruppieren
-  renderContactsList(groupedContacts, contactList); // Kontaktliste rendern
+  const data = await fetchData("contacts");
+  if (data === null) {
+  } else {
+    const contacts = Object.values(data);
+    const groupedContacts = groupContacts(contacts); // Kontakte nach Initialen gruppieren
+    renderContactsList(groupedContacts, contactList); // Kontaktliste rendern
+  }
 }
 
 function renderContactsList(groupedContacts, contactList) {
@@ -38,20 +35,15 @@ function renderLetterBox(initial, contactList) {
 
 function groupContacts(contacts) {
   return contacts.reduce((acc, contact, index) => {
-    let firstInitial = contact.initials.charAt(0).toUpperCase(); // Verwende die gespeicherten Initialen
-    if (!acc[firstInitial]) {
-      acc[firstInitial] = [];
+    if (contact && contact.initials) {
+      let firstInitial = contact.initials.charAt(0).toUpperCase(); // Verwende die gespeicherten Initialen
+      if (!acc[firstInitial]) {
+        acc[firstInitial] = [];
+      }
+      acc[firstInitial].push({ contact, initials: contact.initials, index });
     }
-    acc[firstInitial].push({ contact, initials: contact.initials, index });
     return acc;
   }, {});
-}
-
-function addContactsToList(contactGroup, contactList) {
-  contactGroup.forEach(({ contact, initials, index }) => {
-    const contactHtml = generateContact(contact);
-    contactList.innerHTML += contactHtml;
-  });
 }
 
 async function validateForm() {
@@ -103,8 +95,9 @@ async function addContact() {
   const phone = getInputValue("phone");
 
   if (name && email && phone) {
-    const newContact = createContact(name, email, phone);
-    await addContactToFirebase(newContact);
+    const contactId = await getNewId("contacts");
+    const contactData = createContact(name, email, phone, contactId);
+    await postData(`contacts/${contactId - 1}/`, contactData);
     resetForm();
     renderContent();
   } else {
@@ -112,9 +105,9 @@ async function addContact() {
   }
 }
 
-function createContact(name, email, phone) {
+function createContact(name, email, phone, contactId) {
   return {
-    id: Date.now(),
+    id: contactId,
     name: name,
     email: email,
     phone: phone,
@@ -132,16 +125,6 @@ function getRandomColor() {
   return color;
 }
 
-async function addContactToFirebase(contact) {
-  const response = await fetch(`${BASE_TASKS_URL}/${contact.id}.json`, {
-    method: "PUT", // Verwende PUT, um ein bestimmtes Objekt zu aktualisieren oder hinzuzufügen
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(contact),
-  });
-  const data = await response.json();
-}
 
 function highlightContact(contact) {
   const contacts = document.getElementsByClassName("contacts");
@@ -156,10 +139,13 @@ function highlightContact(contact) {
 
 async function displayContactInfo(contactId) {
   // Daten von Firebase abrufen
-  const data = await fetchContactsFromFirebase();
+  const data = await fetchData("contacts");
   // Finde den Kontakt mit der übergebenen ID
   const contacts = Object.values(data);
-  const contact = contacts.find((c) => c.id === contactId);
+  // Überprüfe den Typ von contactId und konvertiere es in eine Zahl, falls es ein String ist
+  const numericContactId =
+    typeof contactId === "string" ? parseInt(contactId) : contactId;
+  const contact = contacts.find((c) => c && c.id === numericContactId);
   const contactInfoDiv = document.querySelector(".contacts-info-box");
   contactInfoDiv.innerHTML = ""; // Vorherigen Inhalt leeren
   contactInfoDiv.innerHTML = generateContactInfo(contact); // Kontaktdetails anzeigen
@@ -170,7 +156,7 @@ async function displayContactInfo(contactId) {
 
 async function deleteContact(contactId) {
   // Lösche den Kontakt von Firebase
-  const response = await fetch(`${BASE_TASKS_URL}/${contactId}.json`, {
+  await fetch(`${BASE_URL}/contacts/${contactId - 1}/.json`, {
     method: "DELETE",
   });
   // Aktualisiere die Kontaktliste nach dem Löschen
@@ -202,8 +188,7 @@ async function openDialogEdit(contactId) {
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   document.getElementById("grey_background").classList.remove("hidden");
-  const response = await fetch(`${BASE_TASKS_URL}/${contactId}.json`);
-  const contact = await response.json();
+  const contact = await fetchData(`contacts/${contactId - 1}/`);
   populateFormFields(contact);
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
@@ -222,8 +207,7 @@ function updateBigLetterCircle(contact) {
 }
 
 async function editContact(contactId) {
-  const response = await fetch(`${BASE_TASKS_URL}/${contactId}.json`);
-  const existingContact = await response.json();
+  const existingContact = await fetchData(`contacts/${contactId - 1}/`);
   const updatedName = document.getElementById("inputEditName").value;
   const updatedEmail = document.getElementById("inputEditEmail").value;
   const updatedPhone = document.getElementById("inputEditPhone").value;
@@ -235,7 +219,7 @@ async function editContact(contactId) {
     phone: updatedPhone,
     initials: updatedInitials,
   };
-  await addContactToFirebase(updatedContact);
+  await postData(`contacts/${contactId - 1}/`, updatedContact);
   closeDialogEdit();
   await renderContent();
   displayContactInfo(contactId);
