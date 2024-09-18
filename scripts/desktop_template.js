@@ -37,10 +37,6 @@ async function loadTemplate() {
     const response = await fetch("../assets/templates/desktop_template.html");
     const data = await response.text();
     document.getElementById("desktop_template").innerHTML = data;
-
-    // Custom Event "loadTemplated" auslösen, nachdem das Template geladen wurde
-    // const event = new Event("loadTemplated");
-    // // document.dispatchEvent(event);
 }
 
 function updateSidebarIcons() {
