@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../styles/media/media_desktop_template.css" />
     <script src="../scripts/desktop_template.js"></script>
     <script src="../script.js"></script>
+    <script src="../scripts/summary.js"></script>
     <link
       rel="icon"
       type="image/x-icon"
@@ -36,7 +37,7 @@
                 
               </div>
               <div class="number-block">
-                <span class="number-of-tasks">1</span>
+                <span id="count_to_do" class="number-of-tasks">1</span>
                 <span>To-do</span>
               </div>
             </div>
@@ -45,7 +46,7 @@
                 <img class="check" src="../assets/img/png/check-summary.png" alt="">
               </div>
               <div class="number-block">
-                <span class="number-of-tasks">1</span>
+                <span id="count_done" class="number-of-tasks">1</span>
                 <span>Done</span>
               </div>
             </div>
@@ -71,7 +72,7 @@
                 </svg>
               </div>
               <div class="number-block">
-                <span class="number-of-tasks">1</span>
+                <span id="count_priority_urgent" class="number-of-tasks">1</span>
                 <span class="font-s16">Urgent</span>
               </div>
             </div>
@@ -83,23 +84,23 @@
           </div>
           <div class="task-block">
             <div class="task-in-block m-r-32">
-              <span class="number-of-tasks">5</span>
+              <span id="count-tasks" class="number-of-tasks">5</span>
               <span class="width-86">Tasks in Board</span>
             </div>
             <div class="task-in-block m-r-32">
-              <span class="number-of-tasks">2</span>
+              <span id="count_progress" class="number-of-tasks">2</span>
               <span class="width-86"
                 >Tasks in <br/>
                 Progress</span
               >
             </div>
             <div class="task-in-block">
-              <span class="number-of-tasks">2</span>
+              <span id="count_feedback" class="number-of-tasks">2</span>
               <span class="width-86">Awaiting Feedback</span>
             </div>
           </div>
         </div>
-        <h3 class="greeting">Good morning</h3>
+        <h3 class="greeting" id="greetings"></h3>
       </div>
     </div>
   </body>

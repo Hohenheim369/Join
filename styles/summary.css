@@ -250,3 +250,9 @@ span {
   margin-bottom: clamp(24px, 6%, 32px);
 }
 
+.greeting-user{
+  font-size: 64px;
+  font-weight: 700;
+  color: #29ABE2;
+
+}
