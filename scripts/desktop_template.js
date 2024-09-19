@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initializeLinks();
     // Überprüfe den Parameter hideIcons, aber erst nach dem Laden des Templates
     hideIcons();
+
+    handleResponsiveHelp();
+    window.addEventListener("resize", handleResponsiveHelp); // Bei jeder Größenänderung prüfen
   });
 });
 
@@ -32,24 +35,26 @@ document.addEventListener("click", (event) => {
 });
 
 async function loadTemplate() {
-    const response = await fetch("../assets/templates/desktop_template.html");
-    const data = await response.text();
-    document.getElementById("desktop_template").innerHTML = data;
+  const response = await fetch("../assets/templates/desktop_template.html");
+  const data = await response.text();
+  document.getElementById("desktop_template").innerHTML = data;
 }
 
 function updateSidebarIcons() {
   const currentPage = window.location.pathname.split("/").pop();
   const iconPages = ["summary", "board", "contacts", "add_task"];
 
-  iconPages.forEach(page => updateIcon(page, currentPage));
+  iconPages.forEach((page) => updateIcon(page, currentPage));
   updatePageState("privacy-policy.html", ".privacy-policy-link", currentPage);
   updatePageState("legal-notice.html", ".legal-notice-link", currentPage);
 }
 
 function updateIcon(page, currentPage) {
   const linkElement = document.querySelector(`.${page}-link`);
-  const iconElement = linkElement?.querySelector('img'); // Annahme: Es gibt ein <img>-Element im Link
-  const isCurrentPage = currentPage === `${page}.html` || currentPage === `${page.replace('_', '-')}.html`; // Abdeckung von add_task
+  const iconElement = linkElement?.querySelector("img"); // Annahme: Es gibt ein <img>-Element im Link
+  const isCurrentPage =
+    currentPage === `${page}.html` ||
+    currentPage === `${page.replace("_", "-")}.html`; // Abdeckung von add_task
 
   if (linkElement && iconElement) {
     const iconColor = isCurrentPage ? "white" : "grey";
@@ -165,7 +170,7 @@ function hideArrowBack() {
 // }
 
 function getInitialsFromLocalStorage() {
-  let activeUser = localStorage.getItem('activeUser');
+  let activeUser = localStorage.getItem("activeUser");
   if (activeUser) {
     // In ein JSON-Objekt umwandeln
     const loggedInUser = JSON.parse(activeUser);
@@ -187,8 +192,6 @@ function updateInitialsElement() {
 //   let nameParts = userName.split(" ");
 //   return nameParts.map(part => part.charAt(0).toUpperCase()).join("");
 // }
-
-
 
 // function handleDocumentClick(event) {
 //   let logOutElement = document.getElementById("log_out");
@@ -239,4 +242,23 @@ function hideIcons() {
 
 function logOut() {
   localStorage.removeItem("activeUser");
+}
+
+function handleResponsiveHelp() {
+  const mediaQuery = window.matchMedia("(max-width: 1000px)"); // Beispiel für eine mobile Ansicht
+  const sourceDiv = document.getElementById("help_mobile");
+  const targetDiv = document.getElementById("log_out");
+
+  if (mediaQuery.matches) {
+    if (targetDiv.firstChild) {
+      sourceDiv.classList.remove('d-none');
+      targetDiv.insertBefore(sourceDiv, targetDiv.firstChild); // An die erste Position verschieben
+    } else {
+      targetDiv.appendChild(sourceDiv); // Falls das Ziel-Element leer ist
+    }
+  } else {
+    // Optional: Andernfalls zurücksetzen
+    document.getElementById("header_icons").appendChild(sourceDiv); // Falls du es zurückschieben möchtest
+    document.getElementById("help_mobile").classList.add('d-none');
+  }
 }

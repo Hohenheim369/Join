@@ -2,7 +2,7 @@ header {
   top: 0;
   left: 232px;
   position: absolute;
-  font-size: 20px !important;
+  font-size: 20px;
   display: flex;
   width: calc(100% - 232px);
   height: 96px;
@@ -59,6 +59,7 @@ header {
   position: absolute;
   top: 69px;
   left: calc(100% - 263px);
+  font-size: clamp(16px , 3vw, 20px);
 }
 
 #log_out a {
@@ -79,7 +80,7 @@ aside {
   height: 100vh;
   padding: 64px 0px;
   font-weight: 400;
-  font-size: 16px;
+  /* font-size: 16px; */
   color: white;
   background-color: #2a3647;
   display: flex;
@@ -123,6 +124,7 @@ aside {
   height: 46px;
   padding: 8px 56px 8px 56px;
   box-sizing: border-box;
+  font-size: clamp(12px, 2vw, 16px);
 }
 
 .box-icons path {
@@ -142,6 +144,7 @@ aside {
   justify-content: flex-end;
   box-sizing: border-box;
   gap: 8px;
+  
 }
 
 .link-policy-credits {
@@ -188,6 +191,11 @@ aside {
   height: 35px;
   align-items: center;
   justify-content: flex-start;
+  
+}
+
+.credit a{
+  font-size: clamp(12px, 1.5vw, 16px);
 }
 
 /* CSS für inaktive Links */
