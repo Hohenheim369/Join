@@ -1,14 +1,38 @@
-function showAssignedContactList(contact){
-  return  `<div id="bg_task_${contact.id}" onclick="addContactToTask('contact_to_task_${contact.id}', 'task', 'bg_task_${contact.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
+function showAssignedUser(activeUser){
+   return  `<div id="bg_task_${activeUser.id}" onclick="addContactToTask('contact_to_task_${activeUser.id}', 'task', 'bg_task_${activeUser.id}', '${activeUser.name}', '${activeUser.initials}', '${activeUser.color}', '${activeUser.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
             <div class="d-flex-center gap-16">
-              <div class="contact-icon d-flex-center bg-147-39-255">
+              <div class="user-icon d-flex-center" style="background-color: ${activeUser.color};">
+                  <span>${activeUser.initials}</span>
+              </div>
+              <span id="task_name_${activeUser.id}">${activeUser.name}</span>
+              <span>(You)</span>
+            </div>
+            <img id="contact_to_task_${activeUser.id}" src="../assets/img/png/check-task-false.png" alt="">
+          </div>`
+}
+
+function showAssignedContactList(contact){
+  return  `<div id="bg_task_${contact.id}" onclick="addContactToTask('contact_to_task_${contact.id}', 'task', 'bg_task_${contact.id}', '${contact.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
+            <div class="d-flex-center gap-16">
+              <div class="contact-icon d-flex-center" style="background-color: ${contact.color};">
                   <span>${contact.initials}</span>
               </div>
               <span id="task_name_${contact.id}">${contact.name}</span>
             </div>
             <img id="contact_to_task_${contact.id}" src="../assets/img/png/check-task-false.png" alt="">
           </div>`
-         
+}
+
+function assignedUser(contactInitials, contactColor, contactId){
+  return  `<div id="assigned_${contactId}" class="user-icon d-flex-center"  style="background-color: ${contactColor};">
+                <span>${contactInitials}</span>
+          </div>`
+}
+
+function assignedContacts(contactInitials, contactID, contactColor){
+  return  `<div id="assigned_${contactID}" class="contact-icon d-flex-center"  style="background-color: ${contactColor};">
+                <span>${contactInitials}</span>
+          </div>`
 }
 
 function showCategory(){

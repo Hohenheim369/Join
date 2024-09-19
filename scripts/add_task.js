@@ -1,5 +1,6 @@
 let selectedContacts = [];
-let selectedPrio;
+let userId = [];
+let selectedPrio = "low"
 let subTasks = [];
 
 // document.addEventListener("DOMContentLoaded", () => {
@@ -11,20 +12,6 @@ let subTasks = [];
 //   document.getElementById("add_task_template").innerHTML = data;
 // }
 
-async function createTask() {
-  //add function to check if all required fields are filled
-  let title = document.getElementById("title_input").value;
-  let description = document.getElementById("description_textarea").value;
-  let dueDate = document.getElementById("due_date").value;
-  let categorySeleced = document.getElementById("category").innerText;
-  let taskId = await getNewId('tasks');
-  let assignedTo = [1, 5, 7, 9];
-  putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced);
-  openAddTaskDialog();
-  await sleep(1500);
-  window.location.href = "../html/board.html";
-}
-
 async function openAddTaskDialog(){
   document.getElementById('task_added_overlay').innerHTML = taskAddedToBoard ();
   await sleep(10);
@@ -34,6 +21,20 @@ async function openAddTaskDialog(){
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function createTask() {
+  //add function to check if all required fields are filled
+  let title = document.getElementById("title_input").value;
+  let description = document.getElementById("description_textarea").value;
+  let dueDate = document.getElementById("due_date").value;
+  let categorySeleced = document.getElementById("category").innerText;
+  let taskId = await getNewId('tasks');
+  let assignedTo = selectedContacts;
+  putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced);
+  openAddTaskDialog();
+  await sleep(1500);
+  window.location.href = "../html/board.html";
 }
 
 function putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced){
@@ -57,15 +58,71 @@ async function getContacts() {
   let response = await fetch(`https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/.json`);
   let contacts = await response.json();
   window.allContacts = contacts;
+  contacts.sort((a, b) => a.name.localeCompare(b.name));
   displayContacts(contacts);
 }
 
 function displayContacts(contacts) {
   document.getElementById('contact_contant').innerHTML = "";
+  const userHtml = showAssignedUser(activeUser);
+  document.getElementById('contact_contant').innerHTML = userHtml;
   for (let contact of contacts) {
-      document.getElementById('contact_contant').innerHTML += showAssignedContactList(contact);
-      document.querySelector(`#bg_task_${contact.id}`).addEventListener('click', () => addContactAssigned(contact.name));
+      const contactHtml = showAssignedContactList(contact);
+      document.getElementById('contact_contant').innerHTML += contactHtml;
       console.log(contact);
+  }
+}
+
+function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
+  toggleCheckButton(CheckButtonId, CheckTaskButton);
+  let colorChange = document.getElementById(bgChange);
+  colorChange.classList.toggle('assigned-color-change');
+  colorChange.classList.toggle('contact-list');
+  const existingContactIndex = selectedContacts.findIndex(contact => contact.contactId === contactId);
+  if (existingContactIndex === -1) {
+      addContactAssigned(contactId);
+  } else {
+      removeContactAssigned(existingContactIndex);
+  }
+}
+
+function addContactAssigned(contactId) {
+  if (!selectedContacts.some(contact => contact.contactId === contactId)) {
+      selectedContacts.push(contactId);
+      updateSelectedContactsDisplay(contactId);
+  }
+}
+
+function removeContactAssigned(index) {
+  if (index > -1) {
+      selectedContacts.splice(index, 1);
+      updateSelectedContactsDisplay(contactId);
+  }
+}
+
+// function displayActiveUser(contactName, contactInitials, contactColor, contactId){
+//   if (contactName == 'Gast') {
+//     let displayUser = document.getElementById('selected_contacts');
+//     displayUser += assignedUser(contactInitials, contactColor, contactId);
+//   }
+// }
+
+async function updateSelectedContactsDisplay(contactId) {
+  let contacts = await fetchData('contacts');
+  let selectedList = document.getElementById('selected_contacts');
+  selectedList.innerHTML = "";
+  const maxVisibleContacts = 3;
+  for (let i = 0; i < Math.min(selectedContacts.length, maxVisibleContacts); i++) {
+      contactId = selectedContacts[i];
+      const contactInitials = contacts[contactId-1].initials
+      const contactID = contacts[contactId-1].id
+      const contactColor = contacts[contactId-1].color
+      // displayActiveUser(contactId);
+      selectedList.innerHTML += assignedContacts(contactInitials, contactID, contactColor);
+  }
+  if (selectedContacts.length > maxVisibleContacts) {
+      const additionalCount = selectedContacts.length - maxVisibleContacts;
+      selectedList.innerHTML += `<div>+${additionalCount}</div>`;
   }
 }
 
@@ -76,30 +133,6 @@ function searchContact() {
   let filteredContacts = window.allContacts.filter(contact => 
       contact.name.toLowerCase().includes(searContact));
   displayContacts(filteredContacts);
-}
-
-function addContactAssigned(contactName) {
-  if (!selectedContacts.includes(contactName)) {
-      selectedContacts.push(contactName);
-      updateSelectedContactsDisplay();
-  }
-}
-
-function updateSelectedContactsDisplay() {
-  const selectedDiv = document.getElementById('selected_contacts');
-  selectedDiv.innerHTML = "";
-  selectedContacts.forEach(name => {
-      const nameDiv = document.createElement('div');
-      nameDiv.textContent = name;
-      selectedDiv.appendChild(nameDiv);
-  });
-}
-
-function addContactToTask(CheckButtonId, CheckTaskButton, bgChange) {
-  toggleCheckButton(CheckButtonId, CheckTaskButton);
-  let colorChange = document.getElementById(bgChange);
-  colorChange.classList.toggle('assigned-color-change');
-  colorChange.classList.toggle('contact-list');
 }
 
 function handleSelectedPriority(priority) {

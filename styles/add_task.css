@@ -108,6 +108,17 @@ textarea {
   line-height: 14.4px;
 }
 
+.user-icon {
+  height: 42px;
+  width: 42px;
+  border: 2px solid #2a3647;
+  border-radius: 50%;
+  color: #29abe2;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 14.4px;
+}
+
 .contact-list:hover {
   border-radius: 10px;
   background-color: #eeeeee;
