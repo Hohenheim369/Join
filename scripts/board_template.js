@@ -1,4 +1,4 @@
-function generateTasksOnBoard(id, title, shortDescription, category, status, prio){
+function generateTasksOnBoard(id, title, shortDescription, category, status, prio, sumAllSubtasks, sumDoneSubtasks){
     let categoryColor = category.replace(/\s+/g, '').toLowerCase();
 return `<div
               id="task_${id}"
@@ -21,7 +21,7 @@ return `<div
               <div class="d-flex-spbe-center">
                 <div class="ticket-subtasks-bar"></div>
                 <span class="ticket-subtasks-text font-c-black"
-                  >2/3 Subtasks</span
+                  >${sumDoneSubtasks}/${sumAllSubtasks} Subtasks</span
                 >
               </div>
 
