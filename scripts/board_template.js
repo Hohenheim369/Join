@@ -1,6 +1,15 @@
-function generateTasksOnBoard(id, title, shortDescription, category, status, prio, sumAllSubtasks, sumDoneSubtasks){
-    let categoryColor = category.replace(/\s+/g, '').toLowerCase();
-return `<div
+function generateTasksOnBoard(
+  id,
+  title,
+  shortDescription,
+  category,
+  status,
+  prio,
+  sumAllSubtasks,
+  sumDoneSubtasks
+) {
+  let categoryColor = category.replace(/\s+/g, "").toLowerCase();
+  return `<div
               id="task_${id}"
               data-status="${status}"
               draggable="true"
@@ -26,22 +35,10 @@ return `<div
               </div>
 
               <div class="d-flex-spbe-center">
-                <div class="d-flex-center">
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-255-122-0"
-                    >AK</span
-                  >
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-31-215-193"
-                    >LS</span
-                  >
-                  <span
-                    class="assignee font-c-white mar-r-8 wh-32 d-flex-center bg-70-47-138"
-                    >SR</span
-                  >
-                </div>
+                  <div id="assignees_task_${id}" class="d-flex-center">                  
+                  </div>
                 <img src="../assets/img/png/prio-${prio}.png" />
               </div>
             </div>
-          `
+          `;
 }

@@ -92,7 +92,7 @@
 }
 
 .ticket-title {
-  color: rgb(42, 54, 71);
+  color: #2a3647;
 }
 
 .ticket-description {
@@ -126,6 +126,13 @@
   font-size: 12px;
   border: 1px solid white;
   border-radius: 50%;
+}
+
+.additionally-assignee {
+  margin-left: 4px;
+  font-size: 14px;
+  color: black;
+  border: none;
 }
 
 .mar-r-8 {

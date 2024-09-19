@@ -23,15 +23,49 @@ function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
   const taskElement = document.getElementById(`task_${taskId}`);
   if (!taskElement) return;
 
-  const subtasksBar = taskElement.querySelector('.ticket-subtasks-bar');
+  const subtasksBar = taskElement.querySelector(".ticket-subtasks-bar");
   if (!subtasksBar) return;
 
-  const percentage = sumAllSubtasks > 0 ? (sumDoneSubtasks / sumAllSubtasks) * 100 : 0;
-  subtasksBar.style.setProperty('--progress', `${percentage}%`);
+  const percentage =
+    sumAllSubtasks > 0 ? (sumDoneSubtasks / sumAllSubtasks) * 100 : 0;
+  subtasksBar.style.setProperty("--progress", `${percentage}%`);
 
-  const subtasksText = taskElement.querySelector('.ticket-subtasks-text');
+  const subtasksText = taskElement.querySelector(".ticket-subtasks-text");
   if (subtasksText) {
     subtasksText.textContent = `${sumDoneSubtasks}/${sumAllSubtasks} Subtasks`;
+  }
+}
+
+function renderAssignees(id, assigned, contacts) {
+  let updateAssigned = assigned.filter((item) => item !== null);
+  console.log(updateAssigned);
+  let assignedField = document.getElementById(`assignees_task_${id}`);
+  assignedField.innerHTML = "";
+
+  const maxDisplayed = 3;
+  const displayCount = Math.min(updateAssigned.length, maxDisplayed);
+
+  for (let index = 0; index < displayCount; index++) {
+    const contactId = updateAssigned[index];
+    console.log(contactId);
+
+    const contact = contacts.find((c) => c.id === contactId);
+
+    if (contact) {
+      let assignedInitials = contact.initials;
+      let assignedColor = contact.color;
+
+      assignedField.innerHTML += `<span
+        class="assignee font-c-white mar-r-8 wh-32 d-flex-center" style="background-color: ${assignedColor};"
+        >${assignedInitials}</span>`;
+    } else {
+      console.log(`Kontakt mit ID ${contactId} nicht gefunden.`);
+    }
+  }
+
+  if (updateAssigned.length > maxDisplayed) {
+    const remainingCount = updateAssigned.length - maxDisplayed;
+    assignedField.innerHTML += `<span class="additionally-assignee wh-32 d-flex-center"">+${remainingCount}</span>`;
   }
 }
 
@@ -47,7 +81,7 @@ function updateColumnStatus(status) {
   }
 }
 
-function renderTasks(task) {
+function renderTasks(task, contacts) {
   let statusArea = document.getElementById(`kanban_${task.status}`);
   let shortDescription = shortenDescription(task.description);
   let sumAllSubtasks = task.subtasks.length;
@@ -64,21 +98,21 @@ function renderTasks(task) {
     sumDoneSubtasks
   );
   updateSubtasksBar(task.id, sumDoneSubtasks, sumAllSubtasks);
+  renderAssignees(task.id, task.assigned, contacts);
   // updateColumnStatus(task.status);
 }
 
-async function renderTasksInBoard() {
+async function renderBoard() {
   const tasks = await fetchData("tasks");
+  const contacts = await fetchData("contacts");
   const statuses = ["todo", "inprogress", "awaitfeedback", "done"];
 
   tasks.forEach((task) => {
-    renderTasks(task);
-    // renderSubTasks(task);
+    renderTasks(task, contacts);
   });
 
   statuses.forEach(updateColumnStatus);
 }
-
 
 // function initDragAndDrop() {
 //   const columns = document.querySelectorAll('.kanban-tickets');
