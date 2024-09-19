@@ -1,7 +1,7 @@
 @media screen and (max-width: 1000px) {
   header {
-    width: calc(100% - 144px);
-    left: 144px;
+    width: calc(100% - clamp(100px, 15vw, 144px));
+    left: clamp(100px, 15vw, 144px);
     padding: 20px 40px 20px 63px;
   }
   aside {
@@ -40,9 +40,13 @@
   .icon-box {
     justify-content: flex-end;
   }
-  
-  .credit-box{
+
+  .credit-box {
     width: unset;
+  }
+
+  .credit {
+    display: none;
   }
 }
 
@@ -87,7 +91,7 @@
     height: 80px;
     gap: 10px;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 
   .box-icons {

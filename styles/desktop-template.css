@@ -90,8 +90,8 @@ aside {
 }
 
 .logo-sidebar {
-  width: 100.03px;
-  height: 121.97px;
+  width: clamp(70px, 10vw, 100.03px);
+  
 }
 
 /* NICHT VERWENDET */
