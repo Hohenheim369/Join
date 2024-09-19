@@ -1,18 +1,49 @@
-@media screen and (max-width: 530px) {
+@media screen and (max-width: 1400px) {
+  .d-flex {
+    flex-direction: column-reverse;
+  }
+
+  .greeting {
+    padding: 0px 0px 30px 0px;
+  }
+
+
+
+
+}
+
+
+
+@media screen and (max-width: 1000px) {
+  /* .greeting{
+    display: none;
+  } */
+
   .content {
-    height: calc( 100% - 160px);
+    padding: 110px 18px 70px 0px;
+    margin-left: clamp(180px, 3vw, 232px);
+  }
+
+
+
+
+}
+
+@media screen and (max-width: 730px) {
+  .content {
+    height: calc(100% - 160px);
     width: 100%; /*muss weil keine sidebar mehr da ist links  */
     margin: 80px 0px 192px;
     padding: 48px 16px 0px;
   }
 
+  .content-tasks {
+    height: 384px;
+  }
+
   body {
     height: 100%;
   }
-
-  /* #desktop_template {
-    display: none;
-  } */
 
   .head {
     align-items: flex-start;
@@ -38,5 +69,9 @@
 
   .greeting {
     display: none;
+  }
+
+  .task-in-block {
+    height: 116px;
   }
 }

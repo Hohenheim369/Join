@@ -25,6 +25,10 @@ body {
   height: 102px;
 }
 
+h1 {
+  font-size: clamp(47px,3vw,61px);
+}
+
 h2 {
   font-size: 27px;
   font-weight: 400;
@@ -40,7 +44,7 @@ h3 {
 
 span {
   text-align: center;
-  font-size: 20px;
+  font-size: clamp(14px, 5vw,20px);
   color: #2a3647;
 }
 
@@ -51,17 +55,20 @@ span {
 
 .content-tasks {
   display: flex;
-  height: clamp(384px, 57vh, 562px);
+  height: 562px;
   width: clamp(396px, 100%, 560px);
   flex-direction: column;
   justify-content: space-between;
+  gap: clamp(24px, 4vw, 32px);
 }
 
 .to-do-done-block {
   display: flex;
-  height: clamp(110px, 100%, 169px);
+  height: clamp(110px, 15vh, 169px);
   width: clamp(396px, 100%, 560px);
   justify-content: space-between;
+  gap: clamp(24px, 3vw , 32px );
+
 }
 
 .upper-task-block {
@@ -72,7 +79,7 @@ span {
   border-radius: 30px;
   justify-content: center;
   align-items: center;
-  gap: 18px;
+  gap: clamp(10px, 3vw, 18px) ;
   transition: transform 0.08s ease-in-out;
   box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
 }
@@ -115,7 +122,7 @@ span {
   border-radius: 30px;
   justify-content: center;
   align-items: center;
-  gap: 61px;
+  gap: clamp(20px, 2vw, 61px);
   transition: transform 0.08s ease-in-out;
   box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
 }
@@ -140,13 +147,14 @@ span {
 .task-block {
   display: flex;
   justify-content: space-between;
+  gap: clamp(24px, 3vw, 32px);
 }
 
 .task-in-block {
   display: flex;
   background-color: white;
-  width: clamp(116px, 100%, 168px);
-  height: clamp(116px, 168px, 168px);
+  width: clamp(116px, 19vw, 168px);
+  height: 168px;
   border-radius: 30px;
   flex-direction: column;
   align-items: center;
@@ -167,7 +175,7 @@ span {
 
 .greeting {
   padding: 56px 0px 0px 80px;
-  font-size: 47px;
+  font-size: clamp(24px, 3vw, 47px);
   font-weight: 500;
 }
 
@@ -194,7 +202,7 @@ span {
 
 .number-of-tasks {
   text-align: center;
-  font-size: 64px;
+  font-size: clamp(47px, 5vw, 64px);
   font-weight: 600;
   color: black;
 }
@@ -237,21 +245,8 @@ span {
   color: white !important;
 }
 
-.p-top-56 {
-  padding-top: 56px;
-}
-
-.m-r-32 {
-  margin-right: clamp(24px, 6%, 32px);
-}
-
-.m-t-b-32 {
-  margin-top: clamp(24px, 6%, 32px);
-  margin-bottom: clamp(24px, 6%, 32px);
-}
-
 .greeting-user{
-  font-size: 64px;
+  font-size: clamp(30px, 4vw, 64px);
   font-weight: 700;
   color: #29ABE2;
 
