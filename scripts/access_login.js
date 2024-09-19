@@ -1,13 +1,13 @@
 function loginAsGuest() {
   activeUser = {
-    name: "Gast",
+    name: "Guest",
     initials: "G",
     id: 0,
     color: "#ffffff",
     tasks: [1, 2, 3],
     contacts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   };
-
+  localStorage.removeItem("rememberMeData");
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
   window.location.href = "./html/board.html";
 }
