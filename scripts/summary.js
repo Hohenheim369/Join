@@ -1,15 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
   greeting();
   displayTasks();
+  if (window.innerWidth <= 770) {
+    mobileGreeting();
+  }
 });
 
 function greeting() {
-    let greeting = document.getElementById("greetings");
-    let greetingUser = getNameFromLocalStorage();
-    let greetingMassage = getGreetingMessage();
-    greeting.innerHTML = "";
-    greeting.innerHTML = `${greetingMassage}, <div class="greeting-user">${greetingUser}</div> `;
-  }
+  let greeting = document.getElementById("greetings");
+  let greetingMobile = document.getElementById("greeting_mobile");
+  let greetingUser = getNameFromLocalStorage();
+  let greetingMassage = getGreetingMessage();
+  greeting.innerHTML = "";
+  greeting.innerHTML = `${greetingMassage}, <div class="greeting-user">${greetingUser}</div> `;
+  greetingMobile.innerHTML = "";
+  greetingMobile.innerHTML = `${greetingMassage}, <div class="greeting-user">${greetingUser}</div> `;
+}
 
 function getNameFromLocalStorage() {
   let activeUser = localStorage.getItem("activeUser");
@@ -34,47 +40,61 @@ function getGreetingMessage() {
 }
 
 async function displayTasks() {
-    tasks = await fetchData('tasks'); 
-    countToDo(tasks);
-    countDone(tasks);
-    countUrgent(tasks);
-    countTaskInBoard(tasks);
-    countTaskInProgress(tasks);
-    countTaskInFeedback(tasks);
+  tasks = await fetchData("tasks");
+  countToDo(tasks);
+  countDone(tasks);
+  countUrgent(tasks);
+  countTaskInBoard(tasks);
+  countTaskInProgress(tasks);
+  countTaskInFeedback(tasks);
 }
 
 function countToDo(tasks) {
-    let toDo = document.getElementById('count_to_do');
-    let count = tasks.filter(task => task.status === "todo").length;
-    toDo.innerHTML = `${count}`;
+  let toDo = document.getElementById("count_to_do");
+  let count = tasks.filter((task) => task.status === "todo").length;
+  toDo.innerHTML = `${count}`;
 }
 
 function countDone(tasks) {
-    let done = document.getElementById('count_done');
-    let count = tasks.filter(task => task.status === "done").length;
-    done.innerHTML = `${count}`;
+  let done = document.getElementById("count_done");
+  let count = tasks.filter((task) => task.status === "done").length;
+  done.innerHTML = `${count}`;
 }
 
 function countUrgent(tasks) {
-    let urgent = document.getElementById('count_priority_urgent');
-    let count = tasks.filter(task => task.priority === "urgent").length;
-    urgent.innerHTML = `${count}`;
+  let urgent = document.getElementById("count_priority_urgent");
+  let count = tasks.filter((task) => task.priority === "urgent").length;
+  urgent.innerHTML = `${count}`;
 }
 
 function countTaskInBoard(tasks) {
-    let taskInBoard = document.getElementById('count_tasks');
-    let count = tasks.length;
-    taskInBoard.innerHTML = `${count}`;
+  let taskInBoard = document.getElementById("count_tasks");
+  let count = tasks.length;
+  taskInBoard.innerHTML = `${count}`;
 }
 
 function countTaskInProgress(tasks) {
-    let taskInProgress = document.getElementById('count_progress');
-    let count = tasks.filter(task => task.status === "inprogress").length;
-    taskInProgress.innerHTML = `${count}`;
+  let taskInProgress = document.getElementById("count_progress");
+  let count = tasks.filter((task) => task.status === "inprogress").length;
+  taskInProgress.innerHTML = `${count}`;
 }
 
 function countTaskInFeedback(tasks) {
-    let taskInFeedback = document.getElementById('count_feedback');
-    let count = tasks.filter(task => task.status === "feedback").length;
-    taskInFeedback.innerHTML = `${count}`;
+  let taskInFeedback = document.getElementById("count_feedback");
+  let count = tasks.filter((task) => task.status === "feedback").length;
+  taskInFeedback.innerHTML = `${count}`;
+}
+
+function mobileGreeting() {
+  const greetingDialog = document.getElementById("greeting_mobile");
+
+  // Öffnet den Dialog
+  if (greetingDialog) {
+    greetingDialog.showModal();
+
+    // Schließt den Dialog nach 5 Sekunden
+    // setTimeout(() => {
+    //   greetingDialog.close();
+    // }, 3000); // 5000 Millisekunden = 5 Sekunden
+  }
 }
