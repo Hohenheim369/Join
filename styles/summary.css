@@ -44,19 +44,19 @@ h3 {
 
 span {
   text-align: center;
-  font-size: clamp(14px, 5vw,20px);
+  font-size: clamp(11px, 3vw, 20px);
   color: #2a3647;
 }
 
 .date {
-  font-size: 21px;
+  font-size: clamp(13px, 3vw, 21px);
   font-weight: 700;
 }
 
 .content-tasks {
   display: flex;
-  height: 562px;
-  width: clamp(396px, 100%, 560px);
+  height: 100%;
+  width: clamp(285px, 100%, 560px);
   flex-direction: column;
   justify-content: space-between;
   gap: clamp(24px, 4vw, 32px);
@@ -64,8 +64,8 @@ span {
 
 .to-do-done-block {
   display: flex;
-  height: clamp(110px, 15vh, 169px);
-  width: clamp(396px, 100%, 560px);
+  /* height: clamp(110px, 15vh, 169px); */
+  /* width: clamp(312px, 100%, 560px); */
   justify-content: space-between;
   gap: clamp(24px, 3vw , 32px );
 
@@ -74,8 +74,8 @@ span {
 .upper-task-block {
   display: flex;
   background-color: white;
-  height: clamp(110px, 100%, 168px);
-  width: clamp(186px, 100%, 264px);
+  height: clamp(99px, 28vw, 168px);
+  width: clamp(172px, 100%, 264px);
   border-radius: 30px;
   justify-content: center;
   align-items: center;
@@ -109,20 +109,25 @@ span {
   color: white;
 }
 
+.edit{
+  width: clamp(24px, 4vw, 32px);
+  height: clamp(24px, 4vw, 32px);
+}
+
 .check {
-  width: 30px;
-  height: 23px;
+  width: clamp(20px, 4vw, 30px);
+  height: clamp(18px, 4vw, 23px);
 }
 
 .priority-block {
   display: flex;
   background-color: white;
-  width: clamp(396px, 100%, 560px);
-  height: clamp(110px, 100%, 169px);
+  /* width: clamp(312px, 100%, 560px); */
+  height: clamp(99px, 23vw, 169px);
   border-radius: 30px;
   justify-content: center;
   align-items: center;
-  gap: clamp(20px, 2vw, 61px);
+  gap: clamp(20px, 7vw, 61px);
   transition: transform 0.08s ease-in-out;
   box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
 }
@@ -141,7 +146,7 @@ span {
   width: clamp(108px, 100%, 130px);
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap:clamp(12px,3vw,18px);
 }
 
 .task-block {
@@ -153,7 +158,7 @@ span {
 .task-in-block {
   display: flex;
   background-color: white;
-  width: clamp(116px, 19vw, 168px);
+  width: clamp(116px, 27vw, 168px);
   height: 168px;
   border-radius: 30px;
   flex-direction: column;
@@ -180,8 +185,8 @@ span {
 }
 
 .circel {
-  width: clamp(40px, 100%, 69px);
-  height: clamp(40px, 100%, 69px);
+  width: clamp(40px, 12vw, 69px);
+  height: clamp(40px, 12vw, 69px);
   border-radius: 100%;
   background-color: #2a3647;
   display: flex;
@@ -190,8 +195,8 @@ span {
 }
 
 .circel-priority {
-  width: 60px;
-  height: 60px;
+  width: clamp(40px, 12vw, 60px);
+  height: clamp(40px, 12vw, 60px);
   border-radius: 100%;
   background-color: #2a3647;
   display: flex;
@@ -202,7 +207,7 @@ span {
 
 .number-of-tasks {
   text-align: center;
-  font-size: clamp(47px, 5vw, 64px);
+  font-size: clamp(36px, 8vw, 64px);
   font-weight: 600;
   color: black;
 }

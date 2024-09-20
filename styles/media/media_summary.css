@@ -1,4 +1,8 @@
 @media screen and (max-width: 1400px) {
+  .head {
+    padding-bottom: 21px;
+  }
+
   .d-flex {
     flex-direction: column-reverse;
   }
@@ -29,7 +33,7 @@
 
 }
 
-@media screen and (max-width: 730px) {
+@media screen and (max-width: 777px) {
   .content {
     height: calc(100% - 160px);
     width: 100%; /*muss weil keine sidebar mehr da ist links  */
@@ -38,7 +42,8 @@
   }
 
   .content-tasks {
-    height: 384px;
+    height: 100%;
+    /* height: clamp(384px,3vw,512px); */
   }
 
   body {
@@ -72,6 +77,10 @@
   }
 
   .task-in-block {
-    height: 116px;
+    height: clamp(99px, 23vw, 168px);
   }
+
+  .seperator-grey {
+    height: clamp(68px,14vw,102px);
+}
 }

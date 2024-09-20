@@ -50,7 +50,7 @@
   }
 }
 
-@media screen and (max-width: 530px) {
+@media screen and (max-width: 777px) {
   header {
     left: 0;
     width: 100%;
@@ -80,7 +80,7 @@
   }
 
   aside {
-    width: clamp(320px, 100%, 600px);
+    width: clamp(320px, 100%, 777px);
     height: 80px;
     bottom: 0px;
     top: unset;
@@ -95,7 +95,7 @@
   }
 
   .box-icons {
-    width: 66px;
+    width: clamp(66px, 13vw, 99px);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -143,5 +143,8 @@
     display: flex;
     border-radius: 9px;
     gap: 10px;
+  }
+  .greeting {
+    display: none;
   }
 }
