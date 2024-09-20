@@ -38,7 +38,6 @@ function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
 
 function renderAssignees(id, assigned, contacts) {
   let updateAssigned = assigned.filter((item) => item !== null);
-  console.log(updateAssigned);
   let assignedField = document.getElementById(`assignees_task_${id}`);
   assignedField.innerHTML = "";
 
@@ -103,11 +102,22 @@ function renderTasks(task, contacts) {
 }
 
 async function renderBoard() {
-  const tasks = await fetchData("tasks");
+  let userTasks = activeUser.tasks;
+  console.log('User Tasks:', userTasks);
+  
+  const allTasks = await fetchData("tasks");
   const contacts = await fetchData("contacts");
   const statuses = ["todo", "inprogress", "awaitfeedback", "done"];
 
-  tasks.forEach((task) => {
+  const tasksToRender = allTasks.filter(task => userTasks.includes(task.id));
+  console.log('Tasks to render:', tasksToRender);
+
+  statuses.forEach(status => {
+    const statusColumn = document.getElementById(`kanban_${status}`);
+    // statusColumn.innerHTML = '';
+  });
+
+  tasksToRender.forEach((task) => {
     renderTasks(task, contacts);
   });
 
