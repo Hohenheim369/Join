@@ -1,6 +1,6 @@
 let selectedContacts = [];
 let userId = [];
-let selectedPrio = "low"
+let selectedPrio = "low";
 let subTasks = [];
 
 // document.addEventListener("DOMContentLoaded", () => {
@@ -12,11 +12,11 @@ let subTasks = [];
 //   document.getElementById("add_task_template").innerHTML = data;
 // }
 
-async function openAddTaskDialog(){
-  document.getElementById('task_added_overlay').innerHTML = taskAddedToBoard ();
+async function openAddTaskDialog() {
+  document.getElementById("task_added_overlay").innerHTML = taskAddedToBoard();
   await sleep(10);
-  const slidingDiv = document.getElementById('task_added_overlay');
-  slidingDiv.classList.toggle('visible');
+  const slidingDiv = document.getElementById("task_added_overlay");
+  slidingDiv.classList.toggle("visible");
 }
 
 function sleep(ms) {
@@ -29,33 +29,48 @@ async function createTask() {
   let description = document.getElementById("description_textarea").value;
   let dueDate = document.getElementById("due_date").value;
   let categorySeleced = document.getElementById("category").innerText;
-  let taskId = await getNewId('tasks');
+  let taskId = await getNewId("tasks");
   let assignedTo = selectedContacts;
-  putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced);
+  putTasksContent(
+    title,
+    description,
+    dueDate,
+    taskId,
+    assignedTo,
+    categorySeleced
+  );
   openAddTaskDialog();
   await sleep(1500);
   window.location.href = "../html/board.html";
 }
 
-function putTasksContent(title, description, dueDate, taskId, assignedTo, categorySeleced){
-  postData(`tasks/${taskId-1}/`,
-    {
-      title: title,
-      description: description,
-      date: dueDate,
-      priority: selectedPrio,
-      category: categorySeleced,
-      id: taskId,
-      subtasks: subTasks,
-      assigned: assignedTo,
-      status: "todo",
-    }
-  );
+function putTasksContent(
+  title,
+  description,
+  dueDate,
+  taskId,
+  assignedTo,
+  categorySeleced
+) {
+  postData(`tasks/${taskId - 1}/`, {
+    title: title,
+    description: description,
+    date: dueDate,
+    priority: selectedPrio,
+    category: categorySeleced,
+    id: taskId,
+    subtasks: subTasks,
+    assigned: assignedTo,
+    status: "todo",
+    user: userId,
+  });
 }
 
 async function getContacts() {
-  document.getElementById('contact_contant').innerHTML = "";
-  let response = await fetch(`https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/.json`);
+  document.getElementById("contact_contant").innerHTML = "";
+  let response = await fetch(
+    `https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/.json`
+  );
   let contacts = await response.json();
   window.allContacts = contacts;
   contacts.sort((a, b) => a.name.localeCompare(b.name));
@@ -63,75 +78,111 @@ async function getContacts() {
 }
 
 function displayContacts(contacts) {
-  document.getElementById('contact_contant').innerHTML = "";
+  document.getElementById("contact_contant").innerHTML = "";
   const userHtml = showAssignedUser(activeUser);
-  document.getElementById('contact_contant').innerHTML = userHtml;
+  document.getElementById("contact_contant").innerHTML = userHtml;
   for (let contact of contacts) {
-      const contactHtml = showAssignedContactList(contact);
-      document.getElementById('contact_contant').innerHTML += contactHtml;
-      console.log(contact);
+    const contactHtml = showAssignedContactList(contact);
+    document.getElementById("contact_contant").innerHTML += contactHtml;
   }
 }
 
 function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
-  colorChange.classList.toggle('assigned-color-change');
-  colorChange.classList.toggle('contact-list');
-  const existingContactIndex = selectedContacts.findIndex(contact => contact.contactId === contactId);
+  colorChange.classList.toggle("assigned-color-change");
+  colorChange.classList.toggle("contact-list");
+  const existingContactIndex = selectedContacts.indexOf(contactId);
   if (existingContactIndex === -1) {
-      addContactAssigned(contactId);
+    addContactAssigned(contactId);
   } else {
-      removeContactAssigned(existingContactIndex);
+    removeContactAssigned(existingContactIndex);
+  }
+}
+
+function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
+  toggleCheckButton(CheckButtonId, CheckTaskButton);
+  let colorChange = document.getElementById(bgChange);
+  colorChange.classList.toggle("assigned-color-change");
+  colorChange.classList.toggle("contact-list");
+  const existingUserIndex = userId.indexOf(activUserId);
+  if (existingUserIndex === -1) {
+    addUserAssigned(activUserId);
+  } else {
+    removeUserAssigned(existingUserIndex);
   }
 }
 
 function addContactAssigned(contactId) {
-  if (!selectedContacts.some(contact => contact.contactId === contactId)) {
-      selectedContacts.push(contactId);
-      updateSelectedContactsDisplay(contactId);
+  if (!selectedContacts.some((contact) => contact.contactId === contactId)) {
+    selectedContacts.push(contactId);
+    updateSelectedContactsDisplay(contactId);
+  }
+}
+
+function addUserAssigned(activUserId) {
+  if (!userId.some((user) => user.activUserId === activUserId)) {
+    userId.push(activUserId);
+    updateSelectedUserDisplay();
   }
 }
 
 function removeContactAssigned(index) {
   if (index > -1) {
-      selectedContacts.splice(index, 1);
-      updateSelectedContactsDisplay(contactId);
+    selectedContacts.splice(index, 1);
+    updateSelectedContactsDisplay(index);
   }
 }
 
-// function displayActiveUser(contactName, contactInitials, contactColor, contactId){
-//   if (contactName == 'Gast') {
-//     let displayUser = document.getElementById('selected_contacts');
-//     displayUser += assignedUser(contactInitials, contactColor, contactId);
-//   }
-// }
+function removeUserAssigned(index) {
+  if (index > -1) {
+    userId = [];
+    let selectedList = document.getElementById("activ_user");
+    selectedList.innerHTML = "";
+  }
+}
+
+async function updateSelectedUserDisplay(activUserId) {
+  let selectedList = document.getElementById("activ_user");
+  selectedList.innerHTML = "";
+  const userInitials = activeUser.initials;
+  const activUserID = activeUser.id;
+  const userColor = activeUser.color;
+  selectedList.innerHTML += assignedUser(userInitials, activUserID, userColor);
+}
 
 async function updateSelectedContactsDisplay(contactId) {
-  let contacts = await fetchData('contacts');
-  let selectedList = document.getElementById('selected_contacts');
+  const contacts = await fetchData("contacts");
+  const selectedList = document.getElementById("selected_contacts");
   selectedList.innerHTML = "";
+
   const maxVisibleContacts = 3;
-  for (let i = 0; i < Math.min(selectedContacts.length, maxVisibleContacts); i++) {
-      contactId = selectedContacts[i];
-      const contactInitials = contacts[contactId-1].initials
-      const contactID = contacts[contactId-1].id
-      const contactColor = contacts[contactId-1].color
-      // displayActiveUser(contactId);
-      selectedList.innerHTML += assignedContacts(contactInitials, contactID, contactColor);
-  }
-  if (selectedContacts.length > maxVisibleContacts) {
-      const additionalCount = selectedContacts.length - maxVisibleContacts;
-      selectedList.innerHTML += `<div>+${additionalCount}</div>`;
+  displaySelectedContacts(contacts, selectedList, maxVisibleContacts);
+  displayAdditionalCount(selectedList, maxVisibleContacts);
+}
+
+function displaySelectedContacts(contacts, selectedList, maxVisibleContacts) {
+  for (let i = 0;i < Math.min(selectedContacts.length, maxVisibleContacts);i++) {
+    const contactId = selectedContacts[i];
+    const { initials, id, color } = contacts[contactId - 1];
+    selectedList.innerHTML += assignedContacts(initials, id, color);
   }
 }
 
-document.getElementById('assigned_to').addEventListener('input', searchContact);
+function displayAdditionalCount(selectedList, maxVisibleContacts) {
+  if (selectedContacts.length > maxVisibleContacts) {
+    const additionalCount = selectedContacts.length - maxVisibleContacts;
+    selectedList.innerHTML += `<div class="font-s-20 font-w-700">+${additionalCount}</div>`;
+  }
+}
+
+document.getElementById("assigned_to").addEventListener("input", searchContact);
 
 function searchContact() {
-  let searContact = document.getElementById('assigned_to').value.toLowerCase();
-  let filteredContacts = window.allContacts.filter(contact => 
-      contact.name.toLowerCase().includes(searContact));
+  let searContact = document.getElementById("assigned_to").value.toLowerCase();
+  let filteredContacts = window.allContacts.filter((contact) =>
+    contact.name.toLowerCase().includes(searContact)
+  );
   displayContacts(filteredContacts);
 }
 
@@ -144,70 +195,40 @@ function selectCategory(category) {
   closeSelectCategory();
 }
 
-let clickListenerActive = false;
-
-function toggleClickListener() {
-    const categoryActiv = document.getElementById('category_activ');
-    const categoryInactiv = document.getElementById('category_inactiv');
-    const subtasksActiv = document.getElementById('subtasks_inactiv');
-    const subTasksList = document.getElementById(`subtasks_list`);
-    if (categoryActiv || categoryInactiv || subtasksActiv || subTasksList) {
-        if (!clickListenerActive) {
-            document.addEventListener('click', handleDocumentClick);
-            clickListenerActive = true;
-        }
-    } else {
-        if (clickListenerActive) {
-            document.removeEventListener('click', handleDocumentClick);
-            clickListenerActive = false;
-        }
-    }
-}
-
-function handleDocumentClick(event) {
-  const categoryActiv = document.getElementById('category_activ');
-  const categoryInactiv = document.getElementById('category_inactiv');
-  const subtasksActiv = document.getElementById('subtasks_inactiv');
-  const subTasksList = document.getElementById(`subtasks_list`);
-  if (!categoryActiv.contains(event.target) && 
-      !categoryInactiv.contains(event.target) && 
-      !subtasksActiv.contains(event.target)&&
-      !subTasksList.contains(event.target)){
-      closeSelectCategory();
-      cancelSubtasks();
-      toggleClickListener();
-  }
-}
-
-function saveChangesOnClickOutside(index) {
+function saveInput(index) {
   let subInput = document.getElementById(`input_subtask_${index}`).value;
   document.getElementById(`list_subtask_${index}`).innerText = subInput;
   toggleSubtasksImgs(index);
   handleInputBlur(subInput, index);
 }
 
-
 function editSubtask(li, index) {
   const currentText = li.innerText;
   let subInput = document.getElementById(`input_subtask_${index}`);
-  subInput.value = currentText; 
+  subInput.value = currentText;
   toggleSubtasksImgs(index);
   subInput.focus();
+  subInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      subInput.blur();
+      saveInput(index);
+    }
+  });
 }
 
 function handleInputBlur(li, index) {
-  let input = document.getElementById(`list_subtask_${index}`).innerText
+  let input = document.getElementById(`list_subtask_${index}`).innerText;
   if (input.trim() !== "") {
-      saveChanges(li, index);
+    saveChanges(li, index);
   } else {
-      removeSubtask(li, index);
-      return
+    removeSubtask(li, index);
+    return;
   }
-  toggleClickListener();
 }
 
 function saveChanges(subtasksInput, index) {
-  let newValue = { subTaskName: subtasksInput, done: false }
+  let newValue = { subTaskName: subtasksInput, done: false };
   subTasks[index] = newValue;
 }
 

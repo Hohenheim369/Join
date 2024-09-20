@@ -142,6 +142,16 @@ function addSubtasks() {
   }
 }
 
+document
+  .getElementById("subtasks_input")
+  .addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addSubtasks();
+      this.blur();
+    }
+  });
+
 function cancelSubtasks() {
   document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
   document.getElementById("subtasks_activ_img").classList.add("d-none");

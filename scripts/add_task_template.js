@@ -1,5 +1,5 @@
 function showAssignedUser(activeUser){
-   return  `<div id="bg_task_${activeUser.id}" onclick="addContactToTask('contact_to_task_${activeUser.id}', 'task', 'bg_task_${activeUser.id}', '${activeUser.name}', '${activeUser.initials}', '${activeUser.color}', '${activeUser.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
+   return  `<div id="bg_task_${activeUser.id}" onclick="addUserToTask('contact_to_task_${activeUser.id}', 'task', 'bg_task_${activeUser.id}', '${activeUser.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
             <div class="d-flex-center gap-16">
               <div class="user-icon d-flex-center" style="background-color: ${activeUser.color};">
                   <span>${activeUser.initials}</span>
@@ -23,9 +23,9 @@ function showAssignedContactList(contact){
           </div>`
 }
 
-function assignedUser(contactInitials, contactColor, contactId){
-  return  `<div id="assigned_${contactId}" class="user-icon d-flex-center"  style="background-color: ${contactColor};">
-                <span>${contactInitials}</span>
+function assignedUser(userInitials, activUserID, userColor){
+  return  `<div id="assigned_${activUserID}" class="user-icon d-flex-center"  style="background-color: ${userColor};">
+                <span>${userInitials}</span>
           </div>`
 }
 
@@ -56,7 +56,7 @@ function addSubtasksToList(subtasksInput, id) {
             <div id="list_imgs_inactiv_${id}" class="d-flex-center gap-4 pos-abs imgs-pos d-none">
               <img class="hover-circle-subtask" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
               <div class="dividing-border"></div>
-              <img class="hover-circle-subtask" onclick="saveChangesOnClickOutside(${id})" src="../assets/img/png/subtasks-checkmark.png" alt="">
+              <img class="hover-circle-subtask" onclick="saveInput(${id})" src="../assets/img/png/subtasks-checkmark.png" alt="">
             </div>
           </div>` 
 }
