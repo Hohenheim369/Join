@@ -39,7 +39,9 @@
                 type="text"
               />
             </div>
-            <div class="field-alert" id="fieldAlert"></div>
+            <div class="field-alert d-none" id="title_field_alert">
+              This field is required
+            </div>
           </div>
           <div class="form-child-order">
             <label>Description</label>
@@ -76,9 +78,9 @@
               </div>
             </div>
             <div class="contact-icon-order">
-            <div id="activ_user" class="contact-icon-order"></div>
-            <div id="selected_contacts" class="contact-icon-order"></div>
-          </div>
+              <div id="activ_user" class="contact-icon-order"></div>
+              <div id="selected_contacts" class="contact-icon-order"></div>
+            </div>
           </div>
         </form>
         <div class="dividing-bar"></div>
@@ -88,7 +90,9 @@
             <div>
               <input class="pos-rel" required id="due_date" type="date" />
             </div>
-            <div class="field-alert" id="fieldAlert"></div>
+            <div class="field-alert d-none" id="date_field_alert">
+              This field is required
+            </div>
           </div>
           <div class="form-child-order">
             <label>Prio</label>
@@ -194,6 +198,9 @@
                 <div id="category_task_contant" class="category-field"></div>
               </div>
             </div>
+            <div class="field-alert d-none" id="category_field_alert">
+              This field is required
+            </div>
           </div>
           <div class="form-child-order">
             <label>Subtasks</label>
@@ -267,10 +274,17 @@
               </svg>
             </div>
           </button>
-          <button onclick="createTask()" class="create-task-button">
-            <span>Create Task</span>
-            <img src="../assets/img/png-old/check.png" alt="" />
-          </button>
+          <div class="create-button-div" id="create_button_div">
+            <button
+              
+              onclick="enableButton()"
+              id="create_button"
+              class="create-task-button"
+            >
+              <span>Create Task</span>
+              <img src="../assets/img/png-old/check.png" alt="" />
+            </button>
+          </div>
         </div>
       </div>
       <div

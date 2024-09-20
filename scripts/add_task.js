@@ -24,7 +24,6 @@ function sleep(ms) {
 }
 
 async function createTask() {
-  //add function to check if all required fields are filled
   let title = document.getElementById("title_input").value;
   let description = document.getElementById("description_textarea").value;
   let dueDate = document.getElementById("due_date").value;
@@ -115,14 +114,14 @@ function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
 
 function addContactAssigned(contactId) {
   if (!selectedContacts.some((contact) => contact.contactId === contactId)) {
-    selectedContacts.push(contactId);
+    selectedContacts.push(Number(contactId));
     updateSelectedContactsDisplay(contactId);
   }
 }
 
 function addUserAssigned(activUserId) {
   if (!userId.some((user) => user.activUserId === activUserId)) {
-    userId.push(activUserId);
+    userId.push(Number(activUserId));
     updateSelectedUserDisplay();
   }
 }
@@ -142,7 +141,7 @@ function removeUserAssigned(index) {
   }
 }
 
-async function updateSelectedUserDisplay(activUserId) {
+async function updateSelectedUserDisplay() {
   let selectedList = document.getElementById("activ_user");
   selectedList.innerHTML = "";
   const userInitials = activeUser.initials;
@@ -235,4 +234,70 @@ function saveChanges(subtasksInput, index) {
 function removeSubtask(li, index) {
   li.parentNode.remove();
   subTasks.splice(index, 1);
+}
+
+function requiredFields(){
+  requiredTitle();
+  requiredDate();
+  requiredCategory();
+}
+
+function requiredTitle(){
+  let title = document.getElementById('title_input');
+  let alertTitle = document.getElementById('title_field_alert');
+  if (title.value.trim() == '') {
+    title.classList.add('alert-border');
+    alertTitle.classList.remove('d-none');
+  } 
+}
+
+function requiredDate(){
+  let date = document.getElementById('due_date');
+  let alertDate = document.getElementById('date_field_alert');
+  if (date.value.trim() == '') {
+    date.classList.add('alert-border');
+    alertDate.classList.remove('d-none');
+  } 
+}
+
+function requiredCategory(){
+  let categoryValue = document.getElementById('category')
+  let category = document.getElementById('category_contant');
+  let alertCategory = document.getElementById('category_field_alert');
+  if (categoryValue.innerText = "Select task category" ) {
+    category.classList.add('alert-border');
+    alertCategory.classList.remove('d-none');
+    category.classList.remove('category-container')
+  } 
+}
+
+function resetrequiredFields(){
+  resetrequiredTitle();
+  resetrequiredDate();
+  resetrequiredCategory();
+}
+
+function resetrequiredTitle(){
+  let title = document.getElementById('title_input');
+  let alertTitle = document.getElementById('title_field_alert');
+    title.classList.remove('alert-border');
+    alertTitle.classList.add('d-none');
+}
+
+function resetrequiredDate(){
+  let date = document.getElementById('due_date');
+  let alertDate = document.getElementById('date_field_alert');
+    date.classList.remove('alert-border');
+    alertDate.classList.add('d-none');
+}
+
+function resetrequiredCategory(){
+  let categoryValue = document.getElementById('category')
+  let category = document.getElementById('category_contant');
+  let alertCategory = document.getElementById('category_field_alert');
+  if (categoryValue.innerText = ("Technical Task" || "User Story") ) {
+    category.classList.remove('alert-border');
+    alertCategory.classList.add('d-none');
+    category.classList.add('category-container')
+  } 
 }

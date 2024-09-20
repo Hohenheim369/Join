@@ -109,7 +109,6 @@ function openSelectCategory() {
     document.getElementById("category_inactiv").classList.add("d-none");
     document.getElementById("category_activ").classList.remove("d-none");
     document.getElementById("category_task_contant").innerHTML = showCategory();
-    toggleClickListener();
   }
 }
 
@@ -169,3 +168,28 @@ function toggleSubtasksImgs(id) {
   document.getElementById(`list_subtask_${id}`).classList.toggle("d-none");
   document.getElementById(`input_subtask_${id}`).classList.toggle("d-none");
 }
+
+function enableButton() {
+  let input = document.getElementById('title_input');
+  let date = document.getElementById('due_date');
+  let category = document.getElementById('category').innerText;
+  let createButton = document.getElementById('create_button');
+  if (input.value.trim() !== '' && date.value.trim() !== '' && 
+      (category === "Technical Task" || category === "User Story")) {
+      createButton.disabled = false;
+      resetrequiredFields();
+  } else {
+      createButton.disabled = true;
+      requiredFields();
+  }
+}
+
+document.getElementById('title_input').addEventListener('input', enableButton);
+document.getElementById('due_date').addEventListener('input', enableButton);
+document.getElementById('category_task_contant').addEventListener("click",enableButton)
+document.getElementById('create_button').addEventListener('click', function() {
+  let createButton = document.getElementById('create_button');
+  if (!createButton.disabled) {
+    createTask();
+  }
+});

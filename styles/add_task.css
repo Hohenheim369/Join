@@ -225,6 +225,11 @@ li:hover {
   line-height: 20px;
 }
 
+.alert-border {
+  border: 1px solid #ff8190;
+  border-radius: 10px;
+}
+
 .required-sign {
   color: #ff8190;
 }
