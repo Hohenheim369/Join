@@ -152,7 +152,7 @@ span {
 .task-block {
   display: flex;
   justify-content: space-between;
-  gap: clamp(24px, 3vw, 32px);
+  gap: clamp(13px, 3vw, 32px);
 }
 
 .task-in-block {
