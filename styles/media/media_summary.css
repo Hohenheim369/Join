@@ -91,7 +91,7 @@
     height: clamp(17px, 5vw, 25px);
   }
 
-  .greeting-user{
+  .greeting-user {
     font-size: clamp(36px, 11vw, 47px);
   }
 }

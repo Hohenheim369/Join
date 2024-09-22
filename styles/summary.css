@@ -26,7 +26,7 @@ body {
 }
 
 h1 {
-  font-size: clamp(47px,3vw,61px);
+  font-size: clamp(47px, 3vw, 61px);
 }
 
 h2 {
@@ -67,8 +67,7 @@ span {
   /* height: clamp(110px, 15vh, 169px); */
   /* width: clamp(312px, 100%, 560px); */
   justify-content: space-between;
-  gap: clamp(24px, 3vw , 32px );
-
+  gap: clamp(24px, 3vw, 32px);
 }
 
 .upper-task-block {
@@ -79,7 +78,7 @@ span {
   border-radius: 30px;
   justify-content: center;
   align-items: center;
-  gap: clamp(10px, 3vw, 18px) ;
+  gap: clamp(10px, 3vw, 18px);
   transition: transform 0.08s ease-in-out;
   box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.1);
 }
@@ -109,7 +108,7 @@ span {
   color: white;
 }
 
-.edit{
+.edit {
   width: clamp(24px, 4vw, 32px);
   height: clamp(24px, 4vw, 32px);
 }
@@ -237,7 +236,7 @@ span {
   gap: 13px;
 }
 
-.deadline p{
+.deadline p {
   font-size: clamp(12px, 2vw, 16px);
 }
 
@@ -258,14 +257,13 @@ span {
   color: white !important;
 }
 
-.greeting-user{
+.greeting-user {
   font-size: clamp(30px, 4vw, 64px);
   font-weight: 700;
-  color: #29ABE2;
-
+  color: #29abe2;
 }
 
-.greeting-mobile{
+.greeting-mobile {
   display: flex;
   margin: 0px;
   width: 100%;
