@@ -13,6 +13,75 @@ function bubblingPrevention(event) {
   event.stopPropagation();
 }
 
+async function updateTasksOnBoard() {
+  const statuses = ["todo", "inprogress", "awaitfeedback", "done"];
+  cleanBoard(statuses);
+  await renderTasksInStatusArea(statuses);
+}
+
+function cleanBoard(statuses) {
+  statuses.forEach((status) => {
+    const statusColumn = document.getElementById(`kanban_${status}`);
+    statusColumn.innerHTML = "";
+  });
+}
+
+async function renderTasksInStatusArea(statuses) {
+  const tasksToRender = await filterUserTasks();
+  const contacts = await fetchData("contacts");
+
+  statuses.forEach((status) =>
+    renderStatusArea(status, tasksToRender, contacts)
+  );
+}
+
+async function filterUserTasks() {
+  let userTasks = activeUser.tasks;
+  const allTasks = await fetchData("tasks");
+
+  const tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
+  console.log("User Tasks:", userTasks);
+  console.log("Tasks to render:", tasksToRender);
+  return tasksToRender;
+}
+
+function renderStatusArea(status, tasks, contacts) {
+  let statusArea = document.getElementById(`kanban_${status}`);
+  statusArea.innerHTML = "";
+
+  let statusTasks = tasks.filter((task) => task.status == status);
+
+  if (statusTasks == "") {
+    statusArea.innerHTML =
+      '<div class="ticket-none d-flex-center">No tasks To do</div>';
+  } else {
+    renderStatusTasks(statusTasks, statusArea, contacts);
+  }
+}
+
+function renderStatusTasks(tasks, area, contacts) {
+  tasks.forEach((task) => {
+    let shortDescription = shortenDescription(task.description);
+    let sumAllSubtasks = task.subtasks.length;
+    let sumDoneSubtasks = task.subtasks.filter(
+      (subtask) => subtask.done
+    ).length;
+
+    area.innerHTML += generateTasksOnBoard(
+      task.id,
+      task.title,
+      shortDescription,
+      task.category,
+      task.status,
+      task.priority,
+      sumAllSubtasks,
+      sumDoneSubtasks
+    );
+    updateSubtasksBar(task.id, sumDoneSubtasks, sumAllSubtasks);
+    displayAssigneesForTask(task.id, task.assigned, contacts);
+  });
+}
+
 function shortenDescription(description) {
   const words = description.split(/\s+/);
   if (words.length <= 6) return description;
@@ -36,116 +105,40 @@ function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
   }
 }
 
-function renderAssignees(id, assigned, contacts) {
-  let updateAssigned = assigned.filter((item) => item !== null);
-  let assignedField = document.getElementById(`assignees_task_${id}`);
+function displayAssigneesForTask(taskId, assigned, contacts) {
+  const assignedField = document.getElementById(`assignees_task_${taskId}`);
   assignedField.innerHTML = "";
 
   const maxDisplayed = 3;
-  const displayCount = Math.min(updateAssigned.length, maxDisplayed);
-
-  for (let index = 0; index < displayCount; index++) {
-    const contactId = updateAssigned[index];
-    console.log(contactId);
-
-    const contact = contacts.find((c) => c.id === contactId);
-
-    if (contact) {
-      let assignedInitials = contact.initials;
-      let assignedColor = contact.color;
-
-      assignedField.innerHTML += `<span
-        class="assignee font-c-white mar-r-8 wh-32 d-flex-center" style="background-color: ${assignedColor};"
-        >${assignedInitials}</span>`;
-    } else {
-      console.log(`Kontakt mit ID ${contactId} nicht gefunden.`);
-    }
-  }
-
-  if (updateAssigned.length > maxDisplayed) {
-    const remainingCount = updateAssigned.length - maxDisplayed;
-    assignedField.innerHTML += `<span class="additionally-assignee wh-32 d-flex-center"">+${remainingCount}</span>`;
-  }
-}
-
-function updateColumnStatus(status) {
-  const statusArea = document.getElementById(`kanban_${status}`);
-  const noneTicketDiv = statusArea.querySelector(".ticket-none");
-  const tasks = statusArea.querySelectorAll(".ticket-card");
-
-  if (tasks.length === 0) {
-    noneTicketDiv.style.display = "flex";
-  } else {
-    noneTicketDiv.style.display = "none";
-  }
-}
-
-function renderTasks(task, contacts) {
-  let statusArea = document.getElementById(`kanban_${task.status}`);
-  let shortDescription = shortenDescription(task.description);
-  let sumAllSubtasks = task.subtasks.length;
-  let sumDoneSubtasks = task.subtasks.filter((subtask) => subtask.done).length;
-
-  statusArea.innerHTML += generateTasksOnBoard(
-    task.id,
-    task.title,
-    shortDescription,
-    task.category,
-    task.status,
-    task.priority,
-    sumAllSubtasks,
-    sumDoneSubtasks
-  );
-  updateSubtasksBar(task.id, sumDoneSubtasks, sumAllSubtasks);
-  renderAssignees(task.id, task.assigned, contacts);
-  // updateColumnStatus(task.status);
-}
-
-async function renderBoard() {
-  let userTasks = activeUser.tasks;
-  console.log('User Tasks:', userTasks);
   
-  const allTasks = await fetchData("tasks");
-  const contacts = await fetchData("contacts");
-  const statuses = ["todo", "inprogress", "awaitfeedback", "done"];
+  assigned
+    .filter(contactId => contactId !== null)
+    .slice(0, maxDisplayed)
+    .forEach(contactId => renderAssignee(contactId, contacts, assignedField));
 
-  const tasksToRender = allTasks.filter(task => userTasks.includes(task.id));
-  console.log('Tasks to render:', tasksToRender);
-
-  statuses.forEach(status => {
-    const statusColumn = document.getElementById(`kanban_${status}`);
-    // statusColumn.innerHTML = '';
-  });
-
-  tasksToRender.forEach((task) => {
-    renderTasks(task, contacts);
-  });
-
-  statuses.forEach(updateColumnStatus);
+  displayAdditionalAssigneesCount(assigned, maxDisplayed, assignedField);
 }
 
-// function initDragAndDrop() {
-//   const columns = document.querySelectorAll('.kanban-tickets');
-//   columns.forEach(column => {
-//     column.addEventListener('dragover', allowDrop);
-//     column.addEventListener('drop', drop);
-//   });
-// }
+function renderAssignee(contactId, contacts, assignedField) {
+  const contact = contacts.find(c => c.id === contactId);
+  
+  if (contact) {
+    assignedField.innerHTML += `
+      <span class="assignee font-c-white mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${contact.color};">
+        ${contact.initials}
+      </span>`;
+  } else {
+    console.log(`Kontakt mit ID ${contactId} nicht gefunden.`);
+  }
+}
 
-// function allowDrop(ev) {
-//   ev.preventDefault();
-// }
-
-// function drop(ev) {
-//   ev.preventDefault();
-//   const taskId = ev.dataTransfer.getData('text');
-//   const task = document.getElementById(taskId);
-//   ev.target.closest('.kanban-tickets').appendChild(task);
-
-//   // Aktualisiere den Status für beide betroffenen Spalten
-//   updateColumnStatus(task.dataset.status);
-//   updateColumnStatus(ev.target.closest('.kanban-tickets').id.split('_')[1]);
-
-//   // Aktualisiere den Status des Tasks
-//   task.dataset.status = ev.target.closest('.kanban-tickets').id.split('_')[1];
-// }
+function displayAdditionalAssigneesCount(assigned, maxDisplayed, assignedField) {
+  if (assigned.length > maxDisplayed) {
+    const remainingCount = assigned.length - maxDisplayed;
+    assignedField.innerHTML += `
+      <span class="additionally-assignee wh-32 d-flex-center">
+        +${remainingCount}
+      </span>`;
+  }
+}

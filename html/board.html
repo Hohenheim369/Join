@@ -21,7 +21,7 @@
     <script src="../scripts/board_basic.js"></script>
     <script src="../scripts/board_template.js"></script>
   </head>
-  <body onload="renderBoard()">
+  <body onload="updateTasksOnBoard()">
     <div id="desktop_template"></div>
     <section class="content board">
       <div class="d-flex-spbe-center">
@@ -60,7 +60,6 @@
             />
           </div>
           <div id="kanban_todo" class="kanban-tickets d-flex-column">
-            <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
 
@@ -76,7 +75,6 @@
             />
           </div>
           <div id="kanban_inprogress" class="kanban-tickets d-flex-column">
-            <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
 
@@ -92,7 +90,6 @@
             />
           </div>
           <div id="kanban_awaitfeedback" class="kanban-tickets d-flex-column">
-            <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
 
@@ -104,7 +101,6 @@
             <div></div>
           </div>
           <div id="kanban_done" class="kanban-tickets d-flex-column">
-            <div class="ticket-none d-flex-center">No tasks To do</div>
           </div>
         </div>
       </div>
