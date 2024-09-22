@@ -1,0 +1,24 @@
+@media screen and (max-width: 1000px) {
+  /* .greeting{
+      display: none;
+    } */
+
+  .content {
+    padding: 110px 18px 70px 0px;
+    margin-left: clamp(180px, 3vw, 232px);
+  }
+}
+
+@media screen and (max-width: 777px) {
+  .content {
+    height: calc(100% - 65px);
+    width: 100%;
+    margin: 80px 0px 80px;
+    padding: 48px 16px 0px;
+  }
+
+  .arrow-back {
+    left: calc(100% - 60px);
+    top: 150px;
+}
+}

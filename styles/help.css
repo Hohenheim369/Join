@@ -56,7 +56,6 @@ tr {
 }
 
 .what-is-join {
-  height: 238px;
   display: flex;
   gap: 16px;
   flex-direction: column;
