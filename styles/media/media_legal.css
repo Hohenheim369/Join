@@ -18,7 +18,11 @@
   }
 
   .arrow-back {
-    left: calc(100% - 60px);
+    left: calc(100% - 54px);
     top: 150px;
+}
+
+h1 {
+  font-size: clamp(36px, 3vw, 61px);
 }
 }

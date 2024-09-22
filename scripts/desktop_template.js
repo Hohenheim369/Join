@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initializeLinks();
     // Überprüfe den Parameter hideIcons, aber erst nach dem Laden des Templates
     hideIcons();
-
+    hideSidebarMobile();
     handleResponsiveHelp();
-    window.addEventListener("resize", handleResponsiveHelp); // Bei jeder Größenänderung prüfen
+    window.addEventListener("resize", handleResponsiveHelp, hideSidebarMobile); // Bei jeder Größenänderung prüfen
   });
 });
 
@@ -240,6 +240,24 @@ function hideIcons() {
   }
 }
 
+function hideSidebarMobile() {
+  const activeUser = localStorage.getItem("activeUser");
+  const screenWidth = window.innerWidth;
+
+  // Wenn kein Benutzer eingeloggt ist und die Bildschirmbreite unter 770px liegt
+  if (!activeUser && screenWidth < 770) {
+    const sidebar = document.getElementById("sidebar"); // Angenommen, die Sidebar hat die ID 'sidebar'
+    if (sidebar) {
+      sidebar.style.setProperty("display", "none", "important"); // Sidebar ausblenden
+      document.getElementById("arrow_back").classList.add("d-none");
+    }
+    const content = document.querySelector(".content");
+    if (content) {
+      content.style.height = "100%";
+    }
+  }
+}
+
 function logOut() {
   localStorage.removeItem("activeUser");
 }
@@ -251,7 +269,7 @@ function handleResponsiveHelp() {
 
   if (mediaQuery.matches) {
     if (targetDiv.firstChild) {
-      sourceDiv.classList.remove('d-none');
+      sourceDiv.classList.remove("d-none");
       targetDiv.insertBefore(sourceDiv, targetDiv.firstChild); // An die erste Position verschieben
     } else {
       targetDiv.appendChild(sourceDiv); // Falls das Ziel-Element leer ist
@@ -259,6 +277,6 @@ function handleResponsiveHelp() {
   } else {
     // Optional: Andernfalls zurücksetzen
     document.getElementById("header_icons").appendChild(sourceDiv); // Falls du es zurückschieben möchtest
-    document.getElementById("help_mobile").classList.add('d-none');
+    document.getElementById("help_mobile").classList.add("d-none");
   }
 }
