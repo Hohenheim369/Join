@@ -8,6 +8,20 @@ body {
   display: flex;
 }
 
+h1 {
+  font-size: clamp(47px, 4vw, 61px);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: clamp(33px ,3vw, 47px);
+  font-weight: 500;
+  line-height: 56.4px;
+  text-align: left;
+  color: black;
+  margin: 0px;
+}
+
 .content {
   padding: 0px;
   padding-inline: unset !important;
@@ -107,17 +121,14 @@ body {
 }
 
 .text-box {
-  padding-top: 110px;
-  padding-left: 55px;
+  padding-top: clamp(55px , 9vw, 110px);
+  padding-left: clamp(30px, 3vw, 55px);
   display: flex;
-  gap: 30px;
+  gap: clamp(10px, 1vw, 30px);
   align-items: center;
 }
 
-h1 {
-  font-size: 61px;
-  font-weight: 700;
-}
+
 
 .text-seperator {
   height: 59px;
@@ -126,7 +137,7 @@ h1 {
 }
 
 .info-text {
-  font-size: 27px;
+  font-size: clamp(20px, 2vw, 27px);
 }
 
 .grey-background {
@@ -145,40 +156,34 @@ h1 {
 
 .contacts-info {
   display: flex;
-  width: 461px;
+  width: clamp(300px , 32vw, 540px);
   gap: 21px;
   flex-direction: column;
-  padding: 32px 0px 0px 55px;
+  padding-top: 32px;
+  padding-left: clamp(30px, 3vw, 55px)
 }
 
 .contacts-info-name {
-  width: 540px;
+  width: clamp(300px, 32vw, 540px);
   height: 120px;
   display: flex;
-  gap: 54px;
+  gap: clamp(20px, 2vw, 54px);
   align-items: center;
 }
 
 .big-letter-circle {
   color: white;
-  font-size: 47px;
+  font-size: clamp(24px, 3vw, 47px);
   font-weight: 500;
   display: flex;
   border-radius: 90px;
-  width: 120px;
-  height: 120px;
+  width: clamp( 80px, 16vw, 120px);
+  height: clamp( 80px, 7vw, 120px);
   justify-content: center;
   align-items: center;
 }
 
-h3 {
-  font-size: 47px;
-  font-weight: 500;
-  line-height: 56.4px;
-  text-align: left;
-  color: black;
-  margin: 0px;
-}
+
 
 .contact-box-name {
   display: flex;

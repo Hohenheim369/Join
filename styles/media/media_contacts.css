@@ -1,7 +1,11 @@
 @media screen and (max-width: 1000px) {
   .content {
-    padding: 110px 18px 70px 0px;
+    padding: 0px;
     margin-left: clamp(180px, 3vw, 232px);
+  }
+
+  .text-box{
+    flex-direction: column;
   }
 }
 
