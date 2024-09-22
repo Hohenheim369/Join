@@ -1,6 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   greeting();
   displayTasks();
+  const clickableDivs = document.querySelectorAll(
+    ".upper-task-block, .priority-block, .task-in-block"
+  );
+  clickableDivs.forEach((div) => {
+    div.addEventListener("click", () => {
+      // Navigiere zur gewünschten Seite (ersetze URL entsprechend)
+      window.location.href = "../html/board.html"; // Ersetze 'your-board-page.html' mit der tatsächlichen URL deines Boards
+    });
+  });
   if (window.innerWidth <= 770) {
     mobileGreeting();
   }
@@ -93,8 +102,9 @@ function mobileGreeting() {
     greetingDialog.showModal();
 
     // Schließt den Dialog nach 5 Sekunden
-    // setTimeout(() => {
-    //   greetingDialog.close();
-    // }, 3000); // 5000 Millisekunden = 5 Sekunden
+    setTimeout(() => {
+      greetingDialog.classList.add("d-none");
+      greetingDialog.close();
+    }, 3000); // 5000 Millisekunden = 5 Sekunden
   }
 }

@@ -78,6 +78,10 @@
     gap: clamp(13px, 4vw, 61px);
   }
 
+  .priority-block:hover {
+    transform: scale(1.05);
+  }
+
   .priority-and-nummber {
     justify-content: center;
   }
