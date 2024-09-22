@@ -19,10 +19,12 @@
     <script src="../script.js"></script>
     <script src="../scripts/desktop_template.js"></script>
     <script src="../scripts/board_basic.js"></script>
+    <script src="../scripts/board_single_task.js"></script>
     <script src="../scripts/board_template.js"></script>
   </head>
   <body onload="updateTasksOnBoard()">
     <div id="desktop_template"></div>
+
     <section class="content board">
       <div class="d-flex-spbe-center">
         <h1>Board</h1>
@@ -50,7 +52,7 @@
       <div class="kanban-board">
         <div class="d-flex-column gap-12">
           <div
-            class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110"
+            class="d-flex-spbe-center kanban-header font-s-20 font-w-700 font-c-66-82-110"
           >
             To do
             <img
@@ -59,13 +61,18 @@
               alt=""
             />
           </div>
-          <div id="kanban_todo" class="kanban-tickets d-flex-column">
-          </div>
+          <div
+            id="kanban_todo"
+            class="kanban-tickets d-flex-column"
+            ondrop="moveTo('todo')"
+            ondragover="allowDrop(event); hightlight('todo')"
+            ondragleave="removeHightlight('todo')"
+          ></div>
         </div>
 
         <div class="d-flex-column gap-12">
           <div
-            class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110"
+            class="d-flex-spbe-center kanban-header font-s-20 font-w-700 font-c-66-82-110"
           >
             In progress
             <img
@@ -74,13 +81,18 @@
               alt=""
             />
           </div>
-          <div id="kanban_inprogress" class="kanban-tickets d-flex-column">
-          </div>
+          <div
+            id="kanban_inprogress"
+            class="kanban-tickets d-flex-column"
+            ondrop="moveTo('inprogress')"
+            ondragover="allowDrop(event); hightlight('inprogress')"
+            ondragleave="removeHightlight('inprogress')"
+          ></div>
         </div>
 
         <div class="d-flex-column gap-12">
           <div
-            class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110"
+            class="d-flex-spbe-center kanban-header font-s-20 font-w-700 font-c-66-82-110"
           >
             Await feedback
             <img
@@ -89,19 +101,29 @@
               alt=""
             />
           </div>
-          <div id="kanban_awaitfeedback" class="kanban-tickets d-flex-column">
-          </div>
+          <div
+            id="kanban_awaitfeedback"
+            class="kanban-tickets d-flex-column"
+            ondrop="moveTo('awaitfeedback')"
+            ondragover="allowDrop(event); hightlight('awaitfeedback')"
+            ondragleave="removeHightlight('awaitfeedback')"
+          ></div>
         </div>
 
         <div class="d-flex-column gap-12">
           <div
-            class="d-flex-spbe-center mar-8-16 font-s-20 font-w-700 font-c-66-82-110"
+            class="d-flex-spbe-center kanban-header font-s-20 font-w-700 font-c-66-82-110"
           >
             Done
             <div></div>
           </div>
-          <div id="kanban_done" class="kanban-tickets d-flex-column">
-          </div>
+          <div
+            id="kanban_done"
+            class="kanban-tickets d-flex-column"
+            ondrop="moveTo('done')"
+            ondragover="allowDrop(event); hightlight('done')"
+            ondragleave="removeHightlight('done')"
+          ></div>
         </div>
       </div>
     </section>
@@ -111,118 +133,9 @@
       id="board-ticket-overlay"
       onclick="toggleOverlay()"
     >
-      <div class="single-ticket" onclick="bubblingPrevention(event)">
-        <div class="overflow d-flex-column gap-24">
-          <div class="d-flex-spbe-center">
-            <div class="single-ticket-category font-c-white bg-category-blue">
-              User Story
-            </div>
-            <div
-              class="litte-button wh-24 d-flex-center"
-              onclick="toggleOverlay()"
-            >
-              <img src="../assets/img/png/close.png" alt="" />
-            </div>
-          </div>
+      <div id="single_task" class="single-ticket" onclick="bubblingPrevention(event)">
 
-          <h1>Kochwelt Page & Recipe Recommender</h1>
-
-          <div class="font-s-20 font-c-black">
-            Build start page with recipe recommendation...
-          </div>
-
-          <div class="single-ticket-meta font-s-20">
-            Due date:
-            <div class="font-c-black">10/05/2023</div>
-          </div>
-
-          <div class="single-ticket-meta font-s-20">
-            Priority:
-            <img src="../assets/img/png/prio-low-text.png" alt="" />
-          </div>
-
-          <div class="w-100 d-flex-column gap-8 font-s-20">
-            Assigned To:
-
-            <div
-              class="single-ticket-lines d-flex-column gap-4 font-s-19 font-c-black"
-            >
-              <div class="single-ticket-assignee">
-                <span
-                  class="assignee font-c-white wh-42 d-flex-center bg-255-122-0"
-                  >EM</span
-                >
-                Alex Kaljuzhin
-              </div>
-
-              <div class="single-ticket-assignee">
-                <span
-                  class="assignee font-c-white wh-42 d-flex-center bg-31-215-193"
-                  >LS</span
-                >
-                Lars Schumacher
-              </div>
-
-              <div class="single-ticket-assignee">
-                <span
-                  class="assignee font-c-white wh-42 d-flex-center bg-70-47-138"
-                  >SR</span
-                >
-                Susanne Renken
-              </div>
-            </div>
-          </div>
-
-          <div class="w-100 d-flex-column gap-8 font-s-20">
-            Subtasks:
-
-            <div
-              class="single-ticket-lines d-flex-column gap-4 font-s-16 font-c-black"
-            >
-              <div class="single-ticket-subtasks">
-                <img
-                  onclick="toggleCheckButton('todo_1_subtask_1', 'button')"
-                  id="todo_1_subtask_1"
-                  class="litte-button"
-                  src="/assets/img/png/check-button-false.png"
-                  alt=""
-                />
-                Implement Recipe Recommendatio
-              </div>
-
-              <div class="single-ticket-subtasks">
-                <img
-                  onclick="toggleCheckButton('todo_1_subtask_2', 'button')"
-                  id="todo_1_subtask_2"
-                  class="litte-button"
-                  src="/assets/img/png/check-button-false.png"
-                  alt=""
-                />
-                Start Page Layout
-              </div>
-            </div>
-          </div>
-
-          <div class="single-ticket-edit">
-            <div class="delete cursor-p">
-              <img
-                class="img-delete"
-                src="../assets/img/png/delete-default.png"
-                alt=""
-              />
-            </div>
-
-            <div class="dividing-line"></div>
-
-            <div class="edit cursor-p">
-              <img
-                class="img-edit"
-                src="../assets/img/png/edit-default.png"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
+        
       </div>
     </section>
   </body>

@@ -1,16 +1,41 @@
-function toggleOverlay() {
-  let refOverlay = document.getElementById("board-ticket-overlay");
-  refOverlay.classList.toggle("d-none");
+let currentDraggedElement;
 
-  if (!refOverlay.classList.contains("d-none")) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+function startDragging(id) {
+  currentDraggedElement = id;
 }
 
-function bubblingPrevention(event) {
-  event.stopPropagation();
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function hightlight(status) {
+  document
+    .getElementById(`kanban_${status}`)
+    .classList.add("kanban-tickets-highlight");
+}
+
+function removeHightlight(status) {
+  document
+    .getElementById(`kanban_${status}`)
+    .classList.remove("kanban-tickets-highlight");
+}
+
+async function moveTo(status) {
+  let tasks = await fetchData("tasks");
+  let movedTask = tasks.find((task) => task.id === currentDraggedElement);
+  movedTask.status = status;
+  await postUpdateTask(movedTask);
+  removeHightlight(status);
+  updateTasksOnBoard();
+}
+
+async function postUpdateTask(task) {
+  try {
+    const updatedTask = await postData(`tasks/${task.id - 1}`, task);
+    return updatedTask;
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren des Tasks:", error);
+  }
 }
 
 async function updateTasksOnBoard() {
@@ -40,8 +65,6 @@ async function filterUserTasks() {
   const allTasks = await fetchData("tasks");
 
   const tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
-  console.log("User Tasks:", userTasks);
-  console.log("Tasks to render:", tasksToRender);
   return tasksToRender;
 }
 
@@ -62,6 +85,7 @@ function renderStatusArea(status, tasks, contacts) {
 function renderStatusTasks(tasks, area, contacts) {
   tasks.forEach((task) => {
     let shortDescription = shortenDescription(task.description);
+    let categoryColor = task.category.replace(/\s+/g, "").toLowerCase();
     let sumAllSubtasks = task.subtasks.length;
     let sumDoneSubtasks = task.subtasks.filter(
       (subtask) => subtask.done
@@ -72,7 +96,7 @@ function renderStatusTasks(tasks, area, contacts) {
       task.title,
       shortDescription,
       task.category,
-      task.status,
+      categoryColor,
       task.priority,
       sumAllSubtasks,
       sumDoneSubtasks
@@ -110,18 +134,18 @@ function displayAssigneesForTask(taskId, assigned, contacts) {
   assignedField.innerHTML = "";
 
   const maxDisplayed = 3;
-  
+
   assigned
-    .filter(contactId => contactId !== null)
+    .filter((contactId) => contactId !== null)
     .slice(0, maxDisplayed)
-    .forEach(contactId => renderAssignee(contactId, contacts, assignedField));
+    .forEach((contactId) => renderAssignee(contactId, contacts, assignedField));
 
   displayAdditionalAssigneesCount(assigned, maxDisplayed, assignedField);
 }
 
 function renderAssignee(contactId, contacts, assignedField) {
-  const contact = contacts.find(c => c.id === contactId);
-  
+  const contact = contacts.find((c) => c.id === contactId);
+
   if (contact) {
     assignedField.innerHTML += `
       <span class="assignee font-c-white mar-r-8 wh-32 d-flex-center" 
@@ -133,7 +157,11 @@ function renderAssignee(contactId, contacts, assignedField) {
   }
 }
 
-function displayAdditionalAssigneesCount(assigned, maxDisplayed, assignedField) {
+function displayAdditionalAssigneesCount(
+  assigned,
+  maxDisplayed,
+  assignedField
+) {
   if (assigned.length > maxDisplayed) {
     const remainingCount = assigned.length - maxDisplayed;
     assignedField.innerHTML += `
