@@ -1,13 +1,13 @@
 let urgentButton = document.getElementById("urgent_span");
-let urgentSvg1Ref = document.getElementById("urgent_svg1");
-let urgentSvg2Ref = document.getElementById("urgent_svg2");
+let urgentColoredRef = document.getElementById("prio_urgent_colored");
+let urgentWhiteRef = document.getElementById("prio_urgent_white");
 let mediumButton = document.getElementById("medium_span");
-let mediumSVG1Ref = document.getElementById("medium_svg1");
-let mediumSVG2Ref = document.getElementById("medium_svg2");
+let mediumColoredRef = document.getElementById("prio_medium_colored");
+let mediumWhiteRef = document.getElementById("prio_medium_white");
 let lowButton = document.getElementById("low_span");
-let lowSVG1Ref = document.getElementById("low_svg1");
-let lowSVG2Ref = document.getElementById("low_svg2");
-let selectedButton = null;
+let lowColoredRef = document.getElementById("prio_low_colored");
+let lowWhiteRef = document.getElementById("prio_low_white");
+let selectedButton = "medium";
 
 function selectUrgent() {
   resetSelection();
@@ -43,43 +43,43 @@ function resetSelection() {
 function setUrgentSelected() {
   urgentButton.classList.remove("urgent-button");
   urgentButton.classList.add("clicked-urgent");
-  urgentSvg1Ref.setAttribute("fill", "#ffffff");
-  urgentSvg2Ref.setAttribute("fill", "#ffffff");
+  urgentColoredRef.classList.add("d-none");
+  urgentWhiteRef.classList.remove("d-none");
 }
 
 function setMediumSelected() {
   mediumButton.classList.remove("medium-button");
   mediumButton.classList.add("clicked-medium");
-  mediumSVG1Ref.setAttribute("fill", "#ffffff");
-  mediumSVG2Ref.setAttribute("fill", "#ffffff");
+  mediumColoredRef.classList.add("d-none");
+  mediumWhiteRef.classList.remove("d-none");
 }
 
 function setLowSelected() {
   lowButton.classList.remove("low-button");
   lowButton.classList.add("clicked-low");
-  lowSVG1Ref.setAttribute("fill", "#ffffff");
-  lowSVG2Ref.setAttribute("fill", "#ffffff");
+  lowColoredRef.classList.add("d-none");
+  lowWhiteRef.classList.remove("d-none");
 }
 
 function resetUrgent() {
   urgentButton.classList.remove("clicked-urgent");
   urgentButton.classList.add("urgent-button");
-  urgentSvg1Ref.setAttribute("fill", "#FF3D00");
-  urgentSvg2Ref.setAttribute("fill", "#FF3D00");
+  urgentColoredRef.classList.remove("d-none");
+  urgentWhiteRef.classList.add("d-none");
 }
 
 function resetMedium() {
   mediumButton.classList.remove("clicked-medium");
   mediumButton.classList.add("medium-button");
-  mediumSVG1Ref.setAttribute("fill", "#FFA800");
-  mediumSVG2Ref.setAttribute("fill", "#FFA800");
+  mediumColoredRef.classList.remove("d-none");
+  mediumWhiteRef.classList.add("d-none");
 }
 
 function resetLow() {
   lowButton.classList.remove("clicked-low");
   lowButton.classList.add("low-button");
-  lowSVG1Ref.setAttribute("fill", "#7AE229");
-  lowSVG2Ref.setAttribute("fill", "#7AE229");
+  lowColoredRef.classList.remove("d-none");
+  lowWhiteRef.classList.add("d-none");
 }
 
 urgentButton.addEventListener("click", selectUrgent);

@@ -1,6 +1,6 @@
 let selectedContacts = [];
 let userId = [];
-let selectedPrio = "low";
+let selectedPrio = "medium";
 let subTasks = [];
 
 // document.addEventListener("DOMContentLoaded", () => {
