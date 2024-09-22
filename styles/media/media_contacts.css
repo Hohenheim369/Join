@@ -1,0 +1,42 @@
+@media screen and (max-width: 1000px) {
+  .content {
+    padding: 110px 18px 70px 0px;
+    margin-left: clamp(180px, 3vw, 232px);
+  }
+}
+
+@media screen and (max-width: 777px) {
+  .content {
+    height: calc(100% - 160px);
+    width: 100%; /*muss weil keine sidebar mehr da ist links  */
+    margin: 80px 0px 192px;
+    padding: 0px 16px 0px;
+  }
+
+  .add-contact {
+    display: none;
+  }
+
+  #contact_info {
+    display: none;
+  }
+
+  .letter-box {
+    width: clamp(300px, 77vw, 352px);
+  }
+
+  .contacts {
+    width: clamp(300px, 77vw, 352px);
+  }
+
+  .contact-box {
+    width: clamp(312px, 100vw, 456px);
+    height: calc(100vh - 160px);
+    padding: 32px 0px;
+  }
+
+  .contact-seperator {
+    margin-left: clamp(0px, 77vw, 12px);
+    width: clamp(270px, 77vw, 352px);
+  }
+}
