@@ -4,7 +4,9 @@ let selectedPrio = "medium";
 let subTasks = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadTaskTemplate();
+  loadTaskTemplate().then(() => {
+    getContacts();
+  });
 });
 
 async function loadTaskTemplate() {
