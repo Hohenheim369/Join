@@ -59,7 +59,7 @@
   content: url(../assets/img/png/add-board-active.png);
 }
 
-.kanban-tickets {
+.kanban-tasks {
   height: calc(100vh - 360px);
   border: 1px solid transparent;
   border-radius: 10px;
@@ -67,7 +67,7 @@
   overflow-y: scroll;
 }
 
-.kanban-tickets-highlight {
+.kanban-tasks-highlight {
   background-color: rgb(239, 241, 243);
   border: 1px solid rgba(42, 54, 71, 0.1);
 }

@@ -11,13 +11,13 @@ function allowDrop(ev) {
 function hightlight(status) {
   document
     .getElementById(`kanban_${status}`)
-    .classList.add("kanban-tickets-highlight");
+    .classList.add("kanban-tasks-highlight");
 }
 
 function removeHightlight(status) {
   document
     .getElementById(`kanban_${status}`)
-    .classList.remove("kanban-tickets-highlight");
+    .classList.remove("kanban-tasks-highlight");
 }
 
 async function moveTo(status) {
