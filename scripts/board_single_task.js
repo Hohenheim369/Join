@@ -4,7 +4,8 @@ function bubblingPrevention(event) {
 
 async function openSingleTask(id) {
   let tasks = await fetchData("tasks");
-  let singleTask = tasks.find((task) => task.id === id);
+  let activeTasks = tasks.filter((taskId) => taskId !== null);
+  let singleTask = activeTasks.find((task) => task.id === id);
   let categoryColor = singleTask.category.replace(/\s+/g, "").toLowerCase();
   const contacts = await fetchData("contacts");
   console.log(singleTask);
@@ -45,12 +46,16 @@ function displaySingleAssinees(singleTask, contacts) {
   }
 
   let assinees = singleTask.assigned;
+  
   if (assinees) {
-    assinees.forEach((assinee) => {
-      assigneeField.innerHTML += generateSingleAssignee(assinee);
+    const activContacts = contacts.filter((contactId) => contactId !== null);
+    const tasksToContects = activContacts.filter((contact) => assinees.includes(contact.id));
+
+    tasksToContects.forEach((contact) => {
+      assigneeField.innerHTML += generateSingleAssignee(contact);
     });
   } else {
-    assigneeField.innerHTML = `<div class="single-task-subtasks">No assignee have been selected yet</div>`;
+    assigneeField.innerHTML = `<div class="single-task-subtasks font-s-16">No assignee have been selected yet.</div>`;
   }
 }
 

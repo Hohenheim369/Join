@@ -33,7 +33,8 @@ function removeHightlight(status) {
 
 async function moveTo(status) {
   let tasks = await fetchData("tasks");
-  let movedTask = tasks.find((task) => task.id === currentDraggedElement);
+  let activeTasks = tasks.filter((taskId) => taskId !== null);
+  let movedTask = activeTasks.find((task) => task.id === currentDraggedElement);
   movedTask.status = status;
   await postUpdatedTask(movedTask);
   removeHightlight(status);
