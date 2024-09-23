@@ -138,11 +138,14 @@ function highlightContact(contact) {
 }
 
 async function displayContactInfo(contactId) {
-  // Daten von Firebase abrufen
+  // Prüfen, ob die Bildschirmbreite kleiner oder gleich 777px ist
+  if (window.innerWidth <= 777) {
+    // Wenn ja, die mobile Funktion ausführen
+    return displayContactInfoMobile(contactId);
+  }
+  // Andernfalls die reguläre Logik ausführen
   const data = await fetchData("contacts");
-  // Finde den Kontakt mit der übergebenen ID
   const contacts = Object.values(data);
-  // Überprüfe den Typ von contactId und konvertiere es in eine Zahl, falls es ein String ist
   const numericContactId =
     typeof contactId === "string" ? parseInt(contactId) : contactId;
   const contact = contacts.find((c) => c && c.id === numericContactId);
@@ -153,6 +156,24 @@ async function displayContactInfo(contactId) {
     generateDeleteButtonDialog(contact); // Löschen-Button anzeigen
   highlightContact(contact); // Kontakt hervorheben
 }
+
+async function displayContactInfoMobile(contactId) {
+  // Daten von Firebase abrufen
+  document.getElementById('mobile_contact_info').classList.remove('d-none')
+  document.getElementById('mobile_contact_info').classList.add('pos-abs')
+  const data = await fetchData("contacts");
+  const contacts = Object.values(data);
+  const numericContactId =
+    typeof contactId === "string" ? parseInt(contactId) : contactId;
+  const contact = contacts.find((c) => c && c.id === numericContactId);
+  const contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
+  contactInfoDiv.innerHTML = ""; // Vorherigen Inhalt leeren
+  contactInfoDiv.innerHTML = generateContactInfo(contact); // Kontaktdetails anzeigen
+  document.getElementById("button_edit_dialog").innerHTML =
+    generateDeleteButtonDialog(contact); // Löschen-Button anzeigen
+  highlightContact(contact); // Kontakt hervorheben
+}
+
 
 async function deleteContact(contactId) {
   // Lösche den Kontakt von Firebase
