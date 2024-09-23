@@ -39,7 +39,7 @@ async function createTask() {
     assignedTo,
     categorySeleced
   );
-  // putTaskToUser();
+  putTaskToUser(taskId);
   openAddTaskDialog();
   await sleep(1500);
   window.location.href = "../html/board.html";
@@ -71,14 +71,14 @@ function putTasksContent(
     subtasks: getSubtasks(),
     assigned: assignedTo,
     status: "todo",
-    user: Number(userId),
+    user: activeUser.id,
   });
 }
 
-// function putTaskToUser(){
-//   //put to database
-//   //put to localstorage
-// }
+function putTaskToUser(taskId){
+  //put to database
+  //put to localstorage
+}
 
 async function getContacts() {
   document.getElementById("contact_contant").innerHTML = "";
