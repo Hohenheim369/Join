@@ -20,6 +20,8 @@
     <script src="../scripts/desktop_template.js"></script>
     <script src="../scripts/board_basic.js"></script>
     <script src="../scripts/board_single_task.js"></script>
+    <script src="../scripts/board_add_task.js"></script>
+    <script src="../assets/templates/task_form.html"></script>
     <script src="../scripts/board_template.js"></script>
   </head>
   <body onload="updateTasksOnBoard()">
@@ -40,7 +42,7 @@
             </button>
           </div>
 
-          <button>
+          <button onclick="openAddTask('todo')">
             Add Task
             <div class="wh-32 d-flex-center">
               <img src="../assets/img/png/add.png" alt="" />
@@ -56,6 +58,7 @@
           >
             To do
             <img
+              onclick="openAddTask('todo')"
               class="add-board-btn"
               src="../assets/img/png/add-board-default.png"
               alt=""
@@ -76,6 +79,7 @@
           >
             In progress
             <img
+              onclick="openAddTask('inprogress')"
               class="add-board-btn"
               src="../assets/img/png/add-board-default.png"
               alt=""
@@ -96,6 +100,7 @@
           >
             Await feedback
             <img
+              onclick="openAddTask('awaitfeedback')"
               class="add-board-btn"
               src="../assets/img/png/add-board-default.png"
               alt=""
@@ -130,7 +135,7 @@
 
     <section
       class="overlay d-flex-center d-none"
-      id="board-task-overlay"
+      id="board_task_overlay"
       onclick="toggleOverlay()"
     >
       <div
@@ -138,6 +143,19 @@
         class="single-task"
         onclick="bubblingPrevention(event)"
       ></div>
+    </section>
+    <section
+      class="overlay d-flex-center d-none"
+      id="board_addtask_overlay"
+      onclick="toggleOverlay()"
+    >
+      <div
+        id="add_task_board"
+        class="add-task-board"
+        onclick="bubblingPrevention(event)"
+      >
+        <div id="add_task_template"></div>
+      </div>
     </section>
   </body>
 </html>
