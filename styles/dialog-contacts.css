@@ -2,7 +2,7 @@
   font-family: "inter", Arial, sans-serif;
   z-index: 99;
   position: fixed;
-  width: 1212px;
+  width: clamp(900px, 69vw, 1212px);
   height: 592px;
   text-align: center;
   top: 50%;
@@ -22,7 +22,7 @@
   font-family: "inter", Arial, sans-serif;
   z-index: 99;
   position: fixed;
-  width: 1212px;
+  width: clamp(900px, 69vw, 1212px);
   height: 592px;
   text-align: center;
   top: 50%;
@@ -65,16 +65,18 @@
 }
 
 h2 {
-  font-size: 61px;
+  font-size: clamp(47px, 4vw, 61px);
   color: white;
   margin: 0px;
   padding: 0px;
+  text-align: justify;
 }
 
 .dialog-text {
   font-size: 27px;
   font-weight: 400;
   color: white;
+  text-align: left;
 }
 
 .dialo-text-seperator {
@@ -89,7 +91,7 @@ h2 {
 
 .unknown-user {
   margin-top: 204px;
-  margin-left: 83px;
+  margin-left: clamp(27px, 3vw, 83px);
   width: 120px;
   height: 120px;
 }
@@ -110,9 +112,9 @@ h2 {
   align-items: center;
 }
 
-.close-cross:hover{
+.close-cross:hover {
   cursor: pointer;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   border-radius: 15px;
 }
 
@@ -121,9 +123,10 @@ h2 {
 } */
 
 .dialog-content-right {
-  margin-left: 72px;
-    display: flex;
-    flex-direction: column;
+  margin-left: clamp(40px, 3vw, 72px);
+  margin-right: 18px;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-fields-contacts {
@@ -314,7 +317,7 @@ button {
   color: white;
   font-size: 47px;
   font-weight: 500;
-  margin-left: 83px;
+  margin-left: clamp(27px, 3vw, 83px);
   margin-top: 204px;
 }
 
@@ -334,4 +337,3 @@ button {
   font-family: "Poppins";
   color: #ff8190;
 }
-

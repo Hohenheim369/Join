@@ -64,7 +64,7 @@ span {
   color: #a8a8a8;
 }
 
-.arrow-back {
+/* .arrow-back {
   left: calc(100% - 139px);
   top: 225px;
   position: absolute;
@@ -73,7 +73,7 @@ span {
 
 .arrow-back:hover {
   cursor: pointer;
-}
+} */
 
 .headline {
   display: flex;

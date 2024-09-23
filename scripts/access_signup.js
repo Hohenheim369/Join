@@ -171,11 +171,7 @@ function getUserInitials(name) {
     return words[0].charAt(0).toUpperCase();
   }
 
-  if (words.length === 2) {
-    return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
-  }
-
-  if (words.length >= 3) {
+  if (words.length >= 2) {
     return (
       words[0].charAt(0) + words[words.length - 1].charAt(0)
     ).toUpperCase();

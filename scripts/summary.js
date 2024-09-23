@@ -49,13 +49,22 @@ function getGreetingMessage() {
 }
 
 async function displayTasks() {
-  tasks = await fetchData("tasks");
-  countToDo(tasks);
-  countDone(tasks);
-  countUrgent(tasks);
-  countTaskInBoard(tasks);
-  countTaskInProgress(tasks);
-  countTaskInFeedback(tasks);
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+
+  if (activeUser && activeUser.tasks) {
+    const taskIds = activeUser.tasks;
+
+    // Hole die spezifischen Tasks aus Firebase basierend auf den IDs im Local Storage
+    const tasks = await Promise.all(
+      taskIds.map(async (taskId) => await fetchData(`tasks/${taskId}`))
+    );
+    countToDo(tasks);
+    countDone(tasks);
+    countUrgent(tasks);
+    countTaskInBoard(tasks);
+    countTaskInProgress(tasks);
+    countTaskInFeedback(tasks);
+  }
 }
 
 function countToDo(tasks) {

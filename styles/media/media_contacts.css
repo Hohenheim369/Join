@@ -1,11 +1,111 @@
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1024px) {
   .content {
     padding: 0px;
-    margin-left: clamp(180px, 3vw, 232px);
+    margin-left: clamp(116px, 14vw, 232px);
+    width: calc(100% - 116px);
   }
 
-  .text-box{
+  .text-box {
     flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .text-seperator {
+    order: 1;
+    width: 90px;
+    height: 3px;
+  }
+
+  .contacts {
+    width: clamp(306px, 23vw, 352px);
+  }
+
+  .contact-seperator {
+    width: 242px;
+    margin: 8px 0px 8px 12px;
+  }
+
+  .contact-info {
+    font-size: clamp(12px, 5vw, 20px);
+  }
+
+  #dialog_contacts {
+    display: flex;
+    width: 396px;
+    height: 760px;
+    flex-direction: column;
+  }
+
+  .dialog-left {
+    width: 396px;
+    height: 352px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 0px;
+    padding: 66px 24px 66px 24px;
+  }
+
+  .logo-dialog {
+    display: none;
+  }
+
+  .dialog-text{
+    font-size: 20px;
+  }
+
+  .dialog-right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .unknown-user {
+    margin-top: -60px;
+    margin-left: 0px;
+  }
+
+  .input-fields-contacts {
+    margin-top: 23px;
+    width: 364px;
+    gap: 15px;
+  }
+
+  .dialog-content-right {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .input-name {
+    width: 364px;
+    height: 41px;
+  }
+
+  .input-email {
+    width: 364px;
+    height: 41px;
+  }
+
+  .input-phone {
+    width: 364px;
+    height: 41px;
+  }
+
+  .button-cancel {
+    display: none;
+  }
+
+  .button-contacts {
+    padding-top: 32px;
+    justify-content: center;
+  }
+  .close-cross {
+    top: 24px;
+    right: 16px;
+  }
+  .close-cross:hover {
+    background-color: rgb(41, 53, 71);
+  }
+
+  .close-cross:active {
+    background-color: rgb(41, 171, 227);
   }
 }
 
@@ -25,6 +125,10 @@
     display: none;
   }
 
+  #contact_list {
+    margin-left: 9px;
+  }
+
   .letter-box {
     width: clamp(300px, 77vw, 352px);
   }
@@ -34,9 +138,10 @@
   }
 
   .contact-box {
-    width: clamp(312px, 100vw, 456px);
+    width: 100%;
     height: calc(100vh - 160px);
     padding: 32px 0px;
+    align-items: flex-start;
   }
 
   .contact-seperator {

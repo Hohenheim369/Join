@@ -9,7 +9,7 @@ function loginAsGuest() {
   };
   localStorage.removeItem("rememberMeData");
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
-  window.location.href = "./html/board.html";
+  window.location.href = "./html/summary.html";
 }
 
 async function loadUserData(user) {

@@ -44,7 +44,7 @@ h3 {
 
 span {
   text-align: center;
-  font-size: clamp(11px, 3vw, 20px);
+  font-size: clamp(13px, 3vw, 20px);
   color: #2a3647;
 }
 
