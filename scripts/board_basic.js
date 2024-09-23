@@ -1,3 +1,14 @@
+function toggleOverlay(section) {
+  let refOverlay = document.getElementById(section);
+  refOverlay.classList.toggle("d-none");
+
+  if (!refOverlay.classList.contains("d-none")) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+}
+
 let currentDraggedElement;
 
 function startDragging(id) {
@@ -54,9 +65,10 @@ function cleanBoard(statuses) {
 async function renderTasksInStatusArea(statuses) {
   const tasksToRender = await filterUserTasks();
   const contacts = await fetchData("contacts");
+  const activContacts = contacts.filter((contactId) => contactId !== null);
 
   statuses.forEach((status) =>
-    renderStatusArea(status, tasksToRender, contacts)
+    renderStatusArea(status, tasksToRender, activContacts)
   );
 }
 
@@ -146,7 +158,17 @@ function displayAssigneesForTask(task, contacts) {
     .filter((contactId) => contactId !== null)
     .slice(0, maxDisplayed)
     .forEach((contactId) => renderAssignee(contactId, contacts, assignedField));
+  }
 
+  if(task.user === activeUser.id){
+    console.log(`Jetzt wir der User mit der Id ${activeUser.id} erstellt`);
+    assignedField.innerHTML += `
+      <span class="user mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${activeUser.color};">${activeUser.initials}
+      </span>`;
+  }
+  
+  if(task.assigned){
   displayAdditionalAssigneesCount(task.assigned, maxDisplayed, assignedField);
   }
 }
@@ -156,12 +178,9 @@ function renderAssignee(contactId, contacts, assignedField) {
 
   if (contact) {
     assignedField.innerHTML += `
-      <span class="assignee font-c-white mar-r-8 wh-32 d-flex-center" 
-            style="background-color: ${contact.color};">
-        ${contact.initials}
+      <span class="assignee font-s-12 font-c-white mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${contact.color};">${contact.initials}
       </span>`;
-  } else {
-    console.log(`Kontakt mit ID ${contactId} nicht gefunden.`);
   }
 }
 

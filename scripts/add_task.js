@@ -62,7 +62,7 @@ function putTasksContent(
     subtasks: subTasks,
     assigned: assignedTo,
     status: "todo",
-    user: userId,
+    user: userId, //Könnten wir hier "activeUser.id" schreiben, sodass kein Array hochgeladen wird? Es kann ja immer nur eine Id vorhanden sein.
   });
 }
 

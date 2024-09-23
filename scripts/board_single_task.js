@@ -3,7 +3,7 @@ function bubblingPrevention(event) {
 }
 
 async function openSingleTask(id) {
-  toggleOverlay();
+  toggleOverlay('board_task_overlay');
   let tasks = await fetchData("tasks");
   let singleTask = tasks.find((task) => task.id === id);
   let categoryColor = singleTask.category.replace(/\s+/g, "").toLowerCase();
@@ -23,13 +23,3 @@ async function openSingleTask(id) {
   );
 }
 
-function toggleOverlay() {
-  let refOverlay = document.getElementById("board_task_overlay");
-  refOverlay.classList.toggle("d-none");
-
-  if (!refOverlay.classList.contains("d-none")) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
-}

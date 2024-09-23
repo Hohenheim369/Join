@@ -6,7 +6,7 @@ function generateTasksOnBoard(
   categoryColor,
   prio
 ) {
-  return `<div
+  return `  <div
               id="task_${id}"
               draggable="true"
               ondragstart="startDragging(${id}, event)"
@@ -26,7 +26,7 @@ function generateTasksOnBoard(
                 <div id="subtasks_${id}" class="d-flex-spbe-center"></div>
 
                 <div class="d-flex-spbe-center">
-                    <div id="assignees_task_${id}" class="d-flex-center"></div>
+                  <div id="assignees_task_${id}" class="d-flex-center"></div>
                   <img src="../assets/img/png/prio-${prio}.png" />
                 </div>
               </div>
