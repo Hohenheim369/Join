@@ -53,9 +53,9 @@ async function validateEmail(email, noticeField) {
 }
 
 function checkNameNotEmpty(name, noticeField) {
-  if (name.trim() === "") {
+  if (name.trim().length < 3) {
     console.log("No name entered.");
-    noticeField.innerHTML += `<div>Please enter a name.</div>`;
+    noticeField.innerHTML += `<div>Please enter a name with at least 3 letters.</div>`;
     return false;
   }
   return true;
@@ -247,6 +247,7 @@ function resetSignupAlert() {
   noticeField.innerHTML = "";
 
   document.getElementById("signup_email").classList.remove("border-alert");
+  document.getElementById("signup_name").classList.remove("border-alert");
   document.getElementById("signup_password").classList.remove("border-alert");
   document.getElementById("signup_c_password").classList.remove("border-alert");
 }
@@ -282,5 +283,6 @@ async function signUpProcess() {
   await addUser(email, name, password, initials);
   resetSignupFormInputs();
   await showSuccessfullySignedUp();
+  localStorage.removeItem("rememberMeData");
   toggleAccessWindow();
 }

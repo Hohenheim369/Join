@@ -29,11 +29,11 @@
 }
 
 .magnifying-glass:hover {
-  content: url("../assets/img/png/magnifying-glass-hover.png");
+  content: url(../assets/img/png/magnifying-glass-hover.png);
 }
 
 .magnifying-glass:active {
-  content: url("../assets/img/png/magnifying-glass-active.png");
+  content: url(../assets/img/png/magnifying-glass-active.png);
 }
 
 .kanban-board {
@@ -52,11 +52,11 @@
 }
 
 .add-board-btn:hover {
-  content: url("../assets/img/png/add-board-hover.png");
+  content: url(../assets/img/png/add-board-hover.png);
 }
 
 .add-board-btn:active {
-  content: url("../assets/img/png/add-board-active.png");
+  content: url(../assets/img/png/add-board-active.png);
 }
 
 .kanban-tickets {
@@ -244,11 +244,11 @@
 }
 
 .img-delete:hover {
-  content: url("../assets/img/png/delete-hover.png");
+  content: url(../assets/img/png/delete-hover.png);
 }
 
 .img-edit:hover {
-  content: url("../assets/img/png/edit-hover.png");
+  content: url(../assets/img/png/edit-hover.png);
 }
 
 .d-none {
