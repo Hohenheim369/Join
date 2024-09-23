@@ -35,8 +35,10 @@ h1 {
   font-weight: 400;
   color: #a8a8a8;
 }
-
+/* 
 .arrow-back {
+  border-radius: 23px;
+  background-color: rgb(245, 246, 247);
   left: calc(100% - 139px);
   top: 225px;
   position: absolute;
@@ -45,7 +47,7 @@ h1 {
 
 .arrow-back:hover {
   cursor: pointer;
-}
+} */
 
 .headline {
   display: flex;

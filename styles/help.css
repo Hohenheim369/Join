@@ -73,12 +73,16 @@ tr {
   font-weight: 700;
 }
 
-.arrow-back {
+/* .arrow-back {
   left: calc(100% - 139px);
   top: 225px;
   position: absolute;
   width: 37px;
 }
+
+.arrow-back:hover {
+  cursor: pointer;
+} */
 
 .headline {
   display: flex;
@@ -86,6 +90,3 @@ tr {
   justify-content: space-between;
 }
 
-.arrow-back:hover {
-  cursor: pointer;
-}
