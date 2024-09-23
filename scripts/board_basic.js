@@ -74,9 +74,10 @@ async function renderTasksInStatusArea(statuses) {
 
 async function filterUserTasks() {
   let userTasks = activeUser.tasks;
-  const allTasks = await fetchData("tasks");
+  let allTasks = await fetchData("tasks");
+  let activAllTasks = allTasks.filter((tasks) => tasks !== null);
 
-  const tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
+  const tasksToRender = activAllTasks.filter((task) => userTasks.includes(task.id));
   return tasksToRender;
 }
 
@@ -156,7 +157,7 @@ function displayAssigneesForTask(task, contacts) {
 
   displayAssignees(task, contacts, assignedField, maxDisplayed);
   displayUser(task, assignedField);
-  displayAdditionalAssigneesCount(task, maxDisplayed);
+  displayCount(task, maxDisplayed);
 }
 
 function determineMaxDisplayed(task) {
@@ -197,12 +198,13 @@ function displayUser(task, assignedField) {
   }
 }
 
-function displayAdditionalAssigneesCount(task, maxDisplayed) {
+function displayCount(task, maxDisplayed) {
   if (task.assigned) {
     const assignedNumberField = document.getElementById(
       `assignees_number_${task.id}`
     );
     assignedNumberField.innerHTML = "";
+
     if (task.assigned.length > maxDisplayed) {
       const remainingCount = task.assigned.length - maxDisplayed;
       assignedNumberField.innerHTML += `

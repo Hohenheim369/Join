@@ -62,7 +62,7 @@ function generateSingleTasks(
               </div>
               <div
                 class="litte-button wh-24 d-flex-center"
-                onclick="toggleOverlay()"            >
+                onclick="toggleOverlay('board_task_overlay')"            >
                 <img src="../assets/img/png/close.png" alt="" />
               </div>
             </div>
@@ -99,20 +99,7 @@ function generateSingleTasks(
 
             <div class="w-100 d-flex-column gap-8 font-s-20">
               Subtasks:
-
-              <div class="single-task-lines d-flex-column gap-4 font-s-16 font-c-black">
-
-                <div class="single-task-subtasks">
-                  <img
-                    onclick="toggleCheckButton('todo_1_subtask_1', 'button')"
-                    id="todo_1_subtask_1"
-                    class="litte-button"
-                    src="/assets/img/png/check-button-false.png"
-                    alt=""/>
-                  Implement Recipe Recommendatio
-                </div>
-
-              </div>
+              <div id="single_subtask" class="single-task-lines d-flex-column gap-4 font-s-16 font-c-black"></div>
             </div>
 
             <div class="single-task-edit">
@@ -134,3 +121,19 @@ function generateSingleTasks(
             </div>
           </div>`;
 }
+
+
+
+function generateSingleSubtasks(subtask, id) {
+  return `
+          <div class="single-task-subtasks">
+            <img
+            onclick="toggleCheckButton('task_${id}_subtask_${subtask.subId}', 'button')"
+            id="task_${id}_subtask_${subtask.subId}"
+            class="litte-button"
+            src="/assets/img/png/check-button-${subtask.done}.png"
+            alt=""/>
+            ${subtask.subTaskName}
+          </div>`;
+}
+
