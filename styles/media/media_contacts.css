@@ -11,7 +11,8 @@
   }
 
   .text-seperator {
-    width: 59px;
+    order: 1;
+    width: 90px;
     height: 3px;
   }
 
