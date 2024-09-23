@@ -24,7 +24,7 @@ async function openSingleTask(id) {
 }
 
 function toggleOverlay() {
-  let refOverlay = document.getElementById("board-ticket-overlay");
+  let refOverlay = document.getElementById("board-task-overlay");
   refOverlay.classList.toggle("d-none");
 
   if (!refOverlay.classList.contains("d-none")) {

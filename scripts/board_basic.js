@@ -76,7 +76,7 @@ function renderStatusArea(status, tasks, contacts) {
 
   if (statusTasks == "") {
     statusArea.innerHTML =
-      '<div class="ticket-none d-flex-center">No tasks To do</div>';
+      '<div class="task-none d-flex-center">No tasks To do</div>';
   } else {
     renderStatusTasks(statusTasks, statusArea, contacts);
   }
@@ -116,14 +116,14 @@ function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
   const taskElement = document.getElementById(`task_${taskId}`);
   if (!taskElement) return;
 
-  const subtasksBar = taskElement.querySelector(".ticket-subtasks-bar");
+  const subtasksBar = taskElement.querySelector(".task-subtasks-bar");
   if (!subtasksBar) return;
 
   const percentage =
     sumAllSubtasks > 0 ? (sumDoneSubtasks / sumAllSubtasks) * 100 : 0;
   subtasksBar.style.setProperty("--progress", `${percentage}%`);
 
-  const subtasksText = taskElement.querySelector(".ticket-subtasks-text");
+  const subtasksText = taskElement.querySelector(".task-subtasks-text");
   if (subtasksText) {
     subtasksText.textContent = `${sumDoneSubtasks}/${sumAllSubtasks} Subtasks`;
   }
