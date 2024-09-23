@@ -86,7 +86,7 @@ function generateSingleTasks(
             <div class="w-100 d-flex-column gap-8 font-s-20">
               Assigned To:
 
-              <div class="single-task-lines d-flex-column gap-4 font-s-19 font-c-black">
+              <div id="single_assignee" class="single-task-lines d-flex-column gap-4 font-s-19 font-c-black">
 
                 <div class="single-task-assignee">
                   <span

@@ -30,12 +30,23 @@ function displaySingleTask(singleTask, categoryColor){
   );
 }
 
+// function displaySingleAssinees(assinees){
+//   let assigneeField = document.getElementById("single_assignee");
+//   assigneeField.innerHTML = "";
+
+//   if (assinees) {
+//     assinees.forEach((assinee) => {
+//       assigneeField.innerHTML += generateSingleAssignee(assinee);
+//     });
+//   } else {
+//     assigneeField.innerHTML = `<div class="single-task-subtasks">No assignee have been selected yet</div>`;
+//   }
+// }
+
 function displaySingleSubtasks(subtasks, id) {
-  console.log(subtasks);
   let subtaskField = document.getElementById("single_subtask");
   subtaskField.innerHTML = "";
 
-  
   if (subtasks) {
     subtasks.forEach((subtask) => {
       subtaskField.innerHTML += generateSingleSubtasks(subtask, id);
