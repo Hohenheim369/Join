@@ -62,7 +62,7 @@ function putTasksContent(
     subtasks: subTasks,
     assigned: assignedTo,
     status: "todo",
-    user: userId,
+    user: Number(userId),
   });
 }
 
@@ -73,7 +73,6 @@ async function getContacts() {
   );
   let contacts = await response.json();
   window.allContacts = contacts;
-  contacts.sort((a, b) => a.name.localeCompare(b.name));
   displayContacts(contacts);
 }
 
@@ -81,7 +80,9 @@ function displayContacts(contacts) {
   document.getElementById("contact_contant").innerHTML = "";
   const userHtml = showAssignedUser(activeUser);
   document.getElementById("contact_contant").innerHTML = userHtml;
-  for (let contact of contacts) {
+  let renderContacts = contacts.filter((contactId) => contactId !== null)
+  renderContacts.sort((a, b) => a.name.localeCompare(b.name));
+  for (let contact of renderContacts) {
     const contactHtml = showAssignedContactList(contact);
     document.getElementById("contact_contant").innerHTML += contactHtml;
   }
@@ -115,14 +116,14 @@ function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
 
 function addContactAssigned(contactId) {
   if (!selectedContacts.some((contact) => contact.contactId === contactId)) {
-    selectedContacts.push(Number(contactId));
+    selectedContacts.push(contactId);
     updateSelectedContactsDisplay(contactId);
   }
 }
 
 function addUserAssigned(activUserId) {
   if (!userId.some((user) => user.activUserId === activUserId)) {
-    userId.push(Number(activUserId));
+    userId.push(activUserId);
     updateSelectedUserDisplay();
   }
 }

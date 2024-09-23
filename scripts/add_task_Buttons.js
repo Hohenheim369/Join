@@ -33,7 +33,6 @@ function clearButton() {
 }
 
 function openSelect() {
-  getContacts();
   if ((onclick = true)) {
     document.getElementById("assigned_inactiv").classList.add("d-none");
     document.getElementById("assigned_activ").classList.remove("d-none");
