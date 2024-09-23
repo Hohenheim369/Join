@@ -332,14 +332,17 @@ function sleep(ms) {
 
 // Funktion, um das cross im dialog, beim responsiv zu ändern
 function updateCrossImage() {
-  const imgElement = document.querySelector('.cross');
+  const imgElements = document.querySelectorAll('.cross');
 
-  // Überprüfen der Fensterbreite
-  if (window.innerWidth < 1024) {
-    imgElement.src = '../assets/img/png/close-white.png'; // Kleineres Bild
-  } else {
-    imgElement.src = '../assets/img/png/close.png'; // Größeres Bild
-  }
+  // Über alle Bild-Elemente mit der Klasse 'cross' iterieren
+  imgElements.forEach((imgElement) => {
+    // Überprüfen der Fensterbreite
+    if (window.innerWidth < 1024) {
+      imgElement.src = '../assets/img/png/close-white.png'; // Kleineres Bild
+    } else {
+      imgElement.src = '../assets/img/png/close.png'; // Größeres Bild
+    }
+  });
 }
 
 // Initiale Ausführung beim Laden der Seite

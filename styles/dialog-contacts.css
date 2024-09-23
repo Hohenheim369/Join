@@ -261,6 +261,7 @@ button {
 }
 
 .button-delete-save {
+  padding-top: 48px;
   display: flex;
   width: 249px;
   height: 57px;

@@ -36,6 +36,13 @@
     flex-direction: column;
   }
 
+  #dialog_edit {
+    display: flex;
+    width: 396px;
+    height: 760px;
+    flex-direction: column;
+  }
+
   .dialog-left {
     width: 396px;
     height: 352px;
@@ -62,6 +69,12 @@
     margin-left: 0px;
   }
 
+  .edit-big-letter-circle{
+    margin-top: -60px;
+    margin-left: 0px;
+    border: 3px solid white;
+  }
+
   .input-fields-contacts {
     margin-top: 23px;
     width: 364px;
@@ -76,16 +89,19 @@
   .input-name {
     width: 364px;
     height: 41px;
+    background-position: 330px 12px;
   }
 
   .input-email {
     width: 364px;
     height: 41px;
+    background-position: 330px 12px;
   }
 
   .input-phone {
     width: 364px;
     height: 41px;
+    background-position: 330px 12px;
   }
 
   .button-cancel {
@@ -106,6 +122,19 @@
 
   .close-cross:active {
     background-color: rgb(41, 171, 227);
+  }
+
+  .button-delete-save{
+    width: unset;
+    height: 51px;
+    padding-top: 32px;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .button-delete {
+    width: 82px;
+    padding: 18px 10px;
   }
 }
 
