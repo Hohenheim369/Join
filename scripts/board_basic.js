@@ -151,25 +151,22 @@ function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
 function displayAssigneesForTask(task, contacts) {
   const assignedField = document.getElementById(`assignees_task_${task.id}`);
   assignedField.innerHTML = "";
-
   const maxDisplayed = 3;
+  
+  displayAssignees(task, contacts, assignedField, maxDisplayed);
+  displayUser(task, assignedField);
+  
+  if(task.assigned){
+  displayAdditionalAssigneesCount(task.assigned, maxDisplayed, assignedField);
+  }
+}
+
+function displayAssignees(task, contacts, assignedField, maxDisplayed){
   if(task.assigned){
     task.assigned
     .filter((contactId) => contactId !== null)
     .slice(0, maxDisplayed)
     .forEach((contactId) => renderAssignee(contactId, contacts, assignedField));
-  }
-
-  if(task.user === activeUser.id){
-    console.log(`Jetzt wir der User mit der Id ${activeUser.id} erstellt`);
-    assignedField.innerHTML += `
-      <span class="user mar-r-8 wh-32 d-flex-center" 
-            style="background-color: ${activeUser.color};">${activeUser.initials}
-      </span>`;
-  }
-  
-  if(task.assigned){
-  displayAdditionalAssigneesCount(task.assigned, maxDisplayed, assignedField);
   }
 }
 
@@ -180,6 +177,15 @@ function renderAssignee(contactId, contacts, assignedField) {
     assignedField.innerHTML += `
       <span class="assignee font-s-12 font-c-white mar-r-8 wh-32 d-flex-center" 
             style="background-color: ${contact.color};">${contact.initials}
+      </span>`;
+  }
+}
+
+function displayUser(task, assignedField){
+  if(task.user === activeUser.id){
+    assignedField.innerHTML += `
+      <span class="user mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${activeUser.color};">${activeUser.initials}
       </span>`;
   }
 }
