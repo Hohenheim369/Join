@@ -3,14 +3,33 @@ let userId = [];
 let selectedPrio = "medium";
 let subTasks = [];
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   loadTaskTemplate();
-// });
-// async function loadTaskTemplate() {
-//   const response = await fetch("../assets/templates/task_form.html");
-//   const data = await response.text();
-//   document.getElementById("add_task_template").innerHTML = data;
+document.addEventListener("DOMContentLoaded", () => {
+  loadTaskTemplate();
+  // initTasks();
+});
+
+async function loadTaskTemplate() {
+  const response = await fetch("../assets/templates/task_form.html")
+  const data = await response.text();
+  document.getElementById("add_task_template").innerHTML = data;
+}
+
+// function loadTaskTemplate() {
+//   return new Promise((resolve) => {
+//     fetch("../assets/templates/task_form.html")
+//       .then(response => response.text())
+//       .then(html => {
+//         document.getElementById("add_task_template").innerHTML = html;
+//         resolve();
+//       });
+//   });
 // }
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   loadTaskTemplate().then(() => {
+//     initTasks();
+//   });
+// });
 
 async function openAddTaskDialog() {
   document.getElementById("task_added_overlay").innerHTML = taskAddedToBoard();

@@ -1,96 +1,39 @@
-let urgentButton = document.getElementById("urgent_span");
-let urgentColoredRef = document.getElementById("prio_urgent_colored");
-let urgentWhiteRef = document.getElementById("prio_urgent_white");
-let mediumButton = document.getElementById("medium_span");
-let mediumColoredRef = document.getElementById("prio_medium_colored");
-let mediumWhiteRef = document.getElementById("prio_medium_white");
-let lowButton = document.getElementById("low_span");
-let lowColoredRef = document.getElementById("prio_low_colored");
-let lowWhiteRef = document.getElementById("prio_low_white");
 let selectedButton = "medium";
 
-function selectUrgent() {
-  resetSelection();
-  setUrgentSelected();
-  selectedButton = "urgent";
+function selectPrio(priority) {
+  const prios = ["low", "medium", "urgent"];
+  prios.forEach((prio)=>  resetPrio(prio));
+  setPrio(priority);
+  selectedButton = priority;
   handleSelectedPriority(selectedButton);
 }
 
-function selectMedium() {
-  resetSelection();
-  setMediumSelected();
-  selectedButton = "medium";
-  handleSelectedPriority(selectedButton);
+function resetPrio(prio){
+  let prioButton = document.getElementById(`${prio}_span`);
+  let prioColoredRef = document.getElementById(`prio_${prio}_colored`);
+  let prioWhiteRef = document.getElementById(`prio_${prio}_white`);
+  prioButton.classList.remove(`clicked-${prio}`);
+  prioButton.classList.add(`${prio}-button`);
+  prioColoredRef.classList.remove("d-none");
+  prioWhiteRef.classList.add("d-none");
 }
 
-function selectLow() {
-  resetSelection();
-  setLowSelected();
-  selectedButton = "low";
-  handleSelectedPriority(selectedButton);
+function setPrio(priority){
+  let prioButton = document.getElementById(`${priority}_span`);
+  let prioColoredRef = document.getElementById(`prio_${priority}_colored`);
+  let prioWhiteRef = document.getElementById(`prio_${priority}_white`);
+  prioButton.classList.remove(`${priority}-button`);
+  prioButton.classList.add(`clicked-${priority}`);
+  prioColoredRef.classList.add("d-none");
+  prioWhiteRef.classList.remove("d-none");
 }
-
-function resetSelection() {
-  if (selectedButton === "urgent") {
-    resetUrgent();
-  } else if (selectedButton === "medium") {
-    resetMedium();
-  } else if (selectedButton === "low") {
-    resetLow();
-  }
-}
-
-function setUrgentSelected() {
-  urgentButton.classList.remove("urgent-button");
-  urgentButton.classList.add("clicked-urgent");
-  urgentColoredRef.classList.add("d-none");
-  urgentWhiteRef.classList.remove("d-none");
-}
-
-function setMediumSelected() {
-  mediumButton.classList.remove("medium-button");
-  mediumButton.classList.add("clicked-medium");
-  mediumColoredRef.classList.add("d-none");
-  mediumWhiteRef.classList.remove("d-none");
-}
-
-function setLowSelected() {
-  lowButton.classList.remove("low-button");
-  lowButton.classList.add("clicked-low");
-  lowColoredRef.classList.add("d-none");
-  lowWhiteRef.classList.remove("d-none");
-}
-
-function resetUrgent() {
-  urgentButton.classList.remove("clicked-urgent");
-  urgentButton.classList.add("urgent-button");
-  urgentColoredRef.classList.remove("d-none");
-  urgentWhiteRef.classList.add("d-none");
-}
-
-function resetMedium() {
-  mediumButton.classList.remove("clicked-medium");
-  mediumButton.classList.add("medium-button");
-  mediumColoredRef.classList.remove("d-none");
-  mediumWhiteRef.classList.add("d-none");
-}
-
-function resetLow() {
-  lowButton.classList.remove("clicked-low");
-  lowButton.classList.add("low-button");
-  lowColoredRef.classList.remove("d-none");
-  lowWhiteRef.classList.add("d-none");
-}
-
-urgentButton.addEventListener("click", selectUrgent);
-mediumButton.addEventListener("click", selectMedium);
-lowButton.addEventListener("click", selectLow);
 
 function clearButton() {
   location.reload();
 }
 
 function openSelect() {
+  getContacts();
   if ((onclick = true)) {
     document.getElementById("assigned_inactiv").classList.add("d-none");
     document.getElementById("assigned_activ").classList.remove("d-none");
@@ -170,25 +113,30 @@ function toggleSubtasksImgs(id) {
 }
 
 function enableButton() {
-  let input = document.getElementById('title_input');
-  let date = document.getElementById('due_date');
-  let category = document.getElementById('category').innerText;
-  let createButton = document.getElementById('create_button');
-  if (input.value.trim() !== '' && date.value.trim() !== '' && 
-      (category === "Technical Task" || category === "User Story")) {
-      createButton.disabled = false;
-      resetrequiredFields();
+  let input = document.getElementById("title_input");
+  let date = document.getElementById("due_date");
+  let category = document.getElementById("category").innerText;
+  let createButton = document.getElementById("create_button");
+  if (
+    input.value.trim() !== "" &&
+    date.value.trim() !== "" &&
+    (category === "Technical Task" || category === "User Story")
+  ) {
+    createButton.disabled = false;
+    resetrequiredFields();
   } else {
-      createButton.disabled = true;
-      requiredFields();
+    createButton.disabled = true;
+    requiredFields();
   }
 }
 
-document.getElementById('title_input').addEventListener('input', enableButton);
-document.getElementById('due_date').addEventListener('input', enableButton);
-document.getElementById('category_task_contant').addEventListener("click",enableButton)
-document.getElementById('create_button').addEventListener('click', function() {
-  let createButton = document.getElementById('create_button');
+document.getElementById("title_input").addEventListener("input", enableButton);
+document.getElementById("due_date").addEventListener("input", enableButton);
+document
+  .getElementById("category_task_contant")
+  .addEventListener("click", enableButton);
+document.getElementById("create_button").addEventListener("click", function () {
+  let createButton = document.getElementById("create_button");
   if (!createButton.disabled) {
     createTask();
   }
