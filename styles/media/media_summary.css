@@ -18,7 +18,7 @@
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1024px) {
   .content {
     padding: 110px 18px 70px 0px;
     margin-left: clamp(180px, 3vw, 232px);
