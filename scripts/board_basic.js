@@ -96,7 +96,7 @@ function renderStatusTasks(tasks, area, contacts) {
       task.priority
     );
     displaySubtasks(task);
-    displayAssigneesForTask(task.id, task.assigned, contacts);
+    displayAssigneesForTask(task, contacts);
   });
 }
 
@@ -109,17 +109,19 @@ function shortenDescription(description) {
 function displaySubtasks(task) {
   let subtaskArea = document.getElementById(`subtasks_${task.id}`);
   subtaskArea.innerHTML = "";
-  subtaskArea.classList.add('d-none');
+  subtaskArea.classList.add("d-none");
 
-  addSubtasks(subtaskArea, task)
+  addSubtasks(subtaskArea, task);
 }
 
-function addSubtasks(subtaskArea, task){
+function addSubtasks(subtaskArea, task) {
   if (task.subtasks || Array.isArray(task.subtasks)) {
-    subtaskArea.classList.remove('d-none');
+    subtaskArea.classList.remove("d-none");
     let sumAllSubtasks = task.subtasks.length;
-    let sumDoneSubtasks = task.subtasks.filter((subtask) => subtask.done).length;
-    
+    let sumDoneSubtasks = task.subtasks.filter(
+      (subtask) => subtask.done
+    ).length;
+
     subtaskArea.innerHTML = generateSubtasks(sumDoneSubtasks, sumAllSubtasks);
 
     updateSubtasksBar(task.id, sumDoneSubtasks, sumAllSubtasks);
@@ -130,22 +132,23 @@ function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
   const taskElement = document.getElementById(`task_${taskId}`);
   const subtasksBar = taskElement.querySelector(".task-subtasks-bar");
 
-  const percentage =(sumDoneSubtasks / sumAllSubtasks) * 100;
+  const percentage = (sumDoneSubtasks / sumAllSubtasks) * 100;
   subtasksBar.style.setProperty("--progress", `${percentage}%`);
 }
 
-function displayAssigneesForTask(taskId, assigned, contacts) {
-  const assignedField = document.getElementById(`assignees_task_${taskId}`);
+function displayAssigneesForTask(task, contacts) {
+  const assignedField = document.getElementById(`assignees_task_${task.id}`);
   assignedField.innerHTML = "";
 
   const maxDisplayed = 3;
-
-  assigned
+  if(task.assigned){
+    task.assigned
     .filter((contactId) => contactId !== null)
     .slice(0, maxDisplayed)
     .forEach((contactId) => renderAssignee(contactId, contacts, assignedField));
 
-  displayAdditionalAssigneesCount(assigned, maxDisplayed, assignedField);
+  displayAdditionalAssigneesCount(task.assigned, maxDisplayed, assignedField);
+  }
 }
 
 function renderAssignee(contactId, contacts, assignedField) {

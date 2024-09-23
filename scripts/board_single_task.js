@@ -19,7 +19,7 @@ async function openSingleTask(id) {
     singleTask.category,
     categoryColor,
     singleTask.date,
-    singleTask.priority,
+    singleTask.priority
   );
 }
 

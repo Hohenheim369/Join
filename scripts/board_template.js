@@ -4,9 +4,7 @@ function generateTasksOnBoard(
   shortDescription,
   category,
   categoryColor,
-  prio,
-  sumAllSubtasks,
-  sumDoneSubtasks
+  prio
 ) {
   return `<div
               id="task_${id}"
@@ -36,7 +34,7 @@ function generateTasksOnBoard(
           `;
 }
 
-function generateSubtasks(sumDoneSubtasks, sumAllSubtasks){
+function generateSubtasks(sumDoneSubtasks, sumAllSubtasks) {
   return `
       <div class="task-subtasks-bar"></div>
       <span class="task-subtasks-text font-c-black"
