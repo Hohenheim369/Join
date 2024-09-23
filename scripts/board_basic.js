@@ -24,12 +24,12 @@ async function moveTo(status) {
   let tasks = await fetchData("tasks");
   let movedTask = tasks.find((task) => task.id === currentDraggedElement);
   movedTask.status = status;
-  await postUpdateTask(movedTask);
+  await postUpdatedTask(movedTask);
   removeHightlight(status);
   updateTasksOnBoard();
 }
 
-async function postUpdateTask(task) {
+async function postUpdatedTask(task) {
   try {
     const updatedTask = await postData(`tasks/${task.id - 1}`, task);
     return updatedTask;
@@ -86,10 +86,6 @@ function renderStatusTasks(tasks, area, contacts) {
   tasks.forEach((task) => {
     let shortDescription = shortenDescription(task.description);
     let categoryColor = task.category.replace(/\s+/g, "").toLowerCase();
-    let sumAllSubtasks = task.subtasks.length;
-    let sumDoneSubtasks = task.subtasks.filter(
-      (subtask) => subtask.done
-    ).length;
 
     area.innerHTML += generateTasksOnBoard(
       task.id,
@@ -97,11 +93,9 @@ function renderStatusTasks(tasks, area, contacts) {
       shortDescription,
       task.category,
       categoryColor,
-      task.priority,
-      sumAllSubtasks,
-      sumDoneSubtasks
+      task.priority
     );
-    updateSubtasksBar(task.id, sumDoneSubtasks, sumAllSubtasks);
+    displaySubtasks(task);
     displayAssigneesForTask(task.id, task.assigned, contacts);
   });
 }
@@ -112,21 +106,32 @@ function shortenDescription(description) {
   return words.slice(0, 6).join(" ") + "...";
 }
 
+function displaySubtasks(task) {
+  let subtaskArea = document.getElementById(`subtasks_${task.id}`);
+  subtaskArea.innerHTML = "";
+  subtaskArea.classList.add('d-none');
+
+  addSubtasks(subtaskArea, task)
+}
+
+function addSubtasks(subtaskArea, task){
+  if (task.subtasks || Array.isArray(task.subtasks)) {
+    subtaskArea.classList.remove('d-none');
+    let sumAllSubtasks = task.subtasks.length;
+    let sumDoneSubtasks = task.subtasks.filter((subtask) => subtask.done).length;
+    
+    subtaskArea.innerHTML = generateSubtasks(sumDoneSubtasks, sumAllSubtasks);
+
+    updateSubtasksBar(task.id, sumDoneSubtasks, sumAllSubtasks);
+  }
+}
+
 function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
   const taskElement = document.getElementById(`task_${taskId}`);
-  if (!taskElement) return;
-
   const subtasksBar = taskElement.querySelector(".task-subtasks-bar");
-  if (!subtasksBar) return;
 
-  const percentage =
-    sumAllSubtasks > 0 ? (sumDoneSubtasks / sumAllSubtasks) * 100 : 0;
+  const percentage =(sumDoneSubtasks / sumAllSubtasks) * 100;
   subtasksBar.style.setProperty("--progress", `${percentage}%`);
-
-  const subtasksText = taskElement.querySelector(".task-subtasks-text");
-  if (subtasksText) {
-    subtasksText.textContent = `${sumDoneSubtasks}/${sumAllSubtasks} Subtasks`;
-  }
 }
 
 function displayAssigneesForTask(taskId, assigned, contacts) {
