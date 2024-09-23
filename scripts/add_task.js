@@ -32,7 +32,7 @@ async function createTask() {
   let dueDate = document.getElementById("due_date").value;
   let categorySeleced = document.getElementById("category").innerText;
   let taskId = await getNewId("tasks");
-  let assignedTo = selectedContacts;
+  let assignedTo = selectedContacts.map(Number);
   putTasksContent(
     title,
     description,
@@ -79,7 +79,13 @@ function putTasksContent(
 
 function putTaskToUser(taskId){
   //put to database
-  //put to localstorage
+  postData(`users/${activeUser.id - 1}/tasks`, {
+    taskId
+  });
+    if (!activeUser.tasks.includes(taskId)) {
+        activeUser.tasks.push(taskId);
+    }
+    localStorage.setItem('activeUser', JSON.stringify(activeUser));
 }
 
 async function getContacts() {
