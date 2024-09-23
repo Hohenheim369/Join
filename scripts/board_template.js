@@ -122,7 +122,14 @@ function generateSingleTasks(
           </div>`;
 }
 
-
+function generateSingleAssignee(assinee){
+  return `
+          <div class="single-task-assignee">
+                  <span
+                    class="assignee font-c-white wh-42 d-flex-center" style="background-color: ${assinee.color};">${assinee.initials}</span>
+                    ${assinee.name}
+          </div>`;
+}
 
 function generateSingleSubtasks(subtask, id) {
   return `

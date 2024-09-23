@@ -82,7 +82,8 @@ async function loginAsUser() {
   const loginPassword = document.getElementById("login_password").value;
 
   const users = await fetchData('users');
-  const user = users.find(user => user.email.toLowerCase() === loginEmail.toLowerCase());
+  const activUsers = users.filter((usersId) => usersId !== null);
+  const user = activUsers.find(user => user.email.toLowerCase() === loginEmail.toLowerCase());
 
   resetLoginAlert();
 

@@ -7,15 +7,16 @@ async function openSingleTask(id) {
   let singleTask = tasks.find((task) => task.id === id);
   let categoryColor = singleTask.category.replace(/\s+/g, "").toLowerCase();
   const contacts = await fetchData("contacts");
+  console.log(singleTask);
 
   displaySingleTask(singleTask, categoryColor);
-  // displaySingleAssinees(singleTask.assinees);
+  displaySingleAssinees(singleTask, contacts);
   displaySingleSubtasks(singleTask.subtasks, id);
 
   toggleOverlay("board_task_overlay");
 }
 
-function displaySingleTask(singleTask, categoryColor){
+function displaySingleTask(singleTask, categoryColor) {
   let singleTaskArea = document.getElementById(`single_task`);
   singleTaskArea.innerHTML = "";
 
@@ -30,18 +31,28 @@ function displaySingleTask(singleTask, categoryColor){
   );
 }
 
-// function displaySingleAssinees(assinees){
-//   let assigneeField = document.getElementById("single_assignee");
-//   assigneeField.innerHTML = "";
+function displaySingleAssinees(singleTask, contacts) {
+  let assigneeField = document.getElementById("single_assignee");
+  assigneeField.innerHTML = "";
 
-//   if (assinees) {
-//     assinees.forEach((assinee) => {
-//       assigneeField.innerHTML += generateSingleAssignee(assinee);
-//     });
-//   } else {
-//     assigneeField.innerHTML = `<div class="single-task-subtasks">No assignee have been selected yet</div>`;
-//   }
-// }
+  if (singleTask.user === activeUser.id) {
+    assigneeField.innerHTML += `
+          <div class="single-task-assignee">
+                  <span
+                    class="user font-s-12 wh-42 d-flex-center" style="background-color: ${activeUser.color};">${activeUser.initials}</span>
+                    ${activeUser.name}
+          </div>`;
+  }
+
+  let assinees = singleTask.assigned;
+  if (assinees) {
+    assinees.forEach((assinee) => {
+      assigneeField.innerHTML += generateSingleAssignee(assinee);
+    });
+  } else {
+    assigneeField.innerHTML = `<div class="single-task-subtasks">No assignee have been selected yet</div>`;
+  }
+}
 
 function displaySingleSubtasks(subtasks, id) {
   let subtaskField = document.getElementById("single_subtask");
