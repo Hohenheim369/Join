@@ -151,22 +151,29 @@ function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
 function displayAssigneesForTask(task, contacts) {
   const assignedField = document.getElementById(`assignees_task_${task.id}`);
   assignedField.innerHTML = "";
-  const maxDisplayed = 3;
-  
+
+  let maxDisplayed = determineMaxDisplayed(task);
+
   displayAssignees(task, contacts, assignedField, maxDisplayed);
   displayUser(task, assignedField);
-  
-  if(task.assigned){
-  displayAdditionalAssigneesCount(task.assigned, maxDisplayed, assignedField);
-  }
+  displayAdditionalAssigneesCount(task, maxDisplayed);
 }
 
-function displayAssignees(task, contacts, assignedField, maxDisplayed){
-  if(task.assigned){
+function determineMaxDisplayed(task) {
+  if (task.user === activeUser.id) {
+    return 2;
+  }
+  return 3;
+}
+
+function displayAssignees(task, contacts, assignedField, maxDisplayed) {
+  if (task.assigned) {
     task.assigned
-    .filter((contactId) => contactId !== null)
-    .slice(0, maxDisplayed)
-    .forEach((contactId) => renderAssignee(contactId, contacts, assignedField));
+      .filter((contactId) => contactId !== null)
+      .slice(0, maxDisplayed)
+      .forEach((contactId) =>
+        renderAssignee(contactId, contacts, assignedField)
+      );
   }
 }
 
@@ -181,25 +188,27 @@ function renderAssignee(contactId, contacts, assignedField) {
   }
 }
 
-function displayUser(task, assignedField){
-  if(task.user === activeUser.id){
+function displayUser(task, assignedField) {
+  if (task.user === activeUser.id) {
     assignedField.innerHTML += `
-      <span class="user mar-r-8 wh-32 d-flex-center" 
+      <span class="user font-s-12 mar-r-8 wh-32 d-flex-center" 
             style="background-color: ${activeUser.color};">${activeUser.initials}
       </span>`;
   }
 }
 
-function displayAdditionalAssigneesCount(
-  assigned,
-  maxDisplayed,
-  assignedField
-) {
-  if (assigned.length > maxDisplayed) {
-    const remainingCount = assigned.length - maxDisplayed;
-    assignedField.innerHTML += `
+function displayAdditionalAssigneesCount(task, maxDisplayed) {
+  if (task.assigned) {
+    const assignedNumberField = document.getElementById(
+      `assignees_number_${task.id}`
+    );
+    assignedNumberField.innerHTML = "";
+    if (task.assigned.length > maxDisplayed) {
+      const remainingCount = task.assigned.length - maxDisplayed;
+      assignedNumberField.innerHTML += `
       <span class="additionally-assignee wh-32 d-flex-center">
         +${remainingCount}
       </span>`;
+    }
   }
 }
