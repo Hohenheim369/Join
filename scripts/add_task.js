@@ -77,15 +77,23 @@ function putTasksContent(
   });
 }
 
-function putTaskToUser(taskId){
-  //put to database
-  postData(`users/${activeUser.id - 1}/tasks`, {
-    taskId
-  });
-    if (!activeUser.tasks.includes(taskId)) {
-        activeUser.tasks.push(taskId);
-    }
+async function putTaskToUser(taskId) {
+  if (!activeUser.tasks.includes(taskId)) {
+    activeUser.tasks.push(taskId);
     localStorage.setItem('activeUser', JSON.stringify(activeUser));
+    try {
+      await updateUserTaskInDatabase(activeUser.id, taskId);
+    } catch (error) {
+      console.error('Fehler beim Hinzufügen des Tasks:', error);
+      activeUser.tasks.pop();
+      localStorage.setItem('activeUser', JSON.stringify(activeUser));
+    }
+  }
+}
+
+async function updateUserTaskInDatabase(userId, taskId) {
+  const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
+  return postData(path, taskId);
 }
 
 async function getContacts() {
