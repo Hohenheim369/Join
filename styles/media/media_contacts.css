@@ -177,4 +177,8 @@
     margin-left: clamp(0px, 77vw, 12px);
     width: clamp(270px, 77vw, 352px);
   }
+
+  .mobile-add-contact{
+    display: flex;
+  }
 }
