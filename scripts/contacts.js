@@ -329,3 +329,21 @@ function truncate(text, maxLength = 20) {
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+// Funktion, um das cross im dialog, beim responsiv zu ändern
+function updateCrossImage() {
+  const imgElement = document.querySelector('.cross');
+
+  // Überprüfen der Fensterbreite
+  if (window.innerWidth < 1024) {
+    imgElement.src = '../assets/img/png/close-white.png'; // Kleineres Bild
+  } else {
+    imgElement.src = '../assets/img/png/close.png'; // Größeres Bild
+  }
+}
+
+// Initiale Ausführung beim Laden der Seite
+window.addEventListener('load', updateCrossImage);
+
+// Bild bei jeder Fenstergrößenänderung aktualisieren
+window.addEventListener('resize', updateCrossImage);

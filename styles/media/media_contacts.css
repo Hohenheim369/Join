@@ -28,6 +28,85 @@
   .contact-info {
     font-size: clamp(12px, 5vw, 20px);
   }
+
+  #dialog_contacts {
+    display: flex;
+    width: 396px;
+    height: 760px;
+    flex-direction: column;
+  }
+
+  .dialog-left {
+    width: 396px;
+    height: 352px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 0px;
+    padding: 66px 24px 66px 24px;
+  }
+
+  .logo-dialog {
+    display: none;
+  }
+
+  .dialog-text{
+    font-size: 20px;
+  }
+
+  .dialog-right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .unknown-user {
+    margin-top: -60px;
+    margin-left: 0px;
+  }
+
+  .input-fields-contacts {
+    margin-top: 23px;
+    width: 364px;
+    gap: 15px;
+  }
+
+  .dialog-content-right {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .input-name {
+    width: 364px;
+    height: 41px;
+  }
+
+  .input-email {
+    width: 364px;
+    height: 41px;
+  }
+
+  .input-phone {
+    width: 364px;
+    height: 41px;
+  }
+
+  .button-cancel {
+    display: none;
+  }
+
+  .button-contacts {
+    padding-top: 32px;
+    justify-content: center;
+  }
+  .close-cross {
+    top: 24px;
+    right: 16px;
+  }
+  .close-cross:hover {
+    background-color: rgb(41, 53, 71);
+  }
+
+  .close-cross:active {
+    background-color: rgb(41, 171, 227);
+  }
 }
 
 @media screen and (max-width: 777px) {
