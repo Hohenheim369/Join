@@ -5,7 +5,6 @@ let subTasks = [];
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTaskTemplate();
-  // initTasks();
 });
 
 async function loadTaskTemplate() {
@@ -13,23 +12,6 @@ async function loadTaskTemplate() {
   const data = await response.text();
   document.getElementById("add_task_template").innerHTML = data;
 }
-
-// function loadTaskTemplate() {
-//   return new Promise((resolve) => {
-//     fetch("../assets/templates/task_form.html")
-//       .then(response => response.text())
-//       .then(html => {
-//         document.getElementById("add_task_template").innerHTML = html;
-//         resolve();
-//       });
-//   });
-// }
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   loadTaskTemplate().then(() => {
-//     initTasks();
-//   });
-// });
 
 async function openAddTaskDialog() {
   document.getElementById("task_added_overlay").innerHTML = taskAddedToBoard();
@@ -160,7 +142,7 @@ function removeUserAssigned(index) {
   }
 }
 
-async function updateSelectedUserDisplay() {
+function updateSelectedUserDisplay() {
   let selectedList = document.getElementById("activ_user");
   selectedList.innerHTML = "";
   const userInitials = activeUser.initials;
@@ -194,8 +176,6 @@ function displayAdditionalCount(selectedList, maxVisibleContacts) {
   }
 }
 
-document.getElementById("assigned_to").addEventListener("input", searchContact);
-
 function searchContact() {
   let searContact = document.getElementById("assigned_to").value.toLowerCase();
   let filteredContacts = window.allContacts.filter((contact) =>
@@ -211,6 +191,7 @@ function handleSelectedPriority(priority) {
 function selectCategory(category) {
   document.getElementById("category").innerText = category;
   closeSelectCategory();
+  resetrequiredCategory();
 }
 
 function saveInput(index) {
@@ -283,7 +264,7 @@ function requiredCategory(){
   let categoryValue = document.getElementById('category')
   let category = document.getElementById('category_contant');
   let alertCategory = document.getElementById('category_field_alert');
-  if (categoryValue.innerText = "Select task category" ) {
+  if (categoryValue.innerText === "Select task category") {
     category.classList.add('alert-border');
     alertCategory.classList.remove('d-none');
     category.classList.remove('category-container')

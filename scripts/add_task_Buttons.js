@@ -2,13 +2,13 @@ let selectedButton = "medium";
 
 function selectPrio(priority) {
   const prios = ["low", "medium", "urgent"];
-  prios.forEach((prio)=>  resetPrio(prio));
+  prios.forEach((prio) => resetPrio(prio));
   setPrio(priority);
   selectedButton = priority;
   handleSelectedPriority(selectedButton);
 }
 
-function resetPrio(prio){
+function resetPrio(prio) {
   let prioButton = document.getElementById(`${prio}_span`);
   let prioColoredRef = document.getElementById(`prio_${prio}_colored`);
   let prioWhiteRef = document.getElementById(`prio_${prio}_white`);
@@ -18,7 +18,7 @@ function resetPrio(prio){
   prioWhiteRef.classList.add("d-none");
 }
 
-function setPrio(priority){
+function setPrio(priority) {
   let prioButton = document.getElementById(`${priority}_span`);
   let prioColoredRef = document.getElementById(`prio_${priority}_colored`);
   let prioWhiteRef = document.getElementById(`prio_${priority}_white`);
@@ -84,15 +84,18 @@ function addSubtasks() {
   }
 }
 
-document
-  .getElementById("subtasks_input")
-  .addEventListener("keydown", function (event) {
+function enterValue() {
+  openSubtasks();
+  let subtasksInput = document.getElementById("subtasks_input");
+  subtasksInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
       addSubtasks();
-      this.blur();
+      subtasksInput.blur();
+      saveInput(index);
     }
   });
+}
 
 function cancelSubtasks() {
   document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
@@ -124,20 +127,10 @@ function enableButton() {
   ) {
     createButton.disabled = false;
     resetrequiredFields();
+    createTask();
   } else {
     createButton.disabled = true;
     requiredFields();
+    createButton.disabled = false;
   }
 }
-
-document.getElementById("title_input").addEventListener("input", enableButton);
-document.getElementById("due_date").addEventListener("input", enableButton);
-document
-  .getElementById("category_task_contant")
-  .addEventListener("click", enableButton);
-document.getElementById("create_button").addEventListener("click", function () {
-  let createButton = document.getElementById("create_button");
-  if (!createButton.disabled) {
-    createTask();
-  }
-});

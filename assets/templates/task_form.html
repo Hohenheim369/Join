@@ -4,7 +4,7 @@
     <div class="form-child-order">
       <label>Title<span class="required-sign">*</span></label>
       <div>
-        <input
+        <input oninput="resetrequiredTitle()"
           id="title_input"
           required
           placeholder="Enter a title"
@@ -60,7 +60,7 @@
     <div class="form-child-order">
       <label>Due date<span class="required-sign">*</span></label>
       <div>
-        <input class="pos-rel" required id="due_date" type="date" />
+        <input oninput="resetrequiredDate();" class="pos-rel" required id="due_date" type="date" />
       </div>
       <div class="field-alert d-none" id="date_field_alert">
         This field is required
@@ -131,7 +131,7 @@
       <div id="subtasks_contant" class="subtasks-container">
         <div id="subtasks_inactiv">
           <input
-            onclick="openSubtasks()"
+            onclick="enterValue()"
             type="text"
             placeholder="Add new subtask"
             id="subtasks_input"
@@ -188,7 +188,6 @@
     </button>
     <div class="create-button-div" id="create_button_div">
       <button
-        
         onclick="enableButton()"
         id="create_button"
         class="create-task-button"
