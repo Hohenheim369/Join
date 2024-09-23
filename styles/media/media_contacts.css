@@ -1,11 +1,31 @@
 @media screen and (max-width: 1024px) {
   .content {
     padding: 0px;
-    margin-left: clamp(180px, 3vw, 232px);
+    margin-left: clamp(116px, 14vw, 232px);
+    width: calc(100% - 116px);
   }
 
-  .text-box{
+  .text-box {
     flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .text-seperator {
+    width: 59px;
+    height: 3px;
+  }
+
+  .contacts {
+    width: clamp(306px, 23vw, 352px);
+  }
+
+  .contact-seperator {
+    width: 242px;
+    margin: 8px 0px 8px 12px;
+  }
+
+  .contact-info {
+    font-size: clamp(12px, 5vw, 20px);
   }
 }
 
@@ -25,6 +45,10 @@
     display: none;
   }
 
+  #contact_list {
+    margin-left: 9px;
+  }
+
   .letter-box {
     width: clamp(300px, 77vw, 352px);
   }
@@ -34,9 +58,10 @@
   }
 
   .contact-box {
-    width: clamp(312px, 100vw, 456px);
+    width: 100%;
     height: calc(100vh - 160px);
     padding: 32px 0px;
+    align-items: flex-start;
   }
 
   .contact-seperator {
