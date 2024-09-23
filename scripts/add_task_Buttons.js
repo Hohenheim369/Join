@@ -73,7 +73,7 @@ function addSubtasks() {
   document.getElementById("subtasks_activ_img").classList.add("d-none");
   let subtasksInput = document.getElementById("subtasks_input").value;
   if (subtasksInput.trim() !== "") {
-    subTasks.push({ subTaskName: subtasksInput, done: false });
+    subTasks.push(subtasksInput);
     let ids = subTasks.length;
     document.getElementById("subtasks_list").innerHTML += addSubtasksToList(
       subtasksInput,

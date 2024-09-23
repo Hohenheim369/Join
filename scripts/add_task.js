@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function loadTaskTemplate() {
-  const response = await fetch("../assets/templates/task_form.html")
+  const response = await fetch("../assets/templates/task_form.html");
   const data = await response.text();
   document.getElementById("add_task_template").innerHTML = data;
 }
@@ -39,9 +39,18 @@ async function createTask() {
     assignedTo,
     categorySeleced
   );
+  // putTaskToUser();
   openAddTaskDialog();
   await sleep(1500);
   window.location.href = "../html/board.html";
+}
+
+function getSubtasks() {
+  return subTasks.map((subName, index) => ({
+    subTaskName: subName,
+    subId: index + 1,
+    done: false
+  }));
 }
 
 function putTasksContent(
@@ -59,12 +68,17 @@ function putTasksContent(
     priority: selectedPrio,
     category: categorySeleced,
     id: taskId,
-    subtasks: subTasks,
+    subtasks: getSubtasks(),
     assigned: assignedTo,
     status: "todo",
     user: Number(userId),
   });
 }
+
+// function putTaskToUser(){
+//   //put to database
+//   //put to localstorage
+// }
 
 async function getContacts() {
   document.getElementById("contact_contant").innerHTML = "";
@@ -80,7 +94,7 @@ function displayContacts(contacts) {
   document.getElementById("contact_contant").innerHTML = "";
   const userHtml = showAssignedUser(activeUser);
   document.getElementById("contact_contant").innerHTML = userHtml;
-  let renderContacts = contacts.filter((contactId) => contactId !== null)
+  let renderContacts = contacts.filter((contactId) => contactId !== null);
   renderContacts.sort((a, b) => a.name.localeCompare(b.name));
   for (let contact of renderContacts) {
     const contactHtml = showAssignedContactList(contact);
@@ -163,7 +177,11 @@ async function updateSelectedContactsDisplay(contactId) {
 }
 
 function displaySelectedContacts(contacts, selectedList, maxVisibleContacts) {
-  for (let i = 0;i < Math.min(selectedContacts.length, maxVisibleContacts);i++) {
+  for (
+    let i = 0;
+    i < Math.min(selectedContacts.length, maxVisibleContacts);
+    i++
+  ) {
     const contactId = selectedContacts[i];
     const { initials, id, color } = contacts[contactId - 1];
     selectedList.innerHTML += assignedContacts(initials, id, color);
@@ -228,7 +246,7 @@ function handleInputBlur(li, index) {
 }
 
 function saveChanges(subtasksInput, index) {
-  let newValue = { subTaskName: subtasksInput, done: false };
+  let newValue = subtasksInput;
   subTasks[index] = newValue;
 }
 
@@ -237,68 +255,68 @@ function removeSubtask(li, index) {
   subTasks.splice(index, 1);
 }
 
-function requiredFields(){
+function requiredFields() {
   requiredTitle();
   requiredDate();
   requiredCategory();
 }
 
-function requiredTitle(){
-  let title = document.getElementById('title_input');
-  let alertTitle = document.getElementById('title_field_alert');
-  if (title.value.trim() == '') {
-    title.classList.add('alert-border');
-    alertTitle.classList.remove('d-none');
-  } 
+function requiredTitle() {
+  let title = document.getElementById("title_input");
+  let alertTitle = document.getElementById("title_field_alert");
+  if (title.value.trim() == "") {
+    title.classList.add("alert-border");
+    alertTitle.classList.remove("d-none");
+  }
 }
 
-function requiredDate(){
-  let date = document.getElementById('due_date');
-  let alertDate = document.getElementById('date_field_alert');
-  if (date.value.trim() == '') {
-    date.classList.add('alert-border');
-    alertDate.classList.remove('d-none');
-  } 
+function requiredDate() {
+  let date = document.getElementById("due_date");
+  let alertDate = document.getElementById("date_field_alert");
+  if (date.value.trim() == "") {
+    date.classList.add("alert-border");
+    alertDate.classList.remove("d-none");
+  }
 }
 
-function requiredCategory(){
-  let categoryValue = document.getElementById('category')
-  let category = document.getElementById('category_contant');
-  let alertCategory = document.getElementById('category_field_alert');
+function requiredCategory() {
+  let categoryValue = document.getElementById("category");
+  let category = document.getElementById("category_contant");
+  let alertCategory = document.getElementById("category_field_alert");
   if (categoryValue.innerText === "Select task category") {
-    category.classList.add('alert-border');
-    alertCategory.classList.remove('d-none');
-    category.classList.remove('category-container')
-  } 
+    category.classList.add("alert-border");
+    alertCategory.classList.remove("d-none");
+    category.classList.remove("category-container");
+  }
 }
 
-function resetrequiredFields(){
+function resetrequiredFields() {
   resetrequiredTitle();
   resetrequiredDate();
   resetrequiredCategory();
 }
 
-function resetrequiredTitle(){
-  let title = document.getElementById('title_input');
-  let alertTitle = document.getElementById('title_field_alert');
-    title.classList.remove('alert-border');
-    alertTitle.classList.add('d-none');
+function resetrequiredTitle() {
+  let title = document.getElementById("title_input");
+  let alertTitle = document.getElementById("title_field_alert");
+  title.classList.remove("alert-border");
+  alertTitle.classList.add("d-none");
 }
 
-function resetrequiredDate(){
-  let date = document.getElementById('due_date');
-  let alertDate = document.getElementById('date_field_alert');
-    date.classList.remove('alert-border');
-    alertDate.classList.add('d-none');
+function resetrequiredDate() {
+  let date = document.getElementById("due_date");
+  let alertDate = document.getElementById("date_field_alert");
+  date.classList.remove("alert-border");
+  alertDate.classList.add("d-none");
 }
 
-function resetrequiredCategory(){
-  let categoryValue = document.getElementById('category')
-  let category = document.getElementById('category_contant');
-  let alertCategory = document.getElementById('category_field_alert');
-  if (categoryValue.innerText = ("Technical Task" || "User Story") ) {
-    category.classList.remove('alert-border');
-    alertCategory.classList.add('d-none');
-    category.classList.add('category-container')
-  } 
+function resetrequiredCategory() {
+  let categoryValue = document.getElementById("category");
+  let category = document.getElementById("category_contant");
+  let alertCategory = document.getElementById("category_field_alert");
+  if ((categoryValue.innerText = "Technical Task" || "User Story")) {
+    category.classList.remove("alert-border");
+    alertCategory.classList.add("d-none");
+    category.classList.add("category-container");
+  }
 }
