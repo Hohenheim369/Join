@@ -1,5 +1,5 @@
 function showAssignedUser(activeUser){
-   return  `<div id="bg_task_${activeUser.id}" onclick="addUserToTask('contact_to_task_${activeUser.id}', 'task', 'bg_task_${activeUser.id}', '${activeUser.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
+   return  `<div id="bg_task_0" onclick="addUserToTask('contact_to_task_0', 'task', 'bg_task_0', '${activeUser.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
             <div class="d-flex-center gap-16">
               <div class="user-icon d-flex-center" style="background-color: ${activeUser.color};">
                   <span>${activeUser.initials}</span>
@@ -7,7 +7,7 @@ function showAssignedUser(activeUser){
               <span id="task_name_${activeUser.id}">${activeUser.name}</span>
               <span>(You)</span>
             </div>
-            <img id="contact_to_task_${activeUser.id}" src="../assets/img/png/check-task-false.png" alt="">
+            <img id="contact_to_task_0" src="../assets/img/png/check-task-false.png" alt="">
           </div>`
 }
 

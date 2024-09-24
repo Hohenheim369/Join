@@ -118,7 +118,7 @@ function displayContacts(contacts) {
   }
 }
 
-function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
+function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {  
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle("assigned-color-change");
@@ -132,6 +132,8 @@ function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
 }
 
 function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
+  console.log(CheckButtonId);
+
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle("assigned-color-change");
