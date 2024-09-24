@@ -2,6 +2,7 @@ let selectedContacts = [];
 let userId = [];
 let selectedPrio = "medium";
 let subTasks = [];
+let editSubTaskIndex = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTaskTemplate().then(() => {
@@ -241,16 +242,39 @@ function saveInput(index) {
 function editSubtask(li, index) {
   const currentText = li.innerText;
   let subInput = document.getElementById(`input_subtask_${index}`);
-  subInput.value = currentText;
+  handlePreviousEdit(index);
+  setInputValue(subInput, currentText);
   toggleSubtasksImgs(index);
+  editSubTaskIndex = index;
   subInput.focus();
-  subInput.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      saveInput(index);
-      event.preventDefault();
-      subInput.blur();
-    }
-  });
+  setupKeyDownListener(subInput, index);
+}
+
+function handlePreviousEdit(index) {
+  if (editSubTaskIndex !== null && editSubTaskIndex !== index) {
+      toggleSubtasksImgs(editSubTaskIndex);
+  }
+}
+
+function setInputValue(subInput, value) {
+  subInput.value = value;
+}
+
+function setupKeyDownListener(subInput, index) {
+  subInput.removeEventListener("keydown", handleKeyDown);
+  function handleKeyDown(event) {
+      if (event.key === "Enter") {
+          event.preventDefault();
+          subInput.blur();
+          saveInput(index);
+          resetEditIndex();
+      }
+  }
+  subInput.addEventListener("keydown", handleKeyDown);
+}
+
+function resetEditIndex() {
+  editSubTaskIndex = null;
 }
 
 function handleInputBlur(li, index) {
