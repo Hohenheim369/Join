@@ -21,7 +21,7 @@
     <script src="../scripts/desktop_template.js"></script>
     <script src="../scripts/board_basic.js"></script>
     <script src="../scripts/board_single_task.js"></script>
-    
+
     <script src="../assets/templates/task_form.html"></script>
     <script src="../scripts/board_template.js"></script>
     <script src="../scripts/board_add_task.js"></script>
@@ -141,13 +141,32 @@
     <section
       class="overlay d-flex-center d-none"
       id="board_task_overlay"
-      onclick="toggleOverlay('board_task_overlay')"
+      onclick="toggleOverlay('board_task_overlay'); updateTasksOnBoard()"
     >
       <div
         id="single_task"
         class="single-task"
         onclick="bubblingPrevention(event)"
       ></div>
+    </section>
+
+    <section
+      class="overlay d-flex-center d-none"
+      id="board_delete_overlay"
+      onclick="toggleOverlay('board_delete_overlay')"
+    >
+      <div
+        class="delete-task d-flex-column-center gap-32"
+        onclick="bubblingPrevention(event)"
+      >
+        <div class="font-s-20 font-w-700 font-c-66-82-110">
+          Delete task permanently?
+        </div>
+        <div class="w-100 d-flex-center gap-32">
+          <div id="delete_yes_btn"></div>
+          <div class="delete-btn font-s-20 font-c-66-82-110 cursor-p" onclick="toggleOverlay('board_delete_overlay')">NO</div>
+        </div>
+      </div>
     </section>
 
     <section

@@ -8,7 +8,6 @@ async function openSingleTask(id) {
   let singleTask = activeTasks.find((task) => task.id === id);
   let categoryColor = singleTask.category.replace(/\s+/g, "").toLowerCase();
   const contacts = await fetchData("contacts");
-  console.log(singleTask);
 
   displaySingleTask(singleTask, categoryColor);
   displaySingleAssinees(singleTask, contacts);
@@ -46,10 +45,12 @@ function displaySingleAssinees(singleTask, contacts) {
   }
 
   let assinees = singleTask.assigned;
-  
+
   if (assinees) {
     const activContacts = contacts.filter((contactId) => contactId !== null);
-    const tasksToContects = activContacts.filter((contact) => assinees.includes(contact.id));
+    const tasksToContects = activContacts.filter((contact) =>
+      assinees.includes(contact.id)
+    );
 
     tasksToContects.forEach((contact) => {
       assigneeField.innerHTML += generateSingleAssignee(contact);
@@ -70,4 +71,72 @@ function displaySingleSubtasks(subtasks, id) {
   } else {
     subtaskField.innerHTML = `<div class="single-task-subtasks">No subtasks have been created yet.</div>`;
   }
+}
+
+async function updateSubtaskStatus(id, subId) {
+  toggleCheckButton(`task_${id}_subtask_${subId}`, "button");
+
+  const checkButton = document.getElementById(`task_${id}_subtask_${subId}`);
+  const isChecked = checkButton.src.includes("true");
+
+  let tasks = await fetchData("tasks");
+  let task = tasks.find((task) => task.id === id);
+
+  task.subtasks[subId - 1].done = isChecked;
+
+  await postUpdatedTask(task);
+}
+
+function openDeleteDialog(id) {
+  toggleOverlay("board_delete_overlay");
+
+  let yesButton = document.getElementById("delete_yes_btn");
+  yesButton.innerHTML = `
+      <div class="delete-btn font-s-20 font-c-66-82-110 cursor-p"
+           onclick="deleteTask(${id})">YES
+      </div>`;
+}
+
+async function deleteTask(id) {
+  let users = await fetchData("users");
+  let activeUsers = users.filter((userId) => userId !== null);
+
+  if (id >= 1 && id <= 10) {
+    await deleteTaskOnlyforUser(id, activeUsers);
+  } else {
+    await deleteTaskforAllUsers(id, activeUsers);
+  }
+  deleteTaskInLocalStorage(id);
+
+  toggleOverlay("board_delete_overlay");
+  toggleOverlay("board_task_overlay");
+  window.location.reload();
+}
+
+async function deleteTaskOnlyforUser(id, activeUsers) {
+  users = activeUsers.map((user) => {
+    if (user.id === activeUser.id) {
+      return {
+        ...user,
+        tasks: user.tasks.filter((taskId) => taskId !== id),
+      };
+    }
+    return user;
+  });
+  await postData("users", users);
+}
+
+async function deleteTaskforAllUsers(id, activeUsers) {
+  await deleteData("tasks", id);
+  users = activeUsers.map((user) => ({
+    ...user,
+    tasks: user.tasks.filter((taskId) => taskId !== id),
+  }));
+  await postData("users", users);
+}
+
+function deleteTaskInLocalStorage(id) {
+  let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  activeUser.tasks = activeUser.tasks.filter((taskId) => taskId !== id);
+  localStorage.setItem("activeUser", JSON.stringify(activeUser));
 }

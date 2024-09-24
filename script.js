@@ -21,6 +21,17 @@ async function postData(path = "", data = {}) {
   return await response.json();
 }
 
+async function deleteData(path = "", id) {
+  const url = `${BASE_URL}/${path}/${id -1}.json`;
+  const response = await fetch(url, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();
+}
+
 async function getNewId(path = "") {
   let response = await fetch(`${BASE_URL}/${path}/.json`);
   let responseToJson = await response.json();

@@ -253,6 +253,18 @@
   content: url(../assets/img/png/delete-hover.png);
 }
 
+.delete-task {
+  width: 360px;
+  background-color: white;
+  padding: 48px 32px 48px 40px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+}
+
+.delete-btn:hover{
+  font-weight: 700;
+}
+
 .img-edit:hover {
   content: url(../assets/img/png/edit-hover.png);
 }

@@ -62,7 +62,7 @@ function generateSingleTasks(
               </div>
               <div
                 class="litte-button wh-24 d-flex-center"
-                onclick="toggleOverlay('board_task_overlay')"            >
+                onclick="toggleOverlay('board_task_overlay'); updateTasksOnBoard()"            >
                 <img src="../assets/img/png/close.png" alt="" />
               </div>
             </div>
@@ -106,6 +106,7 @@ function generateSingleTasks(
               <div class="delete cursor-p">
                 <img
                   class="img-delete"
+                  onclick="openDeleteDialog(${id})"
                   src="../assets/img/png/delete-default.png"
                   alt=""/>
               </div>
@@ -135,7 +136,7 @@ function generateSingleSubtasks(subtask, id) {
   return `
           <div class="single-task-subtasks">
             <img
-            onclick="toggleCheckButton('task_${id}_subtask_${subtask.subId}', 'button')"
+            onclick="updateSubtaskStatus(${id}, ${subtask.subId})"
             id="task_${id}_subtask_${subtask.subId}"
             class="litte-button"
             src="../assets/img/png/check-button-${subtask.done}.png"

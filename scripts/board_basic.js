@@ -125,10 +125,10 @@ function displaySubtasks(task) {
   subtaskArea.innerHTML = "";
   subtaskArea.classList.add("d-none");
 
-  addSubtasks(subtaskArea, task);
+  addSubtasksOnBoardTasks(subtaskArea, task);
 }
 
-function addSubtasks(subtaskArea, task) {
+function addSubtasksOnBoardTasks(subtaskArea, task) {
   if (task.subtasks || Array.isArray(task.subtasks)) {
     subtaskArea.classList.remove("d-none");
     let sumAllSubtasks = task.subtasks.length;
