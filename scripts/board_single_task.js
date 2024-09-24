@@ -34,20 +34,30 @@ function displaySingleTask(singleTask, categoryColor) {
 function displaySingleAssinees(singleTask, contacts) {
   let assigneeField = document.getElementById("single_assignee");
   assigneeField.innerHTML = "";
+  let hasAssignees = displayAssigneesAndUsers(singleTask, contacts, assigneeField);
 
+  if (!hasAssignees) {
+    assigneeField.innerHTML = `<div class="single-task-subtasks font-s-16">No assignee have been selected yet.</div>`;
+  }
+}
+
+function displayAssigneesAndUsers(singleTask, contacts, assigneeField) {
+  let hasAssignees = false;
   if (singleTask.user === activeUser.id) {
-    assigneeField.innerHTML += `
-          <div class="single-task-assignee">
-                  <span
-                    class="user font-s-12 wh-42 d-flex-center" style="background-color: ${activeUser.color};">${activeUser.initials}</span>
-                    ${activeUser.name}
-          </div>`;
+    assigneeField.innerHTML += generateSingleUserAsAssignee();
+    hasAssignees = true;
   }
 
   let assinees = singleTask.assigned;
-
   if (assinees) {
-    const activContacts = contacts.filter((contactId) => contactId !== null);
+    displayContactAsAssinee(contacts, assinees, assigneeField);
+    hasAssignees = true;
+  } 
+  return hasAssignees;
+}
+
+function displayContactAsAssinee(contacts, assinees, assigneeField){
+  const activContacts = contacts.filter((contactId) => contactId !== null);
     const tasksToContects = activContacts.filter((contact) =>
       assinees.includes(contact.id)
     );
@@ -55,9 +65,6 @@ function displaySingleAssinees(singleTask, contacts) {
     tasksToContects.forEach((contact) => {
       assigneeField.innerHTML += generateSingleAssignee(contact);
     });
-  } else {
-    assigneeField.innerHTML = `<div class="single-task-subtasks font-s-16">No assignee have been selected yet.</div>`;
-  }
 }
 
 function displaySingleSubtasks(subtasks, id) {

@@ -123,6 +123,15 @@ function generateSingleTasks(
           </div>`;
 }
 
+function generateSingleUserAsAssignee(){
+  return `
+         <div class="single-task-assignee">
+                  <span
+                    class="user font-s-12 wh-42 d-flex-center" style="background-color: ${activeUser.color};">${activeUser.initials}</span>
+                    ${activeUser.name}
+          </div>`;
+}
+
 function generateSingleAssignee(contact){
   return `
           <div class="single-task-assignee">
