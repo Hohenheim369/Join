@@ -5,6 +5,14 @@ function initAccess() {
   signupConfirmPasswordField();
 }
 
+function toggleCheckButtonAccess(CheckButtonId, CheckTaskButton) {
+  const checkButton = document.getElementById(CheckButtonId);
+  const isChecked = checkButton.src.includes("true");
+  checkButton.src = `./assets/img/png/check-${CheckTaskButton}-${
+    isChecked ? "false" : "true"
+  }.png`;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const logoContainer = document.querySelector(".logo-container");
   const logo = document.querySelector(".img-logo");
@@ -33,7 +41,7 @@ function checkRememberMeData() {
     try {
       const { email, password } = JSON.parse(rememberMeData);
       fillLoginForm(email, password);
-      toggleCheckButton('login_check_off', 'button');
+      toggleCheckButtonAccess('login_check_off', 'button');
     } catch (error) {
       console.error("Fehler beim Parsen der gespeicherten Login-Daten:", error);
     }
@@ -69,7 +77,7 @@ function setupRememberMeFieldListeners() {
 
   emailInput.addEventListener('input', function() {
     if (this.value === '') {
-      legalButton.src = `/assets/img/png/check-button-false.png`;
+      legalButton.src = `./assets/img/png/check-button-false.png`;
       passwordInput.value = '';
     }
   });
@@ -142,10 +150,10 @@ function updateVisibility(passwordField, lockIcon, togglePassword) {
 
 function showPassword(passwordField, togglePassword) {
   passwordField.type = "text";
-  togglePassword.src = "/assets/img/png/visibility.png";
+  togglePassword.src = "./assets/img/png/visibility.png";
 }
 
 function hidePassword(passwordField, togglePassword) {
   passwordField.type = "password";
-  togglePassword.src = "/assets/img/png/visibility_off.png";
+  togglePassword.src = "./assets/img/png/visibility_off.png";
 }

@@ -234,7 +234,7 @@ function resetSignupFormInputs() {
   document.getElementById("signup_c_password").value = "";
 
   let legalButton = document.getElementById("signup_check_off");
-  legalButton.src = `/assets/img/png/check-button-false.png`;
+  legalButton.src = `./assets/img/png/check-button-false.png`;
   legalButton.classList.remove("bg-alert");
 }
 

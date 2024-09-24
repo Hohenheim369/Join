@@ -60,7 +60,7 @@ let activeUser = getActiveUser();
 function toggleCheckButton(CheckButtonId, CheckTaskButton) {
   const checkButton = document.getElementById(CheckButtonId);
   const isChecked = checkButton.src.includes("true");
-  checkButton.src = `/assets/img/png/check-${CheckTaskButton}-${
+  checkButton.src = `../assets/img/png/check-${CheckTaskButton}-${
     isChecked ? "false" : "true"
   }.png`;
 }

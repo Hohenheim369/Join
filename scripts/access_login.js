@@ -43,7 +43,7 @@ function resetLoginFormInputs() {
   document.getElementById("login_password").value = "";
 
   let legalButton = document.getElementById("login_check_off");
-  legalButton.src = `/assets/img/png/check-button-false.png`;
+  legalButton.src = `./assets/img/png/check-button-false.png`;
 }
 
 function isRememberMeChecked() {
