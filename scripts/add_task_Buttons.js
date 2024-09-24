@@ -80,6 +80,7 @@ function addSubtasks() {
       ids - 1
     );
     document.getElementById("subtasks_input").value = "";
+    enterValue()
   }
 }
 
@@ -91,7 +92,6 @@ function enterValue() {
       event.preventDefault();
       addSubtasks();
       subtasksInput.blur();
-      saveInput(index);
     }
   });
 }

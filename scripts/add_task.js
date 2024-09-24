@@ -246,9 +246,9 @@ function editSubtask(li, index) {
   subInput.focus();
   subInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
+      saveInput(index);
       event.preventDefault();
       subInput.blur();
-      saveInput(index);
     }
   });
 }

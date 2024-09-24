@@ -15,15 +15,17 @@
     <link rel="stylesheet" href="../styles/desktop-template.css" />
     <link rel="stylesheet" href="../styles/board.css" />
     <link rel="stylesheet" href="../styles/media.css" />
-    <link rel="stylesheet" href="../styles/add_task.css">
-    <link rel="stylesheet" href="../styles/add_task_buttons.css">
+    <link rel="stylesheet" href="../styles/add_task.css" />
+    <link rel="stylesheet" href="../styles/add_task_buttons.css" />
     <script src="../script.js" d></script>
     <script src="../scripts/desktop_template.js"></script>
     <script src="../scripts/board_basic.js"></script>
     <script src="../scripts/board_single_task.js"></script>
-    <script src="../scripts/board_add_task.js"></script>
+    
     <script src="../assets/templates/task_form.html"></script>
     <script src="../scripts/board_template.js"></script>
+    <script src="../scripts/board_add_task.js"></script>
+    <script src="../scripts/add_task_template.js"></script>
     <script src="../scripts/add_task_Buttons.js"></script>
     <script src="../scripts/add_task.js"></script>
   </head>
@@ -159,7 +161,12 @@
         onclick="bubblingPrevention(event)"
       >
         <div id="add_task_template"></div>
-        <div onclick="toggleOverlay('board_addtask_overlay')" class="close-add-task-button d-flex-center"><img src="../assets/img/png/close.png" alt=""></div>
+        <div
+          onclick="toggleOverlay('board_addtask_overlay')"
+          class="close-add-task-button d-flex-center"
+        >
+          <img src="../assets/img/png/close.png" alt="" />
+        </div>
       </div>
     </section>
   </body>
