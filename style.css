@@ -28,6 +28,14 @@ body {
   flex-direction: column;
 }
 
+.content-overlay {
+  height: 100%;
+  width: 100%;
+  padding: 64px 74px;
+  display: flex;
+  flex-direction: column;
+}
+
 h1 {
   font-weight: 700;
   font-size: 61px;
