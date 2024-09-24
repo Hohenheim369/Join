@@ -138,7 +138,7 @@ function generateSingleSubtasks(subtask, id) {
             onclick="toggleCheckButton('task_${id}_subtask_${subtask.subId}', 'button')"
             id="task_${id}_subtask_${subtask.subId}"
             class="litte-button"
-            src="/assets/img/png/check-button-${subtask.done}.png"
+            src="../assets/img/png/check-button-${subtask.done}.png"
             alt=""/>
             ${subtask.subTaskName}
           </div>`;
