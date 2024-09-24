@@ -371,3 +371,10 @@ window.addEventListener('load', updateCrossImage);
 
 // Bild bei jeder Fenstergrößenänderung aktualisieren
 window.addEventListener('resize', updateCrossImage);
+
+function goBackMobile(){
+  document.getElementById('mobile_contact_info').classList.add('d-none');
+  document.getElementById('mobile_contact_info').classList.remove('pos-abs');
+  const contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
+  contactInfoDiv.innerHTML = ""; // Vorherigen Inhalt leeren
+}

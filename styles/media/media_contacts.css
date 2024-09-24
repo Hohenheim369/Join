@@ -181,4 +181,9 @@
   .mobile-add-contact{
     display: flex;
   }
+
+  .arrow-back{
+    position: absolute;
+    right: 21px;
+  }
 }
