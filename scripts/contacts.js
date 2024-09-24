@@ -125,7 +125,6 @@ function getRandomColor() {
   return color;
 }
 
-
 function highlightContact(contact) {
   const contacts = document.getElementsByClassName("contacts");
   for (let i = 0; i < contacts.length; i++) {
@@ -159,8 +158,8 @@ async function displayContactInfo(contactId) {
 
 async function displayContactInfoMobile(contactId) {
   // Daten von Firebase abrufen
-  document.getElementById('mobile_contact_info').classList.remove('d-none')
-  document.getElementById('mobile_contact_info').classList.add('pos-abs')
+  document.getElementById("mobile_contact_info").classList.remove("d-none");
+  document.getElementById("mobile_contact_info").classList.add("pos-abs");
   const data = await fetchData("contacts");
   const contacts = Object.values(data);
   const numericContactId =
@@ -172,8 +171,19 @@ async function displayContactInfoMobile(contactId) {
   document.getElementById("button_edit_dialog").innerHTML =
     generateDeleteButtonDialog(contact); // Löschen-Button anzeigen
   highlightContact(contact); // Kontakt hervorheben
+  mobileEditContact();
+  const menu = document.getElementById("mobile_menu");
+  const htmlString = ` <img onclick="openDialogEdit(${contact.id})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
+      <img onclick="deleteContact(${contact.id})" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
+  menu.innerHTML = htmlString;
 }
 
+function mobileEditContact() {
+  const contactMobileButton = document.querySelector(
+    ".contact-box-edit-delete"
+  );
+  contactMobileButton.classList.add("d-none");
+}
 
 async function deleteContact(contactId) {
   // Lösche den Kontakt von Firebase
@@ -353,28 +363,46 @@ function sleep(ms) {
 
 // Funktion, um das cross im dialog, beim responsiv zu ändern
 function updateCrossImage() {
-  const imgElements = document.querySelectorAll('.cross');
+  const imgElements = document.querySelectorAll(".cross");
 
   // Über alle Bild-Elemente mit der Klasse 'cross' iterieren
   imgElements.forEach((imgElement) => {
     // Überprüfen der Fensterbreite
     if (window.innerWidth < 1024) {
-      imgElement.src = '../assets/img/png/close-white.png'; // Kleineres Bild
+      imgElement.src = "../assets/img/png/close-white.png"; // Kleineres Bild
     } else {
-      imgElement.src = '../assets/img/png/close.png'; // Größeres Bild
+      imgElement.src = "../assets/img/png/close.png"; // Größeres Bild
     }
   });
 }
 
 // Initiale Ausführung beim Laden der Seite
-window.addEventListener('load', updateCrossImage);
+window.addEventListener("load", updateCrossImage);
 
 // Bild bei jeder Fenstergrößenänderung aktualisieren
-window.addEventListener('resize', updateCrossImage);
+window.addEventListener("resize", updateCrossImage);
 
-function goBackMobile(){
-  document.getElementById('mobile_contact_info').classList.add('d-none');
-  document.getElementById('mobile_contact_info').classList.remove('pos-abs');
+function goBackMobile() {
+  document.getElementById("mobile_contact_info").classList.add("d-none");
+  document.getElementById("mobile_contact_info").classList.remove("pos-abs");
   const contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
   contactInfoDiv.innerHTML = ""; // Vorherigen Inhalt leeren
+}
+
+function openMobileMenu(contactId) {
+  const menu = document.getElementById("mobile_menu");
+  menu.classList.add("d-flex"); // Menü einblenden
+
+  // Event-Listener hinzufügen, um das Menü zu schließen
+  const handleClickOutside = (event) => {
+    if (!menu.contains(event.target)) { // Prüfen, ob der Klick außerhalb des Menüs ist
+      menu.classList.remove("d-flex"); // Menü ausblenden
+      document.removeEventListener("click", handleClickOutside); // Event-Listener entfernen
+    }
+  };
+
+  // Verzögerung, um den ersten Klick auf das Menü zu ignorieren
+  setTimeout(() => {
+    document.addEventListener("click", handleClickOutside); // Event-Listener hinzufügen
+  }, 0);
 }

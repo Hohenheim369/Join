@@ -55,7 +55,7 @@
     display: none;
   }
 
-  .dialog-text{
+  .dialog-text {
     font-size: 20px;
   }
 
@@ -69,7 +69,7 @@
     margin-left: 0px;
   }
 
-  .edit-big-letter-circle{
+  .edit-big-letter-circle {
     margin-top: -60px;
     margin-left: 0px;
     border: 3px solid white;
@@ -124,7 +124,7 @@
     background-color: rgb(41, 171, 227);
   }
 
-  .button-delete-save{
+  .button-delete-save {
     width: unset;
     height: 51px;
     padding-top: 32px;
@@ -146,6 +146,14 @@
     padding: 0px 16px 0px;
   }
 
+  h1 {
+    font-size: clamp(47px, 7vw, 61px);
+  }
+
+  h3 {
+    font-size: clamp(24px, 5vw, 47px);
+  }
+
   .add-contact {
     display: none;
   }
@@ -160,6 +168,13 @@
 
   .letter-box {
     width: clamp(300px, 77vw, 352px);
+  }
+
+  .big-letter-circle {
+    font-size: clamp(24px, 6vw, 47px);
+    width: clamp(70px, 23vw, 120px);
+    height: clamp(70px, 18vw, 120px);
+    border: 3px solid white;
   }
 
   .contacts {
@@ -178,12 +193,20 @@
     width: clamp(270px, 77vw, 352px);
   }
 
-  .mobile-add-contact{
+  .mobile-add-contact {
     display: flex;
   }
 
-  .arrow-back{
+  .contact-box-name {
+    justify-content: center;
+  }
+
+  .arrow-back {
     position: absolute;
     right: 21px;
+  }
+
+  .arrow-back:hover{
+    cursor: pointer;
   }
 }
