@@ -266,6 +266,19 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
+.close-add-task-button{
+  height: 24px;
+  width: 24px;
+  position: absolute;
+  top: 64px;
+  right: 45px;
+}
+
+.close-add-task-button:hover{
+  border-radius: 50%;
+  background-color: rgb(209, 209, 209);
+}
+
 .d-none {
   display: none;
 }
