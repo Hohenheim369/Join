@@ -32,14 +32,14 @@
   #dialog_contacts {
     display: flex;
     width: clamp(290px, 88vw, 396px);
-    height: 760px;
+    height: clamp(584px, 67vh, 760px);
     flex-direction: column;
   }
 
   #dialog_edit {
     display: flex;
     width: clamp(290px, 88vw, 396px);
-    height: 760px;
+    height: clamp(584px, 67vh, 760px);
     flex-direction: column;
   }
 
@@ -110,6 +110,7 @@
 
   .button-contacts {
     padding-top: 32px;
+    padding-bottom: 30px;
     justify-content: center;
   }
   .close-cross {
@@ -128,6 +129,7 @@
     width: unset;
     height: 51px;
     padding-top: 32px;
+    padding-bottom: 81px;
     justify-content: center;
     gap: 20px;
   }
@@ -206,11 +208,19 @@
     right: 21px;
   }
 
-  .arrow-back:hover{
+  .arrow-back:hover {
     cursor: pointer;
   }
 
   .field-alert {
-   width:  clamp(240px, 76vw, 364px);
+    width: clamp(240px, 76vw, 364px);
+  }
+
+  .contacts-info-name {
+    height: unset;
+  }
+
+  .contacts-information {
+    height: unset;
   }
 }
