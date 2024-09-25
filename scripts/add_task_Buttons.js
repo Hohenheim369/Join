@@ -28,10 +28,6 @@ function setPrio(priority) {
   prioWhiteRef.classList.remove("d-none");
 }
 
-function clearButton() {
-  location.reload();
-}
-
 function openSelect() {
   if ((onclick = true)) {
     document.getElementById("assigned_inactiv").classList.add("d-none");
@@ -68,6 +64,21 @@ function openSubtasks() {
   }
 }
 
+function clearButton() {
+  document.getElementById("title_input").value = "";
+  document.getElementById("description_textarea").value = "";
+  document.getElementById("due_date").value = "";
+  const existingUserIndex = userId.map(Number);
+  removeUserAssigned(existingUserIndex);
+  selectedContacts.length = 0;
+  updateSelectedContactsDisplay();
+  getContacts();
+  selectPrio("medium");
+  document.getElementById("category").innerText = "Select task category";
+  subTasks.length = 0;
+  document.getElementById("subtasks_list").innerHTML = "";
+}
+
 function addSubtasks() {
   document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
   document.getElementById("subtasks_activ_img").classList.add("d-none");
@@ -80,7 +91,7 @@ function addSubtasks() {
       ids - 1
     );
     document.getElementById("subtasks_input").value = "";
-    enterValue()
+    enterValue();
   }
 }
 
