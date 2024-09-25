@@ -8,11 +8,6 @@ async function fetchData(path = "") {
   return activeData;
 }
 
-// async function fetchData(path = "") {
-//   const response = await fetch(`${BASE_URL}/${path}/.json`);
-//   return await response.json();
-// }
-
 async function postData(path = "", data = {}) {
   const response = await fetch(`${BASE_URL}/${path}/.json`, {
     method: "PUT",
