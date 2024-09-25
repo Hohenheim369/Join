@@ -16,7 +16,11 @@ async function loadTaskTemplate() {
   const data = await response.text();
   document.getElementById("add_task_template").innerHTML = data;
 }
-
+/**
+ * 
+ * This function opens the Add Task Dialogwindow
+ * 
+ */
 async function openAddTaskDialog() {
   document.getElementById("task_added_overlay").innerHTML = taskAddedToBoard();
   await sleep(10);
