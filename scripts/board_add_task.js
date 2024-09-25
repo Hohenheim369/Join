@@ -3,3 +3,7 @@ function openAddTask(status) {
   overlay.classList.remove("d-none");  
   taskStatus = status
 }
+
+function openEditDialog(id){
+  
+}

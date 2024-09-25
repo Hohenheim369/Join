@@ -116,6 +116,7 @@ function generateSingleTasks(
               <div class="edit cursor-p">
                 <img
                   class="img-edit"
+                  onclick="openEditDialog(${id})"
                   src="../assets/img/png/edit-default.png"
                   alt=""/>
               </div>

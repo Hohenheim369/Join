@@ -126,7 +126,7 @@ textarea {
 
 .dividing-bar {
   border-left: 1px solid #d1d1d1;
-  min-height: 424px;
+  height: 424px;
   width: 0px;
   margin: 0px 48px;
 }
@@ -207,8 +207,8 @@ li:hover {
   cursor: pointer;
 }
 
-.space-top {
-  height: 138px;
+.space-bottom {
+  min-height: 210px;
 }
 
 .bottom-order {
@@ -295,8 +295,6 @@ li:hover {
   padding: 0px;
   border: 0;
   border-radius: 0;
-  display: flex;
-  align-items: center;
 }
 
 .subtasks-input:focus {
