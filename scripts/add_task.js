@@ -247,7 +247,6 @@ function editSubtask(li, index) {
   toggleSubtasksImgs(index);
   editSubTaskIndex = index;
   subInput.focus();
-  setupKeyDownListener(subInput, index);
 }
 
 function handlePreviousEdit(index) {
@@ -260,17 +259,15 @@ function setInputValue(subInput, value) {
   subInput.value = value;
 }
 
-function setupKeyDownListener(subInput, index) {
-  subInput.removeEventListener("keydown", handleKeyDown);
-  function handleKeyDown(event) {
-      if (event.key === "Enter") {
-          event.preventDefault();
-          subInput.blur();
-          saveInput(index);
-          resetEditIndex();
-      }
+function checkEnterKey(event, index) {
+  let subInput = document.getElementById(`input_subtask_${index}`);
+  if (event.key === 'Enter') {
+    subInput.blur();
+    saveInput(index);
+    resetEditIndex();
+      return false;
   }
-  subInput.addEventListener("keydown", handleKeyDown);
+  return true;
 }
 
 function resetEditIndex() {
