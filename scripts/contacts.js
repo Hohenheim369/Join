@@ -193,6 +193,9 @@ async function deleteContact(contactId) {
   // Aktualisiere die Kontaktliste nach dem Löschen
   await renderContent(); // Render die aktualisierte Kontaktliste
   document.querySelector(".contacts-info-box").innerHTML = ""; // Leere die Detailansicht
+  if (window.innerWidth < 777) {
+    goBackMobile(); // Mobile Funktion aufrufen, wenn die Breite kleiner ist
+  }
 }
 
 async function openDialog() {
@@ -226,15 +229,15 @@ async function openDialogEdit(contactId) {
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   document.getElementById("grey_background").classList.remove("hidden");
+
   // Lade alle Kontakte aus Firebase
   const contacts = await fetchData(`contacts`);
+
   // Finde den Kontakt mit der passenden ID
   const contact = contacts.find(c => c.id === contactId);
+
   // Prüfe, ob der Kontakt gefunden wurde
-  if (!contact) {
-    console.error(`Kontakt mit ID ${contactId} nicht gefunden.`);
-    return;
-  }
+
   populateFormFields(contact);  // Formularfelder mit den Kontaktinformationen füllen
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
@@ -253,7 +256,8 @@ function updateBigLetterCircle(contact) {
 }
 
 async function editContact(contactId) {
-  const existingContact = await fetchData(`contacts/${contactId - 1}/`);
+  const existingContacts = await fetchData(`contacts`);
+  const existingContact = existingContacts.find(c => c.id === contactId);
   const updatedName = document.getElementById("inputEditName").value;
   const updatedEmail = document.getElementById("inputEditEmail").value;
   const updatedPhone = document.getElementById("inputEditPhone").value;
