@@ -29,9 +29,9 @@ function assignedUser(userInitials, activUserID, userColor){
           </div>`
 }
 
-function assignedContacts(contactInitials, contactID, contactColor){
-  return  `<div id="assigned_${contactID}" class="contact-icon d-flex-center"  style="background-color: ${contactColor};">
-                <span>${contactInitials}</span>
+function assignedContacts(activeContacts){
+  return  `<div id="assigned_${activeContacts.id}" class="contact-icon d-flex-center"  style="background-color: ${activeContacts.color};">
+                <span>${activeContacts.initials}</span>
           </div>`
 }
 

@@ -100,10 +100,7 @@ async function updateUserTaskInDatabase(userId, taskId) {
 
 async function getContacts() {
   document.getElementById("contact_contant").innerHTML = "";
-  let response = await fetch(
-    `https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts/.json`
-  );
-  let contacts = await response.json();
+  let contacts = await fetchData("contacts");
   window.allContacts = contacts;
   displayContacts(contacts);
 }
@@ -112,9 +109,8 @@ function displayContacts(contacts) {
   document.getElementById("contact_contant").innerHTML = "";
   const userHtml = showAssignedUser(activeUser);
   document.getElementById("contact_contant").innerHTML = userHtml;
-  let renderContacts = contacts.filter((contactId) => contactId !== null);
-  renderContacts.sort((a, b) => a.name.localeCompare(b.name));
-  for (let contact of renderContacts) {
+  contacts.sort((a, b) => a.name.localeCompare(b.name));
+  for (let contact of contacts) {
     const contactHtml = showAssignedContactList(contact);
     document.getElementById("contact_contant").innerHTML += contactHtml;
   }
@@ -186,25 +182,25 @@ function updateSelectedUserDisplay() {
   selectedList.innerHTML += assignedUser(userInitials, activUserID, userColor);
 }
 
-async function updateSelectedContactsDisplay(contactId) {
-  const contacts = await fetchData("contacts");
+async function updateSelectedContactsDisplay() {
+  const newContacts = await fetchData("contacts");
   const selectedList = document.getElementById("selected_contacts");
   selectedList.innerHTML = "";
 
   const maxVisibleContacts = 3;
-  displaySelectedContacts(contacts, selectedList, maxVisibleContacts);
+  displaySelectedContacts(newContacts, selectedList, maxVisibleContacts);
   displayAdditionalCount(selectedList, maxVisibleContacts);
 }
 
-function displaySelectedContacts(contacts, selectedList, maxVisibleContacts) {
+function displaySelectedContacts(newContacts, selectedList, maxVisibleContacts) {
   for (
     let i = 0;
     i < Math.min(selectedContacts.length, maxVisibleContacts);
     i++
   ) {
-    const contactId = selectedContacts[i];
-    const { initials, id, color } = contacts[contactId - 1];
-    selectedList.innerHTML += assignedContacts(initials, id, color);
+    let contactId = Number(selectedContacts[i]);
+    const activeContacts = newContacts.find((contact) => contact.id === contactId)
+    selectedList.innerHTML += assignedContacts(activeContacts);
   }
 }
 
