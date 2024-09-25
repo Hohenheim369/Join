@@ -3,6 +3,7 @@ let userId = [];
 let selectedPrio = "medium";
 let subTasks = [];
 let editSubTaskIndex = null;
+let taskStatus = "todo";
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTaskTemplate().then(() => {
@@ -73,8 +74,8 @@ function putTasksContent(
     id: taskId,
     subtasks: getSubtasks(),
     assigned: assignedTo,
-    status: "todo",
-    user: activeUser.id,
+    status: taskStatus,
+    user: Number(userId[0]),
   });
 }
 
