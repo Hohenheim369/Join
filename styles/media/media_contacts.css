@@ -31,20 +31,20 @@
 
   #dialog_contacts {
     display: flex;
-    width: 396px;
+    width: clamp(290px, 88vw, 396px);
     height: 760px;
     flex-direction: column;
   }
 
   #dialog_edit {
     display: flex;
-    width: 396px;
+    width: clamp(290px, 88vw, 396px);
     height: 760px;
     flex-direction: column;
   }
 
   .dialog-left {
-    width: 396px;
+    width: clamp(290px, 88vw, 396px);
     height: 352px;
     border-top-right-radius: 30px;
     border-bottom-left-radius: 0px;
@@ -87,19 +87,19 @@
   }
 
   .input-name {
-    width: 364px;
+    width: clamp(240px, 76vw, 364px);
     height: 41px;
     background-position: 330px 12px;
   }
 
   .input-email {
-    width: 364px;
+    width: clamp(240px, 76vw, 364px);
     height: 41px;
     background-position: 330px 12px;
   }
 
   .input-phone {
-    width: 364px;
+    width: clamp(240px, 76vw, 364px);
     height: 41px;
     background-position: 330px 12px;
   }
@@ -208,5 +208,9 @@
 
   .arrow-back:hover{
     cursor: pointer;
+  }
+
+  .field-alert {
+   width:  clamp(240px, 76vw, 364px);
   }
 }

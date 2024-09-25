@@ -216,20 +216,29 @@ async function closeDialog() {
 
 async function openDialogEdit(contactId) {
   const menu = document.getElementById("mobile_menu");
-   // Überprüfen, ob das mobile Menü geöffnet ist (d.h. die Klasse 'd-flex' hat)
-   if (menu.classList.contains("d-flex")) {
+
+  // Überprüfen, ob das mobile Menü geöffnet ist (d.h. die Klasse 'd-flex' hat)
+  if (menu.classList.contains("d-flex")) {
     menu.classList.remove("d-flex"); // Mobile Menü schließen
   }
+
   const dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   document.getElementById("grey_background").classList.remove("hidden");
-  const contact = await fetchData(`contacts/${contactId - 1}/`);
-  populateFormFields(contact);
+  // Lade alle Kontakte aus Firebase
+  const contacts = await fetchData(`contacts`);
+  // Finde den Kontakt mit der passenden ID
+  const contact = contacts.find(c => c.id === contactId);
+  // Prüfe, ob der Kontakt gefunden wurde
+  if (!contact) {
+    console.error(`Kontakt mit ID ${contactId} nicht gefunden.`);
+    return;
+  }
+  populateFormFields(contact);  // Formularfelder mit den Kontaktinformationen füllen
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
   updateBigLetterCircle(contact);
-  
 }
 
 function populateFormFields(contact) {
