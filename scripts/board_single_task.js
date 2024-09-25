@@ -4,8 +4,7 @@ function bubblingPrevention(event) {
 
 async function openSingleTask(id) {
   let tasks = await fetchData("tasks");
-  let activeTasks = tasks.filter((taskId) => taskId !== null);
-  let singleTask = activeTasks.find((task) => task.id === id);
+  let singleTask = tasks.find((task) => task.id === id);
   let categoryColor = singleTask.category.replace(/\s+/g, "").toLowerCase();
   const contacts = await fetchData("contacts");
 
@@ -57,8 +56,7 @@ function displayAssigneesAndUsers(singleTask, contacts, assigneeField) {
 }
 
 function displayContactAsAssinee(contacts, assinees, assigneeField){
-  const activContacts = contacts.filter((contactId) => contactId !== null);
-    const tasksToContects = activContacts.filter((contact) =>
+    const tasksToContects = contacts.filter((contact) =>
       assinees.includes(contact.id)
     );
 
@@ -106,12 +104,11 @@ function openDeleteDialog(id) {
 
 async function deleteTask(id) {
   let users = await fetchData("users");
-  let activeUsers = users.filter((userId) => userId !== null);
 
   if (id >= 1 && id <= 10) {
-    await deleteTaskOnlyforUser(id, activeUsers);
+    await deleteTaskOnlyforUser(id, users);
   } else {
-    await deleteTaskforAllUsers(id, activeUsers);
+    await deleteTaskforAllUsers(id, users);
   }
   deleteTaskInLocalStorage(id);
 

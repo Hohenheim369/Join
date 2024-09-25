@@ -3,8 +3,15 @@ const BASE_URL =
 
 async function fetchData(path = "") {
   const response = await fetch(`${BASE_URL}/${path}/.json`);
-  return await response.json();
+  const datas = await response.json();
+  const activeData = datas.filter((data) => data !== null);
+  return activeData;
 }
+
+// async function fetchData(path = "") {
+//   const response = await fetch(`${BASE_URL}/${path}/.json`);
+//   return await response.json();
+// }
 
 async function postData(path = "", data = {}) {
   const response = await fetch(`${BASE_URL}/${path}/.json`, {

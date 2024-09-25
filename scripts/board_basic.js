@@ -33,8 +33,7 @@ function removeHightlight(status) {
 
 async function moveTo(status) {
   let tasks = await fetchData("tasks");
-  let activeTasks = tasks.filter((taskId) => taskId !== null);
-  let movedTask = activeTasks.find((task) => task.id === currentDraggedElement);
+  let movedTask = tasks.find((task) => task.id === currentDraggedElement);
   movedTask.status = status;
   await postUpdatedTask(movedTask);
   removeHightlight(status);
@@ -66,19 +65,17 @@ function cleanBoard(statuses) {
 async function renderTasksInStatusArea(statuses) {
   const tasksToRender = await filterUserTasks();
   const contacts = await fetchData("contacts");
-  const activContacts = contacts.filter((contactId) => contactId !== null);
 
   statuses.forEach((status) =>
-    renderStatusArea(status, tasksToRender, activContacts)
+    renderStatusArea(status, tasksToRender, contacts)
   );
 }
 
 async function filterUserTasks() {
   let userTasks = activeUser.tasks;
   let allTasks = await fetchData("tasks");
-  let activAllTasks = allTasks.filter((tasks) => tasks !== null);
 
-  const tasksToRender = activAllTasks.filter((task) => userTasks.includes(task.id));
+  const tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
   return tasksToRender;
 }
 
@@ -171,7 +168,6 @@ function determineMaxDisplayed(task) {
 function displayAssignees(task, contacts, assignedField, maxDisplayed) {
   if (task.assigned) {
     task.assigned
-      .filter((contactId) => contactId !== null)
       .slice(0, maxDisplayed)
       .forEach((contactId) =>
         renderAssignee(contactId, contacts, assignedField)
