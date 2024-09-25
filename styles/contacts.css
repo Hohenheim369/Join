@@ -140,7 +140,7 @@ h3 {
 }
 
 .grey-background {
-  z-index: +7;
+  z-index: +98;
   position: fixed;
   top: 0;
   left: 0;
@@ -325,7 +325,7 @@ h3 {
   top: 80px;
   left: 0px;
   bottom: 80px;
-  z-index: 98;
+  z-index: 97;
   width: 100%;
 }
 

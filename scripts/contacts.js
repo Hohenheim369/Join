@@ -215,6 +215,11 @@ async function closeDialog() {
 }
 
 async function openDialogEdit(contactId) {
+  const menu = document.getElementById("mobile_menu");
+   // Überprüfen, ob das mobile Menü geöffnet ist (d.h. die Klasse 'd-flex' hat)
+   if (menu.classList.contains("d-flex")) {
+    menu.classList.remove("d-flex"); // Mobile Menü schließen
+  }
   const dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
@@ -224,6 +229,7 @@ async function openDialogEdit(contactId) {
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
   updateBigLetterCircle(contact);
+  
 }
 
 function populateFormFields(contact) {
@@ -391,18 +397,20 @@ function goBackMobile() {
 
 function openMobileMenu(contactId) {
   const menu = document.getElementById("mobile_menu");
-  menu.classList.add("d-flex"); // Menü einblenden
+  
+  // Menü einblenden
+  menu.classList.add("d-flex");
 
-  // Event-Listener hinzufügen, um das Menü zu schließen
+  // Event-Listener hinzufügen, um das Menü bei einem Klick außerhalb zu schließen
   const handleClickOutside = (event) => {
-    if (!menu.contains(event.target)) { // Prüfen, ob der Klick außerhalb des Menüs ist
+    if (!menu.contains(event.target)) { // Prüfen, ob der Klick außerhalb des Menüs war
       menu.classList.remove("d-flex"); // Menü ausblenden
       document.removeEventListener("click", handleClickOutside); // Event-Listener entfernen
     }
   };
 
-  // Verzögerung, um den ersten Klick auf das Menü zu ignorieren
+  // Event-Listener nur einmal hinzufügen
   setTimeout(() => {
-    document.addEventListener("click", handleClickOutside); // Event-Listener hinzufügen
+    document.addEventListener("click", handleClickOutside);
   }, 0);
 }
