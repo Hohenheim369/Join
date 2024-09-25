@@ -1,7 +1,6 @@
 const BASE_URL =
   "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/";
 /**
- * 
  * @param {string} path - fetch all variable data from database
  * @returns - output off all fetched arrays
  */
