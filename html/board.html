@@ -35,8 +35,8 @@
         <h1>Board</h1>
         <div class="board-menue d-flex-spbe-center">
           <div class="pos-rel d-flex-spbe-center" id="search_box">
-            <input id="search_task" type="text" placeholder="Find Task" />
-            <button class="input-button" id="search_button">
+            <input id="sought_task" oninput="lookingForTasksOnBoard()" type="text" placeholder="Find Task" />
+            <button class="input-button" id="sought_button">
               <img
                 class="magnifying-glass"
                 src="../assets/img/png/magnifying-glass-default.png"
