@@ -37,6 +37,10 @@ function generateTasksOnBoard(
           `;
 }
 
+function generateNoTaskField() {
+  return `<div class="task-none d-flex-center">No tasks To do</div>`;
+}
+
 function generateSubtasks(sumDoneSubtasks, sumAllSubtasks) {
   return `
       <div class="task-subtasks-bar"></div>
