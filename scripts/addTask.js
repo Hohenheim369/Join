@@ -351,7 +351,7 @@ function resetrequiredCategory() {
   let categoryValue = document.getElementById("category");
   let category = document.getElementById("category_contant");
   let alertCategory = document.getElementById("category_field_alert");
-  if ((categoryValue.innerText = "Technical Task" || "User Story")) {
+  if ((categoryValue.innerText == "Technical Task" || "User Story")) {
     category.classList.remove("alert-border");
     alertCategory.classList.add("d-none");
     category.classList.add("category-container");
