@@ -264,6 +264,8 @@ span {
 }
 
 .greeting-mobile {
+  bottom: 80px;
+  position: absolute;
   display: flex;
   margin: 0px;
   width: 100%;

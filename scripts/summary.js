@@ -113,8 +113,7 @@ function mobileGreeting() {
 
   // Öffnet den Dialog
   if (greetingDialog) {
-    greetingDialog.showModal();
-
+    greetingDialog.classList.remove("d-none")
     // Schließt den Dialog nach 5 Sekunden
     setTimeout(() => {
       greetingDialog.classList.add("d-none");

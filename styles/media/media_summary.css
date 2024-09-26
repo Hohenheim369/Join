@@ -38,9 +38,7 @@
     /* height: clamp(384px,3vw,512px); */
   }
 
-  body {
-    height: 100%;
-  }
+  
 
   .head {
     align-items: flex-start;
