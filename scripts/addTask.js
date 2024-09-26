@@ -116,9 +116,7 @@ function displayContacts(contacts) {
   }
 }
 
-function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
-  console.log(CheckButtonId, CheckTaskButton, bgChange, contactId);
-  
+function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {  
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle("assigned-color-change");
@@ -186,9 +184,11 @@ async function updateSelectedContactsDisplay() {
   const newContacts = await fetchData("contacts");
   const selectedList = document.getElementById("selected_contacts");
   selectedList.innerHTML = "";
-
+  let userContacts = activeUser.contacts
+  const contactsToRender = newContacts.filter((contact) => userContacts.includes(contact.id));
+  window.allContacts = contactsToRender;
   const maxVisibleContacts = 3;
-  displaySelectedContacts(newContacts, selectedList, maxVisibleContacts);
+  displaySelectedContacts(contactsToRender, selectedList, maxVisibleContacts);
   displayAdditionalCount(selectedList, maxVisibleContacts);
 }
 

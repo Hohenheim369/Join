@@ -71,7 +71,7 @@ function taskAddedToBoard (){
 
 function editTaskTemplate(taskId){
   return  `<button 
-            onclick="enableButton(${taskId})"
+            onclick="enableEditButton(${taskId})"
             id="create_button"
             class="create-task-button"
           >
