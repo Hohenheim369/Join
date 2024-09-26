@@ -35,7 +35,7 @@ document.addEventListener("click", (event) => {
 });
 
 async function loadTemplate() {
-  const response = await fetch("../assets/templates/desktop_template.html");
+  const response = await fetch("../assets/templates/desktopTemplate.html");
   const data = await response.text();
   document.getElementById("desktop_template").innerHTML = data;
 }
