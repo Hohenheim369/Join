@@ -4,6 +4,7 @@ function openAddTask(status) {
   taskStatus = status
 }
 
-function openEditDialog(id){
+function openEditDialog(taskId){
+  console.log(taskId);
   
 }
