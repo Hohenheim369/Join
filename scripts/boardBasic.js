@@ -207,3 +207,11 @@ function displayUser(task, assignedField) {
       </span>`;
   }
 }
+
+function lookingForTasksOnBoard() {
+  let soughtedTask = document.getElementById("sought_task").value.toLowerCase();
+  let filteredSoughtedTask = window.allContacts.filter((contact) =>
+    contact.name.toLowerCase().includes(soughtedTask)
+  );
+  displayContacts(filteredSoughtedTask);
+}
