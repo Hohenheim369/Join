@@ -5,11 +5,14 @@ let subTasks = [];
 let editSubTaskIndex = null;
 let taskStatus = "todo";
 
-async function initTemplateAddTask(domLocation) {
+async function initTemplateAddTask(domLocation, clear) {
   const response = await fetch("../assets/templates/taskTemplate.html");
   const data = await response.text();
   document.getElementById(domLocation).innerHTML = data;
   getContacts();
+  if (clear) {
+    clearButton();
+  }
 }
 
 async function openAddTaskDialog() {
@@ -112,6 +115,8 @@ function displayContacts(contacts) {
 }
 
 function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
+  console.log(CheckButtonId, CheckTaskButton, bgChange, contactId);
+  
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle("assigned-color-change");
@@ -351,7 +356,7 @@ function resetrequiredCategory() {
   let categoryValue = document.getElementById("category");
   let category = document.getElementById("category_contant");
   let alertCategory = document.getElementById("category_field_alert");
-  if ((categoryValue.innerText == "Technical Task" || "User Story")) {
+  if ((categoryValue.innerText === "Technical Task" || "User Story")) {
     category.classList.remove("alert-border");
     alertCategory.classList.add("d-none");
     category.classList.add("category-container");
