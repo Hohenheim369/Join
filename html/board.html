@@ -45,7 +45,7 @@
             </button>
           </div>
 
-          <button onclick="openAddTask('todo')">
+          <button onclick="initTemplateAddTask('add_task_template'); openAddTask('todo')">
             Add Task
             <div class="wh-32 d-flex-center">
               <img src="../assets/img/png/add.png" alt="" />
@@ -61,7 +61,7 @@
           >
             To do
             <img
-              onclick="openAddTask('todo')"
+              onclick="clearButton(); openAddTask('todo')"
               class="add-board-btn"
               src="../assets/img/png/add-board-default.png"
               alt=""
@@ -82,7 +82,7 @@
           >
             In progress
             <img
-              onclick="openAddTask('inprogress')"
+              onclick="clearButton(); openAddTask('inprogress')"
               class="add-board-btn"
               src="../assets/img/png/add-board-default.png"
               alt=""
@@ -103,7 +103,7 @@
           >
             Await feedback
             <img
-              onclick="openAddTask('awaitfeedback')"
+              onclick="clearButton(); openAddTask('awaitfeedback')"
               class="add-board-btn"
               src="../assets/img/png/add-board-default.png"
               alt=""
@@ -139,7 +139,7 @@
     <section
       class="overlay d-flex-center d-none"
       id="board_task_overlay"
-      onclick="toggleOverlay('board_task_overlay'); updateTasksOnBoard()"
+      onclick="toggleOverlay('board_task_overlay'); updateTasksOnBoard(); clearButton()"
     >
       <div
         id="single_task"
@@ -163,6 +163,26 @@
         <div class="w-100 d-flex-center gap-32">
           <div id="delete_yes_btn"></div>
           <div class="delete-btn font-s-20 font-c-66-82-110 cursor-p" onclick="toggleOverlay('board_delete_overlay')">NO</div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="overlay d-flex-center d-none"
+      id="edit_task_overlay"
+      onclick="toggleOverlay('edit_task_overlay')"
+    >
+      <div
+        id="edit_task_board"
+        class="add-task-board content-overlay pos-rel"
+        onclick="bubblingPrevention(event)"
+      >
+        <div id="edit_task_template"></div>
+        <div
+          onclick="toggleOverlay('edit_task_overlay')"
+          class="close-add-task-button d-flex-center"
+        >
+          <img src="../assets/img/png/close.png" alt="" />
         </div>
       </div>
     </section>

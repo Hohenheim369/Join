@@ -11,7 +11,7 @@ function generateTasksOnBoard(
               draggable="true"
               ondragstart="startDragging(${id}, event)"
             >
-              <div class="task-card d-flex-column gap-24" onclick="openSingleTask(${id})">
+              <div class="task-card d-flex-column gap-24" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template')">
                 <div class="task-category font-c-white bg-category-${categoryColor}">
                   ${category}
                 </div>
@@ -66,7 +66,7 @@ function generateSingleTasks(
               </div>
               <div
                 class="litte-button wh-24 d-flex-center"
-                onclick="toggleOverlay('board_task_overlay'); updateTasksOnBoard()"            >
+                onclick="toggleOverlay('board_task_overlay'); updateTasksOnBoard(); clearButton()">
                 <img src="../assets/img/png/close.png" alt="" />
               </div>
             </div>

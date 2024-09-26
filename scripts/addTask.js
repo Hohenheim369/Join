@@ -5,16 +5,11 @@ let subTasks = [];
 let editSubTaskIndex = null;
 let taskStatus = "todo";
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadTaskTemplate().then(() => {
-    getContacts();
-  });
-});
-
-async function loadTaskTemplate() {
+async function initTemplateAddTask(domLocation) {
   const response = await fetch("../assets/templates/taskTemplate.html");
   const data = await response.text();
-  document.getElementById("add_task_template").innerHTML = data;
+  document.getElementById(domLocation).innerHTML = data;
+  getContacts();
 }
 
 async function openAddTaskDialog() {
@@ -53,7 +48,7 @@ function getSubtasks() {
   return subTasks.map((subName, index) => ({
     subTaskName: subName,
     subId: index + 1,
-    done: false
+    done: false,
   }));
 }
 
@@ -82,13 +77,13 @@ function putTasksContent(
 async function putTaskToUser(taskId) {
   if (!activeUser.tasks.includes(taskId)) {
     activeUser.tasks.push(taskId);
-    localStorage.setItem('activeUser', JSON.stringify(activeUser));
+    localStorage.setItem("activeUser", JSON.stringify(activeUser));
     try {
       await updateUserTaskInDatabase(activeUser.id, taskId);
     } catch (error) {
-      console.error('Fehler beim Hinzufügen des Tasks:', error);
+      console.error("Fehler beim Hinzufügen des Tasks:", error);
       activeUser.tasks.pop();
-      localStorage.setItem('activeUser', JSON.stringify(activeUser));
+      localStorage.setItem("activeUser", JSON.stringify(activeUser));
     }
   }
 }
@@ -116,7 +111,7 @@ function displayContacts(contacts) {
   }
 }
 
-function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {  
+function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle("assigned-color-change");
@@ -192,14 +187,20 @@ async function updateSelectedContactsDisplay() {
   displayAdditionalCount(selectedList, maxVisibleContacts);
 }
 
-function displaySelectedContacts(newContacts, selectedList, maxVisibleContacts) {
+function displaySelectedContacts(
+  newContacts,
+  selectedList,
+  maxVisibleContacts
+) {
   for (
     let i = 0;
     i < Math.min(selectedContacts.length, maxVisibleContacts);
     i++
   ) {
     let contactId = Number(selectedContacts[i]);
-    const activeContacts = newContacts.find((contact) => contact.id === contactId)
+    const activeContacts = newContacts.find(
+      (contact) => contact.id === contactId
+    );
     selectedList.innerHTML += assignedContacts(activeContacts);
   }
 }
@@ -248,7 +249,7 @@ function editSubtask(li, index) {
 
 function handlePreviousEdit(index) {
   if (editSubTaskIndex !== null && editSubTaskIndex !== index) {
-      toggleSubtasksImgs(editSubTaskIndex);
+    toggleSubtasksImgs(editSubTaskIndex);
   }
 }
 
@@ -258,11 +259,11 @@ function setInputValue(subInput, value) {
 
 function checkEnterKey(event, index) {
   let subInput = document.getElementById(`input_subtask_${index}`);
-  if (event.key === 'Enter') {
+  if (event.key === "Enter") {
     subInput.blur();
     saveInput(index);
     resetEditIndex();
-      return false;
+    return false;
   }
   return true;
 }

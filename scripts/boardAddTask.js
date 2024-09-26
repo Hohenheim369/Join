@@ -6,5 +6,7 @@ function openAddTask(status) {
 
 function openEditDialog(taskId){
   console.log(taskId);
+  let overlay = document.getElementById("edit_task_overlay");
+  overlay.classList.remove("d-none");  
   
 }
