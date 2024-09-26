@@ -12,6 +12,8 @@ async function openSingleTask(id) {
   displaySingleAssinees(singleTask, contacts);
   displaySingleSubtasks(singleTask.subtasks, id);
 
+  taskValuesToEditField(singleTask, contacts, id);
+
   toggleOverlay("board_task_overlay");
 }
 
@@ -143,4 +145,8 @@ function deleteTaskInLocalStorage(id) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
   activeUser.tasks = activeUser.tasks.filter((taskId) => taskId !== id);
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
+}
+
+function taskValuesToEditField(singleTask, contacts, id){
+  
 }
