@@ -45,7 +45,7 @@
             </button>
           </div>
 
-          <button onclick="initTemplateAddTask('add_task_template'); openAddTask('todo')">
+          <button onclick="initTemplateAddTask('add_task_template', false); openAddTask('todo')">
             Add Task
             <div class="wh-32 d-flex-center">
               <img src="../assets/img/png/add.png" alt="" />
@@ -61,7 +61,7 @@
           >
             To do
             <img
-              onclick="clearButton(); openAddTask('todo')"
+              onclick="initTemplateAddTask('add_task_template', true); openAddTask('todo')"
               class="add-board-btn"
               src="../assets/img/png/add-board-default.png"
               alt=""
@@ -82,7 +82,7 @@
           >
             In progress
             <img
-              onclick="clearButton(); openAddTask('inprogress')"
+              onclick="initTemplateAddTask('add_task_template', true); openAddTask('inprogress')"
               class="add-board-btn"
               src="../assets/img/png/add-board-default.png"
               alt=""
@@ -103,7 +103,7 @@
           >
             Await feedback
             <img
-              onclick="clearButton(); openAddTask('awaitfeedback')"
+              onclick="initTemplateAddTask('add_task_template', true); openAddTask('awaitfeedback')"
               class="add-board-btn"
               src="../assets/img/png/add-board-default.png"
               alt=""

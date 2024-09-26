@@ -11,7 +11,7 @@ function generateTasksOnBoard(
               draggable="true"
               ondragstart="startDragging(${id}, event)"
             >
-              <div class="task-card d-flex-column gap-24" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template')">
+              <div class="task-card d-flex-column gap-24" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template', false)">
                 <div class="task-category font-c-white bg-category-${categoryColor}">
                   ${category}
                 </div>
