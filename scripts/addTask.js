@@ -99,8 +99,10 @@ async function updateUserTaskInDatabase(userId, taskId) {
 async function getContacts() {
   document.getElementById("contact_contant").innerHTML = "";
   let contacts = await fetchData("contacts");
-  window.allContacts = contacts;
-  displayContacts(contacts);
+  let userContacts = activeUser.contacts
+  const contactsToRender = contacts.filter((contact) => userContacts.includes(contact.id));
+  window.allContacts = contactsToRender;
+  displayContacts(contactsToRender);
 }
 
 function displayContacts(contacts) {
@@ -130,8 +132,6 @@ function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
 }
 
 function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
-  console.log(CheckButtonId);
-
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle("assigned-color-change");

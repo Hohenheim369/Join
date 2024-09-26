@@ -68,3 +68,14 @@ function taskAddedToBoard (){
             <img src="../assets/img/png/board-white.png" alt="">
           </div>`
 }
+
+function editTaskTemplate(taskId){
+  return  `<button 
+            onclick="enableButton(${taskId})"
+            id="create_button"
+            class="create-task-button"
+          >
+              <span>Ok</span>
+              <img src="../assets/img/png-old/check.png" alt="" />
+          </button>`
+}
