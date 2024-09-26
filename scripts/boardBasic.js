@@ -149,13 +149,15 @@ function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
 function displayAssigneesForTask(task, contacts) {
   const assignedField = document.getElementById(`assignees_task_${task.id}`);
   assignedField.innerHTML = "";
-
-  let assignees = task.assigned.filter((data) => data !== null); ;
   let maxDisplayed = determineMaxDisplayed(task);
 
-  displayAssignees(assignees, contacts, assignedField, maxDisplayed);
+  if (task.assigned) {
+    let assignees = task.assigned.filter((data) => data !== null);
+    displayAssignees(assignees, contacts, assignedField, maxDisplayed);
+    displayCount(task, assignees, maxDisplayed);
+  }
+
   displayUser(task, assignedField);
-  displayCount(task, assignees, maxDisplayed);
 }
 
 function determineMaxDisplayed(task) {
@@ -166,13 +168,9 @@ function determineMaxDisplayed(task) {
 }
 
 function displayAssignees(assignees, contacts, assignedField, maxDisplayed) {
-  if (assignees) {
-    assignees
-      .slice(0, maxDisplayed)
-      .forEach((contactId) =>
-        renderAssignee(contactId, contacts, assignedField)
-      );
-  }
+  assignees
+    .slice(0, maxDisplayed)
+    .forEach((contactId) => renderAssignee(contactId, contacts, assignedField));
 }
 
 function renderAssignee(contactId, contacts, assignedField) {
@@ -186,17 +184,7 @@ function renderAssignee(contactId, contacts, assignedField) {
   }
 }
 
-function displayUser(task, assignedField) {
-  if (task.user === activeUser.id) {
-    assignedField.innerHTML += `
-      <span class="user font-s-12 mar-r-8 wh-32 d-flex-center" 
-            style="background-color: ${activeUser.color};">${activeUser.initials}
-      </span>`;
-  }
-}
-
 function displayCount(task, assignees, maxDisplayed) {
-  if (assignees) {
     const assignedNumberField = document.getElementById(
       `assignees_number_${task.id}`
     );
@@ -209,5 +197,13 @@ function displayCount(task, assignees, maxDisplayed) {
         +${remainingCount}
       </span>`;
     }
+}
+
+function displayUser(task, assignedField) {
+  if (task.user === activeUser.id) {
+    assignedField.innerHTML += `
+      <span class="user font-s-12 mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${activeUser.color};">${activeUser.initials}
+      </span>`;
   }
 }
