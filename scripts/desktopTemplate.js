@@ -45,8 +45,8 @@ function updateSidebarIcons() {
   const iconPages = ["summary", "board", "contacts", "add_task"];
 
   iconPages.forEach((page) => updateIcon(page, currentPage));
-  updatePageState("privacy-policy.html", ".privacy-policy-link", currentPage);
-  updatePageState("legal-notice.html", ".legal-notice-link", currentPage);
+  updatePageState("privacyPolicy.html", ".privacy-policy-link", currentPage);
+  updatePageState("legalNotice.html", ".legal-notice-link", currentPage);
 }
 
 function updateIcon(page, currentPage) {
@@ -73,8 +73,8 @@ function updatePageState(page, selector, currentPage) {
 }
 
 function initializeLinks() {
-  handleLink("policy_link", "privacy-policy.html", handleClick);
-  handleLink("legal_link", "legal_notice.html", handleClickLegal);
+  handleLink("policy_link", "privacyPolicy.html", handleClick);
+  handleLink("legal_link", "legalNotice.html", handleClickLegal);
 }
 
 function handleLink(id, page, clickHandler) {
@@ -187,45 +187,6 @@ function updateInitialsElement() {
     initialsElement.innerHTML = `${initials}`;
   }
 }
-
-// function getInitials(userName) {
-//   let nameParts = userName.split(" ");
-//   return nameParts.map(part => part.charAt(0).toUpperCase()).join("");
-// }
-
-// function handleDocumentClick(event) {
-//   let logOutElement = document.getElementById("log_out");
-//   let initialsElement = document.getElementById("user_profile_initials");
-
-//   if (
-//     logOutElement &&
-//     !logOutElement.contains(event.target) &&
-//     !initialsElement.contains(event.target) &&
-//     !event.target.closest("#log_out")
-//   ) {
-//     logOutElement.classList.add("d-none");
-//   }
-// }
-
-// function toggle() {
-//   toggleLogOutVisibility();
-//   toggleColor();
-
-// }
-
-//   function toggleLogOutVisibility() {
-//     let logOutElement = document.getElementById("log_out");
-//     if (logOutElement) {
-//       logOutElement.classList.toggle("d-none");
-//     }
-//     let initialsElement = document.getElementById("user_profile_initials");
-//     if (initialsElement) {
-//       initialsElement.classList.toggle("bg-color");
-//     }
-
-//   }
-
-// });
 
 function hideIcons() {
   const activeUser = localStorage.getItem("activeUser");
