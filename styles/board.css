@@ -304,3 +304,8 @@
   fill: white !important;
 }
 
+.addTask-link {
+  background-color: unset !important;
+  color: rgb(204, 204, 204) !important ;
+}
+
