@@ -42,7 +42,7 @@ async function loadTemplate() {
 
 function updateSidebarIcons() {
   const currentPage = window.location.pathname.split("/").pop();
-  const iconPages = ["summary", "board", "contacts", "add_task"];
+  const iconPages = ["summary", "board", "contacts", "addTask"];
 
   iconPages.forEach((page) => updateIcon(page, currentPage));
   updatePageState("privacyPolicy.html", ".privacy-policy-link", currentPage);
