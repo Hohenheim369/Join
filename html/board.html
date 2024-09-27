@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/assets.css" />
     <link rel="stylesheet" href="../styles/desktopTemplate.css" />
+    <link rel="stylesheet" href="../styles/media/media_desktopTemplate.css" />
     <link rel="stylesheet" href="../styles/board.css" />
     <link rel="stylesheet" href="../styles/media.css" />
     <link rel="stylesheet" href="../styles/addTask.css" />
@@ -28,7 +29,6 @@
     <script src="../scripts/addTaskButtons.js"></script>
     <script src="../scripts/addTask.js"></script>
     <script src="../scripts/dbBackup.js"></script>
-
   </head>
   <body onload="updateTasksOnBoard()">
     <div id="desktop_template"></div>
@@ -38,7 +38,12 @@
         <h1>Board</h1>
         <div class="board-menue d-flex-spbe-center">
           <div class="pos-rel d-flex-spbe-center" id="search_box">
-            <input id="sought_task" oninput="updateTasksOnBoard()" type="text" placeholder="Find Task" />
+            <input
+              id="sought_task"
+              oninput="updateTasksOnBoard()"
+              type="text"
+              placeholder="Find Task"
+            />
             <button class="input-button" id="sought_button">
               <img
                 class="magnifying-glass"
@@ -48,7 +53,9 @@
             </button>
           </div>
 
-          <button onclick="initTemplateAddTask('add_task_template', false); openAddTask('todo')">
+          <button
+            onclick="initTemplateAddTask('add_task_template', false); openAddTask('todo')"
+          >
             Add Task
             <div class="wh-32 d-flex-center">
               <img src="../assets/img/png/add.png" alt="" />
@@ -165,7 +172,12 @@
         </div>
         <div class="w-100 d-flex-center gap-32">
           <div id="delete_yes_btn"></div>
-          <div class="delete-btn font-s-20 font-c-66-82-110 cursor-p" onclick="toggleOverlay('board_delete_overlay')">NO</div>
+          <div
+            class="delete-btn font-s-20 font-c-66-82-110 cursor-p"
+            onclick="toggleOverlay('board_delete_overlay')"
+          >
+            NO
+          </div>
         </div>
       </div>
     </section>
@@ -177,7 +189,7 @@
     >
       <div
         id="edit_task_board"
-         class="single-task content-overlay pos-rel" 
+        class="single-task content-overlay pos-rel"
         onclick="bubblingPrevention(event)"
       >
         <div id="edit_overflow"><div id="edit_task_template"></div></div>

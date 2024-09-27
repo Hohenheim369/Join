@@ -1,5 +1,5 @@
 .board {
-  padding: 80px 50px;
+  padding: 80px 44px 40px 44px;
   gap: 55px;
 }
 
@@ -43,8 +43,8 @@
 }
 
 .kanban-header{
-  width: 254px;
-  margin: 0 16px 0 8px;
+  width: 100%;
+  padding: 0 16px 0 8px;
 }
 
 .add-board-btn {
@@ -60,7 +60,8 @@
 }
 
 .kanban-tasks {
-  height: calc(100vh - 360px);
+  height: calc(100vh - 380px);
+  padding-right: 2px;
   border: 1px solid transparent;
   border-radius: 10px;
   overflow: hidden;

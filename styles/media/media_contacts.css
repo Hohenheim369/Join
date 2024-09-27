@@ -1,4 +1,4 @@
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1240px) {
   .content {
     padding: 0px;
     margin-left: clamp(116px, 14vw, 232px);

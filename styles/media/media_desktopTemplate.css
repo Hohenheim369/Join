@@ -1,4 +1,4 @@
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1240px) {
   header {
     width: calc(100% - clamp(100px, 15vw, 144px));
     left: clamp(100px, 15vw, 144px);

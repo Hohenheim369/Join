@@ -23,7 +23,7 @@ function generateTasksOnBoard(
                   ${shortDescription}
                   </div>
                 </div>
-                <div id="subtasks_${id}" class="d-flex-spbe-center"></div>
+                <div id="subtasks_${id}" class="task-subtasks d-flex-spbe-center"></div>
 
                 <div class="d-flex-spbe-center">
                   <div class="d-flex-center">
