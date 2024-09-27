@@ -15,7 +15,7 @@ async function initTemplateAddTask(domLocation, clear) {
   }
 }
 
-async function openAddTaskDialog() {
+async function openAddTaskDialogFeedback() {
   document.getElementById("task_added_overlay").innerHTML = taskAddedToBoard();
   await sleep(10);
   const slidingDiv = document.getElementById("task_added_overlay");
@@ -42,7 +42,7 @@ async function createTask() {
     categorySeleced
   );
   putTaskToUser(taskId);
-  openAddTaskDialog();
+  openAddTaskDialogFeedback();
   await sleep(1500);
   window.location.href = "../html/board.html";
 }
