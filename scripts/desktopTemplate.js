@@ -221,6 +221,7 @@ function hideSidebarMobile() {
 
 function logOut() {
   localStorage.removeItem("activeUser");
+  resetTheDatabase();
 }
 
 function handleResponsiveHelp() {
