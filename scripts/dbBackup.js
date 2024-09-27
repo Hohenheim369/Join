@@ -292,7 +292,7 @@ let dbBackupContacts = [
     color: "#130994",
     email: "Wolf@gmail.com",
     id: 8,
-    initials: "MB",
+    initials: "TW",
     name: "Tatjana Wolf",
     phone: 12341234,
   },
