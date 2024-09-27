@@ -219,8 +219,7 @@ function hideSidebarMobile() {
   }
 }
 
-async function logOut() {
-  // await resetTheDatabase();
+function logOut() {
   localStorage.removeItem("activeUser");
   window.location.href = "../index.html";  
 }
