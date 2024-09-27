@@ -42,6 +42,11 @@ function setTaskUser(singleTask) {
 }
 
 function setTaskContacts(singleTask, contacts) {
+  //Hier muss geprüft werden, ob assigned vorhanden sind, 
+  //sonst gibt er einen Fehler zurück und kann die SingleTask nicht öffnen...
+  if(!singleTask.assigned){
+    return
+  }
   let userContacts = singleTask.assigned.filter((data) => data !== null);
   let contactsToRender = contacts.filter((contact) =>
     userContacts.includes(contact.id)
@@ -128,7 +133,7 @@ async function editTask(taskId) {
   const taskData = getTaskFormData();
   const tasks = await fetchData("tasks");
   const singleTask = tasks.find((task) => task.id === taskId);
-  const userTaskId = usertest(singleTask);
+  const userTaskId = userTest();
   const currenttaskStatus = singleTask.status;
   updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus);
   await handleTaskEditCompletion(taskId);
@@ -170,9 +175,21 @@ function toggleTaskOverlays() {
 }
 
 
-function usertest(singleTask) {
-  if (singleTask.user) {
-    let userTaskId = singleTask.user;
+// function userTest(singleTask) {
+//   if (singleTask.user) {
+//     let userTaskId = singleTask.user;
+//     return userTaskId;
+//   } else {
+//     let userTaskId = "";
+//     return userTaskId;
+//   }
+// }
+
+// Bei der vorherigen Funktion konnte ich mich nicht als Assigned to hinzufügen.
+// So wird wieder die userId ausgelesen und ich kann mich als User zu Assigned to hinzufügen oder löschen.
+function userTest() {
+  if (userId[0]) {
+    let userTaskId = Number(userId[0]);
     return userTaskId;
   } else {
     let userTaskId = "";
