@@ -10,8 +10,14 @@ function openEditDialog(taskId) {
   document.getElementById("create_button").classList.add("d-none");
   document.getElementById("clear_button").classList.add("d-none");
   document.getElementById("dividing_bar").classList.add("d-none");
+  document.getElementById("add_task_h1").classList.add("d-none");
   document.getElementById("content_order").classList.remove("content-order");
-  document.getElementById("edit_task_template").classList.add("overflow");
+  // document.getElementById("content_order").classList.add("overflow");
+  // document.getElementById("bottom_order").classList.add("overflow");
+  document.getElementById("test").classList.add("overflow");
+
+  
+
   editTaskButton.innerHTML = editTaskTemplate(taskId);
 }
 
