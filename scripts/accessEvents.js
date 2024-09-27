@@ -3,6 +3,7 @@ function initAccess() {
   loginPasswordField();
   signupPasswordField();
   signupConfirmPasswordField();
+  resetTheDatabase();
 }
 
 function toggleCheckButtonAccess(CheckButtonId, CheckTaskButton) {

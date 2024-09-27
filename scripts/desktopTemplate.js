@@ -220,7 +220,7 @@ function hideSidebarMobile() {
 }
 
 async function logOut() {
-  await resetTheDatabase();
+  // await resetTheDatabase();
   localStorage.removeItem("activeUser");
   window.location.href = "../index.html";  
 }
