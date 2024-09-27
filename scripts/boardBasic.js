@@ -64,7 +64,6 @@ function cleanBoard(statuses) {
 
 async function renderTasksInStatusArea(statuses) {
   let tasksToRender = await filterUserTasks();
-  // add search function
   tasksToRender = filterSoughtTask(tasksToRender);
   const contacts = await fetchData("contacts");
 
