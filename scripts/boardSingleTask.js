@@ -2,17 +2,17 @@ function bubblingPrevention(event) {
   event.stopPropagation();
 }
 
-async function openSingleTask(id) {
+async function openSingleTask(taskId) {
   let tasks = await fetchData("tasks");
-  let singleTask = tasks.find((task) => task.id === id);
+  let singleTask = tasks.find((task) => task.id === taskId);
   let categoryColor = singleTask.category.replace(/\s+/g, "").toLowerCase();
   const contacts = await fetchData("contacts");
 
   displaySingleTask(singleTask, categoryColor);
   displaySingleAssinees(singleTask, contacts);
-  displaySingleSubtasks(singleTask.subtasks, id);
+  displaySingleSubtasks(singleTask.subtasks, taskId);
 
-  taskValuesToEditField(singleTask, contacts, id);
+  taskValuesToEditField(singleTask, contacts, taskId);
 
   toggleOverlay("board_task_overlay");
 }
@@ -71,64 +71,64 @@ function displayContactAsAssinee(contacts, assinees, assigneeField) {
   });
 }
 
-function displaySingleSubtasks(subtasks, id) {
+function displaySingleSubtasks(subtasks, taskId) {
   let subtaskField = document.getElementById("single_subtask");
   subtaskField.innerHTML = "";
 
   if (subtasks) {
     subtasks.forEach((subtask) => {
-      subtaskField.innerHTML += generateSingleSubtasks(subtask, id);
+      subtaskField.innerHTML += generateSingleSubtasks(subtask, taskId);
     });
   } else {
     subtaskField.innerHTML = `<div class="single-task-subtasks">No subtasks have been created yet.</div>`;
   }
 }
 
-async function updateSubtaskStatus(id, subId) {
-  toggleCheckButton(`task_${id}_subtask_${subId}`, "button");
+async function updateSubtaskStatus(taskId, subId) {
+  toggleCheckButton(`task_${taskId}_subtask_${subId}`, "button");
 
-  const checkButton = document.getElementById(`task_${id}_subtask_${subId}`);
+  const checkButton = document.getElementById(`task_${taskId}_subtask_${subId}`);
   const isChecked = checkButton.src.includes("true");
 
   let tasks = await fetchData("tasks");
-  let task = tasks.find((task) => task.id === id);
+  let task = tasks.find((task) => task.id === taskId);
 
   task.subtasks[subId - 1].done = isChecked;
 
   await postUpdatedTask(task);
 }
 
-function openDeleteDialog(id) {
+function openDeleteDialog(taskId) {
   toggleOverlay("board_delete_overlay");
 
   let yesButton = document.getElementById("delete_yes_btn");
   yesButton.innerHTML = `
       <div class="delete-btn font-s-20 font-c-66-82-110 cursor-p"
-           onclick="deleteTask(${id})">YES
+           onclick="deleteTask(${taskId})">YES
       </div>`;
 }
 
-async function deleteTask(id) {
+async function deleteTask(taskId) {
   let users = await fetchData("users");
 
-  if (id >= 1 && id <= 10) {
-    await deleteTaskOnlyforUser(id, users);
+  if (taskId >= 1 && taskId <= 10) {
+    await deleteTaskOnlyforUser(taskId, users);
   } else {
-    await deleteTaskforAllUsers(id, users);
+    await deleteTaskforAllUsers(taskId, users);
   }
-  deleteTaskInLocalStorage(id);
+  deleteTaskInLocalStorage(taskId);
 
   toggleOverlay("board_delete_overlay");
   toggleOverlay("board_task_overlay");
   window.location.reload();
 }
 
-async function deleteTaskOnlyforUser(id, activeUsers) {
+async function deleteTaskOnlyforUser(taskId, activeUsers) {
   users = users.map((user) => {
     if (user.id === activeUser.id) {
       return {
         ...user,
-        tasks: user.tasks.filter((taskId) => taskId !== id),
+        tasks: user.tasks.filter((taskId) => taskId !== taskId),
       };
     }
     return user;
@@ -136,17 +136,17 @@ async function deleteTaskOnlyforUser(id, activeUsers) {
   await postData("users", users);
 }
 
-async function deleteTaskforAllUsers(id, activeUsers) {
-  await deleteData("tasks", id);
+async function deleteTaskforAllUsers(taskId, activeUsers) {
+  await deleteData("tasks", taskId);
   users = users.map((user) => ({
     ...user,
-    tasks: user.tasks.filter((taskId) => taskId !== id),
+    tasks: user.tasks.filter((taskId) => taskId !== taskId),
   }));
   await postData("users", users);
 }
 
-function deleteTaskInLocalStorage(id) {
+function deleteTaskInLocalStorage(taskId) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  activeUser.tasks = activeUser.tasks.filter((taskId) => taskId !== id);
+  activeUser.tasks = activeUser.tasks.filter((task) => task !== taskId);
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
 }

@@ -63,11 +63,26 @@ function cleanBoard(statuses) {
 }
 
 async function renderTasksInStatusArea(statuses) {
-  const tasksToRender = await filterUserTasks();
+  let tasksToRender = await filterUserTasks();
+  // add search function
+  tasksToRender = filterSoughtTask(tasksToRender);
   const contacts = await fetchData("contacts");
 
   statuses.forEach((status) =>
     renderStatusArea(status, tasksToRender, contacts)
+  );
+}
+
+function filterSoughtTask(tasksToRender) {
+  let soughtedTask = document.getElementById("sought_task").value.toLowerCase();
+  if (soughtedTask.length === 0) {
+    return tasksToRender;
+  }
+
+  return tasksToRender.filter(
+    (task) =>
+      task.title.toLowerCase().includes(soughtedTask) ||
+      task.description.toLowerCase().includes(soughtedTask)
   );
 }
 
@@ -185,18 +200,18 @@ function renderAssignee(contactId, contacts, assignedField) {
 }
 
 function displayCount(task, assignees, maxDisplayed) {
-    const assignedNumberField = document.getElementById(
-      `assignees_number_${task.id}`
-    );
-    assignedNumberField.innerHTML = "";
+  const assignedNumberField = document.getElementById(
+    `assignees_number_${task.id}`
+  );
+  assignedNumberField.innerHTML = "";
 
-    if (assignees.length > maxDisplayed) {
-      const remainingCount = assignees.length - maxDisplayed;
-      assignedNumberField.innerHTML += `
+  if (assignees.length > maxDisplayed) {
+    const remainingCount = assignees.length - maxDisplayed;
+    assignedNumberField.innerHTML += `
       <span class="additionally-assignee wh-32 d-flex-center">
         +${remainingCount}
       </span>`;
-    }
+  }
 }
 
 function displayUser(task, assignedField) {
@@ -206,12 +221,4 @@ function displayUser(task, assignedField) {
             style="background-color: ${activeUser.color};">${activeUser.initials}
       </span>`;
   }
-}
-
-function lookingForTasksOnBoard() {
-  let soughtedTask = document.getElementById("sought_task").value.toLowerCase();
-  let filteredSoughtedTask = window.allContacts.filter((contact) =>
-    contact.name.toLowerCase().includes(soughtedTask)
-  );
-  displayContacts(filteredSoughtedTask);
 }
