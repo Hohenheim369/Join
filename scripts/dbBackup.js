@@ -305,7 +305,7 @@ let dbBackupContacts = [
     phone: 12341234,
   },
   {
-    color: "#0038FF",
+    color: "#FD5B4F",
     email: "Kovac@gmail.com",
     id: 10,
     initials: "KK",
