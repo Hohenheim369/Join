@@ -5,13 +5,13 @@ function openAddTask(status) {
 }
 
 function openEditDialog(taskId) {
-  let overlay = document.getElementById("edit_task_overlay");
   let editTaskButton = document.getElementById("create_button_div");
-  let createTaskButton = document.getElementById("create_button");
-  let clearButton = document.getElementById("clear_button");
-  createTaskButton.classList.add("d-none");
-  clearButton.classList.add("d-none");
-  overlay.classList.remove("d-none");
+  document.getElementById("edit_task_overlay").classList.remove("d-none");
+  document.getElementById("create_button").classList.add("d-none");
+  document.getElementById("clear_button").classList.add("d-none");
+  document.getElementById("dividing_bar").classList.add("d-none");
+  document.getElementById("content_order").classList.remove("content-order");
+  document.getElementById("edit_task_template").classList.add("overflow");
   editTaskButton.innerHTML = editTaskTemplate(taskId);
 }
 
