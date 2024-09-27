@@ -194,7 +194,7 @@ function createUserData(name, initials, email, password, userId) {
     password,
     id: userId,
     color: "#ffffff",
-    tasks: [1, 2, 3],
+    tasks: [6, 7, 8, 9 , 10],
     contacts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   };
 }

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../styles/media.css" />
     <link rel="stylesheet" href="../styles/addTask.css" />
     <link rel="stylesheet" href="../styles/addTaskButtons.css" />
+
     <script src="../script.js"></script>
     <script src="../scripts/desktopTemplate.js"></script>
     <script src="../scripts/boardBasic.js"></script>
@@ -26,13 +27,15 @@
     <script src="../scripts/addTaskTemplate.js"></script>
     <script src="../scripts/addTaskButtons.js"></script>
     <script src="../scripts/addTask.js"></script>
+    <script src="../scripts/dbBackup.js"></script>
+
   </head>
   <body onload="updateTasksOnBoard()">
     <div id="desktop_template"></div>
 
     <section class="content board">
       <div class="d-flex-spbe-center">
-        <h1>Board</h1>
+        <h1 onclick="resetTheDatabase()">Board</h1>
         <div class="board-menue d-flex-spbe-center">
           <div class="pos-rel d-flex-spbe-center" id="search_box">
             <input id="sought_task" oninput="lookingForTasksOnBoard()" type="text" placeholder="Find Task" />
@@ -174,10 +177,10 @@
     >
       <div
         id="edit_task_board"
-         class="add-task-board content-overlay pos-rel" 
+         class="single-task content-overlay pos-rel" 
         onclick="bubblingPrevention(event)"
-      ><!--single-task -> class for card-->
-        <div id="edit_task_template"></div>
+      >
+        <div id="edit_overflow"><div id="edit_task_template"></div></div>
         <div
           onclick="toggleOverlay('edit_task_overlay')"
           class="close-add-task-button d-flex-center"

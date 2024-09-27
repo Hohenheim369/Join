@@ -278,12 +278,16 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
+.edit-task-height{
+  max-height: calc(100vh - 15px);
+}
+
 .close-add-task-button{
   height: 24px;
   width: 24px;
   position: absolute;
-  top: 64px;
-  right: 45px;
+  top: 30px;
+  right: 50px;
 }
 
 .close-add-task-button:hover{

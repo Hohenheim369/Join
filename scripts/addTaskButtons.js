@@ -80,20 +80,42 @@ function clearButton() {
 }
 
 function addSubtasks() {
-  document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
-  document.getElementById("subtasks_activ_img").classList.add("d-none");
-  let subtasksInput = document.getElementById("subtasks_input").value;
-  if (subtasksInput.trim() !== "") {
-    subTasks.push(subtasksInput);
-    let ids = subTasks.length;
-    document.getElementById("subtasks_list").innerHTML += addSubtasksToList(
-      subtasksInput,
-      ids - 1
-    );
-    document.getElementById("subtasks_input").value = "";
+  toggleSubtaskIcons();
+  const subtasksInput = getSubtaskInputValue();
+  
+  if (isSubtaskInputValid(subtasksInput)) {
+    addSubtaskToList(subtasksInput);
+    clearSubtaskInput();
     enterValue();
   }
 }
+
+function toggleSubtaskIcons() {
+  document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
+  document.getElementById("subtasks_activ_img").classList.add("d-none");
+}
+
+function getSubtaskInputValue() {
+  return document.getElementById("subtasks_input").value;
+}
+
+function isSubtaskInputValid(subtasksInput) {
+  return subtasksInput.trim() !== "";
+}
+
+function addSubtaskToList(subtasksInput) {
+  subTasks.push(subtasksInput);
+  const ids = subTasks.length;
+  document.getElementById("subtasks_list").innerHTML += addSubtasksToList(
+    subtasksInput,
+    ids - 1
+  );
+}
+
+function clearSubtaskInput() {
+  document.getElementById("subtasks_input").value = "";
+}
+
 
 function enterValue() {
   openSubtasks();
@@ -126,21 +148,39 @@ function toggleSubtasksImgs(id) {
 }
 
 function enableButton() {
-  let input = document.getElementById("title_input");
-  let date = document.getElementById("due_date");
-  let category = document.getElementById("category").innerText;
-  let createButton = document.getElementById("create_button");
-  if (
-    input.value.trim() !== "" &&
-    date.value.trim() !== "" &&
-    (category === "Technical Task" || category === "User Story")
-  ) {
-    createButton.disabled = false;
-    resetrequiredFields();
-    createTask();
+  const input = getInputValues();
+  const category = getCategoryValue();
+  if (isFormComplete(input, category)) {
+    processValidForm();
   } else {
-    createButton.disabled = true;
-    requiredFields();
-    createButton.disabled = false;
+    processInvalidForm();
   }
+}
+
+function getInputValues() {
+  return {
+    input: document.getElementById("title_input").value.trim(),
+    date: document.getElementById("due_date").value.trim(),
+  };
+}
+
+function getCategoryValue() {
+  return document.getElementById("category").innerText;
+}
+
+function isFormComplete(input, category) {
+  return (
+    input.input !== "" &&
+    input.date !== "" &&
+    (category === "Technical Task" || category === "User Story")
+  );
+}
+
+function processValidForm() {
+  resetrequiredFields();
+  createTask();
+}
+
+function processInvalidForm() {
+  requiredFields();
 }

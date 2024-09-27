@@ -5,27 +5,49 @@ function openAddTask(status) {
 }
 
 function openEditDialog(taskId) {
-  let overlay = document.getElementById("edit_task_overlay");
-  let editTaskButton = document.getElementById('create_button_div');
-  let createTaskButton = document.getElementById('create_button');
-  let clearButton = document.getElementById('clear_button');
-  createTaskButton.classList.add('d-none')
-  clearButton.classList.add('d-none')
-  overlay.classList.remove("d-none");
-  editTaskButton.innerHTML = editTaskTemplate(taskId)
+  let editTaskButton = document.getElementById("create_button_div");
+  document.getElementById("edit_task_overlay").classList.remove("d-none");
+  document.getElementById("create_button").classList.add("d-none");
+  document.getElementById("clear_button").classList.add("d-none");
+  document.getElementById("dividing_bar").classList.add("d-none");
+  document.getElementById("add_task_h1").classList.add("d-none");
+  document.getElementById("content_order").classList.remove("content-order");
+  document.getElementById("edit_overflow").classList.add("overflow");
+  document.getElementById("edit_task_board").classList.add("edit-task-height");
+
+  
+
+  editTaskButton.innerHTML = editTaskTemplate(taskId);
 }
 
-function taskValuesToEditField(singleTask, contacts, id) {
+function taskValuesToEditField(singleTask, contacts) {
+  setTaskBasicValues(singleTask);
+  setTaskUser(singleTask);
+  setTaskContacts(singleTask, contacts);
+  setTaskPriority(singleTask);
+  setTaskCategory(singleTask);
+  setTaskSubtasks(singleTask);
+}
+
+function setTaskBasicValues(singleTask) {
   document.getElementById("title_input").value = singleTask.title;
-  document.getElementById("description_textarea").value =
-    singleTask.description;
+  document.getElementById("description_textarea").value = singleTask.description;
   document.getElementById("due_date").value = singleTask.date;
-  addUserToTask("contact_to_task_0", "task", "bg_task_0", `${activeUser.id}`);
-  const assineesEdit = singleTask.assigned;
-  const editAssignContact = contacts.filter((contact) =>
-    assineesEdit.includes(contact.id)
+}
+
+function setTaskUser(singleTask) {
+  if (singleTask.user === activeUser.id) {
+    addUserToTask("contact_to_task_0", "task", "bg_task_0", `${activeUser.id}`);
+  }
+}
+
+function setTaskContacts(singleTask, contacts) {
+  let userContacts = singleTask.assigned.filter((data) => data !== null);
+  let contactsToRender = contacts.filter((contact) =>
+    userContacts.includes(contact.id)
   );
-  editAssignContact.forEach((contact) => {
+  window.allContacts = contactsToRender;
+  contactsToRender.forEach((contact) => {
     addContactToTask(
       `contact_to_task_${contact.id}`,
       "task",
@@ -33,10 +55,23 @@ function taskValuesToEditField(singleTask, contacts, id) {
       `${contact.id}`
     );
   });
+}
+
+function setTaskPriority(singleTask) {
   selectPrio(singleTask.priority);
+}
+
+function setTaskCategory(singleTask) {
   document.getElementById("category").innerText = singleTask.category;
-  document.getElementById("edit_category").classList.add("d-none");
-  document.getElementById("edit_category").classList.remove("form-child-order");
+  document
+    .getElementById("edit_category")
+    .classList.add("d-none");
+  document
+    .getElementById("edit_category")
+    .classList.remove("form-child-order");
+}
+
+function setTaskSubtasks(singleTask) {
   const subtaskEdit = singleTask.subtasks;
   if (subtaskEdit) {
     subtaskEdit.forEach((subtask) => {
@@ -51,44 +86,98 @@ function taskValuesToEditField(singleTask, contacts, id) {
 }
 
 function enableEditButton(taskId) {
-  let input = document.getElementById("title_input");
-  let date = document.getElementById("due_date");
-  let category = document.getElementById("category").innerText;
-  let createButton = document.getElementById("create_button");
-  if (
-    input.value.trim() !== "" &&
-    date.value.trim() !== "" &&
-    (category === "Technical Task" || category === "User Story")
-  ) {
-    createButton.disabled = false;
-    resetrequiredFields();
-    editTask(taskId);
+  const input = getInputFields();
+  const category = getCategory();
+  if (isFormValid(input, category)) {
+    handleValidForm(taskId);
   } else {
-    createButton.disabled = true;
-    requiredFields();
-    createButton.disabled = false;
+    handleInvalidForm();
   }
 }
 
-async function editTask(taskId) {
-  let title = document.getElementById("title_input").value;
-  let description = document.getElementById("description_textarea").value;
-  let dueDate = document.getElementById("due_date").value;
-  let categorySeleced = document.getElementById("category").innerText;
-  taskId = await getNewId("tasks");
-  let assignedTo = selectedContacts.map(Number);
-  putEditTasksContent(
-    title,
-    description,
-    dueDate,
-    taskId,
-    assignedTo,
-    categorySeleced
+function getInputFields() {
+  return {
+    input: document.getElementById("title_input").value.trim(),
+    date: document.getElementById("due_date").value.trim(),
+  };
+}
+
+function getCategory() {
+  return document.getElementById("category").innerText;
+}
+
+function isFormValid(input, category) {
+  return (
+    input.input !== "" &&
+    input.date !== "" &&
+    (category === "Technical Task" || category === "User Story")
   );
-  putTaskToUser(taskId);
-  openAddTaskDialog();
+}
+
+function handleValidForm(taskId) {
+  resetrequiredFields();
+  editTask(taskId);
+}
+
+function handleInvalidForm() {
+  requiredFields();
+}
+
+
+async function editTask(taskId) {
+  const taskData = getTaskFormData();
+  const tasks = await fetchData("tasks");
+  const singleTask = tasks.find((task) => task.id === taskId);
+  const userTaskId = usertest(singleTask);
+  const currenttaskStatus = singleTask.status;
+  updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus);
+  await handleTaskEditCompletion(taskId);
+}
+
+function getTaskFormData() {
+  const title = document.getElementById("title_input").value;
+  const description = document.getElementById("description_textarea").value;
+  const dueDate = document.getElementById("due_date").value;
+  const categorySeleced = document.getElementById("category").innerText;
+  const assignedTo = selectedContacts.map(Number);
+  return { title, description, dueDate, categorySeleced, assignedTo };
+}
+
+function updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus) {
+  putEditTasksContent(
+    taskData.title,
+    taskData.description,
+    taskData.dueDate,
+    taskId,
+    taskData.assignedTo,
+    taskData.categorySeleced,
+    userTaskId,
+    currenttaskStatus
+  );
+}
+
+async function handleTaskEditCompletion(taskId) {
+  openAddTaskDialogFeedback();
   await sleep(1500);
-  window.location.href = "../html/board.html";
+  toggleTaskOverlays();
+  closeAddTaskDialogFeedback();
+  openSingleTask(taskId);
+}
+
+function toggleTaskOverlays() {
+  toggleOverlay("edit_task_overlay");
+  toggleOverlay("board_task_overlay");
+}
+
+
+function usertest(singleTask) {
+  if (singleTask.user) {
+    let userTaskId = singleTask.user;
+    return userTaskId;
+  } else {
+    let userTaskId = "";
+    return userTaskId;
+  }
 }
 
 function putEditTasksContent(
@@ -97,7 +186,9 @@ function putEditTasksContent(
   dueDate,
   taskId,
   assignedTo,
-  categorySeleced
+  categorySeleced,
+  userTaskId,
+  currenttaskStatus
 ) {
   postData(`tasks/${taskId - 1}/`, {
     title: title,
@@ -108,9 +199,12 @@ function putEditTasksContent(
     id: taskId,
     subtasks: getSubtasks(),
     assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
+    status: currenttaskStatus,
+    user: userTaskId,
   });
 }
 
-
+async function closeAddTaskDialogFeedback() {
+  const slidingDiv = document.getElementById("task_added_overlay");
+  slidingDiv.classList.toggle("visible");
+}
