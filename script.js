@@ -2,14 +2,12 @@ const BASE_URL =
   "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/";
 let activeUser = getActiveUser();
 
-/**
- * @param {string} path - fetch all variable data from database
- * @returns - output off all fetched arrays
- */
-
 async function fetchData(path = "") {
   const response = await fetch(`${BASE_URL}/${path}/.json`);
   const datas = await response.json();
+  if(datas === null){
+    return null;
+  };
   const dataArray = Array.isArray(datas) ? datas : Object.values(datas);
   return dataArray.filter(data => data !== null);
 }
