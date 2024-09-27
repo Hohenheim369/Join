@@ -69,6 +69,7 @@ async function displayTasks() {
     countTaskInBoard(validTasks);
     countTaskInProgress(validTasks);
     countTaskInFeedback(validTasks);
+    deadlineDate(validTasks);
   }
 }
 
@@ -108,6 +109,32 @@ function countTaskInFeedback(tasks) {
   taskInFeedback.innerHTML = `${count}`;
 }
 
+function deadlineDate(tasks) {
+  // Filtere Tasks, die ein Due-Date haben
+  const tasksWithDueDate = tasks.filter(task => task.date);
+
+  if (tasksWithDueDate.length === 0) {
+    return null; // Kein Fälligkeitsdatum vorhanden
+  }
+
+  // Sortiere die Tasks nach ihrem Due-Date
+  tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  // Nächstes Due-Date (das früheste in der Zukunft)
+  const nextDueDate = new Date(tasksWithDueDate[0].date);
+
+  // Formatiere das Datum (optional, um es benutzerfreundlicher zu machen)
+  const formattedDate = nextDueDate.toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+
+  // Gib das nächste Due-Date im Element mit der ID 'deadline_date' aus
+  const deadlineElement = document.getElementById('deadline_date');
+  deadlineElement.innerHTML = `${formattedDate}`;
+}
+
 function mobileGreeting() {
   const greetingDialog = document.getElementById("greeting_mobile");
 
@@ -121,3 +148,5 @@ function mobileGreeting() {
     }, 3000); // 5000 Millisekunden = 5 Sekunden
   }
 }
+
+
