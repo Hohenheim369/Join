@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   if (window.innerWidth <= 770) {
-    mobileGreeting();
+    checkAndShowGreeting();
   }
 });
 
@@ -149,4 +149,14 @@ function mobileGreeting() {
   }
 }
 
+function checkAndShowGreeting() {
+  const greetingShown = localStorage.getItem("greetingShown");
+
+  // Wenn das Greeting noch nicht gezeigt wurde, zeige es an
+  if (greetingShown === "false" || !greetingShown) {
+    mobileGreeting();
+    // Setze den Zustand, dass das Greeting nun gezeigt wurde
+    localStorage.setItem("greetingShown", "true");
+  }
+}
 

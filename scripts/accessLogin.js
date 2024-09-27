@@ -9,6 +9,7 @@ function loginAsGuest() {
   };
   localStorage.removeItem("rememberMeData");
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
+  localStorage.setItem("greetingShown", "false");
   window.location.href = "./html/summary.html";
 }
 
@@ -65,6 +66,7 @@ async function handleSuccessfulLogin(user) {
   const userData = await loadUserData(user);
   
   localStorage.setItem('activeUser', JSON.stringify(userData));
+  localStorage.setItem("greetingShown", "false");
   resetLoginFormInputs();
   window.location.href = "./html/summary.html";
 }
