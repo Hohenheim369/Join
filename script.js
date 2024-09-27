@@ -1,14 +1,17 @@
 const BASE_URL =
   "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/";
+let activeUser = getActiveUser();
+
 /**
  * @param {string} path - fetch all variable data from database
  * @returns - output off all fetched arrays
  */
+
 async function fetchData(path = "") {
   const response = await fetch(`${BASE_URL}/${path}/.json`);
   const datas = await response.json();
-  const activeData = datas.filter((data) => data !== null);
-  return activeData;
+  const dataArray = Array.isArray(datas) ? datas : Object.values(datas);
+  return dataArray.filter(data => data !== null);
 }
 
 async function postData(path = "", data = {}) {
@@ -27,9 +30,9 @@ async function postData(path = "", data = {}) {
 }
 
 async function deleteData(path = "", id) {
-  const url = `${BASE_URL}/${path}/${id -1}.json`;
+  const url = `${BASE_URL}/${path}/${id - 1}.json`;
   const response = await fetch(url, {
-    method: 'DELETE',
+    method: "DELETE",
   });
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
@@ -71,7 +74,12 @@ function getActiveUser() {
   }
 }
 
-let activeUser = getActiveUser();
+async function resetTheDatabase() {
+  for (let index = 0; index < dbBackupTask.length; index++) {
+      await postData(`tasks/${index}/`, dbBackupTask[index]);
+      await postData(`contacts/${index}/`, dbBackupContacts[index]);
+  }  
+}
 
 function toggleCheckButton(CheckButtonId, CheckTaskButton) {
   const checkButton = document.getElementById(CheckButtonId);
@@ -85,8 +93,6 @@ function openLegal(LinkToSide) {
   let targetUrl = LinkToSide;
   window.open(targetUrl, "_blank");
 }
-
-
 
 function goBack() {
   window.history.back();
