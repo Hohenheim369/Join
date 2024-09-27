@@ -8,25 +8,19 @@ document.addEventListener("DOMContentLoaded", () => {
 async function renderContent() {
   const contactList = document.getElementById("contact_list");
   contactList.innerHTML = ""; // Vorherigen Inhalt löschen
-
   // 1. Abrufen des eingeloggten Benutzers
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-
-  // 3. Alle Kontakte von Firebase abrufen
+  // 2. Alle Kontakte von Firebase abrufen
   const data = await fetchData("contacts");
-
-  // 4. Alle Kontakte aus Firebase in ein Array umwandeln
+  // 3. Alle Kontakte aus Firebase in ein Array umwandeln
   const contacts = Object.values(data);
-
-  // 5. Kontakte basierend auf den IDs des Benutzers filtern
+  // 4. Kontakte basierend auf den IDs des Benutzers filtern
   const userContacts = contacts.filter((contact) =>
     activeUser.contacts.includes(contact.id)
   );
-
-  // 6. Kontakte nach Initialen gruppieren
+  // 5. Kontakte nach Initialen gruppieren
   const groupedContacts = groupContacts(userContacts);
-
-  // 7. Kontaktliste rendern
+  // 6. Kontaktliste rendern
   renderContactsList(groupedContacts, contactList);
 }
 
@@ -110,35 +104,28 @@ async function addContact() {
   if (name && email && phone) {
     const contactId = await getNewId("contacts");
     const contactData = createContact(name, email, phone, contactId);
-    
     // Speichere den neuen Kontakt in der Datenbank
     await postData(`contacts/${contactId - 1}/`, contactData);
-
     const activeUser = JSON.parse(localStorage.getItem("activeUser"));
     const userId = activeUser.id; // ID des aktiven Benutzers
-    
     // Abrufen aller Benutzer von Firebase
     const allUsers = await fetchData("users"); // Alle Benutzer abrufen
-
     // Suche nach dem Benutzer mit der passenden ID
     const userData = Object.values(allUsers).find((user) => user.id === userId);
-
     // Überprüfen, ob die Benutzerdaten erfolgreich abgerufen wurden
     if (userData) {
       // Füge die ID des neuen Kontakts zur Kontaktliste des Benutzers hinzu
       if (!userData.contacts.includes(contactId)) {
         userData.contacts.push(contactId); // Kontakt-ID hinzufügen
       }
-
       // Aktualisiere den Benutzer in der Datenbank
       // Wir verwenden hier den Index von userData, um den richtigen Benutzer zu aktualisieren
-      const userIndex = Object.keys(allUsers).find(key => allUsers[key].id === userId);
-      await postData(`users/${userIndex}/`, {
+      await postData(`users/${userId - 1}/`, {
         ...userData,
         contacts: userData.contacts, // nur die Kontakte aktualisieren
       });
-    }
-
+    } 
+    addContactToUser(contactId, activeUser);
     resetForm();
     renderContent();
   } else {
@@ -228,9 +215,11 @@ function mobileEditContact() {
 
 async function deleteContact(contactId) {
   // Lösche den Kontakt von Firebase
-  await fetch(`${BASE_URL}/contacts/${contactId - 1}/.json`, {
-    method: "DELETE",
-  });
+  // await fetch(`${BASE_URL}/contacts/${contactId - 1}/.json`, {
+  //   method: "DELETE",
+  // });
+
+  deleteContactsInData(contactId)
   // Aktualisiere die Kontaktliste nach dem Löschen
   await renderContent(); // Render die aktualisierte Kontaktliste
   document.querySelector(".contacts-info-box").innerHTML = ""; // Leere die Detailansicht
@@ -469,4 +458,55 @@ function openMobileMenu(contactId) {
   setTimeout(() => {
     document.addEventListener("click", handleClickOutside);
   }, 0);
+}
+
+function addContactToUser(contactId, activeUser){
+  activeUser.contacts.push(contactId);
+  localStorage.setItem("activeUser", JSON.stringify(activeUser));
+
+}
+
+async function deleteContactsInData(contactId) {
+  let users = await fetchData("users");
+
+  if (contactId >= 1 && contactId <= 10) {
+    await deleteTaskOnlyforUser(contactId, users);
+  } else {
+    await deleteTaskforAllUsers(contactId, users);
+  }
+  deleteTaskInLocalStorage(contactId);
+}
+
+async function deleteTaskOnlyforUser(contactId, users) {
+  if (activeUser.id === 0) {
+    return
+  }
+  users = users.map((user) => {
+    if (user.id === activeUser.id) {
+      return {
+        ...user,
+        contacts: user.contacts.filter((contact) => contact !== contactId),
+      };
+    }
+    return user;
+  });
+  await postData("users", users);
+}
+
+async function deleteTaskforAllUsers(contactId, users) {
+  await deleteData("contacts", contactId);
+  if (activeUser.id === 0) {
+    return
+  }
+  users = users.map((user) => ({
+    ...user,
+    contacts: user.contacts.filter((contact) => contact !== contactId),
+  }));
+  await postData("users", users);
+}
+
+function deleteTaskInLocalStorage(contactId) {
+  let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  activeUser.contacts = activeUser.contacts.filter((contact) => contact !== contactId);
+  localStorage.setItem("activeUser", JSON.stringify(activeUser));
 }
