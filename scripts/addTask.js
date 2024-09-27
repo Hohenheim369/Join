@@ -27,25 +27,45 @@ function sleep(ms) {
 }
 
 async function createTask() {
-  let title = document.getElementById("title_input").value;
-  let description = document.getElementById("description_textarea").value;
-  let dueDate = document.getElementById("due_date").value;
-  let categorySeleced = document.getElementById("category").innerText;
-  let taskId = await getNewId("tasks");
-  let assignedTo = selectedContacts.map(Number);
+  const taskData = getTaskFormData();
+  const taskId = await getNewId("tasks");
+
+  saveTaskData(taskData, taskId);
+  await handleTaskCreationCompletion(taskId);
+}
+
+function getTaskFormData() {
+  const title = document.getElementById("title_input").value;
+  const description = document.getElementById("description_textarea").value;
+  const dueDate = document.getElementById("due_date").value;
+  const categorySeleced = document.getElementById("category").innerText;
+  const assignedTo = selectedContacts.map(Number);
+
+  return { title, description, dueDate, categorySeleced, assignedTo };
+}
+
+function saveTaskData(taskData, taskId) {
   putTasksContent(
-    title,
-    description,
-    dueDate,
+    taskData.title,
+    taskData.description,
+    taskData.dueDate,
     taskId,
-    assignedTo,
-    categorySeleced
+    taskData.assignedTo,
+    taskData.categorySeleced
   );
   putTaskToUser(taskId);
+}
+
+async function handleTaskCreationCompletion() {
   openAddTaskDialogFeedback();
   await sleep(1500);
+  redirectToBoard();
+}
+
+function redirectToBoard() {
   window.location.href = "../html/board.html";
 }
+
 
 function getSubtasks() {
   return subTasks.map((subName, index) => ({

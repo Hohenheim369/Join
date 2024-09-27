@@ -79,22 +79,6 @@ function clearButton() {
   document.getElementById("subtasks_list").innerHTML = "";
 }
 
-// function addSubtasks() {
-//   document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
-//   document.getElementById("subtasks_activ_img").classList.add("d-none");
-//   let subtasksInput = document.getElementById("subtasks_input").value;
-//   if (subtasksInput.trim() !== "") {
-//     subTasks.push(subtasksInput);
-//     let ids = subTasks.length;
-//     document.getElementById("subtasks_list").innerHTML += addSubtasksToList(
-//       subtasksInput,
-//       ids - 1
-//     );
-//     document.getElementById("subtasks_input").value = "";
-//     enterValue();
-//   }
-// }
-
 function addSubtasks() {
   toggleSubtaskIcons();
   const subtasksInput = getSubtaskInputValue();
