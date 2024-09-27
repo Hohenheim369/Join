@@ -123,7 +123,7 @@ async function deleteTask(taskId) {
   window.location.reload();
 }
 
-async function deleteTaskOnlyforUser(taskId, activeUsers) {
+async function deleteTaskOnlyforUser(taskId, users) {
   users = users.map((user) => {
     if (user.id === activeUser.id) {
       return {
@@ -136,7 +136,7 @@ async function deleteTaskOnlyforUser(taskId, activeUsers) {
   await postData("users", users);
 }
 
-async function deleteTaskforAllUsers(taskId, activeUsers) {
+async function deleteTaskforAllUsers(taskId, users) {
   await deleteData("tasks", taskId);
   users = users.map((user) => ({
     ...user,
