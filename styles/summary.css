@@ -73,7 +73,7 @@ span {
 .upper-task-block {
   display: flex;
   background-color: white;
-  height: clamp(99px, 28vw, 168px);
+  height: clamp(82px, 22vw, 168px);
   width: clamp(172px, 100%, 264px);
   border-radius: 30px;
   justify-content: center;
@@ -210,7 +210,7 @@ span {
 
 .number-of-tasks {
   text-align: center;
-  font-size: clamp(36px, 8vw, 64px);
+  font-size: clamp(27px, 8vw, 64px);
   font-weight: 600;
   color: black;
 }

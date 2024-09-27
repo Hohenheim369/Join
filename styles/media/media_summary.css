@@ -30,21 +30,19 @@
     height: calc(100% - 160px);
     width: 100%; /*muss weil keine sidebar mehr da ist links  */
     margin: 80px 0px 192px;
-    padding: 48px 16px 0px;
+    padding: 30px 16px 0px;
   }
 
   .content-tasks {
-    height: 100%;
-    /* height: clamp(384px,3vw,512px); */
+    height: clamp(291px, 77vw, 560px);
+    justify-content: unset;
   }
-
-  
 
   .head {
     align-items: flex-start;
     flex-direction: column;
     gap: 16px;
-    padding-bottom: 40px;
+    padding-bottom: clamp(18px, 5vw, 40px);
   }
 
   h1 {
@@ -67,15 +65,16 @@
   }
 
   .task-in-block {
-    height: clamp(99px, 23vw, 168px);
+    height: clamp(75px, 23vw, 168px);
   }
 
   .seperator-grey {
-    height: clamp(68px, 14vw, 102px);
+    height: clamp(51px, 14vw, 102px);
   }
 
   .priority-block {
-    gap: clamp(13px, 4vw, 61px);
+    gap: clamp(3px, 2vw, 61px);
+    justify-content: space-evenly;
   }
 
   .priority-block:hover {
