@@ -194,7 +194,9 @@ async function deleteContact(contactId) {
   await renderContent(); // Render die aktualisierte Kontaktliste
   document.querySelector(".contacts-info-box").innerHTML = ""; // Leere die Detailansicht
   if (window.innerWidth < 777) {
+    document.getElementById("mobile_menu").classList.remove("d-flex");
     goBackMobile(); // Mobile Funktion aufrufen, wenn die Breite kleiner ist
+    
   }
 }
 
