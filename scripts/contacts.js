@@ -8,13 +8,26 @@ document.addEventListener("DOMContentLoaded", () => {
 async function renderContent() {
   const contactList = document.getElementById("contact_list");
   contactList.innerHTML = ""; // Vorherigen Inhalt löschen
+
+  // 1. Abrufen des eingeloggten Benutzers
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+
+  // 3. Alle Kontakte von Firebase abrufen
   const data = await fetchData("contacts");
-  if (data === null) {
-  } else {
-    const contacts = Object.values(data);
-    const groupedContacts = groupContacts(contacts); // Kontakte nach Initialen gruppieren
-    renderContactsList(groupedContacts, contactList); // Kontaktliste rendern
-  }
+
+  // 4. Alle Kontakte aus Firebase in ein Array umwandeln
+  const contacts = Object.values(data);
+
+  // 5. Kontakte basierend auf den IDs des Benutzers filtern
+  const userContacts = contacts.filter((contact) =>
+    activeUser.contacts.includes(contact.id)
+  );
+
+  // 6. Kontakte nach Initialen gruppieren
+  const groupedContacts = groupContacts(userContacts);
+
+  // 7. Kontaktliste rendern
+  renderContactsList(groupedContacts, contactList);
 }
 
 function renderContactsList(groupedContacts, contactList) {
@@ -97,7 +110,35 @@ async function addContact() {
   if (name && email && phone) {
     const contactId = await getNewId("contacts");
     const contactData = createContact(name, email, phone, contactId);
+    
+    // Speichere den neuen Kontakt in der Datenbank
     await postData(`contacts/${contactId - 1}/`, contactData);
+
+    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    const userId = activeUser.id; // ID des aktiven Benutzers
+    
+    // Abrufen aller Benutzer von Firebase
+    const allUsers = await fetchData("users"); // Alle Benutzer abrufen
+
+    // Suche nach dem Benutzer mit der passenden ID
+    const userData = Object.values(allUsers).find((user) => user.id === userId);
+
+    // Überprüfen, ob die Benutzerdaten erfolgreich abgerufen wurden
+    if (userData) {
+      // Füge die ID des neuen Kontakts zur Kontaktliste des Benutzers hinzu
+      if (!userData.contacts.includes(contactId)) {
+        userData.contacts.push(contactId); // Kontakt-ID hinzufügen
+      }
+
+      // Aktualisiere den Benutzer in der Datenbank
+      // Wir verwenden hier den Index von userData, um den richtigen Benutzer zu aktualisieren
+      const userIndex = Object.keys(allUsers).find(key => allUsers[key].id === userId);
+      await postData(`users/${userIndex}/`, {
+        ...userData,
+        contacts: userData.contacts, // nur die Kontakte aktualisieren
+      });
+    }
+
     resetForm();
     renderContent();
   } else {
@@ -196,7 +237,6 @@ async function deleteContact(contactId) {
   if (window.innerWidth < 777) {
     document.getElementById("mobile_menu").classList.remove("d-flex");
     goBackMobile(); // Mobile Funktion aufrufen, wenn die Breite kleiner ist
-    
   }
 }
 
@@ -236,11 +276,11 @@ async function openDialogEdit(contactId) {
   const contacts = await fetchData(`contacts`);
 
   // Finde den Kontakt mit der passenden ID
-  const contact = contacts.find(c => c.id === contactId);
+  const contact = contacts.find((c) => c.id === contactId);
 
   // Prüfe, ob der Kontakt gefunden wurde
 
-  populateFormFields(contact);  // Formularfelder mit den Kontaktinformationen füllen
+  populateFormFields(contact); // Formularfelder mit den Kontaktinformationen füllen
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
   updateBigLetterCircle(contact);
@@ -259,7 +299,7 @@ function updateBigLetterCircle(contact) {
 
 async function editContact(contactId) {
   const existingContacts = await fetchData(`contacts`);
-  const existingContact = existingContacts.find(c => c.id === contactId);
+  const existingContact = existingContacts.find((c) => c.id === contactId);
   const updatedName = document.getElementById("inputEditName").value;
   const updatedEmail = document.getElementById("inputEditEmail").value;
   const updatedPhone = document.getElementById("inputEditPhone").value;
@@ -412,13 +452,14 @@ function goBackMobile() {
 
 function openMobileMenu(contactId) {
   const menu = document.getElementById("mobile_menu");
-  
+
   // Menü einblenden
   menu.classList.add("d-flex");
 
   // Event-Listener hinzufügen, um das Menü bei einem Klick außerhalb zu schließen
   const handleClickOutside = (event) => {
-    if (!menu.contains(event.target)) { // Prüfen, ob der Klick außerhalb des Menüs war
+    if (!menu.contains(event.target)) {
+      // Prüfen, ob der Klick außerhalb des Menüs war
       menu.classList.remove("d-flex"); // Menü ausblenden
       document.removeEventListener("click", handleClickOutside); // Event-Listener entfernen
     }
