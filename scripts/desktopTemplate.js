@@ -221,7 +221,6 @@ function hideSidebarMobile() {
 
 
 function logOut() {
-  resetTheDatabase();
   localStorage.removeItem("activeUser");
   window.location.href = "../index.html";  
 }
