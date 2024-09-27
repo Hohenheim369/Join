@@ -124,6 +124,9 @@ async function deleteTask(taskId) {
 }
 
 async function deleteTaskOnlyforUser(taskId, users) {
+  if (activeUser.id === 0) {
+    return
+  }
   users = users.map((user) => {
     if (user.id === activeUser.id) {
       return {
@@ -138,6 +141,9 @@ async function deleteTaskOnlyforUser(taskId, users) {
 
 async function deleteTaskforAllUsers(taskId, users) {
   await deleteData("tasks", taskId);
+  if (activeUser.id === 0) {
+    return
+  }
   users = users.map((user) => ({
     ...user,
     tasks: user.tasks.filter((task) => task !== taskId),
