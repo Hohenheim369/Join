@@ -32,6 +32,7 @@ function openSelect() {
   if ((onclick = true)) {
     document.getElementById("assigned_inactiv").classList.add("d-none");
     document.getElementById("assigned_activ").classList.remove("d-none");
+    document.body.addEventListener("click", handleBodyClick);
   }
 }
 
@@ -47,6 +48,7 @@ function openSelectCategory() {
     document.getElementById("category_inactiv").classList.add("d-none");
     document.getElementById("category_activ").classList.remove("d-none");
     document.getElementById("category_task_contant").innerHTML = showCategory();
+    document.body.addEventListener("click", handleBodyClick);
   }
 }
 
@@ -55,6 +57,37 @@ function closeSelectCategory() {
     document.getElementById("category_activ").classList.add("d-none");
     document.getElementById("category_inactiv").classList.remove("d-none");
   }
+}
+
+function handleBodyClick(event) {
+  const contactInput = document.getElementById("assigned_inactiv");
+  const contactList = document.getElementById("contact_contant");
+  const categoryInput = document.getElementById("category_inactiv");
+  const categoryList = document.getElementById("category_task_contant");
+
+  if (isClickOutside(event, contactInput, contactList, categoryInput, categoryList)) {
+      handleCloseActions();
+  }
+}
+
+function isClickOutside(event, contactInput, contactList, categoryInput, categoryList) {
+  return !(
+      contactInput.contains(event.target) ||
+      contactList.contains(event.target) ||
+      categoryInput.contains(event.target) ||
+      categoryList.contains(event.target)
+  );
+}
+
+function handleCloseActions() {
+  closeSelect();
+  closeSelectCategory();
+  removeBodyClickListener();
+}
+
+function removeBodyClickListener() {
+  document.body.removeEventListener("click", handleBodyClick);
+  isListenerActive = false;
 }
 
 function openSubtasks() {
@@ -82,7 +115,7 @@ function clearButton() {
 function addSubtasks() {
   toggleSubtaskIcons();
   const subtasksInput = getSubtaskInputValue();
-  
+
   if (isSubtaskInputValid(subtasksInput)) {
     addSubtaskToList(subtasksInput);
     clearSubtaskInput();
@@ -114,7 +147,6 @@ function addSubtaskToList(subtasksInput) {
 function clearSubtaskInput() {
   document.getElementById("subtasks_input").value = "";
 }
-
 
 function enterValue() {
   openSubtasks();
