@@ -32,8 +32,8 @@ function openSelect() {
   if ((onclick = true)) {
     document.getElementById("assigned_inactiv").classList.add("d-none");
     document.getElementById("assigned_activ").classList.remove("d-none");
-    document.body.addEventListener("click", handleBodyClick);
   }
+  activateClickListener()
 }
 
 function closeSelect() {
@@ -48,8 +48,8 @@ function openSelectCategory() {
     document.getElementById("category_inactiv").classList.add("d-none");
     document.getElementById("category_activ").classList.remove("d-none");
     document.getElementById("category_task_contant").innerHTML = showCategory();
-    document.body.addEventListener("click", handleBodyClick);
   }
+  activateClickListener()
 }
 
 function closeSelectCategory() {
@@ -59,23 +59,61 @@ function closeSelectCategory() {
   }
 }
 
+// function activateClickListener(){
+//   document.body.addEventListener("click", handleBodyClick);
+//   document.getElementById('edit_task_overlay').addEventListener("click", handleBodyClick);
+//   document.getElementById('board_addtask_overlay').addEventListener("click", handleBodyClick);
+// }
+
+function activateClickListener() {
+  document.getElementById('add_task_template').addEventListener("click", handleBodyClick);
+  const editTaskOverlay = document.getElementById('edit_task_board');
+  const boardAddTaskOverlay = document.getElementById('add_task_board');
+  
+  if (editTaskOverlay) {
+    removeBodyClickListener();
+      editTaskOverlay.addEventListener("click", handleBodyClick);
+  } else if (boardAddTaskOverlay) {
+    removeBodyClickListener();
+      boardAddTaskOverlay.addEventListener("click", handleBodyClick);
+  }
+}
+
+function removeBodyClickListener() {
+  document.body.removeEventListener("click", handleBodyClick);
+}
+
 function handleBodyClick(event) {
   const contactInput = document.getElementById("assigned_inactiv");
   const contactList = document.getElementById("contact_contant");
   const categoryInput = document.getElementById("category_inactiv");
   const categoryList = document.getElementById("category_task_contant");
 
-  if (isClickOutside(event, contactInput, contactList, categoryInput, categoryList)) {
-      handleCloseActions();
+  if (
+    isClickOutside(
+      event,
+      contactInput,
+      contactList,
+      categoryInput,
+      categoryList
+    )
+  ) {
+    handleCloseActions();
   }
 }
 
-function isClickOutside(event, contactInput, contactList, categoryInput, categoryList) {
+function isClickOutside(
+  event,
+  contactInput,
+  contactList,
+  categoryInput,
+  categoryList
+) {
   return !(
-      contactInput.contains(event.target) ||
-      contactList.contains(event.target) ||
-      categoryInput.contains(event.target) ||
-      categoryList.contains(event.target)
+    contactInput.contains(event.target) ||
+    contactList.contains(event.target) ||
+    categoryInput.contains(event.target) ||
+    categoryList.contains(event.target)
   );
 }
 
@@ -83,11 +121,6 @@ function handleCloseActions() {
   closeSelect();
   closeSelectCategory();
   removeBodyClickListener();
-}
-
-function removeBodyClickListener() {
-  document.body.removeEventListener("click", handleBodyClick);
-  isListenerActive = false;
 }
 
 function openSubtasks() {
