@@ -145,4 +145,21 @@
   .task-none {
     width: 100%;
   }
+
+  .single-task {
+    width: clamp(304px, 82vw, 525px);
+  }
+
+  .single-task-content{
+    font-size: clamp(16px, 3vw, 20px);
+  }
+  
+  .single-task-category {
+    font-size: clamp(16px, 3vw, 24px);
+  }
+
+  .single-task-prio{
+    height: clamp(27px, 5vw, 33px);
+  }
+
 }

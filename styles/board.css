@@ -190,7 +190,8 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
-.overflow{
+.single-task-content{
+  font-size: 20px;
   max-height: calc(100vh - 112px);
   overflow: hidden;
   overflow-y: scroll;
@@ -201,7 +202,7 @@
   width: fit-content;
   padding: 4px 24px;
   border-radius: 8px;
-  font-size: 23px;
+  font-size: 24px;
 }
 
 .close-task {
@@ -216,6 +217,10 @@
   display: flex;
   align-items: center;
   gap: 25px;
+}
+
+.single-task-prio{
+  height: 33px;
 }
 
 .single-task-lines {

@@ -59,7 +59,7 @@ function generateSingleTasks(
   prio
 ) {
   return `
-          <div class="overflow d-flex-column gap-24">
+          <div class="single-task-content d-flex-column gap-24">
             <div class="d-flex-spbe-center">
               <div class="single-task-category font-c-white bg-category-${categoryColor}">
               ${category}
@@ -71,26 +71,26 @@ function generateSingleTasks(
               </div>
             </div>
 
-            <h1>${title}</h1>
+            <h2>${title}</h2>
 
-            <div class="font-s-20 font-c-black">
+            <div class="font-c-black">
               ${description}
             </div>
 
-            <div class="single-task-meta font-s-20">
+            <div class="single-task-meta">
               Due date:
               <div class="font-c-black">${date}</div>
             </div>
 
-            <div class="single-task-meta font-s-20">
+            <div class="single-task-meta">
               Priority:
-              <img src="../assets/img/png/prio-${prio}-text.png" alt="" />
+              <img class="single-task-prio" src="../assets/img/png/prio-${prio}-text.png" alt="" />
             </div>
 
-            <div class="w-100 d-flex-column gap-8 font-s-20">
+            <div class="w-100 d-flex-column gap-8">
               Assigned To:
 
-              <div id="single_assignee" class="single-task-lines d-flex-column gap-4 font-s-19 font-c-black">
+              <div id="single_assignee" class="single-task-lines d-flex-column gap-4 font-c-black">
 
                 <div class="single-task-assignee">
                   <span
@@ -101,7 +101,7 @@ function generateSingleTasks(
               </div>
             </div>
 
-            <div class="w-100 d-flex-column gap-8 font-s-20">
+            <div class="w-100 d-flex-column gap-8">
               Subtasks:
               <div id="single_subtask" class="single-task-lines d-flex-column gap-4 font-s-16 font-c-black"></div>
             </div>
