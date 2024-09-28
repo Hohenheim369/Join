@@ -86,7 +86,6 @@ function addSubtasks() {
   if (isSubtaskInputValid(subtasksInput)) {
     addSubtaskToList(subtasksInput);
     clearSubtaskInput();
-    enterValue();
   }
 }
 
