@@ -101,8 +101,6 @@
   height: fit-content;
   width: 252px;
   background-color: white;
-  /* background-color: rgb(42, 54, 71); */
-  /* background-color: rgb(41, 171, 226); */
   margin: 8px;
   border-radius: 25px;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
@@ -115,8 +113,8 @@
 
 .task-card {
   cursor: pointer;
-  border-top: 1px solid rgb(41, 171, 226);
-  border-bottom: 1px solid rgb(41, 171, 226);
+  /* border-top: 1px solid rgb(41, 171, 226);
+  border-bottom: 1px solid rgb(41, 171, 226); */
   width: 100%;
   padding: 16px;
   background-color: white;

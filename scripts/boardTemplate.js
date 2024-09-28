@@ -12,7 +12,7 @@ function generateTasksOnBoard(
               draggable="true"
               ondragstart="startDragging(${id}, event)"
             >
-              <img class="task-arrow" src="../assets/img/png/arrow-drop-up.png"/>
+              <img class="task-arrow d-none" src="../assets/img/png/arrow-drop-up.png"/>
               <div class="task-card d-flex-column" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template', false)">
                 <div class="task-category font-c-white bg-category-${categoryColor}">
                   ${category}
@@ -35,7 +35,7 @@ function generateTasksOnBoard(
                   <img src="../assets/img/png/prio-${prio}.png" />
                 </div>
               </div>
-              <img class="task-arrow" src="../assets/img/png/arrow-drop-down.png"/>
+              <img class="task-arrow d-none" src="../assets/img/png/arrow-drop-down.png"/>
             </div>
           `;
 }
