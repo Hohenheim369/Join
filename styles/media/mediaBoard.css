@@ -19,7 +19,7 @@
     width: clamp(100px, 17vw, 252px);
   }
 
-  .task-card {
+  .task-card-area {
     width: clamp(200px, 17vw, 252px);
   }
 
@@ -50,11 +50,14 @@
     gap: 32px;
   }
 
-  .task-card {
-    width: clamp(100px, 19vw, 220px);
-    padding: 14px;
+  .task-card-area {
+    width: clamp(50px, 18vw, 220px);
     margin: 6px;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .task-card {
+    padding: 14px;    
     gap: 16px;
   }
 }
@@ -104,11 +107,15 @@
     width: 252px;
   }
 
+  .task-card-area {
+    width: 252px;
+    margin: 8px;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
+  }
+
   .task-card {
     width: 252px;
     padding: 16px;
-    margin: 8px;
-    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
     gap: 24px;
   }
 

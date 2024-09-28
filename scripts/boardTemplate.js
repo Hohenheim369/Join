@@ -7,10 +7,12 @@ function generateTasksOnBoard(
   prio
 ) {
   return `  <div
+              class="task-card-area d-flex-column-center"
               id="task_${id}"
               draggable="true"
               ondragstart="startDragging(${id}, event)"
             >
+              <img class="task-arrow" src="../assets/img/png/arrow-drop-up.png"/>
               <div class="task-card d-flex-column" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template', false)">
                 <div class="task-category font-c-white bg-category-${categoryColor}">
                   ${category}
@@ -33,6 +35,7 @@ function generateTasksOnBoard(
                   <img src="../assets/img/png/prio-${prio}.png" />
                 </div>
               </div>
+              <img class="task-arrow" src="../assets/img/png/arrow-drop-down.png"/>
             </div>
           `;
 }

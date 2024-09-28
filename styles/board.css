@@ -55,7 +55,7 @@
   align-items: start;
 }
 
-.kanban-header{
+.kanban-header {
   width: 100%;
   padding: 0 16px 0 8px;
 }
@@ -97,14 +97,30 @@
   border-radius: 10px;
 }
 
+.task-card-area {  
+  height: fit-content;
+  width: 252px;
+  background-color: white;
+  /* background-color: rgb(42, 54, 71); */
+  /* background-color: rgb(41, 171, 226); */
+  margin: 8px;
+  border-radius: 25px;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
+}
+
+.task-arrow{
+  height: 20px;
+  margin: 4px 0;
+}
+
 .task-card {
   cursor: pointer;
-  width: 252px;
+  border-top: 1px solid rgb(41, 171, 226);
+  border-bottom: 1px solid rgb(41, 171, 226);
+  width: 100%;
   padding: 16px;
-  margin: 8px;
   background-color: white;
   border-radius: 24px;
-  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
   gap: 24px;
 }
 
@@ -154,7 +170,7 @@
   border-radius: 50%;
 }
 
-.user{
+.user {
   font-weight: 700;
   color: rgb(41, 171, 226);
   border: 2px solid black;
@@ -190,7 +206,7 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
-.single-task-content{
+.single-task-content {
   font-size: 20px;
   max-height: calc(100vh - 112px);
   overflow: hidden;
@@ -219,7 +235,7 @@
   gap: 25px;
 }
 
-.single-task-prio{
+.single-task-prio {
   height: 33px;
 }
 
@@ -281,7 +297,7 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
-.delete-btn:hover{
+.delete-btn:hover {
   font-weight: 700;
 }
 
@@ -289,7 +305,7 @@
   content: url(../assets/img/png/edit-hover.png);
 }
 
-.add-task-board{
+.add-task-board {
   width: 1125px;
   height: 870px;
   background-color: white;
@@ -298,11 +314,11 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
-.edit-task-height{
+.edit-task-height {
   max-height: calc(100vh - 15px);
 }
 
-.close-add-task-button{
+.close-add-task-button {
   height: 24px;
   width: 24px;
   position: absolute;
@@ -310,7 +326,7 @@
   right: 50px;
 }
 
-.close-add-task-button:hover{
+.close-add-task-button:hover {
   border-radius: 50%;
   background-color: rgb(209, 209, 209);
 }
@@ -332,4 +348,3 @@
   background-color: unset !important;
   color: rgb(204, 204, 204) !important ;
 }
-
