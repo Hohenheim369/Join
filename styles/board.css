@@ -1,11 +1,20 @@
 .board {
-  padding: 80px 44px 40px 44px;
+  padding: 80px 44px 20px 44px;
   gap: 55px;
 }
 
 .board-menue {
   width: 504px;
   height: 48px;
+}
+
+.search-box {
+  display: flex;
+}
+
+.search-box-mobile {
+  display: none;
+  margin-top: 13px;
 }
 
 .input-button {
@@ -34,6 +43,10 @@
 
 .magnifying-glass:active {
   content: url(../assets/img/png/magnifying-glass-active.png);
+}
+
+.btn-add-task::before {
+  content: "Add Task";
 }
 
 .kanban-board {
@@ -92,6 +105,7 @@
   background-color: white;
   border-radius: 24px;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
+  gap: 24px;
 }
 
 .task-card:active {

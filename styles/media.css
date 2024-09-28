@@ -1,111 +1,37 @@
 @media screen and (min-width: 1441px) {
   .content {
-    padding-inline: calc(96px + (100vw - 1440px)/2);
+    padding-inline: calc(96px + (100vw - 1440px) / 2);
   }
-
-  .board {
-    padding-inline: calc(44px + (100vw - 1440px)/2);    
-  }
-
 }
 
 @media screen and (max-width: 1440px) {
   .content {
     padding-inline: clamp(0px, 1vw, 96px);
   }
-
-  .board {
-    padding-inline: clamp(0px, 2vw, 44px);
-    padding-top: clamp(40px, 4vw, 80px);
-    gap: clamp(32px, 1vw, 55px);
-  }
-
-  .kanban-tasks {
-    height: calc(100vh - 340px);
-  }
-
-  .task-none {
-    width: clamp(100px, 17vw, 252px);
-  }
-
-  .task-card {
-    width: clamp(200px, 17vw, 252px);
-  }
-
-  .task-subtasks-bar {
-    width: clamp(100px, 8vw, 128px);
-
-  }
-}
-
-@media screen and (max-width: 1260px) {
-  .kanban-tasks {
-    height: calc(100vh - 320px);
-  }
-
-  .task-subtasks{
-    flex-direction: column;
-    align-items: start;
-    gap: 8px;
-  }
-
-  .task-subtasks-bar {
-    width: 100%;
-  }
 }
 
 @media screen and (max-width: 1240px) {
   .content {
     width: calc(100% - 144px);
-    margin-left: clamp(144px, 3vw, 232px);
-  }
-
-  .board {
-    padding-inline: clamp(0px, 2vw, 44px);
-    gap: 32px;
-  }
-
-  .task-card {
-    width: clamp(100px, 19vw, 220px);
-    padding: 14px;
-    margin: 6px;
-    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.08);
+    margin-left: 144px;
   }
 }
 
 @media screen and (max-width: 1024px) {
-  /* .content {
-    width: calc(100% - 144px);
-    margin-left: clamp(144px, 3vw, 232px);
-    padding: 110px 96px 70px 96px;
+  .content {
+    width: calc(100% - clamp(100px, 15vw, 144px));
+    margin-left: clamp(100px, 15vw, 144px);
+  }
+}
+
+@media screen and (max-width: 777px) {
+  .content {
+    width: 100%;
+    margin-top: 80px;
+    margin-left: 0;
   }
 
-  .board {
-    padding-inline: clamp(0px, 2vw, 44px);
-    gap: 32px;
+  h1 {
+    font-size: clamp(47px, 7vw, 61px);
   }
-
-  .task-card {
-    width: clamp(100px, 17vw, 220px);
-    padding: 14px;
-    margin: 6px;
-    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.08);
-  } */
-
-
-  .kanban-board {
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
-  }
-
-  .kanban-tasks {
-    height: 270px;
-    overflow: hidden;
-    overflow-x: scroll;
-    display: flex;
-    flex-direction: row;
-  }
-
-  
 }
