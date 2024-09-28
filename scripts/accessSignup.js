@@ -1,31 +1,69 @@
-function removeNoticeButtonBg() {
-  const checkButton = document.getElementById("signup_check_off");
-  checkButton.classList.remove("bg-alert");
+function signUp(){
+  const email = document.getElementById("signup_email").value.trim();
+  const name = document.getElementById("signup_name").value.trim();
+  const password = document.getElementById("signup_password").value;
+  const cPassword = document.getElementById("signup_c_password").value;
+
+  signUpProcess(email, name, password, cPassword);
 }
 
-function checkEmailFormat(email, noticeField) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    console.log("Invalid email format.");
-    noticeField.innerHTML += `<div>Please enter a valid email address.</div>`;
-    return false;
+async function signUpProcess(email, name, password, cPassword) {
+  resetSignupAlert();
+  await validateInputs(email, name, password, cPassword);  
+  const initials = getUserInitials(name);
+  await addUser(email, name, password, initials);  
+  resetSignupFormInputs();
+  await showSuccessfullySignedUp();
+  localStorage.removeItem("rememberMeData");
+  toggleAccessWindow();
+}
+
+function resetSignupAlert() {
+  const noticeField = document.getElementById("signup_notice_field");
+  noticeField.innerHTML = "";
+
+  document.getElementById("signup_email").classList.remove("border-alert");
+  document.getElementById("signup_name").classList.remove("border-alert");
+  document.getElementById("signup_password").classList.remove("border-alert");
+  document.getElementById("signup_c_password").classList.remove("border-alert");
+}
+
+async function validateInputs(email, name, password, cPassword) {
+  const noticeField = document.getElementById("signup_notice_field");
+  const isEmailValid = await validateEmail(email, noticeField);
+  const isNameValid = validateName(name, noticeField);
+  const isPasswordValid = validatePassword(password, cPassword, noticeField);
+  const isLegalAccepted = validateLegalAcceptance(noticeField);
+
+  const isValid =
+    isEmailValid && isNameValid && isPasswordValid && isLegalAccepted;
+
+  if (!isValid) {
+    throw new Error("Error in validation");
   }
   return true;
 }
 
-async function isEmailRegistered(email) {
-  const users = await fetchData('users');
-  if (!users) {
+async function validateEmail(email, noticeField) {
+  const emailField = document.getElementById("signup_email");
+
+  if (!(await checkEmailExists(email, noticeField, emailField))) {
     return false;
   }
-  return Object.values(users).some((user) => user && user.email.toLowerCase() === email.toLowerCase());
+
+  if (!checkEmailFormat(email, noticeField, emailField)) {
+    return false;
+  }
+
+  return true;
 }
 
-async function checkEmailExists(email, noticeField) {
+async function checkEmailExists(email, noticeField, emailField) {
   try {
     const emailExists = await isEmailRegistered(email);
     if (emailExists) {
       console.log("Email already exists.");
+      emailField.classList.add("border-alert");
       noticeField.innerHTML += `<div>This email address is already registered.</div>`;
       return false;
     }
@@ -36,37 +74,22 @@ async function checkEmailExists(email, noticeField) {
   }
 }
 
-async function validateEmail(email, noticeField) {
-  const emailField = document.getElementById("signup_email");
-
-  if (!(await checkEmailExists(email, noticeField))) {
-    emailField.classList.add("border-alert");
+async function isEmailRegistered(email) {
+  const users = await fetchData("users");
+  if (!users) {
     return false;
   }
-
-  if (!(checkEmailFormat(email, noticeField))) {
-    emailField.classList.add("border-alert");
-    return false;
-  }
-
-  return true;
+  return Object.values(users).some(
+    (user) => user && user.email.toLowerCase() === email.toLowerCase()
+  );
 }
 
-function checkNameNotEmpty(name, noticeField) {
-  if (name.trim().length < 3) {
-    console.log("No name entered.");
-    noticeField.innerHTML += `<div>Please enter a name with at least 3 letters.</div>`;
-    return false;
-  }
-  return true;
-}
-
-function checkNameCharacters(name, noticeField) {
-  const nameRegex = /^[A-Za-zÄäÖöÜüß\s]+$/;
-
-  if (!nameRegex.test(name)) {
-    console.log("Name contains invalid characters.");
-    noticeField.innerHTML += `<div>Your name should only contain letters and spaces.</div>`;
+function checkEmailFormat(email, noticeField, emailField) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    console.log("Invalid email format.");
+    emailField.classList.add("border-alert");
+    noticeField.innerHTML += `<div>Please enter a valid email address.</div>`;
     return false;
   }
   return true;
@@ -76,35 +99,34 @@ function validateName(name, noticeField) {
   let isValidName = true;
   const nameField = document.getElementById("signup_name");
 
-  if (!checkNameNotEmpty(name, noticeField)) {
-    nameField.classList.add("border-alert");
+  if (!checkNameNotEmpty(name, noticeField, nameField)) {
     isValidName = false;
   }
 
-  if (!checkNameCharacters(name, noticeField)) {
-    nameField.classList.add("border-alert");
+  if (!checkNameCharacters(name, noticeField, nameField)) {
     isValidName = false;
   }
 
   return isValidName;
 }
 
-function checkPasswordMatch(password, cPassword, noticeField) {
-  if (password !== cPassword) {
-    console.log("Passwords do not match.");
-    noticeField.innerHTML += `<div>Your passwords don't match. Please try again.</div>`;
+function checkNameNotEmpty(name, noticeField, nameField) {
+  if (name.trim().length < 3) {
+    console.log("No name entered.");
+    nameField.classList.add("border-alert");
+    noticeField.innerHTML += `<div>Please enter a name with at least 3 letters.</div>`;
     return false;
   }
   return true;
 }
 
-function checkPasswordComplexity(password, noticeField) {
-  const complexityRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,}$/;
+function checkNameCharacters(name, noticeField, nameField) {
+  const nameRegex = /^[A-Za-zÄäÖöÜüß\s]+$/;
 
-  if (!complexityRegex.test(password)) {
-    console.log("Password does not meet complexity requirements.");
-    noticeField.innerHTML += `<div>Your password must be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.</div>`;
+  if (!nameRegex.test(name)) {
+    console.log("Name contains invalid characters.");
+    nameField.classList.add("border-alert");
+    noticeField.innerHTML += `<div>Your name should only contain letters and spaces.</div>`;
     return false;
   }
   return true;
@@ -115,23 +137,52 @@ function validatePassword(password, cPassword, noticeField) {
   const passwordField = document.getElementById("signup_password");
   const cPasswordField = document.getElementById("signup_c_password");
 
-  if (!checkPasswordComplexity(password, noticeField)) {
-    passwordField.classList.add("border-alert");
+  if (!checkPasswordComplexity(password, noticeField, passwordField)) {
     isValidPassword = false;
   }
 
-  if (!checkPasswordMatch(password, cPassword, noticeField)) {
-    passwordField.classList.add("border-alert");
-    cPasswordField.classList.add("border-alert");
+  if (
+    !checkPasswordMatch(
+      password,
+      cPassword,
+      noticeField,
+      passwordField,
+      cPasswordField
+    )
+  ) {
     isValidPassword = false;
   }
   return isValidPassword;
 }
 
-function isLegalAccepted() {
-  const checkButton = document.getElementById("signup_check_off");
-  const isChecked = checkButton.src.includes("true");
-  return isChecked;
+function checkPasswordComplexity(password, noticeField, passwordField) {
+  const complexityRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,}$/;
+
+  if (!complexityRegex.test(password)) {
+    console.log("Password does not meet complexity requirements.");
+    passwordField.classList.add("border-alert");
+    noticeField.innerHTML += `<div>Your password must be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.</div>`;
+    return false;
+  }
+  return true;
+}
+
+function checkPasswordMatch(
+  password,
+  cPassword,
+  noticeField,
+  passwordField,
+  cPasswordField
+) {
+  if (password !== cPassword) {
+    console.log("Passwords do not match.");
+    passwordField.classList.add("border-alert");
+    cPasswordField.classList.add("border-alert");
+    noticeField.innerHTML += `<div>Your passwords don't match. Please try again.</div>`;
+    return false;
+  }
+  return true;
 }
 
 function validateLegalAcceptance(noticeField) {
@@ -146,22 +197,10 @@ function validateLegalAcceptance(noticeField) {
   return true;
 }
 
-async function validateInputs(email, name, password, cPassword) {
-  const noticeField = document.getElementById("signup_notice_field");
-
-  const isEmailValid = await validateEmail(email, noticeField);
-  const isNameValid = validateName(name, noticeField);
-  const isPasswordValid = validatePassword(password, cPassword, noticeField);
-  const isLegalAccepted = validateLegalAcceptance(noticeField);
-
-  const isValid =
-    isEmailValid && isNameValid && isPasswordValid && isLegalAccepted;
-
-  if (!isValid) {
-    throw new Error("Error in validation");
-  }
-
-  return true;
+function isLegalAccepted() {
+  const checkButton = document.getElementById("signup_check_off");
+  const isChecked = checkButton.src.includes("true");
+  return isChecked;
 }
 
 function getUserInitials(name) {
@@ -178,11 +217,15 @@ function getUserInitials(name) {
   }
 }
 
-function handleRegistrationResult(result) {
-  if (result) {
-    console.log("Registration successful!");
-  } else {
-    console.log("There was a problem with the registration. Please try again.");
+async function addUser(email, name, password, initials) {
+  const userId = await getNewId("users");
+  const userData = createUserData(name, initials, email, password, userId);
+
+  try {
+    const result = await postData(`users/${userId - 1}/`, userData);
+    handleRegistrationResult(result);
+  } catch (error) {
+    console.error("Error during registration:", error);
   }
 }
 
@@ -194,29 +237,9 @@ function createUserData(name, initials, email, password, userId) {
     password,
     id: userId,
     color: "#ffffff",
-    tasks: [6, 7, 8, 9 , 10],
+    tasks: [6, 7, 8, 9, 10],
     contacts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   };
-}
-
-async function addUser(email, name, password, initials) {
-  const userId = await getNewId('users');
-  const userData = createUserData(name, initials, email, password, userId);
-
-  try {
-    const result = await postData(
-      `users/${userId - 1}/`,
-      userData
-    );
-    handleRegistrationResult(result);
-  } catch (error) {
-    handleRegistrationError(error);
-  }
-}
-
-function handleRegistrationError(error) {
-  console.error("Error during registration:", error);
-  console.log("An error occurred. Please try again later.");
 }
 
 function handleRegistrationResult(result) {
@@ -238,16 +261,6 @@ function resetSignupFormInputs() {
   legalButton.classList.remove("bg-alert");
 }
 
-function resetSignupAlert() {
-  const noticeField = document.getElementById("signup_notice_field");
-  noticeField.innerHTML = "";
-
-  document.getElementById("signup_email").classList.remove("border-alert");
-  document.getElementById("signup_name").classList.remove("border-alert");
-  document.getElementById("signup_password").classList.remove("border-alert");
-  document.getElementById("signup_c_password").classList.remove("border-alert");
-}
-
 function showSuccessfullySignedUp() {
   return new Promise((resolve) => {
     const overlay = document.getElementById("successfully_signed_up");
@@ -265,20 +278,7 @@ function showSuccessfullySignedUp() {
   });
 }
 
-async function signUpProcess() {
-  const email = document.getElementById("signup_email").value.trim();
-  const name = document.getElementById("signup_name").value.trim();
-  const password = document.getElementById("signup_password").value;
-  const cPassword = document.getElementById("signup_c_password").value;
-
-  resetSignupAlert();
-  await validateInputs(email, name, password, cPassword);
-
-  const initials = getUserInitials(name);
-
-  await addUser(email, name, password, initials);
-  resetSignupFormInputs();
-  await showSuccessfullySignedUp();
-  localStorage.removeItem("rememberMeData");
-  toggleAccessWindow();
+function removeNoticeButtonBg() {
+  const checkButton = document.getElementById("signup_check_off");
+  checkButton.classList.remove("bg-alert");
 }
