@@ -299,6 +299,39 @@
   font-weight: 700;
 }
 
+.delete-message{
+  height: 74px;
+  padding: 8px 24px;
+  border-radius: 20px;
+  background-color: rgb(42, 54, 71);
+  transform: translateY(100vh);
+  transition: transform 0.5s ease;
+}
+
+.overlay-delete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1002;
+  opacity: 0;
+  transition: background-color 0.5s ease;
+}
+
+.overlay-delete.active {
+  display: flex;
+}
+
+.overlay-delete.visible {
+  opacity: 1;
+}
+
+.overlay-delete.visible .delete-message {
+  transform: translateY(0);
+}
+
 .img-edit:hover {
   content: url(../assets/img/png/edit-hover.png);
 }

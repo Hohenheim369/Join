@@ -121,8 +121,8 @@ body {
 }
 
 .signup-message{
-  width: 312px;
   height: 74px;
+  padding: 8px 24px;
   border-radius: 20px;
   background-color: rgb(42, 54, 71);
   transform: translateY(100vh);

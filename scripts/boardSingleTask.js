@@ -118,6 +118,7 @@ async function deleteTask(taskId) {
   }
   deleteTaskInLocalStorage(taskId);
 
+  await showSuccessfullyDelete();
   toggleOverlay("board_delete_overlay");
   toggleOverlay("board_task_overlay");
   window.location.reload();
@@ -155,4 +156,21 @@ function deleteTaskInLocalStorage(taskId) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
   activeUser.tasks = activeUser.tasks.filter((task) => task !== taskId);
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
+}
+
+function showSuccessfullyDelete() {
+  return new Promise((resolve) => {
+    const overlay = document.getElementById("successfully_delete_task");
+    overlay.classList.remove("d-none");
+    overlay.classList.add("active");
+
+    setTimeout(() => {
+      overlay.classList.add("visible");
+      setTimeout(() => {
+        overlay.classList.remove("active", "visible");
+        overlay.classList.add("d-none");
+        resolve();
+      }, 1500);
+    }, 50);
+  });
 }

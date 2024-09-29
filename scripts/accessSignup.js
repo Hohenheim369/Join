@@ -273,7 +273,7 @@ function showSuccessfullySignedUp() {
         overlay.classList.remove("active", "visible");
         overlay.classList.add("d-none");
         resolve();
-      }, 1500);
+      }, 15000);
     }, 50);
   });
 }
