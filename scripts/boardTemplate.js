@@ -54,6 +54,34 @@ function generateSubtasks(sumDoneSubtasks, sumAllSubtasks) {
       </span>`;
 }
 
+function generateAssigneeField(contact) {
+  return `<span class="assignee font-s-12 font-c-white mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${contact.color};">${contact.initials}
+      </span>`;
+}
+
+function generateAdditionallyAssigneeField(remainingCount) {
+  return `<span class="additionally-assignee wh-32 d-flex-center">
+        +${remainingCount}
+      </span>`;
+}
+
+function generateUserField(activeUser) {
+  return `<span class="user font-s-12 mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${activeUser.color};">${activeUser.initials}
+      </span>`;
+}
+
+function generateArrowTop(task) {
+  return `<img class="task-arrow" onclick="moveToStatus(${task.id}, 0)" 
+            src="../assets/img/png/arrow-drop-up.png"/>`;
+}
+
+function generateArrowBottom(task) {
+  return `<img class="task-arrow" onclick="moveToStatus(${task.id}, 1)" 
+            src="../assets/img/png/arrow-drop-down.png"/>`;
+}
+
 function generateSingleTasks(
   id,
   title,
@@ -162,4 +190,22 @@ function generateSingleSubtasks(subtask, id) {
             alt=""/>
             ${subtask.subTaskName}
           </div>`;
+}
+
+function generateNoAssigneeField() {
+  return `<div class="single-task-subtasks font-s-16">
+            No assignee have been selected yet.
+          </div>`;
+}
+
+function generateNoSubtaskField() {
+  return `<div class="single-task-subtasks">
+            No subtasks have been created yet.
+          </div>`;
+}
+
+function generateDeleteButton(taskId) {
+  return `<div class="delete-btn font-s-20 font-c-66-82-110 cursor-p"
+           onclick="deleteTask(${taskId})">YES
+      </div>`;
 }

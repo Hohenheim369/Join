@@ -200,34 +200,23 @@ function renderAssignee(contactId, contacts, assignedField) {
   const contact = contacts.find((c) => c.id === contactId);
 
   if (contact) {
-    assignedField.innerHTML += `
-      <span class="assignee font-s-12 font-c-white mar-r-8 wh-32 d-flex-center" 
-            style="background-color: ${contact.color};">${contact.initials}
-      </span>`;
+    assignedField.innerHTML += generateAssigneeField(contact);
   }
 }
 
 function displayCount(task, assignees, maxDisplayed) {
-  const assignedNumberField = document.getElementById(
-    `assignees_number_${task.id}`
-  );
-  assignedNumberField.innerHTML = "";
+  const numberField = document.getElementById(`assignees_number_${task.id}`);
+  numberField.innerHTML = "";
 
   if (assignees.length > maxDisplayed) {
     const remainingCount = assignees.length - maxDisplayed;
-    assignedNumberField.innerHTML += `
-      <span class="additionally-assignee wh-32 d-flex-center">
-        +${remainingCount}
-      </span>`;
+    numberField.innerHTML += generateAdditionallyAssigneeField(remainingCount);
   }
 }
 
 function displayUser(task, assignedField) {
   if (task.user === activeUser.id) {
-    assignedField.innerHTML += `
-      <span class="user font-s-12 mar-r-8 wh-32 d-flex-center" 
-            style="background-color: ${activeUser.color};">${activeUser.initials}
-      </span>`;
+    assignedField.innerHTML += generateUserField(activeUser);
   }
 }
 
@@ -237,13 +226,12 @@ function displayStatusArrows(task) {
   let arrowBottom = document.getElementById(`arrow_area_bottom_${task.id}`);
 
   if (task.status != "todo") {
-    arrowTop.innerHTML = `<img class="task-arrow" onclick="moveToStatus(${task.id}, 0)" src="../assets/img/png/arrow-drop-up.png"/>`;
-    taskCard.classList.add('task-arrow-top');
+    arrowTop.innerHTML = generateArrowTop(task);
+    taskCard.classList.add("task-arrow-top");
   }
 
   if (task.status != "done") {
-    arrowBottom.innerHTML = `<img class="task-arrow" onclick="moveToStatus(${task.id}, 1)" src="../assets/img/png/arrow-drop-down.png"/>`;
-    taskCard.classList.add('task-arrow-bottom');
+    arrowBottom.innerHTML = generateArrowBottom(task);
+    taskCard.classList.add("task-arrow-bottom");
   }
-
 }

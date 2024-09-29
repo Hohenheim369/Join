@@ -42,7 +42,7 @@ function displaySingleAssinees(singleTask, contacts) {
   );
 
   if (!hasAssignees) {
-    assigneeField.innerHTML = `<div class="single-task-subtasks font-s-16">No assignee have been selected yet.</div>`;
+    assigneeField.innerHTML = generateNoAssigneeField();
   }
 }
 
@@ -80,7 +80,7 @@ function displaySingleSubtasks(subtasks, taskId) {
       subtaskField.innerHTML += generateSingleSubtasks(subtask, taskId);
     });
   } else {
-    subtaskField.innerHTML = `<div class="single-task-subtasks">No subtasks have been created yet.</div>`;
+    subtaskField.innerHTML = generateNoSubtaskField();
   }
 }
 
@@ -102,10 +102,7 @@ function openDeleteDialog(taskId) {
   toggleOverlay("board_delete_overlay");
 
   let yesButton = document.getElementById("delete_yes_btn");
-  yesButton.innerHTML = `
-      <div class="delete-btn font-s-20 font-c-66-82-110 cursor-p"
-           onclick="deleteTask(${taskId})">YES
-      </div>`;
+  yesButton.innerHTML = generateDeleteButton(taskId);
 }
 
 async function deleteTask(taskId) {
