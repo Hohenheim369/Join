@@ -23,8 +23,11 @@ async function renderContent() {
   const userContacts = contacts.filter((contact) =>
     activeUser.contacts.includes(contact.id)
   );
-  // activeUser in der kontkate liste ganz oben setzten
-  const activeUserContactId = await renderActiveUserInContactList();
+  // 5. Aktiven Benutzer in der Kontaktliste rendern, wenn die ID nicht 0 ist
+  let activeUserContactId = null;
+  if (activeUser.id !== 0) {
+    activeUserContactId = await renderActiveUserInContactList();
+  }
   // 5. Kontakte nach Initialen gruppieren
   const groupedContacts = groupContacts(userContacts, activeUserContactId);
   
@@ -162,7 +165,6 @@ function createContact(name, email, phone, color, contactId) {
 async function searchActiveUserinContacts(activeUser) {
   // Hole die Kontakte aus Firebase
   let contacts = await fetchData("contacts");
-
   // Suche nach dem aktiven Benutzer im Kontakte-Array
   for (const id in contacts) {
     if (contacts[id].name === activeUser.name) {
@@ -170,13 +172,10 @@ async function searchActiveUserinContacts(activeUser) {
       return contacts[id].id;
     }
   }
-
   // Wenn der Kontakt nicht gefunden wurde, füge ihn hinzu
   await addActiveUserToContacts(activeUser);
-
   // Nach dem Hinzufügen des neuen Kontakts erneut nach den Kontakten suchen
   contacts = await fetchData("contacts");
-
   // Suche erneut nach dem aktiven Benutzer im Kontakte-Array
   for (const contact of contacts) {
     if (contact.name === activeUser.name) {
