@@ -219,7 +219,7 @@ async function deleteContact(contactId) {
   //   method: "DELETE",
   // });
 
-  deleteContactsInData(contactId)
+  await deleteContactsInData(contactId)
   // Aktualisiere die Kontaktliste nach dem Löschen
   await renderContent(); // Render die aktualisierte Kontaktliste
   document.querySelector(".contacts-info-box").innerHTML = ""; // Leere die Detailansicht
