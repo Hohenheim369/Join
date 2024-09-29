@@ -12,8 +12,9 @@ function generateTasksOnBoard(
               draggable="true"
               ondragstart="startDragging(${id}, event)"
             >
-              <img class="task-arrow d-none" src="../assets/img/png/arrow-drop-up.png"/>
-              <div class="task-card d-flex-column" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template', false)">
+              <div id="arrow_area_top_${id}"></div>
+              
+              <div id="task_card_${id}" class="task-card d-flex-column" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template', false)">
                 <div class="task-category font-c-white bg-category-${categoryColor}">
                   ${category}
                 </div>
@@ -35,7 +36,8 @@ function generateTasksOnBoard(
                   <img src="../assets/img/png/prio-${prio}.png" />
                 </div>
               </div>
-              <img class="task-arrow d-none" src="../assets/img/png/arrow-drop-down.png"/>
+
+              <div  id="arrow_area_bottom_${id}" onclick="moveToStatus(${id}, 1)"></div>
             </div>
           `;
 }
@@ -131,7 +133,7 @@ function generateSingleTasks(
           </div>`;
 }
 
-function generateSingleUserAsAssignee(){
+function generateSingleUserAsAssignee() {
   return `
          <div class="single-task-assignee">
                   <span
@@ -140,7 +142,7 @@ function generateSingleUserAsAssignee(){
           </div>`;
 }
 
-function generateSingleAssignee(contact){
+function generateSingleAssignee(contact) {
   return `
           <div class="single-task-assignee">
                   <span
@@ -161,4 +163,3 @@ function generateSingleSubtasks(subtask, id) {
             ${subtask.subTaskName}
           </div>`;
 }
-

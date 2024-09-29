@@ -80,7 +80,7 @@ async function filterUserTasks() {
   return tasksToRender;
 }
 
-function filterSoughtTaskToRender (tasksToRender) {
+function filterSoughtTaskToRender(tasksToRender) {
   let soughtTask = getSoughtTask();
 
   if (soughtTask.length != 0) {
@@ -90,13 +90,14 @@ function filterSoughtTaskToRender (tasksToRender) {
         task.description.toLowerCase().includes(soughtTask)
     );
   }
-  
+
   return tasksToRender;
 }
 
 function getSoughtTask() {
   const soughtedTaskDesktop = document.getElementById("sought_task").value;
-  const soughtedTaskMobile = document.getElementById("sought_task_mobile").value;
+  const soughtedTaskMobile =
+    document.getElementById("sought_task_mobile").value;
   return (soughtedTaskDesktop || soughtedTaskMobile).toLowerCase();
 }
 
@@ -128,6 +129,7 @@ function renderStatusTasks(tasks, area, contacts) {
     );
     displaySubtasks(task);
     displayAssigneesForTask(task, contacts);
+    displayStatusArrows(task);
   });
 }
 
@@ -227,4 +229,21 @@ function displayUser(task, assignedField) {
             style="background-color: ${activeUser.color};">${activeUser.initials}
       </span>`;
   }
+}
+
+function displayStatusArrows(task) {
+  let taskCard = document.getElementById(`task_card_${task.id}`);
+  let arrowTop = document.getElementById(`arrow_area_top_${task.id}`);
+  let arrowBottom = document.getElementById(`arrow_area_bottom_${task.id}`);
+
+  if (task.status != "todo") {
+    arrowTop.innerHTML = `<img class="task-arrow" onclick="moveToStatus(${task.id}, 0)" src="../assets/img/png/arrow-drop-up.png"/>`;
+    taskCard.classList.add('task-arrow-top');
+  }
+
+  if (task.status != "done") {
+    arrowBottom.innerHTML = `<img class="task-arrow" onclick="moveToStatus(${task.id}, 1)" src="../assets/img/png/arrow-drop-down.png"/>`;
+    taskCard.classList.add('task-arrow-bottom');
+  }
+
 }

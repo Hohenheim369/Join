@@ -57,7 +57,7 @@
   }
 
   .task-card {
-    padding: 14px;    
+    padding: 14px;
     gap: 16px;
   }
 }
@@ -113,6 +113,18 @@
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
   }
 
+  .task-arrow {
+    display: flex;
+  }
+
+  .task-arrow-top{
+    border-top: 1px solid rgb(41, 171, 226);
+  }
+  
+  .task-arrow-bottom{
+    border-bottom: 1px solid rgb(41, 171, 226);
+  }
+
   .task-card {
     width: 252px;
     padding: 16px;
@@ -157,16 +169,15 @@
     width: clamp(304px, 82vw, 525px);
   }
 
-  .single-task-content{
+  .single-task-content {
     font-size: clamp(16px, 3vw, 20px);
   }
-  
+
   .single-task-category {
     font-size: clamp(16px, 3vw, 24px);
   }
 
-  .single-task-prio{
+  .single-task-prio {
     height: clamp(27px, 5vw, 33px);
   }
-
 }
