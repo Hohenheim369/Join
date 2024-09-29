@@ -64,8 +64,12 @@
 
 @media screen and (max-width: 1024px) {
   .board {
+    height: calc(100vh - 120px);
     padding-inline: 21px;
+    margin-bottom: 40px;
     gap: 32px;
+    overflow: hidden;
+    overflow-y: scroll;
   }
 
   .board-menue {
@@ -89,8 +93,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
-    overflow: hidden;
-    overflow-y: scroll;
   }
 
   .kanban-tasks {
@@ -117,11 +119,11 @@
     display: flex;
   }
 
-  .task-arrow-top{
+  .task-arrow-top {
     border-top: 1px solid rgb(41, 171, 226);
   }
-  
-  .task-arrow-bottom{
+
+  .task-arrow-bottom {
     border-bottom: 1px solid rgb(41, 171, 226);
   }
 
@@ -143,9 +145,10 @@
 }
 
 @media screen and (max-width: 777px) {
-  .board {
-    height: calc(100vh - 80px);
-    padding: 48px 16px 88px 16px;
+  .board {    
+    height: calc(100vh - 160px);
+    padding-inline: 16px;
+    margin-bottom: 80px;
     gap: 27px;
   }
 
@@ -167,6 +170,8 @@
 
   .single-task {
     width: clamp(304px, 82vw, 525px);
+    padding-block: clamp(32px, 3vw, 48px);
+    padding-inline: clamp(24px, 3vw, 40px);
   }
 
   .single-task-content {
@@ -179,5 +184,11 @@
 
   .single-task-prio {
     height: clamp(27px, 5vw, 33px);
+  }
+
+  .delete-task {
+    width: clamp(290px, 78vw, 360px);
+    font-size: clamp(18px, 5vw, 20px);
+    padding-block: clamp(36px, 11vw, 48px);
   }
 }

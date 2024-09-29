@@ -187,17 +187,17 @@
         class="delete-task d-flex-column-center gap-32"
         onclick="bubblingPrevention(event)"
       >
-        <div class="font-s-20 font-w-700 font-c-66-82-110">
+        <div class=" font-w-700 font-c-66-82-110">
           Delete task permanently?
         </div>
-        <div class="w-100 d-flex-center gap-32">
-          <div id="delete_yes_btn"></div>
-          <div
-            class="delete-btn font-s-20 font-c-66-82-110 cursor-p"
+        <div class="delte-task-button-area d-flex-center">
+          <div class="delete-btn" id="delete_yes_btn"></div>
+          <button
+            class="clear-button"
             onclick="toggleOverlay('board_delete_overlay')"
           >
             NO
-          </div>
+          </button>
         </div>
       </div>
     </section>

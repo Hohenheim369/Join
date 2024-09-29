@@ -205,7 +205,7 @@ function generateNoSubtaskField() {
 }
 
 function generateDeleteButton(taskId) {
-  return `<div class="delete-btn font-s-20 font-c-66-82-110 cursor-p"
+  return `<button class="clear-button"
            onclick="deleteTask(${taskId})">YES
-      </div>`;
+      </button>`;
 }
