@@ -12,7 +12,7 @@ function generateTasksOnBoard(
               draggable="true"
               ondragstart="startDragging(${id}, event)"
             >
-              <div id="arrow_area_top_${id}"></div>
+              <div class="w-100" id="arrow_area_top_${id}"></div>
               
               <div id="task_card_${id}" class="task-card d-flex-column" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template', false)">
                 <div class="task-category font-c-white bg-category-${categoryColor}">
@@ -37,7 +37,7 @@ function generateTasksOnBoard(
                 </div>
               </div>
 
-              <div  id="arrow_area_bottom_${id}" onclick="moveToStatus(${id}, 1)"></div>
+              <div class="w-100" id="arrow_area_bottom_${id}"></div>
             </div>
           `;
 }
@@ -73,12 +73,12 @@ function generateUserField(activeUser) {
 }
 
 function generateArrowTop(task) {
-  return `<img class="task-arrow" onclick="moveToStatus(${task.id}, 0)" 
+  return `<img class="task-arrow cursor-p" onclick="moveToStatus(${task.id}, '${task.status}', -1)" 
             src="../assets/img/png/arrow-drop-up.png"/>`;
 }
 
 function generateArrowBottom(task) {
-  return `<img class="task-arrow" onclick="moveToStatus(${task.id}, 1)" 
+  return `<img class="task-arrow cursor-p" onclick="moveToStatus(${task.id}, '${task.status}', 1)" 
             src="../assets/img/png/arrow-drop-down.png"/>`;
 }
 

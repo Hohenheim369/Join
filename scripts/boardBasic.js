@@ -9,7 +9,19 @@ function toggleOverlay(section) {
   }
 }
 
+const statuses = ["todo", "inprogress", "awaitfeedback", "done"];
 let currentDraggedElement;
+
+async function moveToStatus(taskId, status, moveToDirection){
+
+  let currentIndex = statuses.indexOf(status);
+  let newIndex = currentIndex + moveToDirection;
+  let newStatus = statuses[newIndex];
+
+  currentDraggedElement = taskId;
+
+  await moveTo(newStatus);
+}
 
 function startDragging(id) {
   currentDraggedElement = id;
@@ -50,7 +62,6 @@ async function postUpdatedTask(task) {
 }
 
 async function updateTasksOnBoard() {
-  const statuses = ["todo", "inprogress", "awaitfeedback", "done"];
   cleanBoard(statuses);
   await renderTasksInStatusArea(statuses);
 }
@@ -235,3 +246,5 @@ function displayStatusArrows(task) {
     taskCard.classList.add("task-arrow-bottom");
   }
 }
+
+
