@@ -64,24 +64,11 @@ function cleanBoard(statuses) {
 
 async function renderTasksInStatusArea(statuses) {
   let tasksToRender = await filterUserTasks();
-  tasksToRender = filterSoughtTask(tasksToRender);
+  tasksToRender = filterSoughtTaskToRender(tasksToRender);
   const contacts = await fetchData("contacts");
 
   statuses.forEach((status) =>
     renderStatusArea(status, tasksToRender, contacts)
-  );
-}
-
-function filterSoughtTask(tasksToRender) {
-  let soughtedTask = document.getElementById("sought_task").value.toLowerCase();
-  if (soughtedTask.length === 0) {
-    return tasksToRender;
-  }
-
-  return tasksToRender.filter(
-    (task) =>
-      task.title.toLowerCase().includes(soughtedTask) ||
-      task.description.toLowerCase().includes(soughtedTask)
   );
 }
 
@@ -91,6 +78,26 @@ async function filterUserTasks() {
 
   const tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
   return tasksToRender;
+}
+
+function filterSoughtTaskToRender (tasksToRender) {
+  let soughtTask = getSoughtTask();
+
+  if (soughtTask.length != 0) {
+    return tasksToRender.filter(
+      (task) =>
+        task.title.toLowerCase().includes(soughtTask) ||
+        task.description.toLowerCase().includes(soughtTask)
+    );
+  }
+  
+  return tasksToRender;
+}
+
+function getSoughtTask() {
+  const soughtedTaskDesktop = document.getElementById("sought_task").value;
+  const soughtedTaskMobile = document.getElementById("sought_task_mobile").value;
+  return (soughtedTaskDesktop || soughtedTaskMobile).toLowerCase();
 }
 
 function renderStatusArea(status, tasks, contacts) {
