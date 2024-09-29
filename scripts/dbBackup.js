@@ -144,7 +144,7 @@ let dbBackupTask = [
     description: "In your join you will find 10 tasks and 10 contacts to try out. You can edit these, but the changes will be reset after you log in again. If you delete them, they are permanently removed from your join.",
     id: 7,
     priority: "urgent",
-    status: "inprogress",
+    status: "todo",
     title: "Tutorial 2: Sample Tasks and Contacts",
     user: "",
   },
@@ -154,7 +154,7 @@ let dbBackupTask = [
     description: "You can edit your cards. Tasks can be moved from one phase to the next, edited under \"Edit\" and deleted under \"Delete\".",
     id: 8,
     priority: "low",
-    status: "awaitfeedback",
+    status: "inprogress",
     subtasks: [
       {
         done: false,
