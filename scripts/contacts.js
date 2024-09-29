@@ -19,35 +19,36 @@ async function renderContent() {
   const data = await fetchData("contacts");
   // 3. Alle Kontakte aus Firebase in ein Array umwandeln
   const contacts = Object.values(data);
-  
   // 4. Kontakte basierend auf den IDs des Benutzers filtern
   const userContacts = contacts.filter((contact) =>
     activeUser.contacts.includes(contact.id)
   );
+  // activeUser in der kontkate liste ganz oben setzten
+  const activeUserContactId = await renderActiveUserInContactList();
   // 5. Kontakte nach Initialen gruppieren
-  const groupedContacts = groupContacts(userContacts);
+  const groupedContacts = groupContacts(userContacts, activeUserContactId);
+  
   // 6. Kontaktliste rendern
-  // activeUser in der kontkate liste ganz oben setzten 
-  await renderActiveUserInContactList();
-  renderContactsList(groupedContacts, contactList);
+  renderContactsList(groupedContacts, contactList,activeUserContactId );
 }
 
-async function renderActiveUserInContactList(){
+async function renderActiveUserInContactList() {
   const contactList = document.getElementById("contact_list");
   let activeUserContactId = await searchActiveUserinContacts(activeUser);
-  let data = await fetchData(`contacts/${activeUserContactId -1}`)
-  const activeUserHtml = generateActiveUser(data);
-  contactList.innerHTML = activeUserHtml;
+  let data = await fetchData(`contacts/${activeUserContactId - 1}`);
+  contactList.innerHTML = generateActiveUser(data);
+  return activeUserContactId;
 }
 
-function renderContactsList(groupedContacts, contactList) {
+function renderContactsList(groupedContacts, contactList, activeUserContactId) {
   const sortedInitials = Object.keys(groupedContacts).sort(); // Initialen alphabetisch sortieren
   sortedInitials.forEach((initial) => {
     renderLetterBox(initial, contactList); // Buchstaben-Box für Initiale rendern
     groupedContacts[initial].forEach(({ contact }) => {
-      const contactHtml = generateContact(contact); // Kontakt-HTML generieren
-      contactList.innerHTML += contactHtml; // Kontakt zum DOM hinzufügen
-    });
+      if (contact.id !== activeUserContactId) {
+        const contactHtml = generateContact(contact); // Kontakt-HTML generieren
+        contactList.innerHTML += contactHtml; // Kontakt zum DOM hinzufügen
+      }});
   });
 }
 
@@ -56,9 +57,9 @@ function renderLetterBox(initial, contactList) {
   contactList.innerHTML += letterBoxHtml;
 }
 
-function groupContacts(contacts) {
+function groupContacts(contacts, activeUserContactId) {
   return contacts.reduce((acc, contact, index) => {
-    if (contact && contact.initials) {
+    if (contact && contact.initials && contact.id !== activeUserContactId) {
       let firstInitial = contact.initials.charAt(0).toUpperCase(); // Verwende die gespeicherten Initialen
       if (!acc[firstInitial]) {
         acc[firstInitial] = [];
@@ -115,9 +116,12 @@ async function validateEditForm(contactId) {
   if (valid) editContact(contactId);
 }
 
-async function addContact(name, email, phone) {
+async function addContact(name, email, phone, color) {
   const contactId = await getNewId("contacts");
-  const contactData = createContact(name, email, phone, contactId);
+  if (!color) {
+    color = getRandomColor();
+  }
+  const contactData = createContact(name, email, phone, color, contactId);
   // Speichere den neuen Kontakt in der Datenbank
   await postData(`contacts/${contactId - 1}/`, contactData);
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
@@ -144,20 +148,20 @@ async function addContact(name, email, phone) {
   renderContent();
 }
 
-function createContact(name, email, phone, contactId) {
+function createContact(name, email, phone, color, contactId) {
   return {
     id: contactId,
     name: name,
     email: email,
     phone: phone,
-    color: getRandomColor(),
+    color: color,
     initials: calculateInitials(name),
   };
 }
 
 async function searchActiveUserinContacts(activeUser) {
   // Hole die Kontakte aus Firebase
-  const contacts = await fetchData("contacts");
+  let contacts = await fetchData("contacts");
 
   // Suche nach dem aktiven Benutzer im Kontakte-Array
   for (const id in contacts) {
@@ -166,16 +170,30 @@ async function searchActiveUserinContacts(activeUser) {
       return contacts[id].id;
     }
   }
+
+  // Wenn der Kontakt nicht gefunden wurde, füge ihn hinzu
   await addActiveUserToContacts(activeUser);
+
+  // Nach dem Hinzufügen des neuen Kontakts erneut nach den Kontakten suchen
+  contacts = await fetchData("contacts");
+
+  // Suche erneut nach dem aktiven Benutzer im Kontakte-Array
+  for (const contact of contacts) {
+    if (contact.name === activeUser.name) {
+      // Gib die ID des neuen Kontakts zurück
+      return contact.id;
+    }
+  }
 }
 
 async function addActiveUserToContacts(activeUser) {
-  const activeUserId = activeUser.id
+  const activeUserId = activeUser.id;
   const user = await fetchData(`users/${activeUserId - 1}`);
   const name = user[5]; // Name aus dem Array
   const email = user[2]; // E-Mail aus dem Array
   const phone = "";
-  await addContact(name, email, phone);
+  const color = "#ffffff";
+  await addContact(name, email, phone, color);
 }
 
 function getRandomColor() {
@@ -336,7 +354,6 @@ async function editContact(contactId) {
 }
 
 function calculateInitials(name) {
-  
   const names = name.split(" "); // Den Namen in Wörter aufteilen
   if (names.length === 1) {
     return names[0].charAt(0).toUpperCase(); // Wenn es nur ein Wort gibt, nimm den ersten Buchstaben
