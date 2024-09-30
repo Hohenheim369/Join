@@ -134,7 +134,7 @@ function cancelSubtasks() {
 }
 
 function deleteSubtask(id) {
-  document.getElementById(`listItem_${id}`).remove();
+  document.getElementById(`listItem_${id}`).remove();  
   subTasks.splice(id, 1);
 }
 

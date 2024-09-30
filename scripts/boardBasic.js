@@ -246,5 +246,3 @@ function displayStatusArrows(task) {
     taskCard.classList.add("task-arrow-bottom");
   }
 }
-
-

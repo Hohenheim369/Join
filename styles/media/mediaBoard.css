@@ -112,6 +112,7 @@
   .task-card-area {
     width: 252px;
     margin: 8px;
+    background-color: rgb(42, 54, 71);
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
   }
 

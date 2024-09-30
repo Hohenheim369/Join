@@ -156,6 +156,7 @@ async function updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus
 }
 
 async function handleTaskEditCompletion(taskId) {
+  subTasks = []; //zugefügt OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
   openAddTaskDialogFeedback();
   await sleep(1500);
   toggleTaskOverlays();
@@ -202,20 +203,21 @@ async function putEditTasksContent(
   });
 }
 
-async function getEditSubtasks(taskId) {  
+async function getEditSubtasks(taskId) {
   let tasks = await fetchData("tasks");
   let editSingleTask = tasks.find((task) => task.id === taskId);
   let filteredSubtasks = editSingleTask.subtasks.filter(data => data !== null);
-  subTasks.forEach((task) => {
-    let foundSubtask =  filteredSubtasks.subTaskName.filter((filteredTask) => filteredTask === task)
-    console.log(foundSubtask);
-    
-  })
-  // return subTasks.map((subName, index) => ({
-  //   subTaskName: subName,
-  //   subId: index + 1,
-  //   done: false,
-  // }));
+
+  return subTasks.map((subName, index) => {
+    let foundSubtask = filteredSubtasks.find(
+      (filteredTask) => filteredTask.subTaskName === subName
+    );
+    return {
+      subTaskName: subName,
+      subId: index + 1,
+      done: foundSubtask ? foundSubtask.done : false
+    };
+  });
 }
 
 // let editSubTasks = [];
