@@ -1,11 +1,20 @@
 .board {
-  padding: 80px 44px 40px 44px;
+  padding: 80px 44px 20px 44px;
   gap: 55px;
 }
 
 .board-menue {
   width: 504px;
   height: 48px;
+}
+
+.search-box {
+  display: flex;
+}
+
+.search-box-mobile {
+  display: none;
+  margin-top: 13px;
 }
 
 .input-button {
@@ -36,13 +45,17 @@
   content: url(../assets/img/png/magnifying-glass-active.png);
 }
 
+.btn-add-task::before {
+  content: "Add Task";
+}
+
 .kanban-board {
   display: flex;
   justify-content: space-between;
   align-items: start;
 }
 
-.kanban-header{
+.kanban-header {
   width: 100%;
   padding: 0 16px 0 8px;
 }
@@ -84,14 +97,38 @@
   border-radius: 10px;
 }
 
+.task-card-area {
+  height: fit-content;
+  width: 252px;
+  background-color: white;
+  margin: 8px;
+  border-radius: 25px;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
+}
+
+.task-arrow {
+  display: none;
+  width: 100%;
+  height: 20px;
+  margin: 4px 0;
+  object-fit: contain;
+}
+
+.task-arrow-top {
+  border-top: none;
+}
+
+.task-arrow-bottom {
+  border-bottom: none;
+}
+
 .task-card {
   cursor: pointer;
-  width: 252px;
+  width: 100%;
   padding: 16px;
-  margin: 8px;
   background-color: white;
   border-radius: 24px;
-  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.08);
+  gap: 24px;
 }
 
 .task-card:active {
@@ -140,7 +177,7 @@
   border-radius: 50%;
 }
 
-.user{
+.user {
   font-weight: 700;
   color: rgb(41, 171, 226);
   border: 2px solid black;
@@ -171,12 +208,14 @@
 .single-task {
   width: 525px;
   background-color: white;
-  padding: 48px 32px 48px 40px;
+  padding-block: 48px;
+  padding-inline: 40px;
   border-radius: 30px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
-.overflow{
+.single-task-content {
+  font-size: 20px;
   max-height: calc(100vh - 112px);
   overflow: hidden;
   overflow-y: scroll;
@@ -187,7 +226,7 @@
   width: fit-content;
   padding: 4px 24px;
   border-radius: 8px;
-  font-size: 23px;
+  font-size: 24px;
 }
 
 .close-task {
@@ -202,6 +241,10 @@
   display: flex;
   align-items: center;
   gap: 25px;
+}
+
+.single-task-prio {
+  height: 33px;
 }
 
 .single-task-lines {
@@ -256,21 +299,61 @@
 
 .delete-task {
   width: 360px;
+  font-size: 20px;
   background-color: white;
-  padding: 48px 32px 48px 40px;
+  padding-block: 48px;
   border-radius: 30px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
-.delete-btn:hover{
-  font-weight: 700;
+.delte-task-button-area {
+  width: 100%;
+  height: 35px;
+  justify-content: space-around;
+}
+
+.delete-btn {
+  height: 100%;
+}
+
+.delete-message {
+  height: 74px;
+  padding: 8px 24px;
+  border-radius: 20px;
+  background-color: rgb(42, 54, 71);
+  transform: translateY(100vh);
+  transition: transform 0.5s ease;
+}
+
+.overlay-delete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1002;
+  opacity: 0;
+  transition: background-color 0.5s ease;
+}
+
+.overlay-delete.active {
+  display: flex;
+}
+
+.overlay-delete.visible {
+  opacity: 1;
+}
+
+.overlay-delete.visible .delete-message {
+  transform: translateY(0);
 }
 
 .img-edit:hover {
   content: url(../assets/img/png/edit-hover.png);
 }
 
-.add-task-board{
+.add-task-board {
   width: 1125px;
   height: 870px;
   background-color: white;
@@ -279,11 +362,11 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
-.edit-task-height{
+.edit-task-height {
   max-height: calc(100vh - 15px);
 }
 
-.close-add-task-button{
+.close-add-task-button {
   height: 24px;
   width: 24px;
   position: absolute;
@@ -291,7 +374,7 @@
   right: 50px;
 }
 
-.close-add-task-button:hover{
+.close-add-task-button:hover {
   border-radius: 50%;
   background-color: rgb(209, 209, 209);
 }
@@ -313,4 +396,3 @@
   background-color: unset !important;
   color: rgb(204, 204, 204) !important ;
 }
-

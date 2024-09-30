@@ -28,7 +28,7 @@ h3 {
 }
 
 .contact-box {
-  overflow: scroll;
+
   padding: 32px 24px 32px 24px;
   display: flex;
   width: clamp(333px, 27vw, 456px);
@@ -393,4 +393,23 @@ h3 {
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+
+#contact_list {
+  overflow: scroll;
+  margin-top: 9px;
+}
+
+.user-profile-initials-box-contacts{
+  font-weight: 600;
+  display: flex;
+  width: 48px;
+  height: 48px;
+  gap: 16px;
+  border: 3px solid black;
+  border-radius: 559px;
+  align-items: center;
+  justify-content: center;
+  color: #29abe2;
+  background-color: white;
 }

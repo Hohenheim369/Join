@@ -4,6 +4,11 @@ const BASE_CONTACTS_URL =
 document.addEventListener("DOMContentLoaded", () => {
   renderContent(); // Stellen sicher, dass Daten geladen sind
 });
+// Initiale Ausführung beim Laden der Seite
+window.addEventListener("load", updateCrossImage);
+
+// Bild bei jeder Fenstergrößenänderung aktualisieren
+window.addEventListener("resize", updateCrossImage);
 
 async function renderContent() {
   const contactList = document.getElementById("contact_list");
@@ -18,20 +23,35 @@ async function renderContent() {
   const userContacts = contacts.filter((contact) =>
     activeUser.contacts.includes(contact.id)
   );
+  // 5. Aktiven Benutzer in der Kontaktliste rendern, wenn die ID nicht 0 ist
+  let activeUserContactId = null;
+  if (activeUser.id !== 0) {
+    activeUserContactId = await renderActiveUserInContactList();
+  }
   // 5. Kontakte nach Initialen gruppieren
-  const groupedContacts = groupContacts(userContacts);
+  const groupedContacts = groupContacts(userContacts, activeUserContactId);
+  
   // 6. Kontaktliste rendern
-  renderContactsList(groupedContacts, contactList);
+  renderContactsList(groupedContacts, contactList,activeUserContactId );
 }
 
-function renderContactsList(groupedContacts, contactList) {
+async function renderActiveUserInContactList() {
+  const contactList = document.getElementById("contact_list");
+  let activeUserContactId = await searchActiveUserinContacts(activeUser);
+  let data = await fetchData(`contacts/${activeUserContactId - 1}`);
+  contactList.innerHTML = generateActiveUser(data);
+  return activeUserContactId;
+}
+
+function renderContactsList(groupedContacts, contactList, activeUserContactId) {
   const sortedInitials = Object.keys(groupedContacts).sort(); // Initialen alphabetisch sortieren
   sortedInitials.forEach((initial) => {
     renderLetterBox(initial, contactList); // Buchstaben-Box für Initiale rendern
-    groupedContacts[initial].forEach(({ contact, index }) => {
-      const contactHtml = generateContact(contact); // Kontakt-HTML generieren
-      contactList.innerHTML += contactHtml; // Kontakt zum DOM hinzufügen
-    });
+    groupedContacts[initial].forEach(({ contact }) => {
+      if (contact.id !== activeUserContactId) {
+        const contactHtml = generateContact(contact); // Kontakt-HTML generieren
+        contactList.innerHTML += contactHtml; // Kontakt zum DOM hinzufügen
+      }});
   });
 }
 
@@ -40,9 +60,9 @@ function renderLetterBox(initial, contactList) {
   contactList.innerHTML += letterBoxHtml;
 }
 
-function groupContacts(contacts) {
+function groupContacts(contacts, activeUserContactId) {
   return contacts.reduce((acc, contact, index) => {
-    if (contact && contact.initials) {
+    if (contact && contact.initials && contact.id !== activeUserContactId) {
       let firstInitial = contact.initials.charAt(0).toUpperCase(); // Verwende die gespeicherten Initialen
       if (!acc[firstInitial]) {
         acc[firstInitial] = [];
@@ -68,7 +88,10 @@ async function validateForm() {
     "field_alert_email"
   );
   if (nameValid && emailValid) {
-    await addContact();
+    const name = getInputValue("name");
+    const email = getInputValue("email");
+    const phone = getInputValue("phone");
+    await addContact(name, email, phone);
     closeDialog();
     await openDialogSuccessfully();
   }
@@ -96,52 +119,80 @@ async function validateEditForm(contactId) {
   if (valid) editContact(contactId);
 }
 
-async function addContact() {
-  const name = getInputValue("name");
-  const email = getInputValue("email");
-  const phone = getInputValue("phone");
-
-  if (name && email && phone) {
-    const contactId = await getNewId("contacts");
-    const contactData = createContact(name, email, phone, contactId);
-    // Speichere den neuen Kontakt in der Datenbank
-    await postData(`contacts/${contactId - 1}/`, contactData);
-    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-    const userId = activeUser.id; // ID des aktiven Benutzers
-    // Abrufen aller Benutzer von Firebase
-    const allUsers = await fetchData("users"); // Alle Benutzer abrufen
-    // Suche nach dem Benutzer mit der passenden ID
-    const userData = Object.values(allUsers).find((user) => user.id === userId);
-    // Überprüfen, ob die Benutzerdaten erfolgreich abgerufen wurden
-    if (userData) {
-      // Füge die ID des neuen Kontakts zur Kontaktliste des Benutzers hinzu
-      if (!userData.contacts.includes(contactId)) {
-        userData.contacts.push(contactId); // Kontakt-ID hinzufügen
-      }
-      // Aktualisiere den Benutzer in der Datenbank
-      // Wir verwenden hier den Index von userData, um den richtigen Benutzer zu aktualisieren
-      await postData(`users/${userId - 1}/`, {
-        ...userData,
-        contacts: userData.contacts, // nur die Kontakte aktualisieren
-      });
-    } 
-    addContactToUser(contactId, activeUser);
-    resetForm();
-    renderContent();
-  } else {
-    alert("Bitte füllen Sie alle Felder aus.");
+async function addContact(name, email, phone, color) {
+  const contactId = await getNewId("contacts");
+  if (!color) {
+    color = getRandomColor();
   }
+  const contactData = createContact(name, email, phone, color, contactId);
+  // Speichere den neuen Kontakt in der Datenbank
+  await postData(`contacts/${contactId - 1}/`, contactData);
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  const userId = activeUser.id; // ID des aktiven Benutzers
+  // Abrufen aller Benutzer von Firebase
+  const allUsers = await fetchData("users"); // Alle Benutzer abrufen
+  // Suche nach dem Benutzer mit der passenden ID
+  const userData = Object.values(allUsers).find((user) => user.id === userId);
+  // Überprüfen, ob die Benutzerdaten erfolgreich abgerufen wurden
+  if (userData) {
+    // Füge die ID des neuen Kontakts zur Kontaktliste des Benutzers hinzu
+    if (!userData.contacts.includes(contactId)) {
+      userData.contacts.push(contactId); // Kontakt-ID hinzufügen
+    }
+    // Aktualisiere den Benutzer in der Datenbank
+    // Wir verwenden hier den Index von userData, um den richtigen Benutzer zu aktualisieren
+    await postData(`users/${userId - 1}/`, {
+      ...userData,
+      contacts: userData.contacts, // nur die Kontakte aktualisieren
+    });
+  }
+  addContactToUser(contactId, activeUser);
+  resetForm();
+  renderContent();
 }
 
-function createContact(name, email, phone, contactId) {
+function createContact(name, email, phone, color, contactId) {
   return {
     id: contactId,
     name: name,
     email: email,
     phone: phone,
-    color: getRandomColor(),
+    color: color,
     initials: calculateInitials(name),
   };
+}
+
+async function searchActiveUserinContacts(activeUser) {
+  // Hole die Kontakte aus Firebase
+  let contacts = await fetchData("contacts");
+  // Suche nach dem aktiven Benutzer im Kontakte-Array
+  for (const id in contacts) {
+    if (contacts[id].name === activeUser.name) {
+      // Wenn der Name gefunden wird, gib die ID zurück
+      return contacts[id].id;
+    }
+  }
+  // Wenn der Kontakt nicht gefunden wurde, füge ihn hinzu
+  await addActiveUserToContacts(activeUser);
+  // Nach dem Hinzufügen des neuen Kontakts erneut nach den Kontakten suchen
+  contacts = await fetchData("contacts");
+  // Suche erneut nach dem aktiven Benutzer im Kontakte-Array
+  for (const contact of contacts) {
+    if (contact.name === activeUser.name) {
+      // Gib die ID des neuen Kontakts zurück
+      return contact.id;
+    }
+  }
+}
+
+async function addActiveUserToContacts(activeUser) {
+  const activeUserId = activeUser.id;
+  const user = await fetchData(`users/${activeUserId - 1}`);
+  const name = user[5]; // Name aus dem Array
+  const email = user[2]; // E-Mail aus dem Array
+  const phone = "";
+  const color = "#ffffff";
+  await addContact(name, email, phone, color);
 }
 
 function getRandomColor() {
@@ -214,12 +265,7 @@ function mobileEditContact() {
 }
 
 async function deleteContact(contactId) {
-  // Lösche den Kontakt von Firebase
-  // await fetch(`${BASE_URL}/contacts/${contactId - 1}/.json`, {
-  //   method: "DELETE",
-  // });
-
-  deleteContactsInData(contactId)
+  await deleteContactsInData(contactId);
   // Aktualisiere die Kontaktliste nach dem Löschen
   await renderContent(); // Render die aktualisierte Kontaktliste
   document.querySelector(".contacts-info-box").innerHTML = ""; // Leere die Detailansicht
@@ -426,12 +472,6 @@ function updateCrossImage() {
   });
 }
 
-// Initiale Ausführung beim Laden der Seite
-window.addEventListener("load", updateCrossImage);
-
-// Bild bei jeder Fenstergrößenänderung aktualisieren
-window.addEventListener("resize", updateCrossImage);
-
 function goBackMobile() {
   document.getElementById("mobile_contact_info").classList.add("d-none");
   document.getElementById("mobile_contact_info").classList.remove("pos-abs");
@@ -460,10 +500,9 @@ function openMobileMenu(contactId) {
   }, 0);
 }
 
-function addContactToUser(contactId, activeUser){
+function addContactToUser(contactId, activeUser) {
   activeUser.contacts.push(contactId);
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
-
 }
 
 async function deleteContactsInData(contactId) {
@@ -479,7 +518,7 @@ async function deleteContactsInData(contactId) {
 
 async function deleteTaskOnlyforUser(contactId, users) {
   if (activeUser.id === 0) {
-    return
+    return;
   }
   users = users.map((user) => {
     if (user.id === activeUser.id) {
@@ -496,7 +535,7 @@ async function deleteTaskOnlyforUser(contactId, users) {
 async function deleteTaskforAllUsers(contactId, users) {
   await deleteData("contacts", contactId);
   if (activeUser.id === 0) {
-    return
+    return;
   }
   users = users.map((user) => ({
     ...user,
@@ -507,6 +546,8 @@ async function deleteTaskforAllUsers(contactId, users) {
 
 function deleteTaskInLocalStorage(contactId) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  activeUser.contacts = activeUser.contacts.filter((contact) => contact !== contactId);
+  activeUser.contacts = activeUser.contacts.filter(
+    (contact) => contact !== contactId
+  );
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
 }

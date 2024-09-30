@@ -7,11 +7,14 @@ function generateTasksOnBoard(
   prio
 ) {
   return `  <div
+              class="task-card-area d-flex-column-center"
               id="task_${id}"
               draggable="true"
               ondragstart="startDragging(${id}, event)"
             >
-              <div class="task-card d-flex-column gap-24" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template', false)">
+              <div class="w-100" id="arrow_area_top_${id}"></div>
+              
+              <div id="task_card_${id}" class="task-card d-flex-column" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template', false)">
                 <div class="task-category font-c-white bg-category-${categoryColor}">
                   ${category}
                 </div>
@@ -33,6 +36,8 @@ function generateTasksOnBoard(
                   <img src="../assets/img/png/prio-${prio}.png" />
                 </div>
               </div>
+
+              <div class="w-100" id="arrow_area_bottom_${id}"></div>
             </div>
           `;
 }
@@ -49,6 +54,34 @@ function generateSubtasks(sumDoneSubtasks, sumAllSubtasks) {
       </span>`;
 }
 
+function generateAssigneeField(contact) {
+  return `<span class="assignee font-s-12 font-c-white mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${contact.color};">${contact.initials}
+      </span>`;
+}
+
+function generateAdditionallyAssigneeField(remainingCount) {
+  return `<span class="additionally-assignee wh-32 d-flex-center">
+        +${remainingCount}
+      </span>`;
+}
+
+function generateUserField(activeUser) {
+  return `<span class="user font-s-12 mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${activeUser.color};">${activeUser.initials}
+      </span>`;
+}
+
+function generateArrowTop(task) {
+  return `<img class="task-arrow cursor-p" onclick="moveToStatus(${task.id}, '${task.status}', -1)" 
+            src="../assets/img/png/arrow-drop-up.png"/>`;
+}
+
+function generateArrowBottom(task) {
+  return `<img class="task-arrow cursor-p" onclick="moveToStatus(${task.id}, '${task.status}', 1)" 
+            src="../assets/img/png/arrow-drop-down.png"/>`;
+}
+
 function generateSingleTasks(
   id,
   title,
@@ -59,7 +92,7 @@ function generateSingleTasks(
   prio
 ) {
   return `
-          <div class="overflow d-flex-column gap-24">
+          <div class="single-task-content d-flex-column gap-24">
             <div class="d-flex-spbe-center">
               <div class="single-task-category font-c-white bg-category-${categoryColor}">
               ${category}
@@ -71,26 +104,26 @@ function generateSingleTasks(
               </div>
             </div>
 
-            <h1>${title}</h1>
+            <h2>${title}</h2>
 
-            <div class="font-s-20 font-c-black">
+            <div class="font-c-black">
               ${description}
             </div>
 
-            <div class="single-task-meta font-s-20">
+            <div class="single-task-meta">
               Due date:
               <div class="font-c-black">${date}</div>
             </div>
 
-            <div class="single-task-meta font-s-20">
+            <div class="single-task-meta">
               Priority:
-              <img src="../assets/img/png/prio-${prio}-text.png" alt="" />
+              <img class="single-task-prio" src="../assets/img/png/prio-${prio}-text.png" alt="" />
             </div>
 
-            <div class="w-100 d-flex-column gap-8 font-s-20">
+            <div class="w-100 d-flex-column gap-8">
               Assigned To:
 
-              <div id="single_assignee" class="single-task-lines d-flex-column gap-4 font-s-19 font-c-black">
+              <div id="single_assignee" class="single-task-lines d-flex-column gap-4 font-c-black">
 
                 <div class="single-task-assignee">
                   <span
@@ -101,7 +134,7 @@ function generateSingleTasks(
               </div>
             </div>
 
-            <div class="w-100 d-flex-column gap-8 font-s-20">
+            <div class="w-100 d-flex-column gap-8">
               Subtasks:
               <div id="single_subtask" class="single-task-lines d-flex-column gap-4 font-s-16 font-c-black"></div>
             </div>
@@ -128,7 +161,7 @@ function generateSingleTasks(
           </div>`;
 }
 
-function generateSingleUserAsAssignee(){
+function generateSingleUserAsAssignee() {
   return `
          <div class="single-task-assignee">
                   <span
@@ -137,7 +170,7 @@ function generateSingleUserAsAssignee(){
           </div>`;
 }
 
-function generateSingleAssignee(contact){
+function generateSingleAssignee(contact) {
   return `
           <div class="single-task-assignee">
                   <span
@@ -159,3 +192,20 @@ function generateSingleSubtasks(subtask, id) {
           </div>`;
 }
 
+function generateNoAssigneeField() {
+  return `<div class="single-task-subtasks font-s-16">
+            No assignee have been selected yet.
+          </div>`;
+}
+
+function generateNoSubtaskField() {
+  return `<div class="single-task-subtasks">
+            No subtasks have been created yet.
+          </div>`;
+}
+
+function generateDeleteButton(taskId) {
+  return `<button class="clear-button"
+           onclick="deleteTask(${taskId})">YES
+      </button>`;
+}

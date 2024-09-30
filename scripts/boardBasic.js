@@ -9,7 +9,19 @@ function toggleOverlay(section) {
   }
 }
 
+const statuses = ["todo", "inprogress", "awaitfeedback", "done"];
 let currentDraggedElement;
+
+async function moveToStatus(taskId, status, moveToDirection){
+
+  let currentIndex = statuses.indexOf(status);
+  let newIndex = currentIndex + moveToDirection;
+  let newStatus = statuses[newIndex];
+
+  currentDraggedElement = taskId;
+
+  await moveTo(newStatus);
+}
 
 function startDragging(id) {
   currentDraggedElement = id;
@@ -50,7 +62,6 @@ async function postUpdatedTask(task) {
 }
 
 async function updateTasksOnBoard() {
-  const statuses = ["todo", "inprogress", "awaitfeedback", "done"];
   cleanBoard(statuses);
   await renderTasksInStatusArea(statuses);
 }
@@ -64,24 +75,11 @@ function cleanBoard(statuses) {
 
 async function renderTasksInStatusArea(statuses) {
   let tasksToRender = await filterUserTasks();
-  tasksToRender = filterSoughtTask(tasksToRender);
+  tasksToRender = filterSoughtTaskToRender(tasksToRender);
   const contacts = await fetchData("contacts");
 
   statuses.forEach((status) =>
     renderStatusArea(status, tasksToRender, contacts)
-  );
-}
-
-function filterSoughtTask(tasksToRender) {
-  let soughtedTask = document.getElementById("sought_task").value.toLowerCase();
-  if (soughtedTask.length === 0) {
-    return tasksToRender;
-  }
-
-  return tasksToRender.filter(
-    (task) =>
-      task.title.toLowerCase().includes(soughtedTask) ||
-      task.description.toLowerCase().includes(soughtedTask)
   );
 }
 
@@ -91,6 +89,27 @@ async function filterUserTasks() {
 
   const tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
   return tasksToRender;
+}
+
+function filterSoughtTaskToRender(tasksToRender) {
+  let soughtTask = getSoughtTask();
+
+  if (soughtTask.length != 0) {
+    return tasksToRender.filter(
+      (task) =>
+        task.title.toLowerCase().includes(soughtTask) ||
+        task.description.toLowerCase().includes(soughtTask)
+    );
+  }
+
+  return tasksToRender;
+}
+
+function getSoughtTask() {
+  const soughtedTaskDesktop = document.getElementById("sought_task").value;
+  const soughtedTaskMobile =
+    document.getElementById("sought_task_mobile").value;
+  return (soughtedTaskDesktop || soughtedTaskMobile).toLowerCase();
 }
 
 function renderStatusArea(status, tasks, contacts) {
@@ -121,6 +140,7 @@ function renderStatusTasks(tasks, area, contacts) {
     );
     displaySubtasks(task);
     displayAssigneesForTask(task, contacts);
+    displayStatusArrows(task);
   });
 }
 
@@ -191,33 +211,40 @@ function renderAssignee(contactId, contacts, assignedField) {
   const contact = contacts.find((c) => c.id === contactId);
 
   if (contact) {
-    assignedField.innerHTML += `
-      <span class="assignee font-s-12 font-c-white mar-r-8 wh-32 d-flex-center" 
-            style="background-color: ${contact.color};">${contact.initials}
-      </span>`;
+    assignedField.innerHTML += generateAssigneeField(contact);
   }
 }
 
 function displayCount(task, assignees, maxDisplayed) {
-  const assignedNumberField = document.getElementById(
-    `assignees_number_${task.id}`
-  );
-  assignedNumberField.innerHTML = "";
+  const numberField = document.getElementById(`assignees_number_${task.id}`);
+  numberField.innerHTML = "";
 
   if (assignees.length > maxDisplayed) {
     const remainingCount = assignees.length - maxDisplayed;
-    assignedNumberField.innerHTML += `
-      <span class="additionally-assignee wh-32 d-flex-center">
-        +${remainingCount}
-      </span>`;
+    numberField.innerHTML += generateAdditionallyAssigneeField(remainingCount);
   }
 }
 
 function displayUser(task, assignedField) {
   if (task.user === activeUser.id) {
-    assignedField.innerHTML += `
-      <span class="user font-s-12 mar-r-8 wh-32 d-flex-center" 
-            style="background-color: ${activeUser.color};">${activeUser.initials}
-      </span>`;
+    assignedField.innerHTML += generateUserField(activeUser);
   }
 }
+
+function displayStatusArrows(task) {
+  let taskCard = document.getElementById(`task_card_${task.id}`);
+  let arrowTop = document.getElementById(`arrow_area_top_${task.id}`);
+  let arrowBottom = document.getElementById(`arrow_area_bottom_${task.id}`);
+
+  if (task.status != "todo") {
+    arrowTop.innerHTML = generateArrowTop(task);
+    taskCard.classList.add("task-arrow-top");
+  }
+
+  if (task.status != "done") {
+    arrowBottom.innerHTML = generateArrowBottom(task);
+    taskCard.classList.add("task-arrow-bottom");
+  }
+}
+
+

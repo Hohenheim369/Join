@@ -38,7 +38,12 @@ body {
 h1 {
   font-weight: 700;
   font-size: 61px;
-  line-height: 73px;
+  color: #000000;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 61px;
   color: #000000;
 }
 
@@ -78,10 +83,6 @@ a:hover {
 
 .font-s-16 {
   font-size: 16px;
-}
-
-.font-s-19 {
-  font-size: 19px;
 }
 
 .font-s-20 {

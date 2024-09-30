@@ -13,6 +13,66 @@ function loginAsGuest() {
   window.location.href = "./html/summary.html";
 }
 
+async function loginAsUser() {
+  const loginEmail = document.getElementById("login_email").value.trim();
+  const loginPassword = document.getElementById("login_password").value;
+  const users = await fetchData("users");
+  const user = users.find(
+    (user) => user.email.toLowerCase() === loginEmail.toLowerCase()
+  );
+
+  resetLoginAlert();
+
+  if (user && user.password === loginPassword) {
+    await handleSuccessfulLogin(user);
+  } else {
+    handleLoginError();
+  }
+}
+
+function resetLoginAlert() {
+  const noticeField = document.getElementById("login_notice_field");
+  noticeField.innerHTML = "";
+
+  document.getElementById("login_email").classList.remove("border-alert");
+  document.getElementById("login_password").classList.remove("border-alert");
+}
+
+async function handleSuccessfulLogin(user) {
+  handleRememberMe(user);
+
+  const userData = await loadUserData(user);
+
+  localStorage.setItem("activeUser", JSON.stringify(userData));
+  localStorage.setItem("greetingShown", "false");
+  resetLoginFormInputs();
+  window.location.href = "./html/summary.html";
+}
+
+async function handleRememberMe(user) {
+  if (isRememberMeChecked()) {
+    const saveData = await loadRememberMeData(user);
+    localStorage.setItem("rememberMeData", JSON.stringify(saveData));
+  }
+
+  if (!isRememberMeChecked()) {
+    localStorage.removeItem("rememberMeData");
+  }
+}
+
+function isRememberMeChecked() {
+  const checkButton = document.getElementById("login_check_off");
+  const isChecked = checkButton.src.includes("true");
+  return isChecked;
+}
+
+async function loadRememberMeData(user) {
+  return {
+    email: user.email,
+    password: user.password,
+  };
+}
+
 async function loadUserData(user) {
   return {
     name: user.name,
@@ -24,21 +84,6 @@ async function loadUserData(user) {
   };
 }
 
-async function loadRememberMeData(user) {
-  return {
-    email: user.email,
-    password: user.password,
-  };
-}
-
-function resetLoginAlert() {
-  const noticeField = document.getElementById("login_notice_field");
-  noticeField.innerHTML = "";
-
-  document.getElementById("login_email").classList.remove("border-alert");
-  document.getElementById("login_password").classList.remove("border-alert");
-}
-
 function resetLoginFormInputs() {
   document.getElementById("login_email").value = "";
   document.getElementById("login_password").value = "";
@@ -47,50 +92,10 @@ function resetLoginFormInputs() {
   legalButton.src = `./assets/img/png/check-button-false.png`;
 }
 
-function isRememberMeChecked() {
-  const checkButton = document.getElementById("login_check_off");
-  const isChecked = checkButton.src.includes("true");
-  return isChecked;
-}
-
-async function handleSuccessfulLogin(user) {
-  if(isRememberMeChecked()){
-    const saveDAta = await loadRememberMeData(user);
-    localStorage.setItem('rememberMeData', JSON.stringify(saveDAta));
-  }
-
-  if(!isRememberMeChecked()){
-    localStorage.removeItem("rememberMeData");
-  }
-
-  const userData = await loadUserData(user);
-  
-  localStorage.setItem('activeUser', JSON.stringify(userData));
-  localStorage.setItem("greetingShown", "false");
-  resetLoginFormInputs();
-  window.location.href = "./html/summary.html";
-}
-
 function handleLoginError() {
   const noticeField = document.getElementById("login_notice_field");
-  noticeField.innerHTML += `<div>Check your email and password. Please try again.</div>`
+  noticeField.innerHTML += `<div>Check your email and password. Please try again.</div>`;
   document.getElementById("login_email").classList.add("border-alert");
   document.getElementById("login_password").classList.add("border-alert");
   console.error(errorMessage);
-}
-
-async function loginAsUser() {
-  const loginEmail = document.getElementById("login_email").value.trim();
-  const loginPassword = document.getElementById("login_password").value;
-
-  const users = await fetchData('users');
-  const user = users.find(user => user.email.toLowerCase() === loginEmail.toLowerCase());
-
-  resetLoginAlert();
-
-  if (user && user.password === loginPassword) {
-    await handleSuccessfulLogin(user);    
-  } else {
-    handleLoginError();
-  }
 }

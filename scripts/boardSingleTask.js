@@ -42,7 +42,7 @@ function displaySingleAssinees(singleTask, contacts) {
   );
 
   if (!hasAssignees) {
-    assigneeField.innerHTML = `<div class="single-task-subtasks font-s-16">No assignee have been selected yet.</div>`;
+    assigneeField.innerHTML = generateNoAssigneeField();
   }
 }
 
@@ -80,7 +80,7 @@ function displaySingleSubtasks(subtasks, taskId) {
       subtaskField.innerHTML += generateSingleSubtasks(subtask, taskId);
     });
   } else {
-    subtaskField.innerHTML = `<div class="single-task-subtasks">No subtasks have been created yet.</div>`;
+    subtaskField.innerHTML = generateNoSubtaskField();
   }
 }
 
@@ -102,10 +102,7 @@ function openDeleteDialog(taskId) {
   toggleOverlay("board_delete_overlay");
 
   let yesButton = document.getElementById("delete_yes_btn");
-  yesButton.innerHTML = `
-      <div class="delete-btn font-s-20 font-c-66-82-110 cursor-p"
-           onclick="deleteTask(${taskId})">YES
-      </div>`;
+  yesButton.innerHTML = generateDeleteButton(taskId);
 }
 
 async function deleteTask(taskId) {
@@ -118,6 +115,7 @@ async function deleteTask(taskId) {
   }
   deleteTaskInLocalStorage(taskId);
 
+  await showSuccessfullyDelete();
   toggleOverlay("board_delete_overlay");
   toggleOverlay("board_task_overlay");
   window.location.reload();
@@ -155,4 +153,21 @@ function deleteTaskInLocalStorage(taskId) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
   activeUser.tasks = activeUser.tasks.filter((task) => task !== taskId);
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
+}
+
+function showSuccessfullyDelete() {
+  return new Promise((resolve) => {
+    const overlay = document.getElementById("successfully_delete_task");
+    overlay.classList.remove("d-none");
+    overlay.classList.add("active");
+
+    setTimeout(() => {
+      overlay.classList.add("visible");
+      setTimeout(() => {
+        overlay.classList.remove("active", "visible");
+        overlay.classList.add("d-none");
+        resolve();
+      }, 1500);
+    }, 50);
+  });
 }
