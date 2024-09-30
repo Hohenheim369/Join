@@ -23,6 +23,7 @@
     <script src="../script.js"></script>
     <script src="../scripts/desktopTemplate.js"></script>
     <script src="../scripts/boardBasic.js"></script>
+    <script src="../scripts/boardTasks.js"></script>
     <script src="../scripts/boardSingleTask.js"></script>
     <script src="../scripts/boardTemplate.js"></script>
     <script src="../scripts/boardAddTask.js"></script>
@@ -41,7 +42,7 @@
           <div class="search-box pos-rel d-flex-spbe-center" id="search_box">
             <input
               id="sought_task"
-              oninput="updateTasksOnBoard()"
+              oninput="updateTasksOnBoard(), clearSearchField('sought_task_mobile')"
               type="text"
               placeholder="Find Task"
             />
@@ -68,7 +69,7 @@
       <div class="search-box-mobile pos-rel d-flex-spbe-center" id="search_box">
         <input
           id="sought_task_mobile"
-          oninput="updateTasksOnBoard()"
+          oninput="updateTasksOnBoard(), clearSearchField('sought_task')"
           type="text"
           placeholder="Find Task"
         />
