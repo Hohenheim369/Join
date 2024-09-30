@@ -141,7 +141,7 @@ let dbBackupTask = [
     assigned: [10],
     category: "User Story",
     date: "2024-09-20",
-    description: "In your join you will find 10 tasks and 10 contacts to try out. You can edit these, but the changes will be reset after you log in again. If you delete them, they are permanently removed from your join.",
+    description: "In your join you will find 5 tasks and 10 contacts to try out. You can edit these, but the changes will be reset after you log in again. If you delete them, they are permanently removed from your join.",
     id: 7,
     priority: "urgent",
     status: "todo",
