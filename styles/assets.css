@@ -115,25 +115,6 @@ form{
   width: 100%;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgb(168, 168 ,168);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(150, 150, 150);
-}
-
 .bg-category-userstory{
   background-color: rgb(0, 56, 255);
 }
