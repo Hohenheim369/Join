@@ -205,7 +205,6 @@ async function putEditTasksContent(
   });
 }
 
-//zugefügt OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 async function getEditSubtasks(taskId) {
   let tasks = await fetchData("tasks");
   let editSingleTask = tasks.find((task) => task.id === taskId);
@@ -213,16 +212,20 @@ async function getEditSubtasks(taskId) {
 
   if (subTasks.length === 0) return [];
 
-  return subTasks.map((subName, index) => {
-    let foundSubtask = filteredSubtasks.find(
-      (filteredTask) => filteredTask.subTaskName === subName
-    );
-    return {
-      subTaskName: subName,
-      subId: index + 1,
-      done: foundSubtask ? foundSubtask.done : false
-    };
-  });
+  return subTasks.map((subName, index) => 
+    createSubtaskObject(subName, index, filteredSubtasks)
+  );
+}
+
+function createSubtaskObject(subName, index, filteredSubtasks) {
+  let foundSubtask = filteredSubtasks.find(
+    (filteredTask) => filteredTask.subTaskName === subName
+  );
+  return {
+    subTaskName: subName,
+    subId: index + 1,
+    done: foundSubtask ? foundSubtask.done : false
+  };
 }
 
 async function closeAddTaskDialogFeedback() {
