@@ -122,8 +122,8 @@ function enterValue() {
     if (event.key === "Enter") {
       event.preventDefault();
       addSubtasks();
-      subtasksInput.blur();
-    }
+      document.getElementById("subtasks_inactiv_img").classList.add("d-none");
+      document.getElementById("subtasks_activ_img").classList.remove("d-none");    }
   });
 }
 
