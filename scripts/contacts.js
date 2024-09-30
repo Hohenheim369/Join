@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  renderContent(); 
+  renderContent();
 });
 
 async function renderContent() {
@@ -31,14 +31,23 @@ async function filterUserContacts() {
   return userContacts;
 }
 
-function renderContactsList(groupedContacts) {
+async function renderContactsList(groupedContacts) {
   const contactList = document.getElementById("contact_list");
   contactList.innerHTML = "";
+  await renderActiveUser(contactList);
   const sortedInitials = sortInitials(Object.keys(groupedContacts));
   sortedInitials.forEach((initial) => {
     renderLetterBox(initial, contactList);
     renderContactsByInitial(groupedContacts[initial], contactList);
   });
+}
+
+async function renderActiveUser(contactList) {
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  const data = await fetchData("users");
+  const users = Object.values(data);
+  const user = users.find((c) => c.id === activeUser.id);
+  contactList.innerHTML = generateActiveUserContact(user);
 }
 
 function sortInitials(initials) {
@@ -178,6 +187,19 @@ async function displayContactInfo(contactId) {
   highlightContact(contact);
 }
 
+async function displayAktivUserContactInfo(userId) {
+  if (window.innerWidth <= 777) {
+    return displayContactInfoMobile(userId);
+  }
+  const user = await searchForUser(userId);
+  const contactInfoDiv = document.querySelector(".contacts-info-box");
+  const contactInfoButtons = document.getElementById("button_edit_dialog");
+  contactInfoDiv.innerHTML = "";
+  contactInfoDiv.innerHTML = generateContactInfo(user);
+  contactInfoButtons.innerHTML = generateButtonsInContactInfo(user);
+  highlightContact(user);
+}
+
 function highlightContact(contact) {
   const contacts = document.getElementsByClassName("contacts");
   for (let i = 0; i < contacts.length; i++) {
@@ -198,11 +220,11 @@ async function displayContactInfoMobile(contactId) {
   const contactInfoButtons = document.getElementById("button_edit_dialog");
   contactInfoDiv.innerHTML = "";
   contactInfoDiv.innerHTML = generateContactInfo(contact);
-  contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact); 
-  highlightContact(contact); 
+  contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
+  highlightContact(contact);
   mobileEditContact();
   const menu = document.getElementById("mobile_menu");
-  menu.innerHTML = generateMobileMenu(contact);;
+  menu.innerHTML = generateMobileMenu(contact);
 }
 
 function mobileEditContact() {
@@ -281,14 +303,14 @@ async function openDialog() {
 async function openDialogEdit(contactId) {
   const menu = document.getElementById("mobile_menu");
   if (menu.classList.contains("d-flex")) {
-    menu.classList.remove("d-flex"); 
+    menu.classList.remove("d-flex");
   }
   const dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   document.getElementById("grey_background").classList.remove("hidden");
-  const contact = await searchForContact(contactId)
-  populateFormFields(contact); 
+  const contact = await searchForContact(contactId);
+  populateFormFields(contact);
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
   dialogBigLetterCircle(contact);
@@ -326,7 +348,7 @@ function dialogBigLetterCircle(contact) {
 }
 
 async function editContact(contactId) {
-  const existingContact = await searchForContact(contactId)
+  const existingContact = await searchForContact(contactId);
   const updatedName = document.getElementById("inputEditName").value;
   const updatedEmail = document.getElementById("inputEditEmail").value;
   const updatedPhone = document.getElementById("inputEditPhone").value;
@@ -361,9 +383,9 @@ async function openDialogSuccessfully() {
     await sleep(300);
     dialogContainer.classList.add("dialog-open");
     dialogContainer.classList.add("d-flex");
-    await sleep(1000); 
+    await sleep(1000);
     dialogContainer.classList.remove("dialog-open");
-    await sleep(300); 
+    await sleep(300);
     dialogContainer.classList.remove("d-flex");
     dialogContainer.open = false;
   }, 300);
@@ -383,7 +405,7 @@ function setError(inputElement, message, alertElementId) {
 function clearError(inputElement, alertElementId) {
   const alertElement = document.getElementById(alertElementId);
   alertElement.innerText = "";
-  alertElement.style.display = "none"; 
+  alertElement.style.display = "none";
   inputElement.classList.remove("error");
 }
 
@@ -473,6 +495,15 @@ async function searchForContact(contactId) {
   const contact = contacts.find((c) => c && c.id === contactId);
   return contact;
 }
+
+async function searchForUser(contactId) {
+  const data = await fetchData("users");
+  const contacts = Object.values(data);
+  const contact = contacts.find((c) => c && c.id === contactId);
+  return contact;
+}
+
+
 
 window.addEventListener("load", updateCrossImage);
 

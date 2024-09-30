@@ -1,3 +1,15 @@
+function generateActiveUserContact(user){
+  return `
+      <div id="contact${user.id}" class="contacts" onclick="displayAktivUserContactInfo(${user.id})">
+        <div class="letter-circle" style="background-color: white;">${user.initials}</div>
+        <div class="contact-info">
+          <span>${user.name}</span>
+          <a class="contact-email" href="#">${user.email}</a>
+        </div>
+      </div>
+    `;
+}
+
 function generateContact(contact) {
   const truncatedName = truncate(contact.name);
   const truncatedEmail = truncate(contact.email);
