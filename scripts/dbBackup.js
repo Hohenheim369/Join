@@ -118,7 +118,7 @@ let dbBackupTask = [
     assigned: [1, 2, 3, 4],
     category: "Technical Task",
     date: "2024-09-20",
-    description: "Welcome to Join. Here you find your default board. This board represents your project and contains four default lists: \"To Do\", \"In Progress\", \"Await feedback\" and \"Done\".",
+    description: "Welcome to Join. Here you can find your default board. This board represents your project and contains four default lists: \"To do\", \"In progress\", \"Await feedback\" and \"Done\".",
     id: 6,
     priority: "low",
     status: "todo",
@@ -141,7 +141,7 @@ let dbBackupTask = [
     assigned: [10],
     category: "User Story",
     date: "2024-09-20",
-    description: "In your join you will find 5 tasks and 10 contacts to try out. You can edit these, but the changes will be reset after you log in again. If you delete them, they are permanently removed from your join.",
+    description: "In your Join you will find 5 tasks and 10 contacts to try out. Feel free to edit these, but the changes will be reset after you log in again. If you delete them, they are permanently removed from your Join board.",
     id: 7,
     priority: "urgent",
     status: "todo",
@@ -151,7 +151,7 @@ let dbBackupTask = [
   {
     category: "Technical Task",
     date: "2024-09-20",
-    description: "You can edit your cards. Tasks can be moved from one phase to the next, edited under \"Edit\" and deleted under \"Delete\".",
+    description: "Feel free to edit your cards. You can move tasks between sections.",
     id: 8,
     priority: "low",
     status: "inprogress",
@@ -174,7 +174,7 @@ let dbBackupTask = [
       {
         done: false,
         subId: 4,
-        subTaskName: "Move a task to another stage.",
+        subTaskName: "Move a task to another section.",
       },
       {
         done: false,
@@ -189,7 +189,7 @@ let dbBackupTask = [
     assigned: [4, 5, 6, 7, 8],
     category: "Technical Task",
     date: "2024-09-20",
-    description: "Cards represent individual tasks. Click the \"+\" button under the corresponding list to create a new card. To create new cards you can also go to the \"Add Task\" section. Enter the task details in the card, e.g. E.g. task name, description, due date, assignee, etc.",
+    description: "Cards represent individual tasks. Click the \"+\" above the list to create a new task. To create new task you can also go to the \"Add Task\" in the main menu. Enter the task details in the card.",
     id: 9,
     priority: "medium",
     status: "awaitfeedback",
@@ -197,7 +197,7 @@ let dbBackupTask = [
       {
         done: false,
         subId: 1,
-        subTaskName: "Go to \"Add Task\" in the menu and add a new task.",
+        subTaskName: "Go to \"Add Task\" in the main menu and add a new task.",
       },
       {
         done: false,
@@ -212,7 +212,7 @@ let dbBackupTask = [
     assigned: [7, 8, 9],
     category: "User Story",
     date: "2024-09-20",
-    description: "You can add contacts to collaborate on your projects. Go to the \"Contacts\" section, click on \"New contact\", and fill in the required information. Once added, these contacts can be assigned tasks and they can interact with the tasks on the board.",
+    description: "You can add new contacts to your projects. Go to the \"Contacts\" in the main menu, click on \"Add new contact\". Once added, these contacts can get tasks assigned and can edit them.",
     id: 10,
     priority: "medium",
     status: "done",
