@@ -166,7 +166,7 @@ h3 {
   width: clamp(300px, 57vw, 700px);
   height: 120px;
   display: flex;
-  gap: clamp(20px, 2vw, 54px);
+  gap: clamp(8px, 2vw, 54px);
   align-items: center;
 }
 

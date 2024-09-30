@@ -1,8 +1,5 @@
-const BASE_CONTACTS_URL =
-  "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/contacts";
-
 document.addEventListener("DOMContentLoaded", () => {
-  renderContent(); // Stellen sicher, dass Daten geladen sind
+  renderContent(); 
 });
 
 async function renderContent() {
@@ -116,7 +113,7 @@ async function addContact() {
   addContactToUserLocal(contactId, activeUser);
   closeDialog();
   await openDialogSuccessfully();
-  resetForm();
+  clearForm();
   renderContent();
 }
 
@@ -291,10 +288,10 @@ async function openDialogEdit(contactId) {
   dialogContainer.classList.add("d-flex");
   document.getElementById("grey_background").classList.remove("hidden");
   const contact = await searchForContact(contactId)
-  populateFormFields(contact); // Formularfelder mit den Kontaktinformationen füllen
+  populateFormFields(contact); 
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
-  updateBigLetterCircle(contact);
+  dialogBigLetterCircle(contact);
 }
 
 async function closeDialog() {
@@ -323,14 +320,13 @@ function populateFormFields(contact) {
   document.getElementById("inputEditPhone").value = contact.phone;
 }
 
-function updateBigLetterCircle(contact) {
+function dialogBigLetterCircle(contact) {
   document.getElementById("big_letter_circle").innerHTML =
     generateBigLetterCircle(contact);
 }
 
 async function editContact(contactId) {
-  const existingContacts = await fetchData(`contacts`);
-  const existingContact = existingContacts.find((c) => c.id === contactId);
+  const existingContact = await searchForContact(contactId)
   const updatedName = document.getElementById("inputEditName").value;
   const updatedEmail = document.getElementById("inputEditEmail").value;
   const updatedPhone = document.getElementById("inputEditPhone").value;
@@ -358,45 +354,36 @@ function calculateInitials(name) {
   return firstInitial + lastInitial; // Initialen zurückgeben
 }
 
-
-
 async function openDialogSuccessfully() {
   const dialogContainer = document.getElementById("succesfully_created");
-  // Verzögerung von 1 Sekunde, bevor der Dialog angezeigt wird
   setTimeout(async () => {
     dialogContainer.open = true;
     await sleep(300);
     dialogContainer.classList.add("dialog-open");
     dialogContainer.classList.add("d-flex");
-    await sleep(1000); // 2000 Millisekunden = 2 Sekunden
+    await sleep(1000); 
     dialogContainer.classList.remove("dialog-open");
-    await sleep(300); // Kleine Verzögerung für die Animation
+    await sleep(300); 
     dialogContainer.classList.remove("d-flex");
     dialogContainer.open = false;
-  }, 300); // 1000 Millisekunden = 1 Sekunde
+  }, 300);
 }
 
 function getInputValue(id) {
   return document.getElementById(id).value;
 }
 
-function resetForm() {
-  document.getElementById("name").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("phone").value = "";
-}
-
 function setError(inputElement, message, alertElementId) {
   const alertElement = document.getElementById(alertElementId);
   alertElement.innerText = message;
-  alertElement.style.display = "block"; // Fehlermeldung sichtbar machen
+  alertElement.style.display = "block";
   inputElement.classList.add("error");
 }
 
 function clearError(inputElement, alertElementId) {
   const alertElement = document.getElementById(alertElementId);
   alertElement.innerText = "";
-  alertElement.style.display = "none"; // Fehlermeldung verstecken
+  alertElement.style.display = "none"; 
   inputElement.classList.remove("error");
 }
 
@@ -445,7 +432,6 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Funktion, um das cross im dialog, beim responsiv zu ändern
 function updateCrossImage() {
   const imgElements = document.querySelectorAll(".cross");
 
@@ -459,12 +445,6 @@ function updateCrossImage() {
     }
   });
 }
-
-// Initiale Ausführung beim Laden der Seite
-window.addEventListener("load", updateCrossImage);
-
-// Bild bei jeder Fenstergrößenänderung aktualisieren
-window.addEventListener("resize", updateCrossImage);
 
 function goBackMobile() {
   document.getElementById("mobile_contact_info").classList.add("d-none");
@@ -493,3 +473,7 @@ async function searchForContact(contactId) {
   const contact = contacts.find((c) => c && c.id === contactId);
   return contact;
 }
+
+window.addEventListener("load", updateCrossImage);
+
+window.addEventListener("resize", updateCrossImage);
