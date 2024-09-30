@@ -28,8 +28,7 @@ h3 {
 }
 
 .contact-box {
-
-  padding: 32px 24px 32px 24px;
+  padding: 32px 0px 0px 24px;
   display: flex;
   width: clamp(333px, 27vw, 456px);
   height: calc(100vh - 96px);
@@ -45,6 +44,7 @@ h3 {
   width: clamp(261px, 23vw, 352px);
   height: 56px;
   padding: 12px 16px 12px 16px;
+  margin-right: 24px;
   gap: 16px;
   border-radius: 10px 10px 10px 10px;
   align-items: center;
@@ -117,13 +117,13 @@ h3 {
 
 .contact-seperator {
   width: clamp(261px, 23vw, 352px);
-  margin: 8px 0px 8px 0px;
+  margin: 8px 12px 8px 0px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .text-box {
   padding-top: clamp(55px, 9vw, 110px);
-  padding-left: clamp(30px, 3vw, 55px);
+  padding-left: clamp(15px, 5vw, 55px);
   display: flex;
   gap: clamp(10px, 1vw, 30px);
   align-items: center;
@@ -159,7 +159,7 @@ h3 {
   gap: 21px;
   flex-direction: column;
   padding-top: 32px;
-  padding-left: clamp(30px, 3vw, 55px);
+  padding-left: clamp(15px, 5vw, 55px);
 }
 
 .contacts-info-name {
@@ -369,7 +369,7 @@ h3 {
 }
 
 .mobile-menu img{
-  padding: 9px 24px 9px 9px ;
+  padding: 9px 9px 9px 9px ;
 }
 
 .mobile-menu img:hover{

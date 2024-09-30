@@ -1,8 +1,8 @@
 function generateContact(contact) {
-    const truncatedName = truncate(contact.name);
-    const truncatedEmail = truncate(contact.email);
-  
-    return `
+  const truncatedName = truncate(contact.name);
+  const truncatedEmail = truncate(contact.email);
+
+  return `
       <div id="contact${contact.id}" class="contacts" onclick="displayContactInfo(${contact.id})">
         <div class="letter-circle" style="background-color: ${contact.color};">${contact.initials}</div>
         <div class="contact-info">
@@ -11,15 +11,15 @@ function generateContact(contact) {
         </div>
       </div>
     `;
-  }
-  
-  function generateLetterBox(initials) {
-    return `<div class="letter-box">${initials}</div>
+}
+
+function generateLetterBox(initials) {
+  return `<div class="letter-box">${initials}</div>
               <div class="contact-seperator"></div>`;
-  }
-  
-  function generateContactInfo(contact) {
-    return `
+}
+
+function generateContactInfo(contact) {
+  return `
     <div class="contacts-info">
         <div class="contacts-info-name">
           <div class="big-letter-circle" style="background-color: ${contact.color};">${contact.initials}</div>
@@ -56,17 +56,17 @@ function generateContact(contact) {
         </div>
         </div>
       `;
-  }
-  
-  function generateBigLetterCircle(contact) {
-    return `
+}
+
+function generateBigLetterCircle(contact) {
+  return `
       <div class="edit-big-letter-circle" style="background-color: ${contact.color}";>${contact.initials}
       </div>
       `;
-  }
-  
-  function generateDeleteButtonDialog(contact){
-    return `
+}
+
+function generateButtonsInContactInfo(contact) {
+  return `
     <button onclick="deleteContact(${contact.id}), closeDialogEdit()" class="button-delete">
     Delete
   </button>
@@ -79,5 +79,10 @@ function generateContact(contact) {
     />
   </button>
     `;
-  }
+}
+
+function generateMobileMenu(contact){
+  return ` <img onclick="openDialogEdit(${contact.id})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
+      <img onclick="deleteContact(${contact.id})" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
   
+}

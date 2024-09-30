@@ -6,44 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function renderContent() {
-  const contactList = document.getElementById("contact_list");
-  contactList.innerHTML = ""; // Vorherigen Inhalt löschen
-  // 1. Abrufen des eingeloggten Benutzers
-  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  // 2. Alle Kontakte von Firebase abrufen
-  const data = await fetchData("contacts");
-  // 3. Alle Kontakte aus Firebase in ein Array umwandeln
-  const contacts = Object.values(data);
-  // 4. Kontakte basierend auf den IDs des Benutzers filtern
-  const userContacts = contacts.filter((contact) =>
-    activeUser.contacts.includes(contact.id)
-  );
-  // 5. Kontakte nach Initialen gruppieren
-  const groupedContacts = groupContacts(userContacts);
-  // 6. Kontaktliste rendern
-  renderContactsList(groupedContacts, contactList);
+  const groupedContacts = await groupContacts();
+  renderContactsList(groupedContacts);
 }
 
-function renderContactsList(groupedContacts, contactList) {
-  const sortedInitials = Object.keys(groupedContacts).sort(); // Initialen alphabetisch sortieren
-  sortedInitials.forEach((initial) => {
-    renderLetterBox(initial, contactList); // Buchstaben-Box für Initiale rendern
-    groupedContacts[initial].forEach(({ contact, index }) => {
-      const contactHtml = generateContact(contact); // Kontakt-HTML generieren
-      contactList.innerHTML += contactHtml; // Kontakt zum DOM hinzufügen
-    });
-  });
-}
-
-function renderLetterBox(initial, contactList) {
-  const letterBoxHtml = generateLetterBox(initial);
-  contactList.innerHTML += letterBoxHtml;
-}
-
-function groupContacts(contacts) {
-  return contacts.reduce((acc, contact, index) => {
+async function groupContacts() {
+  userContacts = await filterUserContacts();
+  return userContacts.reduce((acc, contact, index) => {
     if (contact && contact.initials) {
-      let firstInitial = contact.initials.charAt(0).toUpperCase(); // Verwende die gespeicherten Initialen
+      let firstInitial = contact.initials.charAt(0).toUpperCase();
       if (!acc[firstInitial]) {
         acc[firstInitial] = [];
       }
@@ -53,29 +24,72 @@ function groupContacts(contacts) {
   }, {});
 }
 
+async function filterUserContacts() {
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  const data = await fetchData("contacts");
+  const contacts = Object.values(data);
+  const userContacts = contacts.filter((contact) =>
+    activeUser.contacts.includes(contact.id)
+  );
+  return userContacts;
+}
+
+function renderContactsList(groupedContacts) {
+  const contactList = document.getElementById("contact_list");
+  contactList.innerHTML = "";
+  const sortedInitials = sortInitials(Object.keys(groupedContacts));
+  sortedInitials.forEach((initial) => {
+    renderLetterBox(initial, contactList);
+    renderContactsByInitial(groupedContacts[initial], contactList);
+  });
+}
+
+function sortInitials(initials) {
+  return initials.sort();
+}
+
+function renderContactsByInitial(contacts, contactList) {
+  contacts.forEach(({ contact }) => {
+    const contactHtml = generateContact(contact);
+    contactList.innerHTML += contactHtml;
+  });
+}
+
+function renderLetterBox(initial, contactList) {
+  const letterBoxHtml = generateLetterBox(initial);
+  contactList.innerHTML += letterBoxHtml;
+}
+
+function validateFields(fields) {
+  return fields.every(({ id, regex, alert, message, maxLength }) =>
+    validateInput(document.getElementById(id), regex, message, alert, maxLength)
+  );
+}
+
 async function validateForm() {
-  const nameValid = validateInput(
-    document.getElementById("name"),
-    /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
-    "(min. two words, max. 23 chars)",
-    "field_alert_name",
-    23
-  );
-  const emailValid = validateInput(
-    document.getElementById("email"),
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    "Invalid email (test@test.de)",
-    "field_alert_email"
-  );
-  if (nameValid && emailValid) {
+  const fields = [
+    {
+      id: "name",
+      regex: /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
+      alert: "field_alert_name",
+      message: "(min. two words, max. 23 chars)",
+      maxLength: 23,
+    },
+    {
+      id: "email",
+      regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      alert: "field_alert_email",
+      message: "Invalid email (test@test.de)",
+    },
+  ];
+  const valid = validateFields(fields);
+  if (valid) {
     await addContact();
-    closeDialog();
-    await openDialogSuccessfully();
   }
 }
 
 async function validateEditForm(contactId) {
-  const inputs = [
+  const fields = [
     {
       id: "inputEditName",
       regex: /^[A-Za-zÄäÖöÜüß]+(\s+[A-Za-zÄäÖöÜüß]+){1,}$/,
@@ -90,47 +104,31 @@ async function validateEditForm(contactId) {
       message: "Invalid email (test@test.de)",
     },
   ];
-  const valid = inputs.every(({ id, regex, alert, message, maxLength }) =>
-    validateInput(document.getElementById(id), regex, message, alert, maxLength)
-  );
-  if (valid) editContact(contactId);
+  const valid = validateFields(fields);
+  if (valid) {
+    await editContact(contactId);
+  }
 }
 
 async function addContact() {
+  const contactId = await postNewContact();
+  addContactToUser(contactId, activeUser);
+  addContactToUserLocal(contactId, activeUser);
+  closeDialog();
+  await openDialogSuccessfully();
+  resetForm();
+  renderContent();
+}
+
+async function postNewContact() {
   const name = getInputValue("name");
   const email = getInputValue("email");
   const phone = getInputValue("phone");
-
-  if (name && email && phone) {
-    const contactId = await getNewId("contacts");
-    const contactData = createContact(name, email, phone, contactId);
-    // Speichere den neuen Kontakt in der Datenbank
-    await postData(`contacts/${contactId - 1}/`, contactData);
-    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-    const userId = activeUser.id; // ID des aktiven Benutzers
-    // Abrufen aller Benutzer von Firebase
-    const allUsers = await fetchData("users"); // Alle Benutzer abrufen
-    // Suche nach dem Benutzer mit der passenden ID
-    const userData = Object.values(allUsers).find((user) => user.id === userId);
-    // Überprüfen, ob die Benutzerdaten erfolgreich abgerufen wurden
-    if (userData) {
-      // Füge die ID des neuen Kontakts zur Kontaktliste des Benutzers hinzu
-      if (!userData.contacts.includes(contactId)) {
-        userData.contacts.push(contactId); // Kontakt-ID hinzufügen
-      }
-      // Aktualisiere den Benutzer in der Datenbank
-      // Wir verwenden hier den Index von userData, um den richtigen Benutzer zu aktualisieren
-      await postData(`users/${userId - 1}/`, {
-        ...userData,
-        contacts: userData.contacts, // nur die Kontakte aktualisieren
-      });
-    } 
-    addContactToUser(contactId, activeUser);
-    resetForm();
-    renderContent();
-  } else {
-    alert("Bitte füllen Sie alle Felder aus.");
-  }
+  if (!name || !email) return; // Frühzeitiges Beenden bei fehlendem Name/Email
+  const contactId = await getNewId("contacts");
+  const contactData = createContact(name, email, phone, contactId);
+  await postData(`contacts/${contactId - 1}/`, contactData); // Funktion zum Speichern des Kontakts
+  return contactId; // Rückgabe der Werte zur weiteren Verwendung
 }
 
 function createContact(name, email, phone, contactId) {
@@ -144,6 +142,23 @@ function createContact(name, email, phone, contactId) {
   };
 }
 
+async function addContactToUser(contactId, activeUser) {
+  const userId = activeUser.id;
+  const allUsers = await fetchData("users");
+  const userData = Object.values(allUsers).find((user) => user.id === userId);
+
+  if (userData && !userData.contacts.includes(contactId)) {
+    userData.contacts.push(contactId);
+    await postData(`users/${userId - 1}/`, { ...userData });
+  }
+}
+
+function addContactToUserLocal(contactId) {
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  activeUser.contacts.push(contactId);
+  localStorage.setItem("activeUser", JSON.stringify(activeUser));
+}
+
 function getRandomColor() {
   const darkLetters = "0123456789ABC"; // Beschränke auf dunklere Farbtöne
   let color = "#";
@@ -151,6 +166,19 @@ function getRandomColor() {
     color += darkLetters[Math.floor(Math.random() * darkLetters.length)];
   }
   return color;
+}
+
+async function displayContactInfo(contactId) {
+  if (window.innerWidth <= 777) {
+    return displayContactInfoMobile(contactId);
+  }
+  const contact = await searchForContact(contactId);
+  const contactInfoDiv = document.querySelector(".contacts-info-box");
+  const contactInfoButtons = document.getElementById("button_edit_dialog");
+  contactInfoDiv.innerHTML = "";
+  contactInfoDiv.innerHTML = generateContactInfo(contact);
+  contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
+  highlightContact(contact);
 }
 
 function highlightContact(contact) {
@@ -164,46 +192,20 @@ function highlightContact(contact) {
   document.getElementById(`contact${contact.id}`).style.color = "white";
 }
 
-async function displayContactInfo(contactId) {
-  // Prüfen, ob die Bildschirmbreite kleiner oder gleich 777px ist
-  if (window.innerWidth <= 777) {
-    // Wenn ja, die mobile Funktion ausführen
-    return displayContactInfoMobile(contactId);
-  }
-  // Andernfalls die reguläre Logik ausführen
-  const data = await fetchData("contacts");
-  const contacts = Object.values(data);
-  const numericContactId =
-    typeof contactId === "string" ? parseInt(contactId) : contactId;
-  const contact = contacts.find((c) => c && c.id === numericContactId);
-  const contactInfoDiv = document.querySelector(".contacts-info-box");
-  contactInfoDiv.innerHTML = ""; // Vorherigen Inhalt leeren
-  contactInfoDiv.innerHTML = generateContactInfo(contact); // Kontaktdetails anzeigen
-  document.getElementById("button_edit_dialog").innerHTML =
-    generateDeleteButtonDialog(contact); // Löschen-Button anzeigen
-  highlightContact(contact); // Kontakt hervorheben
-}
-
 async function displayContactInfoMobile(contactId) {
-  // Daten von Firebase abrufen
-  document.getElementById("mobile_contact_info").classList.remove("d-none");
-  document.getElementById("mobile_contact_info").classList.add("pos-abs");
-  const data = await fetchData("contacts");
-  const contacts = Object.values(data);
-  const numericContactId =
-    typeof contactId === "string" ? parseInt(contactId) : contactId;
-  const contact = contacts.find((c) => c && c.id === numericContactId);
+  let infoDiv = document.getElementById("mobile_contact_info");
+  infoDiv.classList.remove("d-none");
+  infoDiv.classList.add("pos-abs");
+  const contact = await searchForContact(contactId);
   const contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
-  contactInfoDiv.innerHTML = ""; // Vorherigen Inhalt leeren
-  contactInfoDiv.innerHTML = generateContactInfo(contact); // Kontaktdetails anzeigen
-  document.getElementById("button_edit_dialog").innerHTML =
-    generateDeleteButtonDialog(contact); // Löschen-Button anzeigen
-  highlightContact(contact); // Kontakt hervorheben
+  const contactInfoButtons = document.getElementById("button_edit_dialog");
+  contactInfoDiv.innerHTML = "";
+  contactInfoDiv.innerHTML = generateContactInfo(contact);
+  contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact); 
+  highlightContact(contact); 
   mobileEditContact();
   const menu = document.getElementById("mobile_menu");
-  const htmlString = ` <img onclick="openDialogEdit(${contact.id})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
-      <img onclick="deleteContact(${contact.id})" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
-  menu.innerHTML = htmlString;
+  menu.innerHTML = generateMobileMenu(contact);;
 }
 
 function mobileEditContact() {
@@ -214,19 +216,60 @@ function mobileEditContact() {
 }
 
 async function deleteContact(contactId) {
-  // Lösche den Kontakt von Firebase
-  // await fetch(`${BASE_URL}/contacts/${contactId - 1}/.json`, {
-  //   method: "DELETE",
-  // });
-
-  deleteContactsInData(contactId)
-  // Aktualisiere die Kontaktliste nach dem Löschen
-  await renderContent(); // Render die aktualisierte Kontaktliste
-  document.querySelector(".contacts-info-box").innerHTML = ""; // Leere die Detailansicht
+  await deleteContactInData(contactId);
+  await renderContent();
+  document.querySelector(".contacts-info-box").innerHTML = "";
   if (window.innerWidth < 777) {
     document.getElementById("mobile_menu").classList.remove("d-flex");
-    goBackMobile(); // Mobile Funktion aufrufen, wenn die Breite kleiner ist
+    goBackMobile();
   }
+}
+
+async function deleteContactInData(contactId) {
+  let users = await fetchData("users");
+
+  if (contactId >= 1 && contactId <= 10) {
+    await deleteContactOnlyforUser(contactId, users);
+  } else {
+    await deleteContactforAllUsers(contactId, users);
+  }
+  deleteContactInLocalStorage(contactId);
+}
+
+async function deleteContactOnlyforUser(contactId, users) {
+  if (activeUser.id === 0) {
+    return;
+  }
+  users = users.map((user) => {
+    if (user.id === activeUser.id) {
+      return {
+        ...user,
+        contacts: user.contacts.filter((contact) => contact !== contactId),
+      };
+    }
+    return user;
+  });
+  await postData("users", users);
+}
+
+async function deleteContactforAllUsers(contactId, users) {
+  await deleteData("contacts", contactId);
+  if (activeUser.id === 0) {
+    return;
+  }
+  users = users.map((user) => ({
+    ...user,
+    contacts: user.contacts.filter((contact) => contact !== contactId),
+  }));
+  await postData("users", users);
+}
+
+function deleteContactInLocalStorage(contactId) {
+  let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  activeUser.contacts = activeUser.contacts.filter(
+    (contact) => contact !== contactId
+  );
+  localStorage.setItem("activeUser", JSON.stringify(activeUser));
 }
 
 async function openDialog() {
@@ -236,6 +279,22 @@ async function openDialog() {
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
   document.getElementById("grey_background").classList.remove("hidden");
+}
+
+async function openDialogEdit(contactId) {
+  const menu = document.getElementById("mobile_menu");
+  if (menu.classList.contains("d-flex")) {
+    menu.classList.remove("d-flex"); 
+  }
+  const dialogContainer = document.getElementById("dialog_edit");
+  dialogContainer.open = true;
+  dialogContainer.classList.add("d-flex");
+  document.getElementById("grey_background").classList.remove("hidden");
+  const contact = await searchForContact(contactId)
+  populateFormFields(contact); // Formularfelder mit den Kontaktinformationen füllen
+  await sleep(10);
+  dialogContainer.classList.add("dialog-open");
+  updateBigLetterCircle(contact);
 }
 
 async function closeDialog() {
@@ -248,31 +307,14 @@ async function closeDialog() {
   clearForm();
 }
 
-async function openDialogEdit(contactId) {
-  const menu = document.getElementById("mobile_menu");
-
-  // Überprüfen, ob das mobile Menü geöffnet ist (d.h. die Klasse 'd-flex' hat)
-  if (menu.classList.contains("d-flex")) {
-    menu.classList.remove("d-flex"); // Mobile Menü schließen
-  }
-
+async function closeDialogEdit() {
   const dialogContainer = document.getElementById("dialog_edit");
-  dialogContainer.open = true;
-  dialogContainer.classList.add("d-flex");
-  document.getElementById("grey_background").classList.remove("hidden");
-
-  // Lade alle Kontakte aus Firebase
-  const contacts = await fetchData(`contacts`);
-
-  // Finde den Kontakt mit der passenden ID
-  const contact = contacts.find((c) => c.id === contactId);
-
-  // Prüfe, ob der Kontakt gefunden wurde
-
-  populateFormFields(contact); // Formularfelder mit den Kontaktinformationen füllen
-  await sleep(10);
-  dialogContainer.classList.add("dialog-open");
-  updateBigLetterCircle(contact);
+  dialogContainer.classList.remove("dialog-open");
+  document.getElementById("grey_background").classList.add("hidden");
+  await sleep(300);
+  dialogContainer.classList.remove("d-flex");
+  dialogContainer.open = false;
+  clearEditForm();
 }
 
 function populateFormFields(contact) {
@@ -316,15 +358,7 @@ function calculateInitials(name) {
   return firstInitial + lastInitial; // Initialen zurückgeben
 }
 
-async function closeDialogEdit() {
-  const dialogContainer = document.getElementById("dialog_edit");
-  dialogContainer.classList.remove("dialog-open");
-  document.getElementById("grey_background").classList.add("hidden");
-  await sleep(300);
-  dialogContainer.classList.remove("d-flex");
-  dialogContainer.open = false;
-  clearEditForm();
-}
+
 
 async function openDialogSuccessfully() {
   const dialogContainer = document.getElementById("succesfully_created");
@@ -441,72 +475,21 @@ function goBackMobile() {
 
 function openMobileMenu(contactId) {
   const menu = document.getElementById("mobile_menu");
-
-  // Menü einblenden
   menu.classList.add("d-flex");
-
-  // Event-Listener hinzufügen, um das Menü bei einem Klick außerhalb zu schließen
   const handleClickOutside = (event) => {
     if (!menu.contains(event.target)) {
-      // Prüfen, ob der Klick außerhalb des Menüs war
-      menu.classList.remove("d-flex"); // Menü ausblenden
-      document.removeEventListener("click", handleClickOutside); // Event-Listener entfernen
+      menu.classList.remove("d-flex");
+      document.removeEventListener("click", handleClickOutside);
     }
   };
-
-  // Event-Listener nur einmal hinzufügen
   setTimeout(() => {
     document.addEventListener("click", handleClickOutside);
   }, 0);
 }
 
-function addContactToUser(contactId, activeUser){
-  activeUser.contacts.push(contactId);
-  localStorage.setItem("activeUser", JSON.stringify(activeUser));
-
-}
-
-async function deleteContactsInData(contactId) {
-  let users = await fetchData("users");
-
-  if (contactId >= 1 && contactId <= 10) {
-    await deleteTaskOnlyforUser(contactId, users);
-  } else {
-    await deleteTaskforAllUsers(contactId, users);
-  }
-  deleteTaskInLocalStorage(contactId);
-}
-
-async function deleteTaskOnlyforUser(contactId, users) {
-  if (activeUser.id === 0) {
-    return
-  }
-  users = users.map((user) => {
-    if (user.id === activeUser.id) {
-      return {
-        ...user,
-        contacts: user.contacts.filter((contact) => contact !== contactId),
-      };
-    }
-    return user;
-  });
-  await postData("users", users);
-}
-
-async function deleteTaskforAllUsers(contactId, users) {
-  await deleteData("contacts", contactId);
-  if (activeUser.id === 0) {
-    return
-  }
-  users = users.map((user) => ({
-    ...user,
-    contacts: user.contacts.filter((contact) => contact !== contactId),
-  }));
-  await postData("users", users);
-}
-
-function deleteTaskInLocalStorage(contactId) {
-  let activeUser = JSON.parse(localStorage.getItem("activeUser"));
-  activeUser.contacts = activeUser.contacts.filter((contact) => contact !== contactId);
-  localStorage.setItem("activeUser", JSON.stringify(activeUser));
+async function searchForContact(contactId) {
+  const data = await fetchData("contacts");
+  const contacts = Object.values(data);
+  const contact = contacts.find((c) => c && c.id === contactId);
+  return contact;
 }
