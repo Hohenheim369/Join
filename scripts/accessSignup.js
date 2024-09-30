@@ -87,7 +87,7 @@ async function isEmailRegistered(email) {
 function checkEmailFormat(email, noticeField, emailField) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    console.log("Invalid email format.");
+    console.error("Invalid email format.");
     emailField.classList.add("border-alert");
     noticeField.innerHTML += `<div>Please enter a valid email address.</div>`;
     return false;

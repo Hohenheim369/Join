@@ -176,9 +176,8 @@ function generateSingleAssignee(contact) {
 
 function generateSingleSubtasks(subtask, id) {
   return `
-          <div class="single-task-subtasks">
-            <img
-            onclick="updateSubtaskStatus(${id}, ${subtask.subId})"
+          <div onclick="updateSubtaskStatus(${id}, ${subtask.subId})" class="single-task-subtasks cursor-p">
+            <img            
             id="task_${id}_subtask_${subtask.subId}"
             class="litte-button"
             src="../assets/img/png/check-button-${subtask.done}.png"
