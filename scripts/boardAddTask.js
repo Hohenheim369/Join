@@ -1,7 +1,9 @@
 function openAddTask(status) {
   //hier könnten wir die toggleOverlay mit einfügen...
-  let overlay = document.getElementById("board_addtask_overlay");
-  overlay.classList.remove("d-none");
+  toggleOverlay('board_addtask_overlay')
+
+  // let overlay = document.getElementById("board_addtask_overlay");
+  // overlay.classList.remove("d-none");
 
   taskStatus = status;
 }

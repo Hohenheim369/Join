@@ -206,6 +206,19 @@
   z-index: 1002;
 }
 
+.overlay.active {
+  display: flex;
+}
+
+.overlay.visible {
+  opacity: 1;
+}
+
+.overlay.visible .single-task,
+.overlay.visible .add-task-board {
+  transform: translateY(0);
+}
+
 .single-task {
   width: 525px;
   background-color: white;
@@ -213,6 +226,8 @@
   padding-inline: 40px;
   border-radius: 30px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+  transform: translateX(100vh);
+  transition: transform 0.5s ease;
 }
 
 .single-task-content {
@@ -361,6 +376,8 @@
   padding: 64px 74px;
   border-radius: 30px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+  transform: translateX(100vh);
+  transition: transform 0.5s ease;
 }
 
 .edit-task-height {
