@@ -382,3 +382,10 @@ function resetrequiredCategory() {
     category.classList.add("category-container");
   }
 }
+
+function closeTaskIfOutside(event) {
+  if (event.target.id === 'add_task_board'||'edit_task_board') {
+    closeSelect();
+    closeSelectCategory();
+  }
+}

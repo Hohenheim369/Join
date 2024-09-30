@@ -33,7 +33,6 @@ function openSelect() {
     document.getElementById("assigned_inactiv").classList.add("d-none");
     document.getElementById("assigned_activ").classList.remove("d-none");
   }
-  activateClickListener();
 }
 
 function closeSelect() {
@@ -49,7 +48,6 @@ function openSelectCategory() {
     document.getElementById("category_activ").classList.remove("d-none");
     document.getElementById("category_task_contant").innerHTML = showCategory();
   }
-  activateClickListener();
 }
 
 function closeSelectCategory() {
@@ -57,76 +55,6 @@ function closeSelectCategory() {
     document.getElementById("category_activ").classList.add("d-none");
     document.getElementById("category_inactiv").classList.remove("d-none");
   }
-}
-
-function activateClickListener() {
-  const addTaskOverlay = document.getElementById("add_task_content");
-  const editTaskOverlay = document.getElementById("edit_task_board_click");
-  const boardAddTaskOverlay = document.getElementById("add_task_board_click");
-  let displayedSection = includesDnone();
-  if (addTaskOverlay) {
-    // removeBodyClickListener();
-    addTaskOverlay.addEventListener("click", handleBodyClick);
-  }
-  if (editTaskOverlay && displayedSection) {
-    // removeBodyClickListener();
-    editTaskOverlay.addEventListener("click", handleBodyClick);
-  }
-  if (boardAddTaskOverlay && !displayedSection) {
-    // removeBodyClickListener();
-    boardAddTaskOverlay.addEventListener("click", handleBodyClick);
-  }
-}
-
-function includesDnone() {
-  const element = document.getElementById("edit_task_board_click");
-  return element ? element.classList.contains("d-none") : false;
-}
-
-function removeBodyClickListener() {
-  document.getElementById("add_task_content").removeEventListener("click", handleBodyClick);
-  document.getElementById("edit_task_board_click").removeEventListener("click", handleBodyClick);
-  document.getElementById("add_task_board_click").removeEventListener("click", handleBodyClick);
-}
-
-function handleBodyClick(event) {
-  const contactInput = document.getElementById("assigned_inactiv");
-  const contactList = document.getElementById("contact_contant");
-  const categoryInput = document.getElementById("category_inactiv");
-  const categoryList = document.getElementById("category_task_contant");
-
-  if (
-    isClickOutside(
-      event,
-      contactInput,
-      contactList,
-      categoryInput,
-      categoryList
-    )
-  ) {
-    handleCloseActions();
-  }
-}
-
-function isClickOutside(
-  event,
-  contactInput,
-  contactList,
-  categoryInput,
-  categoryList
-) {
-  return !(
-    contactInput.contains(event.target) ||
-    contactList.contains(event.target) ||
-    categoryInput.contains(event.target) ||
-    categoryList.contains(event.target)
-  );
-}
-
-function handleCloseActions() {
-  closeSelect();
-  closeSelectCategory();
-  // removeBodyClickListener();
 }
 
 function openSubtasks() {

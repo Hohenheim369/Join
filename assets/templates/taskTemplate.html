@@ -26,7 +26,7 @@
     <div class="form-child-order">
       <label>Assigned to</label>
       <div id="assigned_contant" class="assigned-container">
-        <div id="assigned_inactiv" onclick="openSelect()">
+        <div id="assigned_inactiv" onclick="openSelect(); bubblingPrevention(event)">
           <div class="div-input">Select contacts to assign</div>
           <div class="hover-circle d-flex-center pos-abs">
             <img src="../assets/img/png-old/arrow_drop_down.png" alt="" />
@@ -35,6 +35,7 @@
         <div id="assigned_activ" class="d-none">
           <input
             oninput="searchContact()"
+            onclick="bubblingPrevention(event)"
             type="text"
             placeholder="Select contacts to assign"
             id="assigned_to"
@@ -46,7 +47,7 @@
               alt=""
             />
           </div>
-          <div id="contact_contant" class="select-field"></div>
+          <div onclick="bubblingPrevention(event)" id="contact_contant" class="select-field"></div>
         </div>
       </div>
       <div id="assigned_all" class="contact-icon-order">
@@ -101,7 +102,7 @@
     <div id="edit_category" class="form-child-order">
       <label>Category<span class="required-sign">*</span></label>
       <div id="category_contant" class="category-container">
-        <div id="category_inactiv" onclick="openSelectCategory()">
+        <div id="category_inactiv" onclick="openSelectCategory(); bubblingPrevention(event)">
           <div id="category" class="div-input">Select task category</div>
           <div class="hover-circle d-flex-center pos-abs">
             <img src="../assets/img/png-old/arrow_drop_down.png" alt="" />
