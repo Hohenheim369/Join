@@ -108,3 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
+function bubblingPrevention(event) {
+  event.stopPropagation();
+}

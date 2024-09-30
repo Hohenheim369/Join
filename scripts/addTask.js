@@ -384,7 +384,7 @@ function resetrequiredCategory() {
 }
 
 function closeTaskIfOutside(event) {
-  if (event.target.id === 'add_task_board'||'edit_task_board') {
+  if (event.target.id === 'add_task_board'||'edit_task_board'||'add_task_content') {
     closeSelect();
     closeSelectCategory();
   }

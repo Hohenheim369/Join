@@ -213,11 +213,11 @@
       id="edit_task_overlay"
       onclick="toggleOverlay('edit_task_overlay')"
     >
-      <div id="edit_task_board_click">
+      <div onclick="bubblingPrevention(event)" id="edit_task_board_click">
         <div
           id="edit_task_board"
           class="single-task content-overlay pos-rel"
-          onclick="bubblingPrevention(event)"
+          onclick="closeTaskIfOutside(event)"
         >
           <div id="edit_overflow"><div id="edit_task_template"></div></div>
           <div
