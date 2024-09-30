@@ -123,6 +123,10 @@ form{
   background-color: rgb(31, 215, 193);
 }
 
+.bg-category-tutorial{
+  background-color: rgb(253, 91, 79);
+}
+
 .assigned-color-change{
   background-color: #091931;
   color: #ffffff;
