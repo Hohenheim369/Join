@@ -197,6 +197,10 @@ li {
   height: 32px;
 }
 
+.li-hover  {
+  overflow-x: hidden;
+}
+
 .li-hover:hover  {
   background-color: #eeeeee;
   border-radius: 10px;

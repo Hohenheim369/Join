@@ -1,33 +1,68 @@
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 1160px) {
   .content {
-    padding: 50px 0px;
-    margin-left: clamp(135px, 3vw, 232px);
+    padding: 40px;
+    padding-inline: clamp(16px, 1vw, 96px);
+}
+}
+
+@media screen and (max-width: 835px) {
+  .bottom-order {
+    background-color: rgb(246, 247, 248);
+    width: 85%;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 16px;
+    position: fixed;
+    bottom: 0px;
   }
+  .content-order {
+    overflow-y: auto;
+    height: calc(100vh - 376px);
+  }
+  .content {
+    padding: 40px 0px;
+    margin-left: clamp(100px, 15vw, 144px);  }
 }
 
 @media screen and (max-width: 777px) {
   .content {
     padding: 50px 0px;
-    margin-left: clamp(40px, 3vw, 232px);
+    margin-left: 0px;
   }
   .bottom-order {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 16px 16px;
-    position: fixed;
     bottom: 80px;
   }
-  .content-order {
-    overflow-y: auto;
-  }
-
   .content-order {
     display: flex;
     flex-direction: column;
     margin-top: 25px;
+    overflow-y: auto;
+    height: calc(100vh - 376px);
   }
   .dividing-bar {
     display: none;
+  }
+  .add-task-form-left {
+    padding: 0px 16px;
+    width: auto;
+  }
+  .add-task-form-right {
+    padding: 0px 16px;
+
+    width: auto;
+  }
+  .div-button-order {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 516px) {
+  .clear-button {
+    display: none;
+  }
+  .div-button-order {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
