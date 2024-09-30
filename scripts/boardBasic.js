@@ -5,11 +5,11 @@ function toggleOverlay(section) {
   let refOverlay = document.getElementById(section);
   refOverlay.classList.toggle("d-none");
 
-  if (!refOverlay.classList.contains("d-none")) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+  // if (!refOverlay.classList.contains("d-none")) {
+  //   document.body.style.overflow = "hidden";
+  // } else {
+  //   document.body.style.overflow = "auto";
+  // }
 }
 
 async function moveToStatus(taskId, status, moveToDirection) {

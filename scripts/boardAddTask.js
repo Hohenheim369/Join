@@ -209,7 +209,9 @@ async function putEditTasksContent(
 async function getEditSubtasks(taskId) {
   let tasks = await fetchData("tasks");
   let editSingleTask = tasks.find((task) => task.id === taskId);
-  let filteredSubtasks = editSingleTask.subtasks.filter(data => data !== null);
+  let filteredSubtasks = editSingleTask.subtasks?.filter(data => data !== null) || [];
+
+  if (subTasks.length === 0) return [];
 
   return subTasks.map((subName, index) => {
     let foundSubtask = filteredSubtasks.find(
