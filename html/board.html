@@ -215,13 +215,13 @@
       id="edit_task_overlay"
       onclick="toggleOverlay('edit_task_overlay')"
     >
-      <div onclick="bubblingPrevention(event)" id="edit_task_board_click">
+      <div onclick="bubblingPrevention(event)" class="edit-task-board-click" id="edit_task_board_click">
         <div
           id="edit_task_board"
-          class="single-task content-overlay pos-rel"
+          class="single-edit-task content-overlay pos-rel"
           onclick="closeTaskIfOutside(event)"
         >
-          <div id="edit_overflow"><div id="edit_task_template"></div></div>
+          <div id="edit_overflow" class="edit-overflow"><div id="edit_task_template"></div></div>
           <div
             onclick="toggleOverlay('edit_task_overlay')"
             class="close-add-task-button d-flex-center"
@@ -237,7 +237,7 @@
       id="board_addtask_overlay"
       onclick="toggleOverlay('board_addtask_overlay')"
     >
-      <div onclick="bubblingPrevention(event)" id="add_task_board_click">
+      <div onclick="bubblingPrevention(event)" class="add-task-board-click" id="add_task_board_click">
         <div
           id="add_task_board"
           class="add-task-board content-overlay pos-rel"

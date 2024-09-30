@@ -363,3 +363,26 @@ li {
   transition: ease-in-out;
   transform: scale(1.1);
 }
+
+.add-task-board-click{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-inline: 16px;
+}
+
+.edit-task-board-click{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-inline: 16px;
+}
+
+.single-edit-task {
+  width: 525px;
+  background-color: white;
+  padding-block: 48px;
+  padding-inline: 40px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+}
