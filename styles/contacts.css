@@ -413,3 +413,8 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #29abe2;
   background-color: white;
 }
+
+.letter-circel-user{
+  border: 2px solid black !important;
+  color: rgb(41, 171, 227) !important;
+}

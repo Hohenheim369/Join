@@ -47,7 +47,11 @@ async function renderActiveUser(contactList) {
   const data = await fetchData("users");
   const users = Object.values(data);
   const user = users.find((c) => c.id === activeUser.id);
-  contactList.innerHTML = generateActiveUserContact(user);
+
+  if (user) {
+    user.id = 0;
+    contactList.innerHTML = generateActiveUserContact(user);
+  }
 }
 
 function sortInitials(initials) {
@@ -175,29 +179,28 @@ function getRandomColor() {
 }
 
 async function displayContactInfo(contactId) {
+  let contact;
+  if (contactId === 0) {
+    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    contact = await searchForUser(activeUser.id);
+    contact.id = 0;
+  } else {
+    contact = await searchForContact(contactId);
+  }
   if (window.innerWidth <= 777) {
     return displayContactInfoMobile(contactId);
   }
-  const contact = await searchForContact(contactId);
   const contactInfoDiv = document.querySelector(".contacts-info-box");
   const contactInfoButtons = document.getElementById("button_edit_dialog");
   contactInfoDiv.innerHTML = "";
   contactInfoDiv.innerHTML = generateContactInfo(contact);
+  if (contact.id === 0) {
+    document
+      .getElementById("for_active_user")
+      .classList.add("letter-circel-user");
+  }
   contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   highlightContact(contact);
-}
-
-async function displayAktivUserContactInfo(userId) {
-  if (window.innerWidth <= 777) {
-    return displayContactInfoMobile(userId);
-  }
-  const user = await searchForUser(userId);
-  const contactInfoDiv = document.querySelector(".contacts-info-box");
-  const contactInfoButtons = document.getElementById("button_edit_dialog");
-  contactInfoDiv.innerHTML = "";
-  contactInfoDiv.innerHTML = generateContactInfo(user);
-  contactInfoButtons.innerHTML = generateButtonsInContactInfo(user);
-  highlightContact(user);
 }
 
 function highlightContact(contact) {
@@ -301,6 +304,14 @@ async function openDialog() {
 }
 
 async function openDialogEdit(contactId) {
+  if (contactId === 0) {
+    activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    contactId = activeUser.id;
+    contact = await searchForUser(contactId);
+  } else {
+    contact = await searchForContact(contactId);
+  }
+
   const menu = document.getElementById("mobile_menu");
   if (menu.classList.contains("d-flex")) {
     menu.classList.remove("d-flex");
@@ -309,7 +320,6 @@ async function openDialogEdit(contactId) {
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
   document.getElementById("grey_background").classList.remove("hidden");
-  const contact = await searchForContact(contactId);
   populateFormFields(contact);
   await sleep(10);
   dialogContainer.classList.add("dialog-open");
@@ -339,16 +349,31 @@ async function closeDialogEdit() {
 function populateFormFields(contact) {
   document.getElementById("inputEditName").value = contact.name;
   document.getElementById("inputEditEmail").value = contact.email;
+  if (contact.phone === undefined) {
+    contact.phone = "";
+  }
   document.getElementById("inputEditPhone").value = contact.phone;
 }
 
 function dialogBigLetterCircle(contact) {
   document.getElementById("big_letter_circle").innerHTML =
     generateBigLetterCircle(contact);
+  if (contact.color === "#ffffff") {
+    document
+      .getElementById("for_active_use_dialog_circel")
+      .classList.add("letter-circel-user");
+  }
 }
 
 async function editContact(contactId) {
-  const existingContact = await searchForContact(contactId);
+  let existingContact;
+  if (contactId === 0) {
+    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    contactId = activeUser.id;
+    existingContact = await searchForUser(contactId);
+  } else {
+    existingContact = await searchForContact(contactId);
+  }
   const updatedName = document.getElementById("inputEditName").value;
   const updatedEmail = document.getElementById("inputEditEmail").value;
   const updatedPhone = document.getElementById("inputEditPhone").value;
@@ -360,7 +385,12 @@ async function editContact(contactId) {
     phone: updatedPhone,
     initials: updatedInitials,
   };
-  await postData(`contacts/${contactId - 1}/`, updatedContact);
+  if (existingContact.color === "#ffffff") {
+    await postData(`users/${contactId - 1}/`, updatedContact);
+  } else {
+    await postData(`contacts/${contactId - 1}/`, updatedContact);
+  }
+
   closeDialogEdit();
   await renderContent();
   displayContactInfo(contactId);
@@ -503,7 +533,7 @@ async function searchForUser(contactId) {
   return contact;
 }
 
-
+function userLetterCircel() {}
 
 window.addEventListener("load", updateCrossImage);
 

@@ -1,9 +1,9 @@
 function generateActiveUserContact(user){
   return `
-      <div id="contact${user.id}" class="contacts" onclick="displayAktivUserContactInfo(${user.id})">
-        <div class="letter-circle" style="background-color: white;">${user.initials}</div>
+      <div id="contact${user.id}" class="contacts" onclick="displayContactInfo(${user.id})">
+        <div class="letter-circle letter-circel-user" style="background-color: white;">${user.initials}</div>
         <div class="contact-info">
-          <span>${user.name}</span>
+          <span>${user.name}(YOU)</span>
           <a class="contact-email" href="#">${user.email}</a>
         </div>
       </div>
@@ -34,7 +34,7 @@ function generateContactInfo(contact) {
   return `
     <div class="contacts-info">
         <div class="contacts-info-name">
-          <div class="big-letter-circle" style="background-color: ${contact.color};">${contact.initials}</div>
+          <div id="for_active_user" class="big-letter-circle" style="background-color: ${contact.color};">${contact.initials}</div>
           <div class="contact-box-name">
             <h3>${contact.name}</h3>
             <div class="contact-box-edit-delete">
@@ -72,7 +72,7 @@ function generateContactInfo(contact) {
 
 function generateBigLetterCircle(contact) {
   return `
-      <div class="edit-big-letter-circle" style="background-color: ${contact.color}";>${contact.initials}
+      <div id="for_active_use_dialog_circel" class="edit-big-letter-circle" style="background-color: ${contact.color}";>${contact.initials}
       </div>
       `;
 }
