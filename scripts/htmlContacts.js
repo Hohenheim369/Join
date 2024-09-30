@@ -12,18 +12,6 @@ function generateContact(contact) {
       </div>
     `;
   }
-
-  function generateActiveUser(activeUserContact) {
-    return `
-    <div id="contact${activeUserContact[2]}" class="contacts" onclick="displayContactInfo(${activeUserContact[2]})">
-      <div class="user-profile-initials-box-contacts ">${activeUserContact[3]}</div>
-      <div class="contact-info">
-        <span>${activeUserContact[4]} (You)</span>
-        <a class="contact-email" href="#">${activeUserContact[1]}</a>
-      </div>
-    </div>
-  `;
-  }
   
   function generateLetterBox(initials) {
     return `<div class="letter-box">${initials}</div>
