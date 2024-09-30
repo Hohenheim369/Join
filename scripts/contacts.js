@@ -194,12 +194,12 @@ async function displayContactInfo(contactId) {
   const contactInfoButtons = document.getElementById("button_edit_dialog");
   contactInfoDiv.innerHTML = "";
   contactInfoDiv.innerHTML = generateContactInfo(contact);
+  contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   if (contact.id === 0) {
     document
       .getElementById("for_active_user")
       .classList.add("letter-circel-user");
   }
-  contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   highlightContact(contact);
 }
 
@@ -218,11 +218,23 @@ async function displayContactInfoMobile(contactId) {
   let infoDiv = document.getElementById("mobile_contact_info");
   infoDiv.classList.remove("d-none");
   infoDiv.classList.add("pos-abs");
-  const contact = await searchForContact(contactId);
+  let contact;
+  if (contactId === 0) {
+    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    contact = await searchForUser(activeUser.id);
+    contact.id = 0;
+  } else {
+    contact = await searchForContact(contactId);
+  }
   const contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
   const contactInfoButtons = document.getElementById("button_edit_dialog");
   contactInfoDiv.innerHTML = "";
   contactInfoDiv.innerHTML = generateContactInfo(contact);
+  if (contact.id === 0) {
+    document
+      .getElementById("for_active_user")
+      .classList.add("letter-circel-user");
+  }
   contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   highlightContact(contact);
   mobileEditContact();
@@ -234,10 +246,15 @@ function mobileEditContact() {
   const contactMobileButton = document.querySelector(
     ".contact-box-edit-delete"
   );
+
   contactMobileButton.classList.add("d-none");
 }
 
 async function deleteContact(contactId) {
+  if(contactId === 0) {
+    alert("user can't be deletet by this way")
+    return;
+  } 
   await deleteContactInData(contactId);
   await renderContent();
   document.querySelector(".contacts-info-box").innerHTML = "";
@@ -393,7 +410,14 @@ async function editContact(contactId) {
 
   closeDialogEdit();
   await renderContent();
+  if(window.innerWidth <= 777){
+    let infoDiv = document.getElementById("mobile_contact_info");
+  infoDiv.classList.add("d-none");
+  infoDiv.classList.remove("pos-abs");
+  } else{
   displayContactInfo(contactId);
+  }
+  
 }
 
 function calculateInitials(name) {
@@ -532,8 +556,6 @@ async function searchForUser(contactId) {
   const contact = contacts.find((c) => c && c.id === contactId);
   return contact;
 }
-
-function userLetterCircel() {}
 
 window.addEventListener("load", updateCrossImage);
 
