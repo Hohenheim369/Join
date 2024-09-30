@@ -33,7 +33,7 @@ function openSelect() {
     document.getElementById("assigned_inactiv").classList.add("d-none");
     document.getElementById("assigned_activ").classList.remove("d-none");
   }
-  activateClickListener()
+  activateClickListener();
 }
 
 function closeSelect() {
@@ -49,7 +49,7 @@ function openSelectCategory() {
     document.getElementById("category_activ").classList.remove("d-none");
     document.getElementById("category_task_contant").innerHTML = showCategory();
   }
-  activateClickListener()
+  activateClickListener();
 }
 
 function closeSelectCategory() {
@@ -59,28 +59,34 @@ function closeSelectCategory() {
   }
 }
 
-// function activateClickListener(){
-//   document.body.addEventListener("click", handleBodyClick);
-//   document.getElementById('edit_task_overlay').addEventListener("click", handleBodyClick);
-//   document.getElementById('board_addtask_overlay').addEventListener("click", handleBodyClick);
-// }
-
 function activateClickListener() {
-  document.getElementById('add_task_template').addEventListener("click", handleBodyClick);
-  const editTaskOverlay = document.getElementById('edit_task_board');
-  const boardAddTaskOverlay = document.getElementById('add_task_board');
-  
-  if (editTaskOverlay) {
-    removeBodyClickListener();
-      editTaskOverlay.addEventListener("click", handleBodyClick);
-  } else if (boardAddTaskOverlay) {
-    removeBodyClickListener();
-      boardAddTaskOverlay.addEventListener("click", handleBodyClick);
+  const addTaskOverlay = document.getElementById("add_task_content");
+  const editTaskOverlay = document.getElementById("edit_task_board_click");
+  const boardAddTaskOverlay = document.getElementById("add_task_board_click");
+  let displayedSection = includesDnone();
+  if (addTaskOverlay) {
+    // removeBodyClickListener();
+    addTaskOverlay.addEventListener("click", handleBodyClick);
+  }
+  if (editTaskOverlay && displayedSection) {
+    // removeBodyClickListener();
+    editTaskOverlay.addEventListener("click", handleBodyClick);
+  }
+  if (boardAddTaskOverlay && !displayedSection) {
+    // removeBodyClickListener();
+    boardAddTaskOverlay.addEventListener("click", handleBodyClick);
   }
 }
 
+function includesDnone() {
+  const element = document.getElementById("edit_task_board_click");
+  return element ? element.classList.contains("d-none") : false;
+}
+
 function removeBodyClickListener() {
-  document.body.removeEventListener("click", handleBodyClick);
+  document.getElementById("add_task_content").removeEventListener("click", handleBodyClick);
+  document.getElementById("edit_task_board_click").removeEventListener("click", handleBodyClick);
+  document.getElementById("add_task_board_click").removeEventListener("click", handleBodyClick);
 }
 
 function handleBodyClick(event) {
@@ -120,7 +126,7 @@ function isClickOutside(
 function handleCloseActions() {
   closeSelect();
   closeSelectCategory();
-  removeBodyClickListener();
+  // removeBodyClickListener();
 }
 
 function openSubtasks() {

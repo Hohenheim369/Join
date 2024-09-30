@@ -1,0 +1,33 @@
+@media screen and (max-width: 840px) {
+  .content {
+    padding: 50px 0px;
+    margin-left: clamp(135px, 3vw, 232px);
+  }
+}
+
+@media screen and (max-width: 777px) {
+  .content {
+    padding: 50px 0px;
+    margin-left: clamp(40px, 3vw, 232px);
+  }
+  .bottom-order {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 16px;
+    position: fixed;
+    bottom: 80px;
+  }
+  .content-order {
+    overflow-y: auto;
+  }
+
+  .content-order {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+  }
+  .dividing-bar {
+    display: none;
+  }
+}
