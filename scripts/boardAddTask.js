@@ -112,7 +112,7 @@ function isFormValid(input, category) {
   return (
     input.input !== "" &&
     input.date !== "" &&
-    (category === "Technical Task" || category === "User Story")
+    (category === "Technical Task" || category === "User Story" || category === "Tutorial")
   );
 }
 
