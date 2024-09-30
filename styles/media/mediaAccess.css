@@ -1,0 +1,22 @@
+@media screen and (max-width: 1440px) {
+  .img-logo {
+    width: clamp(100px, 19vw, 274px);
+    height: clamp(122px, 24vw, 335px);
+  }
+
+  .logo-small {
+    width: clamp(64px, 9vw, 100px);
+    height: clamp(78px, 11vw, 122px);
+    top: clamp(37px, 5vw, 80px);
+    left: clamp(38px, 5vw, 77px);
+    transform: none;
+  }
+
+  .access-window {
+    width: clamp(288px, 45vw, 652px);
+    padding-block: clamp(32px, 5vw, 48px) ;
+    padding-inline: clamp(16px, 8vw, 115px);
+    border-radius: 30px;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+  }
+}
