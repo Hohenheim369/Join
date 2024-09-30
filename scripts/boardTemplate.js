@@ -83,19 +83,14 @@ function generateArrowBottom(task) {
 }
 
 function generateSingleTasks(
-  id,
-  title,
-  description,
-  category,
-  categoryColor,
-  date,
-  prio
+  singleTask,
+  categoryColor
 ) {
   return `
           <div class="single-task-content d-flex-column gap-24">
             <div class="d-flex-spbe-center">
               <div class="single-task-category font-c-white bg-category-${categoryColor}">
-              ${category}
+              ${singleTask.category}
               </div>
               <div
                 class="litte-button wh-24 d-flex-center"
@@ -104,20 +99,20 @@ function generateSingleTasks(
               </div>
             </div>
 
-            <h2>${title}</h2>
+            <h2>${singleTask.title}</h2>
 
             <div class="font-c-black">
-              ${description}
+              ${singleTask.description}
             </div>
 
             <div class="single-task-meta">
               Due date:
-              <div class="font-c-black">${date}</div>
+              <div class="font-c-black">${singleTask.date}</div>
             </div>
 
             <div class="single-task-meta">
               Priority:
-              <img class="single-task-prio" src="../assets/img/png/prio-${prio}-text.png" alt="" />
+              <img class="single-task-prio" src="../assets/img/png/prio-${singleTask.priority}-text.png" alt="" />
             </div>
 
             <div class="w-100 d-flex-column gap-8">
@@ -143,7 +138,7 @@ function generateSingleTasks(
               <div class="delete cursor-p">
                 <img
                   class="img-delete"
-                  onclick="openDeleteDialog(${id})"
+                  onclick="openDeleteDialog(${singleTask.id})"
                   src="../assets/img/png/delete-default.png"
                   alt=""/>
               </div>
@@ -153,7 +148,7 @@ function generateSingleTasks(
               <div class="edit cursor-p">
                 <img
                   class="img-edit"
-                  onclick="openEditDialog(${id})"
+                  onclick="openEditDialog(${singleTask.id}); taskValuesToEditField(${singleTask.id});"
                   src="../assets/img/png/edit-default.png"
                   alt=""/>
               </div>

@@ -7,24 +7,17 @@ async function openSingleTask(taskId) {
   displaySingleTask(singleTask, categoryColor);
   displaySingleAssinees(singleTask, contacts);
   displaySingleSubtasks(singleTask.subtasks, taskId);
-
-  taskValuesToEditField(singleTask, contacts, taskId);
-
   toggleOverlay("board_task_overlay");
 }
 
-function displaySingleTask(singleTask, categoryColor) {
+function displaySingleTask(singleTask, categoryColor, contacts) {
   let singleTaskArea = document.getElementById(`single_task`);
   singleTaskArea.innerHTML = "";
 
   singleTaskArea.innerHTML += generateSingleTasks(
-    singleTask.id,
-    singleTask.title,
-    singleTask.description,
-    singleTask.category,
+    singleTask,
     categoryColor,
-    singleTask.date,
-    singleTask.priority
+    contacts
   );
 }
 

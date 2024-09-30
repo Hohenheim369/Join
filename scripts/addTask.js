@@ -67,7 +67,7 @@ function redirectToBoard() {
 }
 
 
-function getSubtasks() {
+function getSubtasks() {  
   return subTasks.map((subName, index) => ({
     subTaskName: subName,
     subId: index + 1,

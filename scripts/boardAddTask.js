@@ -15,12 +15,13 @@ function openEditDialog(taskId) {
   document.getElementById("edit_overflow").classList.add("overflow");
   document.getElementById("edit_task_board").classList.add("edit-task-height");
 
-  
-
   editTaskButton.innerHTML = editTaskTemplate(taskId);
 }
 
-function taskValuesToEditField(singleTask, contacts) {
+async function taskValuesToEditField(taskId) {
+  let tasks = await fetchData("tasks");
+  let singleTask = tasks.find((task) => task.id === taskId);
+  const contacts = await fetchData("contacts");
   setTaskBasicValues(singleTask);
   setTaskUser(singleTask);
   setTaskContacts(singleTask, contacts);
@@ -31,7 +32,8 @@ function taskValuesToEditField(singleTask, contacts) {
 
 function setTaskBasicValues(singleTask) {
   document.getElementById("title_input").value = singleTask.title;
-  document.getElementById("description_textarea").value = singleTask.description;
+  document.getElementById("description_textarea").value =
+    singleTask.description;
   document.getElementById("due_date").value = singleTask.date;
 }
 
@@ -42,10 +44,8 @@ function setTaskUser(singleTask) {
 }
 
 function setTaskContacts(singleTask, contacts) {
-  //Hier muss geprüft werden, ob assigned vorhanden sind, 
-  //sonst gibt er einen Fehler zurück und kann die SingleTask nicht öffnen...
-  if(!singleTask.assigned){
-    return
+  if (!singleTask.assigned) {
+    return;
   }
   let userContacts = singleTask.assigned.filter((data) => data !== null);
   let contactsToRender = contacts.filter((contact) =>
@@ -68,24 +68,19 @@ function setTaskPriority(singleTask) {
 
 function setTaskCategory(singleTask) {
   document.getElementById("category").innerText = singleTask.category;
-  document
-    .getElementById("edit_category")
-    .classList.add("d-none");
-  document
-    .getElementById("edit_category")
-    .classList.remove("form-child-order");
+  document.getElementById("edit_category").classList.add("d-none");
+  document.getElementById("edit_category").classList.remove("form-child-order");
 }
 
 function setTaskSubtasks(singleTask) {
   const subtaskEdit = singleTask.subtasks;
+  let subTaskField = document.getElementById("subtasks_list");
+  subTaskField.innerHTML = "";
   if (subtaskEdit) {
     subtaskEdit.forEach((subtask) => {
       subTasks.push(subtask.subTaskName);
       let ids = subTasks.length;
-      document.getElementById("subtasks_list").innerHTML += addSubtasksToList(
-        subtask.subTaskName,
-        ids - 1
-      );
+      subTaskField.innerHTML += addSubtasksToList(subtask.subTaskName, ids - 1);
     });
   }
 }
@@ -127,7 +122,6 @@ function handleValidForm(taskId) {
 function handleInvalidForm() {
   requiredFields();
 }
-
 
 async function editTask(taskId) {
   const taskData = getTaskFormData();
@@ -174,19 +168,6 @@ function toggleTaskOverlays() {
   toggleOverlay("board_task_overlay");
 }
 
-
-// function userTest(singleTask) {
-//   if (singleTask.user) {
-//     let userTaskId = singleTask.user;
-//     return userTaskId;
-//   } else {
-//     let userTaskId = "";
-//     return userTaskId;
-//   }
-// }
-
-// Bei der vorherigen Funktion konnte ich mich nicht als Assigned to hinzufügen.
-// So wird wieder die userId ausgelesen und ich kann mich als User zu Assigned to hinzufügen oder löschen.
 function userTest() {
   if (userId[0]) {
     let userTaskId = Number(userId[0]);
@@ -220,6 +201,35 @@ function putEditTasksContent(
     user: userTaskId,
   });
 }
+
+
+// async function getEditSubtasks(taskId) {
+//   let tasks = await fetchData("tasks");
+//   let editSingleTask = tasks.find((task) => task.id === taskId);
+//   let editSubTasks = [];
+//   for (let index = 0; index < subTasks.length; index++) {
+//     const subName = subTasks[index];
+//     const subDone = editSingleTask.subtasks[index].done;
+
+//     console.log(subName);
+//     console.log(subDone);
+//     editSubTasks.push({
+//       subTaskName: subName,
+//       subId: index + 1,
+//       done: subDone,
+//     });
+//   }
+//   // console.log(subName.subTaskName);
+//   // console.log(subName.done);
+//   // return editSubTasks.map((subName, index,) => ({
+//   //   subTaskName: subName.subTaskName,
+//   //   subId: index + 1,
+//   //   done: subName.done,
+//   // }));
+//     console.log(editSubTasks);
+
+//   // return editSubTasks;
+// }
 
 async function closeAddTaskDialogFeedback() {
   const slidingDiv = document.getElementById("task_added_overlay");
