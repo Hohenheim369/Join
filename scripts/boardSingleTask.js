@@ -1,7 +1,3 @@
-function bubblingPrevention(event) {
-  event.stopPropagation();
-}
-
 async function openSingleTask(taskId) {
   let tasks = await fetchData("tasks");
   let singleTask = tasks.find((task) => task.id === taskId);
