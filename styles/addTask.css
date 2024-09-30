@@ -365,17 +365,17 @@ li {
 }
 
 .add-task-board-click{
-  width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: center;
-  padding-inline: 16px;
+  margin-inline: 100%;
 }
 
 .edit-task-board-click{
-  width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: center;
-  padding-inline: 16px;
+  margin-inline: 100%;
 }
 
 .single-edit-task {

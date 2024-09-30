@@ -88,4 +88,8 @@
   .edit-overflow{
     overflow-y: auto;
   }
+  .add-task-board-click{
+    width: 100%;
+    margin-inline: 20px;
+}
 }
