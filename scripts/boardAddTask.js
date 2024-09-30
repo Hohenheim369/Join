@@ -129,7 +129,7 @@ async function editTask(taskId) {
   const singleTask = tasks.find((task) => task.id === taskId);
   const userTaskId = userTest();
   const currenttaskStatus = singleTask.status;
-  updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus);
+  await updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus);
   await handleTaskEditCompletion(taskId);
 }
 
@@ -142,8 +142,8 @@ function getTaskFormData() {
   return { title, description, dueDate, categorySeleced, assignedTo };
 }
 
-function updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus) {
-  putEditTasksContent(
+async function updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus) {
+  await putEditTasksContent(
     taskData.title,
     taskData.description,
     taskData.dueDate,
@@ -178,7 +178,7 @@ function userTest() {
   }
 }
 
-function putEditTasksContent(
+async function putEditTasksContent(
   title,
   description,
   dueDate,
@@ -195,40 +195,51 @@ function putEditTasksContent(
     priority: selectedPrio,
     category: categorySeleced,
     id: taskId,
-    subtasks: getSubtasks(),
+    subtasks: await getEditSubtasks(taskId),
     assigned: assignedTo,
     status: currenttaskStatus,
     user: userTaskId,
   });
 }
 
+async function getEditSubtasks(taskId) {  
+  let tasks = await fetchData("tasks");
+  let editSingleTask = tasks.find((task) => task.id === taskId);
+  let filteredSubtasks = editSingleTask.subtasks.filter(data => data !== null);
+  subTasks.forEach((task) => {
+    let foundSubtask =  filteredSubtasks.subTaskName.filter((filteredTask) => filteredTask === task)
+    console.log(foundSubtask);
+    
+  })
+  // return subTasks.map((subName, index) => ({
+  //   subTaskName: subName,
+  //   subId: index + 1,
+  //   done: false,
+  // }));
+}
+
+// let editSubTasks = [];
 
 // async function getEditSubtasks(taskId) {
+//   editSubTasks = [];
 //   let tasks = await fetchData("tasks");
 //   let editSingleTask = tasks.find((task) => task.id === taskId);
-//   let editSubTasks = [];
+//   let filteredSubtasks = editSingleTask.subtasks.filter(data => data !== null);
+//   let numberFilterSub = filteredSubtasks.length;
 //   for (let index = 0; index < subTasks.length; index++) {
 //     const subName = subTasks[index];
-//     const subDone = editSingleTask.subtasks[index].done;
-
+//     console.log(filteredSubtasks);
+//     let subTaskDone = filteredSubtasks[index].done;
 //     console.log(subName);
-//     console.log(subDone);
+//     console.log(subTaskDone);
 //     editSubTasks.push({
 //       subTaskName: subName,
 //       subId: index + 1,
-//       done: subDone,
+//       done: subTaskDone,
 //     });
 //   }
-//   // console.log(subName.subTaskName);
-//   // console.log(subName.done);
-//   // return editSubTasks.map((subName, index,) => ({
-//   //   subTaskName: subName.subTaskName,
-//   //   subId: index + 1,
-//   //   done: subName.done,
-//   // }));
-//     console.log(editSubTasks);
-
-//   // return editSubTasks;
+//   console.log(editSubTasks);
+//   return editSubTasks;
 // }
 
 async function closeAddTaskDialogFeedback() {

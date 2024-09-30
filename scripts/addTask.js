@@ -307,6 +307,12 @@ function handleInputBlur(li, index) {
   }
 }
 
+/**
+ *This function saves all changes after editing a subtask
+ *  
+ * @param {string} subtasksInput 
+ * @param {number} index 
+ */
 function saveChanges(subtasksInput, index) {
   let newValue = subtasksInput;
   subTasks[index] = newValue;
