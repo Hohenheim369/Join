@@ -203,6 +203,7 @@ async function putEditTasksContent(
   });
 }
 
+//zugefügt OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 async function getEditSubtasks(taskId) {
   let tasks = await fetchData("tasks");
   let editSingleTask = tasks.find((task) => task.id === taskId);
@@ -219,30 +220,6 @@ async function getEditSubtasks(taskId) {
     };
   });
 }
-
-// let editSubTasks = [];
-
-// async function getEditSubtasks(taskId) {
-//   editSubTasks = [];
-//   let tasks = await fetchData("tasks");
-//   let editSingleTask = tasks.find((task) => task.id === taskId);
-//   let filteredSubtasks = editSingleTask.subtasks.filter(data => data !== null);
-//   let numberFilterSub = filteredSubtasks.length;
-//   for (let index = 0; index < subTasks.length; index++) {
-//     const subName = subTasks[index];
-//     console.log(filteredSubtasks);
-//     let subTaskDone = filteredSubtasks[index].done;
-//     console.log(subName);
-//     console.log(subTaskDone);
-//     editSubTasks.push({
-//       subTaskName: subName,
-//       subId: index + 1,
-//       done: subTaskDone,
-//     });
-//   }
-//   console.log(editSubTasks);
-//   return editSubTasks;
-// }
 
 async function closeAddTaskDialogFeedback() {
   const slidingDiv = document.getElementById("task_added_overlay");
