@@ -58,7 +58,7 @@ header {
   border-radius: 20px 0px 20px 20px;
   position: absolute;
   top: 69px;
-  left: calc(100% - 263px);
+  left: calc(100% - 254px);
   font-size: clamp(16px , 3vw, 20px);
 }
 
