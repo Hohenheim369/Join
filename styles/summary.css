@@ -8,7 +8,7 @@ body {
 } */
 
 .head {
-  width: clamp(223px, 100%, 625px);
+  width: clamp(224px, 67vw, 580px);
   display: flex;
   align-items: center;
   justify-content: space-between;
