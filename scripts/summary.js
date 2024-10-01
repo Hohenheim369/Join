@@ -121,21 +121,18 @@ function countTaskInFeedback(tasks) {
 function deadlineDate(tasks) {
   // Filtere Tasks, die ein Due-Date haben
   const tasksWithDueDate = tasks.filter((task) => task.date);
-
-  if (tasksWithDueDate.length === 0) {
-    return null; // Kein Fälligkeitsdatum vorhanden
-  }
-
   // Sortiere die Tasks nach ihrem Due-Date
   tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
-
   // Nächstes Due-Date (das früheste in der Zukunft)
   const nextDueDate = tasksWithDueDate[0].date;
-
-  // Splitte den ISO-Datumsstring und formatiere es manuell
+  // Manuelle Formatierung: "Month Day, Year"
   const [year, month, day] = nextDueDate.split("-");
-  const formattedDate = `${day}.${month}.${year}`;
-
+  const dateObj = new Date(year, month - 1, day); // Monat muss um 1 reduziert werden, da er bei 0 beginnt
+  const formattedDate = dateObj.toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
   // Gib das nächste Due-Date im Element mit der ID 'deadline_date' aus
   const deadlineElement = document.getElementById("deadline_date");
   deadlineElement.innerHTML = `${formattedDate}`;
