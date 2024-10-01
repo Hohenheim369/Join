@@ -6,8 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   clickableDivs.forEach((div) => {
     div.addEventListener("click", () => {
-      // Navigiere zur gewünschten Seite (ersetze URL entsprechend)
-      window.location.href = "../html/board.html"; // Ersetze 'your-board-page.html' mit der tatsächlichen URL deines Boards
+      window.location.href = "../html/board.html";
     });
   });
   if (window.innerWidth <= 770) {
@@ -28,13 +27,8 @@ function greeting() {
 
 function getNameFromLocalStorage() {
   let activeUser = localStorage.getItem("activeUser");
-  if (activeUser) {
-    // In ein JSON-Objekt umwandeln
-    const loggedInUser = JSON.parse(activeUser);
-    // Initialen abrufen
-    return loggedInUser.name;
-  }
-  return "";
+  const loggedInUser = JSON.parse(activeUser);
+  return loggedInUser.name;
 }
 
 function getGreetingMessage() {
@@ -49,6 +43,17 @@ function getGreetingMessage() {
 }
 
 async function displayTasks() {
+  const tasks = await loadTasks();
+  countToDo(tasks);
+  countDone(tasks);
+  countTasksWithDueDate(tasks);
+  countTaskInBoard(tasks);
+  countTaskInProgress(tasks);
+  countTaskInFeedback(tasks);
+  deadlineDate(tasks);
+}
+
+async function loadTasks() {
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
   if (activeUser && activeUser.tasks) {
     const taskIds = activeUser.tasks;
@@ -62,15 +67,9 @@ async function displayTasks() {
       })
     );
     // Filtere null-Werte heraus, falls keine passenden Tasks gefunden wurden
-    const validTasks = tasks.filter(task => task !== null);
-    countToDo(validTasks);
-    countDone(validTasks);
-    countUrgent(validTasks);
-    countTaskInBoard(validTasks);
-    countTaskInProgress(validTasks);
-    countTaskInFeedback(validTasks);
-    deadlineDate(validTasks);
+    return tasks.filter((task) => task !== null);
   }
+  return [];
 }
 
 function countToDo(tasks) {
@@ -85,10 +84,20 @@ function countDone(tasks) {
   done.innerHTML = `${count}`;
 }
 
-function countUrgent(tasks) {
-  let urgent = document.getElementById("count_priority_urgent");
-  let count = tasks.filter((task) => task.priority === "urgent").length;
-  urgent.innerHTML = `${count}`;
+function countTasksWithDueDate(tasks) {
+  // Filtere Tasks, die ein Due-Date haben
+  const tasksWithDueDate = tasks.filter((task) => task.date);
+  // Sortiere die Tasks nach ihrem Due-Date
+  tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
+  // Nächstes Due-Date (das früheste in der Zukunft)
+  const nextDueDate = tasksWithDueDate[0].date;
+  // Zähle die Anzahl der Tasks, die das gleiche Due-Date haben
+  const tasksWithSameDueDate = tasks.filter(
+    (task) => task.date === nextDueDate
+  );
+  // Gib die Anzahl im Element mit der ID 'count_priority_urgent' aus
+  const taskCountElement = document.getElementById("count_priority_urgent");
+  taskCountElement.innerHTML = `${tasksWithSameDueDate.length}`;
 }
 
 function countTaskInBoard(tasks) {
@@ -111,7 +120,7 @@ function countTaskInFeedback(tasks) {
 
 function deadlineDate(tasks) {
   // Filtere Tasks, die ein Due-Date haben
-  const tasksWithDueDate = tasks.filter(task => task.date);
+  const tasksWithDueDate = tasks.filter((task) => task.date);
 
   if (tasksWithDueDate.length === 0) {
     return null; // Kein Fälligkeitsdatum vorhanden
@@ -121,17 +130,14 @@ function deadlineDate(tasks) {
   tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
 
   // Nächstes Due-Date (das früheste in der Zukunft)
-  const nextDueDate = new Date(tasksWithDueDate[0].date);
+  const nextDueDate = tasksWithDueDate[0].date;
 
-  // Formatiere das Datum (optional, um es benutzerfreundlicher zu machen)
-  const formattedDate = nextDueDate.toLocaleDateString('de-DE', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  });
+  // Splitte den ISO-Datumsstring und formatiere es manuell
+  const [year, month, day] = nextDueDate.split("-");
+  const formattedDate = `${day}.${month}.${year}`;
 
   // Gib das nächste Due-Date im Element mit der ID 'deadline_date' aus
-  const deadlineElement = document.getElementById('deadline_date');
+  const deadlineElement = document.getElementById("deadline_date");
   deadlineElement.innerHTML = `${formattedDate}`;
 }
 
@@ -140,7 +146,7 @@ function mobileGreeting() {
 
   // Öffnet den Dialog
   if (greetingDialog) {
-    greetingDialog.classList.remove("d-none")
+    greetingDialog.classList.remove("d-none");
     // Schließt den Dialog nach 5 Sekunden
     setTimeout(() => {
       greetingDialog.classList.add("d-none");
@@ -159,4 +165,3 @@ function checkAndShowGreeting() {
     localStorage.setItem("greetingShown", "true");
   }
 }
-
