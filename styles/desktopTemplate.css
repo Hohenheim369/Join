@@ -51,6 +51,7 @@ header {
 }
 
 .log-out {
+  z-index: 1;
   display: flex;
   flex-direction: column;
   background-color: #2a3647;
@@ -60,6 +61,10 @@ header {
   top: 69px;
   left: calc(100% - 254px);
   font-size: clamp(16px , 3vw, 20px);
+  border-left: 1px solid white;   /* Linker Rand */
+  border-right: 1px solid white;  /* Rechter Rand */
+  border-bottom: 1px solid white; /* Unterer Rand */
+  border-top: none;   
 }
 
 #log_out a {
