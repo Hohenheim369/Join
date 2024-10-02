@@ -32,7 +32,7 @@ function initializeUserInterface() {
   document.body.style.visibility = "visible";
   updateSidebarIcons();
   initializeLinks();
-  handleResize(); // Initial aufrufen
+  handleResize(); 
 }
 
 /**
