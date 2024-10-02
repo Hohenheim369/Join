@@ -272,6 +272,7 @@ async function deleteContactInData(contactId) {
   } else {
     await deleteContactforAllUsers(contactId, users);
   }
+  await deleteContactFromTasks(contactId)
   deleteContactInLocalStorage(contactId);
 }
 
@@ -289,6 +290,20 @@ async function deleteContactOnlyforUser(contactId, users) {
     return user;
   });
   await postData("users", users);
+}
+
+async function deleteContactFromTasks(contactId) {
+  const allTasks = await fetchData("tasks");
+  const updatedTasks = allTasks.map((task) => {
+    if (task.assigned && Array.isArray(task.assigned)) {
+      return {
+        ...task,
+        assigned: task.assigned.filter((id) => id !== contactId), 
+      };
+    }
+    return task; 
+  });
+  await postData("tasks", updatedTasks);
 }
 
 async function deleteContactforAllUsers(contactId, users) {
