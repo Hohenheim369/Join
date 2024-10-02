@@ -528,7 +528,7 @@ function updateCrossImage() {
   // Über alle Bild-Elemente mit der Klasse 'cross' iterieren
   imgElements.forEach((imgElement) => {
     // Überprüfen der Fensterbreite
-    if (window.innerWidth < 1241) {
+    if (window.innerWidth < 1240) {
       imgElement.src = "../assets/img/png/close-white.png"; // Kleineres Bild
     } else {
       imgElement.src = "../assets/img/png/close.png"; // Größeres Bild

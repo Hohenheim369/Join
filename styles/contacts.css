@@ -2,6 +2,7 @@ body {
   font-family: "inter";
   margin: 0px;
   visibility: hidden;
+  overflow: hidden;
 }
 
 .d-flex {

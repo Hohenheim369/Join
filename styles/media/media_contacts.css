@@ -223,4 +223,18 @@
   .contacts-info {
     animation: slideInFromRight 0s ease-in;
 }
+
+#succesfully_created {
+  top: unset;
+  left: 50%;
+  bottom: -15%;
+  transition: bottom 0.4s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+#succesfully_created.dialog-open {
+  left: 50%;
+  bottom: 20%;
+}
+
 }
