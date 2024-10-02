@@ -1,4 +1,7 @@
-/** wenn der DOM geladen wird wird die begrüßung geladen */
+/**
+ * Fügt einen Event-Listener hinzu, der ausgelöst wird, wenn der DOM vollständig geladen ist.
+ * Bei Auslösung werden die Begrüßung, die Aufgaben gerendert und die mobile Begrüßung überprüft.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   greeting();
   renderTasks();
@@ -7,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+/**
+ * Aktualisiert die Begrüßungsnachricht und zeigt sie an.
+ */
 function greeting() {
   let greeting = document.getElementById("greetings");
   let greetingMobile = document.getElementById("greeting_mobile");
@@ -18,12 +24,20 @@ function greeting() {
   greetingMobile.innerHTML = greetingHtml(greetingMassage, greetingUser);
 }
 
+/**
+ * Ruft den Namen des Benutzers aus dem lokalen Speicher ab.
+ * @returns {string} - Der Name des angemeldeten Benutzers.
+ */
 function getNameFromLocalStorage() {
   let activeUser = localStorage.getItem("activeUser");
   const loggedInUser = JSON.parse(activeUser);
   return loggedInUser.name;
 }
 
+/**
+ * Gibt die Begrüßungsnachricht basierend auf der aktuellen Uhrzeit zurück.
+ * @returns {string} - Die Begrüßungsnachricht ("Guten Morgen", "Guten Nachmittag" oder "Guten Abend").
+ */
 function getGreetingMessage() {
   const currentHour = new Date().getHours();
   if (currentHour < 12) {
@@ -35,10 +49,20 @@ function getGreetingMessage() {
   }
 }
 
-function greetingHtml(greetingMassage, greetingUser){
-   return `${greetingMassage}, <div class="greeting-user">${greetingUser}</div> `
+/**
+ * Generiert die HTML für die Begrüßung.
+ * @param {string} greetingMassage - Die Begrüßungsnachricht.
+ * @param {string} greetingUser - Der Name des Benutzers.
+ * @returns {string} - Die HTML-Darstellung der Begrüßung.
+ */
+function greetingHtml(greetingMassage, greetingUser) {
+  return `${greetingMassage}, <div class="greeting-user">${greetingUser}</div>`;
 }
 
+/**
+ * Rendert die Aufgaben und aktualisiert die Zähler.
+ * @returns {Promise<void>}
+ */
 async function renderTasks() {
   const tasks = await loadTasks();
   countToDo(tasks);
@@ -47,9 +71,12 @@ async function renderTasks() {
   countTaskInBoard(tasks);
   countTaskInProgress(tasks);
   countTaskInFeedback(tasks);
-  deadlineDate(tasks);
 }
 
+/**
+ * Lädt die Aufgaben des aktiven Benutzers aus dem lokalen Speicher.
+ * @returns {Promise<Array>} - Ein Array von Aufgaben.
+ */
 async function loadTasks() {
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
   if (activeUser && activeUser.tasks) {
@@ -65,76 +92,98 @@ async function loadTasks() {
   return [];
 }
 
+/**
+ * Zählt die Anzahl der Aufgaben mit dem Status "todo" und aktualisiert die Anzeige.
+ * @param {Array} tasks - Die Liste der Aufgaben.
+ */
 function countToDo(tasks) {
   let toDo = document.getElementById("count_to_do");
   let count = tasks.filter((task) => task.status === "todo").length;
   toDo.innerHTML = `${count}`;
 }
 
+/**
+ * Zählt die Anzahl der erledigten Aufgaben und aktualisiert die Anzeige.
+ * @param {Array} tasks - Die Liste der Aufgaben.
+ */
 function countDone(tasks) {
   let done = document.getElementById("count_done");
   let count = tasks.filter((task) => task.status === "done").length;
   done.innerHTML = `${count}`;
 }
 
+/**
+ * Zählt die Anzahl der Aufgaben mit einem Due-Date und aktualisiert die Anzeige.
+ * @param {Array} tasks - Die Liste der Aufgaben.
+ */
 function countTasksWithDueDate(tasks) {
-  // Filtere Tasks, die ein Due-Date haben
   const tasksWithDueDate = tasks.filter((task) => task.date);
-  // Sortiere die Tasks nach ihrem Due-Date
   tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
-  // Nächstes Due-Date (das früheste in der Zukunft)
-  const nextDueDate = tasksWithDueDate[0].date;
-  // Zähle die Anzahl der Tasks, die das gleiche Due-Date haben
-  const tasksWithSameDueDate = tasks.filter(
-    (task) => task.date === nextDueDate
-  );
-  // Gib die Anzahl im Element mit der ID 'count_priority_urgent' aus
+  const nextDueDate = tasksWithDueDate[0]?.date; // Verwende optional chaining
+  const tasksWithSameDueDate = tasks.filter((task) => task.date === nextDueDate);
   const taskCountElement = document.getElementById("count_priority_urgent");
   taskCountElement.innerHTML = `${tasksWithSameDueDate.length}`;
 }
 
+/**
+ * Zählt die Gesamtzahl der Aufgaben und aktualisiert die Anzeige.
+ * @param {Array} tasks - Die Liste der Aufgaben.
+ */
 function countTaskInBoard(tasks) {
   let taskInBoard = document.getElementById("count_tasks");
   let count = tasks.length;
   taskInBoard.innerHTML = `${count}`;
 }
 
+/**
+ * Zählt die Anzahl der Aufgaben im Status "in progress" und aktualisiert die Anzeige.
+ * @param {Array} tasks - Die Liste der Aufgaben.
+ */
 function countTaskInProgress(tasks) {
   let taskInProgress = document.getElementById("count_progress");
   let count = tasks.filter((task) => task.status === "inprogress").length;
   taskInProgress.innerHTML = `${count}`;
 }
 
+/**
+ * Zählt die Anzahl der Aufgaben im Status "await feedback" und aktualisiert die Anzeige.
+ * @param {Array} tasks - Die Liste der Aufgaben.
+ */
 function countTaskInFeedback(tasks) {
   let taskInFeedback = document.getElementById("count_feedback");
   let count = tasks.filter((task) => task.status === "awaitfeedback").length;
   taskInFeedback.innerHTML = `${count}`;
 }
 
+/**
+ * Gibt das nächste Due-Date der Aufgaben aus und formatiert es.
+ * @param {Array} tasks - Die Liste der Aufgaben.
+ */
 function deadlineDate(tasks) {
-  // Filtere Tasks, die ein Due-Date haben
   const tasksWithDueDate = tasks.filter((task) => task.date);
-  // Sortiere die Tasks nach ihrem Due-Date
   tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
-  // Nächstes Due-Date (das früheste in der Zukunft)
-  const nextDueDate = tasksWithDueDate[0].date;
-  // Manuelle Formatierung: "Month Day, Year"
+  const nextDueDate = tasksWithDueDate[0]?.date; // Verwende optional chaining
   const [year, month, day] = nextDueDate.split("-");
-  const dateObj = new Date(year, month - 1, day); // Monat muss um 1 reduziert werden, da er bei 0 beginnt
+  const dateObj = new Date(year, month - 1, day);
   const formattedDate = dateObj.toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   });
-  // Gib das nächste Due-Date im Element mit der ID 'deadline_date' aus
   const deadlineElement = document.getElementById("deadline_date");
   deadlineElement.innerHTML = `${formattedDate}`;
 }
 
-function navigatonToBoard(){
+/**
+ * Navigiert zur Board-Seite.
+ */
+function navigatonToBoard() {
   window.location.href = "../html/board.html";
 }
 
+/**
+ * Zeigt die mobile Begrüßung an und blendet sie nach 2,5 Sekunden aus.
+ */
 function mobileGreeting() {
   const greetingDialog = document.getElementById("greeting_mobile");
   if (greetingDialog) {
@@ -146,6 +195,9 @@ function mobileGreeting() {
   }
 }
 
+/**
+ * Überprüft, ob die mobile Begrüßung angezeigt werden soll und zeigt sie gegebenenfalls an.
+ */
 function checkAndShowGreeting() {
   const greetingShown = localStorage.getItem("greetingShown");
   if (greetingShown === "false" || !greetingShown) {

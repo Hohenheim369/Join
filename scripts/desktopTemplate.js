@@ -1,16 +1,32 @@
+/**
+ * Fügt einen Event-Listener hinzu, der ausgelöst wird, wenn der DOM vollständig geladen ist.
+ * Bei Auslösung wird das Template geladen, die Benutzeroberfläche initialisiert 
+ * und ein Event-Listener für das Ändern der Fenstergröße hinzugefügt.
+ */
 document.addEventListener("DOMContentLoaded", async () => {
   await loadTemplate();
   initializeUserInterface();
   window.addEventListener("resize", handleResize);
 });
 
+/**
+ * Fügt einen Event-Listener hinzu, der bei Klicks im Benutzer-Menü ausgelöst wird.
+ */
 document.addEventListener("click", handleClickUserMenu);
 
+/**
+ * Lädt das Desktop-Template und fügt den Inhalt in das entsprechende HTML-Element ein.
+ * @returns {Promise<void>}
+ */
 async function loadTemplate() {
   const response = await fetch("../assets/templates/desktopTemplate.html");
   document.getElementById("desktop_template").innerHTML = await response.text();
 }
 
+/**
+ * Initialisiert die Benutzeroberfläche, indem sie die Initialen des Benutzers aktualisiert,
+ * die Sichtbarkeit des Körpers auf sichtbar setzt, Sidebar-Icons aktualisiert und Links initialisiert.
+ */
 function initializeUserInterface() {
   updateInitials();
   document.body.style.visibility = "visible";
@@ -19,6 +35,9 @@ function initializeUserInterface() {
   handleResize(); // Initial aufrufen
 }
 
+/**
+ * Aktualisiert die Icons in der Sidebar basierend auf der aktuellen Seite.
+ */
 function updateSidebarIcons() {
   const currentPage = window.location.pathname.split("/").pop();
   const pages = ["summary", "board", "contacts", "addTask"];
@@ -27,6 +46,11 @@ function updateSidebarIcons() {
   updatePageState("legalNotice.html", ".legal-notice-link", currentPage);
 }
 
+/**
+ * Aktualisiert den Status des Icons basierend auf der aktuellen Seite.
+ * @param {string} page - Der Name der Seite.
+ * @param {string} currentPage - Der Name der aktuellen Seite.
+ */
 function updateIconState(page, currentPage) {
   const link = document.querySelector(`.${page}-link`);
   const icon = link?.querySelector("img");
@@ -38,6 +62,12 @@ function updateIconState(page, currentPage) {
   }
 }
 
+/**
+ * Aktualisiert den Status eines Links in der Sidebar basierend auf der aktuellen Seite.
+ * @param {string} page - Der Name der Seite.
+ * @param {string} selector - Der CSS-Selektor des Links.
+ * @param {string} currentPage - Der Name der aktuellen Seite.
+ */
 function updatePageState(page, selector, currentPage) {
   const link = document.querySelector(selector);
   if (link) {
@@ -47,11 +77,17 @@ function updatePageState(page, selector, currentPage) {
   }
 }
 
+/**
+ * Handhabt das Ändern der Fenstergröße und passt die Anzeige an.
+ */
 function handleResize() {
   hideSidebarAtMobile();
   addHelpToMenu();
 }
 
+/**
+ * Blendet die Sidebar auf mobilen Geräten aus, wenn kein aktiver Benutzer vorhanden ist.
+ */
 function hideSidebarAtMobile() {
   if (!localStorage.getItem("activeUser") && window.innerWidth < 770) {
     document.getElementById("sidebar")?.style.setProperty("display", "none", "important");
@@ -60,6 +96,9 @@ function hideSidebarAtMobile() {
   }
 }
 
+/**
+ * Fügt das Hilfe-Element zum Menü hinzu, je nach Bildschirmgröße.
+ */
 function addHelpToMenu() {
   const isMobile = window.matchMedia("(max-width: 1240px)").matches;
   const helpDiv = document.getElementById("help_mobile");
@@ -73,11 +112,20 @@ function addHelpToMenu() {
   }
 }
 
+/**
+ * Initialisiert Links in der Benutzeroberfläche.
+ */
 function initializeLinks() {
   setupLink("policy_link", "privacyPolicy.html", handleLinkClick);
   setupLink("legal_link", "legalNotice.html", handleLinkClick);
 }
 
+/**
+ * Setzt einen Link mit einem Klick-Handler.
+ * @param {string} id - Die ID des Links.
+ * @param {string} page - Der Zielseite des Links.
+ * @param {Function} clickHandler - Der Klick-Handler für den Link.
+ */
 function setupLink(id, page, clickHandler) {
   const link = document.getElementById(id);
   if (link && !window.location.pathname.includes(page)) {
@@ -87,6 +135,11 @@ function setupLink(id, page, clickHandler) {
   }
 }
 
+/**
+ * Handhabt den Klick auf einen Link, indem die Standardaktion verhindert 
+ * und der Link deaktiviert wird, bevor die Seite umgeleitet wird.
+ * @param {Event} event - Das Klick-Ereignis.
+ */
 function handleLinkClick(event) {
   event.preventDefault();
   const link = event.currentTarget;
@@ -97,6 +150,10 @@ function handleLinkClick(event) {
   }, 100);
 }
 
+/**
+ * Handhabt Klicks im Benutzer-Menü und zeigt die Logout-Option an oder aus.
+ * @param {Event} event - Das Klick-Ereignis.
+ */
 function handleClickUserMenu(event) {
   const initials = document.getElementById("user_profile_initials");
   const logOut = document.getElementById("log_out");
@@ -108,11 +165,19 @@ function handleClickUserMenu(event) {
   }
 }
 
+/**
+ * Wechselt die Sichtbarkeit des Logout-Elements.
+ * @param {HTMLElement} logOut - Das Logout-Element.
+ * @param {HTMLElement} initials - Das Initialen-Element.
+ */
 function toggleVisibility(logOut, initials) {
   logOut.classList.toggle("d-none");
   initials.classList.toggle("bg-color");
 }
 
+/**
+ * Aktualisiert die Initialen des Benutzers in der Benutzeroberfläche.
+ */
 function updateInitials() {
   const initials = JSON.parse(localStorage.getItem("activeUser"))?.initials;
   document.getElementById("user_profile_initials").textContent = initials || "";
