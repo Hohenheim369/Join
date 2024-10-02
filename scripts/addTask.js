@@ -4,21 +4,21 @@ let selectedPrio = "medium";
 let subTasks = [];
 let editSubTaskIndex = null;
 let taskStatus = "todo";
-/**
- * This function loads the Add Task Template content
- * 
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
- */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  getContacts();
-  if (clear) {
-    clearButton();
-  }
-}
+// /**
+//  * This function loads the Add Task Template content
+//  * 
+//  * @param {string} domLocation This variable is the id where to load the template
+//  * @param {boolean} clear This variable is a state of true or false
+//  */
+// async function initTemplateAddTask(domLocation, clear) {
+//   const response = await fetch("../assets/templates/taskTemplate.html");
+//   const data = await response.text();
+//   document.getElementById(domLocation).innerHTML = data;
+//   getContacts();
+//   if (clear) {
+//     clearButton();
+//   }
+// }
 
 async function openAddTaskDialogFeedback() {
   document.getElementById("task_added_overlay").innerHTML = taskAddedToBoard();
@@ -31,13 +31,13 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
+// async function createTask() {
+//   const taskData = getTaskFormData();
+//   const taskId = await getNewId("tasks");
 
-  saveTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
-}
+//   saveTaskData(taskData, taskId);
+//   await handleTaskCreationCompletion(taskId);
+// }
 
 function getTaskFormData() {
   const title = document.getElementById("title_input").value;
@@ -49,17 +49,17 @@ function getTaskFormData() {
   return { title, description, dueDate, categorySeleced, assignedTo };
 }
 
-function saveTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
-  );
-  putTaskToUser(taskId);
-}
+// function saveTaskData(taskData, taskId) {
+//   putTasksContent(
+//     taskData.title,
+//     taskData.description,
+//     taskData.dueDate,
+//     taskId,
+//     taskData.assignedTo,
+//     taskData.categorySeleced
+//   );
+//   putTaskToUser(taskId);
+// }
 
 async function handleTaskCreationCompletion() {
   openAddTaskDialogFeedback();
@@ -80,59 +80,59 @@ function getSubtasks() {
   }));
 }
 
-function putTasksContent(
-  title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
-) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
-  });
-}
+// function putTasksContent(
+//   title,
+//   description,
+//   dueDate,
+//   taskId,
+//   assignedTo,
+//   categorySeleced
+// ) {
+//   postData(`tasks/${taskId - 1}/`, {
+//     title: title,
+//     description: description,
+//     date: dueDate,
+//     priority: selectedPrio,
+//     category: categorySeleced,
+//     id: taskId,
+//     subtasks: getSubtasks(),
+//     assigned: assignedTo,
+//     status: taskStatus,
+//     user: Number(userId[0]),
+//   });
+// }
 
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
-    } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    }
-  }
-}
+// async function putTaskToUser(taskId) {
+//   if (!activeUser.tasks.includes(taskId)) {
+//     activeUser.tasks.push(taskId);
+//     localStorage.setItem("activeUser", JSON.stringify(activeUser));
+//     try {
+//       await updateUserTaskInDatabase(activeUser.id, taskId);
+//     } catch (error) {
+//       console.error("Fehler beim Hinzufügen des Tasks:", error);
+//       activeUser.tasks.pop();
+//       localStorage.setItem("activeUser", JSON.stringify(activeUser));
+//     }
+//   }
+// }
 
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
-  }
-}
+// async function updateUserTaskInDatabase(userId, taskId) {
+//   if (userId != 0) {
+//     const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
+//     return postData(path, taskId);
+//   }
+// }
 /**
  * This function fetches all contact data from the database
  */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts
-  const contactsToRender = contacts.filter((contact) => userContacts.includes(contact.id));
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
-}
+// async function getContacts() {
+//   document.getElementById("contact_contant").innerHTML = "";
+//   let contacts = await fetchData("contacts");
+//   let userContacts = activeUser.contacts
+//   const contactsToRender = contacts.filter((contact) => userContacts.includes(contact.id));
+//   window.allContacts = contactsToRender;
+//   displayContacts(contactsToRender);
+// }
 
 function displayContacts(contacts) {
   document.getElementById("contact_contant").innerHTML = "";
@@ -209,26 +209,23 @@ function updateSelectedUserDisplay() {
   selectedList.innerHTML += assignedUser(userInitials, activUserID, userColor);
 }
 
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts
-  const contactsToRender = newContacts.filter((contact) => userContacts.includes(contact.id));
-  window.allContacts = contactsToRender;
-  const maxVisibleContacts = 3;
-  displaySelectedContacts(contactsToRender, selectedList, maxVisibleContacts);
-  displayAdditionalCount(selectedList, maxVisibleContacts);
-}
+// async function updateSelectedContactsDisplay() {
+//   const newContacts = await fetchData("contacts");
+//   const selectedList = document.getElementById("selected_contacts");
+//   selectedList.innerHTML = "";
+//   let userContacts = activeUser.contacts
+//   const contactsToRender = newContacts.filter((contact) => userContacts.includes(contact.id));
+//   window.allContacts = contactsToRender;
+//   displaySelectedContacts(contactsToRender, selectedList);
+// }
 
 function displaySelectedContacts(
   newContacts,
   selectedList,
-  maxVisibleContacts
 ) {
   for (
     let i = 0;
-    i < Math.min(selectedContacts.length, maxVisibleContacts);
+    i < Math.min(selectedContacts.length);
     i++
   ) {
     let contactId = Number(selectedContacts[i]);
@@ -236,13 +233,6 @@ function displaySelectedContacts(
       (contact) => contact.id === contactId
     );
     selectedList.innerHTML += assignedContacts(activeContacts);
-  }
-}
-
-function displayAdditionalCount(selectedList, maxVisibleContacts) {
-  if (selectedContacts.length > maxVisibleContacts) {
-    const additionalCount = selectedContacts.length - maxVisibleContacts;
-    selectedList.innerHTML += `<div class="font-s-20 font-w-700">+${additionalCount}</div>`;
   }
 }
 
@@ -402,11 +392,6 @@ function closeTaskIfOutside(event) {
   if (event.target.id === 'add_task_board'||'edit_task_board'||'add_task_content') {
     closeSelect();
     closeSelectCategory();
-    let subInputFocus = document.getElementById('subtasks_input')
-    if (subInputFocus.focus()) {
-      document.getElementById("subtasks_inactiv_img").classList.add("d-none");
-    document.getElementById("subtasks_activ_img").classList.remove("d-none");
-    }
     document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
     document.getElementById("subtasks_activ_img").classList.add("d-none");
   }
