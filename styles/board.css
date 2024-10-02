@@ -370,7 +370,7 @@
 }
 
 .add-task-board {
-  max-width: 1125px;
+  width: 100%;
   height: 870px;
   background-color: white;
   padding: 64px 74px;

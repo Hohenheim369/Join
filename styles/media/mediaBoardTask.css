@@ -1,18 +1,30 @@
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1125px) {
   .content {
     padding: 40px;
     padding-inline: clamp(16px, 1vw, 96px);
+  }
+  .add-task-board-click {
+    margin: clamp(0px, 4vw, 36px);
+  }
+  .bottom-order {
+    width: calc(100% - 148px);
+  }
+  .bottom-edit-order {
+    width: 150%;
   }
 }
 
 @media screen and (max-width: 855px) {
   .bottom-order {
-    width: 85%;
-    display: flex;
-    justify-content: space-between;
-    padding: 16px 16px;
-    position: fixed;
     bottom: 20px;
+    width: calc(100% - 16px);
+  }
+  .bottom-edit-order {
+    width: 100%;
+    bottom: -235px;
+  }
+  .bottom-button-order {
+    margin-right: 54px;
   }
   .content-order {
     overflow-y: auto;
@@ -23,35 +35,35 @@
     margin-left: clamp(100px, 15vw, 144px);
   }
   .add-task-board {
-    padding: 64px 35px;
+    padding: 45px 35px;
   }
   h1 {
     font-size: clamp(47px, 7vw, 61px);
-}
+  }
 }
 
-@media screen and (max-width: 783px) {
-    label{
-        font-size: clamp(16px, 4vw, 20px);
-    }
-    input{
-        font-size: clamp(16px, 4vw, 20px);
-    }
-    textarea{
-        font-size: clamp(16px, 4vw, 20px);
-    }
-    .div-input{
-        font-size: clamp(16px, 4vw, 20px);
-    }
-    .prio-span{
-        font-size: clamp(16px, 4vw, 20px);
-    }
-    button{
-        font-size: clamp(16px, 4vw, 20px);
-    }
-    .alert-field{
-        font-size: clamp(12px, 4vw, 16px);
-    }
+@media screen and (max-width: 777px) {
+  label {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  input {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  textarea {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .div-input {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .prio-span {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  button {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .alert-field {
+    font-size: clamp(12px, 4vw, 16px);
+  }
   .content {
     padding: 50px 0px;
     margin-left: 0px;
@@ -61,7 +73,7 @@
     flex-direction: column;
     margin-top: 25px;
     overflow-y: auto;
-    height: calc(100vh - 376px);
+    height: calc(100vh - 550px);
   }
   .dividing-bar {
     display: none;
@@ -85,11 +97,26 @@
     align-items: flex-start;
     flex-direction: column;
   }
-  .edit-overflow{
+  .edit-overflow {
     overflow-y: auto;
   }
-  .add-task-board-click{
-    width: 100%;
-    margin-inline: 20px;
+  .bottom-button-order {
+    margin-right: 78px;
+  }
+  .bottom-edit-order {
+    max-width: 493px;
+    position: fixed;
+    bottom: 40px;
+    padding-inline: 20px;
+  }
+  .single-edit-task {
+    padding-inline: clamp(5px, 1vw, 40px);
+  }
 }
+
+@media screen and (max-width: 500px) {
+  ::-webkit-calendar-picker-indicator {
+    height: 20px;
+    width: 20px;
+  }
 }

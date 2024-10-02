@@ -13,6 +13,8 @@ function openEditDialog(taskId) {
   document.getElementById("edit_task_overlay").classList.remove("d-none");
   document.getElementById("create_button").classList.add("d-none");
   document.getElementById("clear_button").classList.add("d-none");
+  document.getElementById("alert_field").classList.add("d-none");
+  document.getElementById("alert_field").classList.remove("alert-field");
   document.getElementById("dividing_bar").classList.add("d-none");
   document.getElementById("add_task_h1").classList.add("d-none");
   document.getElementById("content_order").classList.remove("content-order");

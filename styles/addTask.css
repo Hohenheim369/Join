@@ -240,9 +240,18 @@ li {
 }
 
 .bottom-order {
-  max-width: 976px;
+  width: 976px;
   display: flex;
   justify-content: space-between;
+  position: absolute;
+}
+.bottom-edit-order {
+  width: 46%;
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: -160px;
 }
 
 .alert-field {
@@ -365,7 +374,7 @@ li {
 }
 
 .add-task-board-click{
-  max-width: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   margin-inline: 100%;
@@ -379,6 +388,7 @@ li {
 }
 
 .single-edit-task {
+  height: calc(100vh - 15px);
   width: 525px;
   background-color: white;
   padding-block: 48px;
