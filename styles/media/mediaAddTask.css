@@ -1,49 +1,37 @@
-@media screen and (max-width: 1160px) {
-  .content {
-    padding: 40px;
-    padding-inline: clamp(16px, 1vw, 96px);
-  }
+@media screen and (max-width: 1145px) {
   .bottom-order {
-    width: calc(100% - 178px);
+    width: calc(100% - 167px);
   }
 }
 
-@media screen and (max-width: 835px) {
+@media screen and (max-width: 999px) {
   .bottom-order {
-    background-color: rgb(246, 247, 248);
-    width: 85%;
-    display: flex;
-    justify-content: space-between;
-    padding: 16px 16px;
-    position: fixed;
-    bottom: 0px;
-  }
-  .content-order {
-    overflow-y: auto;
-    height: calc(100vh - 376px);
-    padding-inline: 16px;
-  }
-  .content {
-    padding: 40px 0px;
-    margin-left: clamp(100px, 15vw, 144px);
+    width: calc(100% - 17%);
   }
 }
 
 @media screen and (max-width: 777px) {
-  .content {
-    padding: 50px 0px;
-    margin-left: 0px;
+  .add-task-h1 {
+    padding-inline: 16px;
   }
+  .content {
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 0;
+}
   .bottom-order {
     width: 100%;
     bottom: 80px;
+    left: 0px;
+    background-color: rgb(246, 247, 248);
+    padding: 16px 16px;
   }
   .content-order {
     display: flex;
     flex-direction: column;
     margin-top: 25px;
     overflow-y: auto;
-    height: calc(100vh - 376px);
+    height: calc(100vh - 452px);
   }
   .dividing-bar {
     display: none;
@@ -54,7 +42,6 @@
   }
   .add-task-form-right {
     padding: 0px 16px;
-
     width: auto;
   }
   .div-button-order {

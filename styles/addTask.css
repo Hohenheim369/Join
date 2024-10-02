@@ -184,7 +184,7 @@ textarea {
 }
 
 ul {
-  max-height: 112px;
+  max-height: 120px;
   overflow-y: auto;
 }
 
@@ -236,7 +236,8 @@ li {
 }
 
 .space-bottom {
-  min-height: 210px;
+  min-height: 215px;
+  margin-bottom: 16px;
 }
 
 .bottom-order {
