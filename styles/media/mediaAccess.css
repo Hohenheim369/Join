@@ -1,4 +1,15 @@
-@media screen and (max-width: 1440px) {
+@media (min-width: 1441px) {
+  .logo-small {
+    left: calc((100vw - 1286px) / 2);
+  }
+
+  .change-access {
+    right: calc((100vw - 1196px) / 2);
+  }
+}
+
+
+@media (max-width: 1440px) {
   .img-logo {
     width: clamp(100px, 19vw, 274px);
     height: clamp(122px, 24vw, 335px);
@@ -13,10 +24,48 @@
   }
 
   .access-window {
-    width: clamp(288px, 45vw, 652px);
+    width: clamp(288px, 90vw, 652px);
     padding-block: clamp(32px, 5vw, 48px) ;
     padding-inline: clamp(16px, 8vw, 115px);
     border-radius: 30px;
     box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
   }
+}
+
+@media (max-width: 888px) {
+  .change-access {
+    right: clamp(0px, 9vw, 122px);
+  }
+}
+
+@media (max-width: 777px) {
+  .change-access {
+    top: auto;
+    bottom: 102px;
+    right: auto;
+  }
+
+  .login-buttons{
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    gap: 21px;
+  }
+
+  .access-button{
+    height: 51px;
+  }
+
+  .access-button button{
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .arrow{
+    top: clamp(12px, 7vw, 54px);
+    left: clamp(16px, 6vw, 48px);
+}
+  
 }

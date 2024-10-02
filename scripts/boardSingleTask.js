@@ -76,7 +76,9 @@ function displaySingleSubtasks(subtasks, taskId) {
 async function updateSubtaskStatus(taskId, subId) {
   toggleCheckButton(`task_${taskId}_subtask_${subId}`, "button");
 
-  const checkButton = document.getElementById(`task_${taskId}_subtask_${subId}`);
+  const checkButton = document.getElementById(
+    `task_${taskId}_subtask_${subId}`
+  );
   const isChecked = checkButton.src.includes("true");
 
   let tasks = await fetchData("tasks");
@@ -102,6 +104,7 @@ async function deleteTask(taskId) {
   } else {
     await deleteTaskforAllUsers(taskId, users);
   }
+
   deleteTaskInLocalStorage(taskId);
 
   await showSuccessfullyDelete();
@@ -112,7 +115,7 @@ async function deleteTask(taskId) {
 
 async function deleteTaskOnlyforUser(taskId, users) {
   if (activeUser.id === 0) {
-    return
+    return;
   }
   users = users.map((user) => {
     if (user.id === activeUser.id) {
@@ -129,7 +132,7 @@ async function deleteTaskOnlyforUser(taskId, users) {
 async function deleteTaskforAllUsers(taskId, users) {
   await deleteData("tasks", taskId);
   if (activeUser.id === 0) {
-    return
+    return;
   }
   users = users.map((user) => ({
     ...user,

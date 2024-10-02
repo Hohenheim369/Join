@@ -1,5 +1,7 @@
 body {
   visibility: visible;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,6 +20,7 @@ body {
   transition: background-color 1s ease-out;
   z-index: 1000;
 }
+
 .img-logo {
   width: 274px;
   height: 335px;
@@ -90,6 +93,13 @@ body {
 .login-buttons{
   width: 322px;
   height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.access-button{
+  height: 100%;
 }
 
 .guest-button{

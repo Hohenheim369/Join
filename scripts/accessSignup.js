@@ -1,4 +1,4 @@
-function signUp(){
+function signUp() {
   const email = document.getElementById("signup_email").value.trim();
   const name = document.getElementById("signup_name").value.trim();
   const password = document.getElementById("signup_password").value;
@@ -9,9 +9,9 @@ function signUp(){
 
 async function signUpProcess(email, name, password, cPassword) {
   resetSignupAlert();
-  await validateInputs(email, name, password, cPassword);  
+  await validateInputs(email, name, password, cPassword);
   const initials = getUserInitials(name);
-  await addUser(email, name, password, initials);  
+  await addUser(email, name, password, initials);
   resetSignupFormInputs();
   await showSuccessfullySignedUp();
   localStorage.removeItem("rememberMeData");
