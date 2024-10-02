@@ -162,7 +162,7 @@ async function updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus
 }
 
 async function handleTaskEditCompletion(taskId) {
-  subTasks = []; //zugefügt OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+  subTasks = [];
   openAddTaskDialogFeedback();
   await sleep(1500);
   toggleTaskOverlays();
