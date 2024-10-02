@@ -422,7 +422,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .letter-circel-user{
-  font-size: 14px !important;
   border: 2px solid black !important;
   color: rgb(41, 171, 227) !important;
 }
