@@ -6,12 +6,12 @@
   height: 592px;
   text-align: center;
   top: 50%;
-  left: 200%; /* Start off-screen */
+  left: 200%; 
   transform: translate(-50%, -50%);
   border-radius: 33px;
   padding: 0;
   border: 0px;
-  transition: left 0.4s ease-out; /* Transition for the sliding effect */
+  transition: left 0.4s ease-out; 
 }
 
 #dialog_contacts.dialog-open {
@@ -117,10 +117,6 @@ h2 {
   background-color: #eeeeee;
   border-radius: 15px;
 }
-
-/* .cross:hover {
-  background-color: grey;
-} */
 
 .dialog-content-right {
   margin-left: clamp(40px, 3vw, 72px);

@@ -144,6 +144,10 @@ a:hover {
   display: none;
 }
 
+.d-flex {
+  display: flex;
+}
+
 .d-flex-center {
   display: flex;
   justify-content: center;

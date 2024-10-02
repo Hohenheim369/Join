@@ -182,7 +182,7 @@ function validateInput(input, regex, errorMsg, errorId, maxLength) {
 function updateCrossImage() {
   const imgElements = document.querySelectorAll(".cross");
   imgElements.forEach((imgElement) => {
-    if (window.innerWidth < 1240) {
+    if (window.innerWidth < 1024) {
       imgElement.src = "../assets/img/png/close-white.png"; // Kleineres Bild
     } else {
       imgElement.src = "../assets/img/png/close.png"; // Größeres Bild

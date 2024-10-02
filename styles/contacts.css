@@ -1,12 +1,6 @@
 body {
-  font-family: "inter";
   margin: 0px;
-  visibility: hidden;
   overflow: hidden;
-}
-
-.d-flex {
-  display: flex;
 }
 
 h1 {
@@ -35,7 +29,6 @@ h3 {
   height: calc(100vh - 96px);
   background-color: white;
   box-shadow: 1px 0px 4px 0px #0000001a;
-  box-sizing: border-box;
   flex-direction: column;
   align-items: center;
 }
@@ -65,7 +58,6 @@ h3 {
 
 .letter-box {
   font-size: 20px;
-  box-sizing: border-box;
   width: clamp(261px, 22vw, 352px);
   padding: 17px 36px 17px 36px;
 }
@@ -73,7 +65,6 @@ h3 {
 .contacts {
   display: flex;
   font-size: 20px;
-  box-sizing: border-box;
   width: clamp(280px, 23vw, 352px);
   padding: 15px 24px 15px 24px;
   gap: 35px;
@@ -141,13 +132,13 @@ h3 {
 }
 
 .grey-background {
-  z-index: +98;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
+  z-index: +98;
 }
 
 .hidden {
@@ -196,7 +187,6 @@ h3 {
 .contact-box-edit-delete {
   display: flex;
   width: 159px;
-  height: 24px;
   justify-content: space-between;
 }
 
@@ -301,98 +291,6 @@ h3 {
   border-color: red;
 }
 
-.mobile-add-contact {
-  display: none;
-  border-radius: 30px;
-  width: 56px;
-  height: 56px;
-  right: 16px;
-  bottom: 88px;
-  background-color: rgb(41, 53, 71);
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.mobile-add-contact:hover {
-  cursor: pointer;
-}
-
-.mobile-add-contact:active {
-  background-color: rgb(41, 171, 227);
-}
-
-.mobile-contact-info {
-  background-color: rgb(245, 246, 247);
-  top: 80px;
-  left: 0px;
-  bottom: 80px;
-  z-index: 97;
-  width: 100%;
-}
-
-.mobile-delete-edit {
-  display: flex;
-  border-radius: 30px;
-  width: 56px;
-  height: 56px;
-  right: 16px;
-  bottom: 8px;
-  background-color: rgb(41, 53, 71);
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.mobile-delete-edit:hover {
-  cursor: pointer;
-}
-
-.mobile-delete-edit:active {
-  background-color: rgb(41, 171, 227);
-}
-
-.mobile-menu {
-  z-index: 98;
-  background-color: white;
-  bottom: 85px;
-  right: 6px;
-  position: absolute;
-  display: none;
-  width: 116px;
-  height: 100px;
-  border-radius: 20px 20px 0px 20px;
-  padding: 10px ;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  flex-direction: column;
-  box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
-}
-
-.mobile-menu img{
-  padding: 9px 9px 9px 9px ;
-}
-
-.mobile-menu img:hover{
-  cursor: pointer;
-}
-
-.mobile-menu .mobile-edit-img:active{
-  content: url('../assets/img/png/edit-hover.png');
-  background-color: rgb(245, 246, 247);
-  border-radius: 9px;
-  padding: 9px 24px 9px 9px ;
-}
-
-.mobile-menu .mobile-delete-img:active{
-  content: url('../assets/img/png/delete-hover.png');
-  background-color: rgb(245, 246, 247);
-  border-radius: 9px;
-  padding: 9px 6px 9px 9px ;
-}
-
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -407,7 +305,7 @@ input[type="number"]::-webkit-inner-spin-button {
   align-items: center;
 }
 
-.user-profile-initials-box-contacts{
+.user-profile-initials-box-contacts {
   font-weight: 600;
   display: flex;
   width: 48px;
@@ -421,7 +319,7 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: white;
 }
 
-.letter-circel-user{
+.letter-circel-user {
   border: 2px solid black !important;
   color: rgb(41, 171, 227) !important;
 }
