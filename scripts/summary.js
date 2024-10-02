@@ -119,7 +119,7 @@ function countDone(tasks) {
 function countTasksWithDueDate(tasks) {
   const tasksWithDueDate = tasks.filter((task) => task.date);
   tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
-  const nextDueDate = tasksWithDueDate[0]?.date; // Verwende optional chaining
+  const nextDueDate = tasksWithDueDate[0]?.date;
   const tasksWithSameDueDate = tasks.filter((task) => task.date === nextDueDate);
   const taskCountElement = document.getElementById("count_priority_urgent");
   taskCountElement.innerHTML = `${tasksWithSameDueDate.length}`;
@@ -162,7 +162,7 @@ function countTaskInFeedback(tasks) {
 function deadlineDate(tasks) {
   const tasksWithDueDate = tasks.filter((task) => task.date);
   tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
-  const nextDueDate = tasksWithDueDate[0]?.date; // Verwende optional chaining
+  const nextDueDate = tasksWithDueDate[0]?.date; 
   const [year, month, day] = nextDueDate.split("-");
   const dateObj = new Date(year, month - 1, day);
   const formattedDate = dateObj.toLocaleDateString('en-US', {

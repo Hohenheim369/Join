@@ -84,11 +84,11 @@ async function postNewContact() {
   const name = getInputValue("name");
   const email = getInputValue("email");
   const phone = getInputValue("phone");
-  if (!name || !email) return; // Frühzeitiges Beenden bei fehlendem Name/Email
+  if (!name || !email) return; 
   const contactId = await getNewId("contacts");
   const contactData = createContact(name, email, phone, contactId);
-  await postData(`contacts/${contactId - 1}/`, contactData); // Funktion zum Speichern des Kontakts
-  return contactId; // Rückgabe der Werte zur weiteren Verwendung
+  await postData(`contacts/${contactId - 1}/`, contactData); 
+  return contactId; 
 }
 
 function createContact(name, email, phone, contactId) {
@@ -120,7 +120,7 @@ function addContactToUserLocal(contactId) {
 }
 
 function generateRandomColor() {
-  const darkLetters = "0123456789ABC"; // Beschränke auf dunklere Farbtöne
+  const darkLetters = "0123456789ABC"; 
   let color = "#";
   for (let i = 0; i < 6; i++) {
     color += darkLetters[Math.floor(Math.random() * darkLetters.length)];
@@ -265,13 +265,13 @@ function deleteContactInLocalStorage(contactId) {
 }
 
 function getInitials(name) {
-  const names = name.split(" "); // Den Namen in Wörter aufteilen
+  const names = name.split(" ");  
   if (names.length === 1) {
-    return names[0].charAt(0).toUpperCase(); // Wenn es nur ein Wort gibt, nimm den ersten Buchstaben
+    return names[0].charAt(0).toUpperCase(); 
   }
-  const firstInitial = names[0].charAt(0).toUpperCase(); // Erster Buchstabe des ersten Wortes
-  const lastInitial = names[names.length - 1].charAt(0).toUpperCase(); // Erster Buchstabe des letzten Wortes
-  return firstInitial + lastInitial; // Initialen zurückgeben
+  const firstInitial = names[0].charAt(0).toUpperCase();
+  const lastInitial = names[names.length - 1].charAt(0).toUpperCase();
+  return firstInitial + lastInitial; 
 }
 
 function limitTextLength(text, maxLength = 20) {
@@ -289,7 +289,7 @@ function goBackMobile() {
   document.getElementById("mobile_contact_info").classList.add("d-none");
   document.getElementById("mobile_contact_info").classList.remove("pos-abs");
   const contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
-  contactInfoDiv.innerHTML = ""; // Vorherigen Inhalt leeren
+  contactInfoDiv.innerHTML = "";
 }
 
 function openMobileMenu(contactId) {

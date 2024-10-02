@@ -183,9 +183,9 @@ function updateCrossImage() {
   const imgElements = document.querySelectorAll(".cross");
   imgElements.forEach((imgElement) => {
     if (window.innerWidth < 1024) {
-      imgElement.src = "../assets/img/png/close-white.png"; // Kleineres Bild
+      imgElement.src = "../assets/img/png/close-white.png"; 
     } else {
-      imgElement.src = "../assets/img/png/close.png"; // Größeres Bild
+      imgElement.src = "../assets/img/png/close.png"; 
     }
   });
 }
