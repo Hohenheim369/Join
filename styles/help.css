@@ -1,10 +1,5 @@
 body {
   margin: 0px;
-  visibility: hidden;
-}
-
-.d-flex {
-  display: flex;
 }
 
 h1 {
@@ -72,17 +67,6 @@ tr {
   font-size: 27px;
   font-weight: 700;
 }
-
-/* .arrow-back {
-  left: calc(100% - 139px);
-  top: 225px;
-  position: absolute;
-  width: 37px;
-}
-
-.arrow-back:hover {
-  cursor: pointer;
-} */
 
 .headline {
   display: flex;

@@ -1,11 +1,10 @@
 body {
   background-color: #f5f6f7;
-  visibility: hidden;
 }
 
-/* .content {       
-  height: 100vh;
-} */
+.d-flex {
+  display: flex;
+}
 
 .head {
   width: clamp(224px, 67vw, 580px);
@@ -64,8 +63,6 @@ span {
 
 .to-do-done-block {
   display: flex;
-  /* height: clamp(110px, 15vh, 169px); */
-  /* width: clamp(312px, 100%, 560px); */
   justify-content: space-between;
   gap: clamp(24px, 3vw, 32px);
 }
@@ -95,12 +92,12 @@ span {
 }
 
 .upper-task-block:hover .edit img {
-  content: url("../assets/img/png/editBlue.png"); /* Ändert das Bild beim Hover */
+  content: url("../assets/img/png/editBlue.png"); 
   transform: scale(1);
 }
 
 .upper-task-block:hover .check img {
-  content: url("../assets/img/png/check-blue-summary.png"); /* Ändert das Bild beim Hover */
+  content: url("../assets/img/png/check-blue-summary.png");
   transform: scale(1);
 }
 
@@ -121,7 +118,6 @@ span {
 .priority-block {
   display: flex;
   background-color: white;
-  /* width: clamp(312px, 100%, 560px); */
   height: clamp(99px, 23vw, 169px);
   border-radius: 30px;
   justify-content: center;
@@ -221,10 +217,6 @@ span {
   align-items: center;
 }
 
-.d-flex {
-  display: flex;
-}
-
 .center {
   align-items: center;
 }
@@ -246,10 +238,6 @@ span {
 
 .font-s16 {
   font-size: 16px;
-}
-
-.font-w400 {
-  font-weight: 400;
 }
 
 .summary-link {

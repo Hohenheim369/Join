@@ -37,6 +37,7 @@ header {
   justify-content: center;
   color: #29abe2;
 }
+
 .user-profile-initials-box:hover {
   background-color: rgb(225, 230, 237);
   cursor: pointer;
@@ -60,11 +61,11 @@ header {
   position: absolute;
   top: 69px;
   left: calc(100% - 254px);
-  font-size: clamp(16px , 3vw, 20px);
-  border-left: 1px solid white;   /* Linker Rand */
-  border-right: 1px solid white;  /* Rechter Rand */
-  border-bottom: 1px solid white; /* Unterer Rand */
-  border-top: none;   
+  font-size: clamp(16px, 3vw, 20px);
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  border-top: none;
 }
 
 #log_out a {
@@ -72,7 +73,6 @@ header {
   padding: 8px 16px;
   color: #cdcdcd;
 }
-
 
 #log_out a:hover {
   background-color: #2a3d59;
@@ -85,7 +85,6 @@ aside {
   height: 100vh;
   padding: 64px 0px;
   font-weight: 400;
-  /* font-size: 16px; */
   color: white;
   background-color: #2a3647;
   display: flex;
@@ -96,14 +95,6 @@ aside {
 
 .logo-sidebar {
   width: clamp(70px, 10vw, 100.03px);
-  
-}
-
-/* NICHT VERWENDET */
-.content-sidebar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .icon-bar {
@@ -149,7 +140,6 @@ aside {
   justify-content: flex-end;
   box-sizing: border-box;
   gap: 8px;
-  
 }
 
 .link-policy-credits {
@@ -165,9 +155,9 @@ aside {
 }
 
 .link-policy-credits.disabled {
-  pointer-events: none; /* Verhindert, dass der Link geklickt werden kann */
-  font-weight: normal; /* Rücksetzen auf normales Gewicht */
-  cursor: default; /* Standard-Mauszeiger */
+  pointer-events: none; 
+  font-weight: normal; 
+  cursor: default;
   color: #a8a8a8;
 }
 
@@ -196,44 +186,45 @@ aside {
   height: 35px;
   align-items: center;
   justify-content: flex-start;
-  
 }
 
-.credit a{
+.credit a {
   font-size: clamp(12px, 1.5vw, 16px);
 }
 
-/* CSS für inaktive Links */
 .link-sidebar.disabled {
-  pointer-events: none; /* Verhindert, dass der Link geklickt werden kann */
-  background-color: #091931; /* Hintergrundfarbe für inaktive Links */
-  color: #ffffff; /* Textfarbe für inaktive Links */
+  pointer-events: none; 
+  background-color: #091931; 
+  color: #ffffff; 
 }
 
-/* Entfernt den Hover-Effekt für inaktive Links */
 .link-sidebar.disabled:hover {
-  cursor: default; /* Standard-Mauszeiger */
-  background-color: #2a3d59; /* Gleiche Hintergrundfarbe wie im normalen Zustand */
+  cursor: default; 
+  background-color: #2a3d59;
 }
 
 .disabled {
-  pointer-events: none; /* Verhindert, dass der Link angeklickt wird */
-  color: grey; /* Oder eine andere Farbe, um den Link als deaktiviert darzustellen */
-  cursor: not-allowed; /* Ändert den Mauszeiger, um anzuzeigen, dass der Link deaktiviert ist */
+  pointer-events: none; 
+  color: grey; 
+  cursor: not-allowed; 
 }
 
-.d-none {
-  display: none;
-}
-
-.bg-color{
+.bg-color {
   background-color: rgb(225, 230, 237) !important;
 }
 
-a:hover{
+a:hover {
   font-weight: 400;
 }
 
-.logo-mobile{
+.logo-mobile {
+  display: none;
+}
+
+.d-flex{
+  display: flex;
+}
+
+.d-none{
   display: none;
 }

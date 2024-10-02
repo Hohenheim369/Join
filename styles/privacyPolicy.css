@@ -1,10 +1,5 @@
 body {
   margin: 0px;
-  visibility: hidden;
-}
-
-.d-flex {
-  display: flex;
 }
 
 .content-policy {
@@ -35,19 +30,6 @@ h1 {
   font-weight: 400;
   color: #a8a8a8;
 }
-/* 
-.arrow-back {
-  border-radius: 23px;
-  background-color: rgb(245, 246, 247);
-  left: calc(100% - 139px);
-  top: 225px;
-  position: absolute;
-  width: 37px;
-}
-
-.arrow-back:hover {
-  cursor: pointer;
-} */
 
 .headline {
   display: flex;
@@ -55,11 +37,3 @@ h1 {
   justify-content: space-between;
 }
 
-/* die klassen wenn keiner ein geloggt ist  */
-/* .not-logged-in .icon-box {
-  display: none !important;
-}
-
-.not-logged-in .box-icons {
-  display: none !important;
-} */
