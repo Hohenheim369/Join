@@ -1,14 +1,7 @@
+/** wenn der DOM geladen wird wird die begrüßung geladen */
 document.addEventListener("DOMContentLoaded", () => {
   greeting();
   displayTasks();
-  const clickableDivs = document.querySelectorAll(
-    ".upper-task-block, .priority-block, .task-in-block"
-  );
-  clickableDivs.forEach((div) => {
-    div.addEventListener("click", () => {
-      window.location.href = "../html/board.html";
-    });
-  });
   if (window.innerWidth <= 770) {
     checkAndShowGreeting();
   }
@@ -20,9 +13,9 @@ function greeting() {
   let greetingUser = getNameFromLocalStorage();
   let greetingMassage = getGreetingMessage();
   greeting.innerHTML = "";
-  greeting.innerHTML = `${greetingMassage}, <div class="greeting-user">${greetingUser}</div> `;
   greetingMobile.innerHTML = "";
-  greetingMobile.innerHTML = `${greetingMassage}, <div class="greeting-user">${greetingUser}</div> `;
+  greeting.innerHTML = greetingHtml(greetingMassage, greetingUser);
+  greetingMobile.innerHTML = greetingHtml(greetingMassage, greetingUser);
 }
 
 function getNameFromLocalStorage() {
@@ -40,6 +33,10 @@ function getGreetingMessage() {
   } else {
     return "Good evening";
   }
+}
+
+function greetingHtml(greetingMassage, greetingUser){
+   return `${greetingMassage}, <div class="greeting-user">${greetingUser}</div> `
 }
 
 async function displayTasks() {
@@ -138,27 +135,27 @@ function deadlineDate(tasks) {
   deadlineElement.innerHTML = `${formattedDate}`;
 }
 
+function navigatonToBoard(){
+  window.location.href = "../html/board.html";
+}
+
+
+
 function mobileGreeting() {
   const greetingDialog = document.getElementById("greeting_mobile");
-
-  // Öffnet den Dialog
   if (greetingDialog) {
     greetingDialog.classList.remove("d-none");
-    // Schließt den Dialog nach 5 Sekunden
     setTimeout(() => {
       greetingDialog.classList.add("d-none");
       greetingDialog.close();
-    }, 3000); // 5000 Millisekunden = 5 Sekunden
+    }, 3000); 
   }
 }
 
 function checkAndShowGreeting() {
   const greetingShown = localStorage.getItem("greetingShown");
-
-  // Wenn das Greeting noch nicht gezeigt wurde, zeige es an
   if (greetingShown === "false" || !greetingShown) {
     mobileGreeting();
-    // Setze den Zustand, dass das Greeting nun gezeigt wurde
     localStorage.setItem("greetingShown", "true");
   }
 }
