@@ -11,15 +11,15 @@ function generateActiveUserContact(user){
 }
 
 function generateContact(contact) {
-  const truncatedName = truncate(contact.name);
-  const truncatedEmail = truncate(contact.email);
+  const limitNameLength = limitTextLength(contact.name);
+  const limitEmailLength = limitTextLength(contact.email);
 
   return `
       <div id="contact${contact.id}" class="contacts" onclick="displayContactInfo(${contact.id})">
         <div class="letter-circle" style="background-color: ${contact.color};">${contact.initials}</div>
         <div class="contact-info">
-          <span>${truncatedName}</span>
-          <a class="contact-email" href="#">${truncatedEmail}</a>
+          <span>${limitNameLength}</span>
+          <a class="contact-email" href="#">${limitEmailLength}</a>
         </div>
       </div>
     `;

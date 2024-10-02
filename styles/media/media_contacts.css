@@ -171,7 +171,7 @@
   .big-letter-circle {
     font-size: clamp(24px, 6vw, 47px);
     width: clamp(70px, 23vw, 120px);
-    height: clamp(70px, 18vw, 120px);
+    height: clamp(70px, 19vw, 120px);
     border: 3px solid white;
   }
 
@@ -188,7 +188,7 @@
 
   .contact-seperator {
     margin-left: clamp(0px, 77vw, 12px);
-    width:  clamp(270px, 83vw, 95%);
+    width: clamp(270px, 83vw, 95%);
   }
 
   .mobile-add-contact {
@@ -214,6 +214,7 @@
 
   .contacts-info-name {
     height: unset;
+    width: clamp(300px, 57vw, 700px);
   }
 
   .contacts-information {
@@ -222,19 +223,18 @@
 
   .contacts-info {
     animation: slideInFromRight 0s ease-in;
-}
+  }
 
-#succesfully_created {
-  top: unset;
-  left: 50%;
-  bottom: -15%;
-  transition: bottom 0.4s ease-out;
-  transform: translate(-50%, -50%);
-}
+  #succesfully_created {
+    top: unset;
+    left: 50%;
+    bottom: -15%;
+    transition: bottom 0.4s ease-out;
+    transform: translate(-50%, -50%);
+  }
 
-#succesfully_created.dialog-open {
-  left: 50%;
-  bottom: 20%;
-}
-
+  #succesfully_created.dialog-open {
+    left: 50%;
+    bottom: 20%;
+  }
 }

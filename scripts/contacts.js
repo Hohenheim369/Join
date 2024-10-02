@@ -34,15 +34,15 @@ async function filterUserContacts() {
 async function renderContactsList(groupedContacts) {
   const contactList = document.getElementById("contact_list");
   contactList.innerHTML = "";
-  await renderActiveUser(contactList);
+  await initActiveUser(contactList);
   const sortedInitials = sortInitials(Object.keys(groupedContacts));
   sortedInitials.forEach((initial) => {
-    renderLetterBox(initial, contactList);
-    renderContactsByInitial(groupedContacts[initial], contactList);
+    initLetterBox(initial, contactList);
+    initContactsByInitial(groupedContacts[initial], contactList);
   });
 }
 
-async function renderActiveUser(contactList) {
+async function initActiveUser(contactList) {
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
   const data = await fetchData("users");
   const users = Object.values(data);
@@ -58,14 +58,14 @@ function sortInitials(initials) {
   return initials.sort();
 }
 
-function renderContactsByInitial(contacts, contactList) {
+function initContactsByInitial(contacts, contactList) {
   contacts.forEach(({ contact }) => {
     const contactHtml = generateContact(contact);
     contactList.innerHTML += contactHtml;
   });
 }
 
-function renderLetterBox(initial, contactList) {
+function initLetterBox(initial, contactList) {
   const letterBoxHtml = generateLetterBox(initial);
   contactList.innerHTML += letterBoxHtml;
 }
@@ -97,8 +97,8 @@ function createContact(name, email, phone, contactId) {
     name: name,
     email: email,
     phone: phone,
-    color: getRandomColor(),
-    initials: calculateInitials(name),
+    color: generateRandomColor(),
+    initials: getInitials(name),
   };
 }
 
@@ -119,7 +119,7 @@ function addContactToUserLocal(contactId) {
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
 }
 
-function getRandomColor() {
+function generateRandomColor() {
   const darkLetters = "0123456789ABC"; // Beschränke auf dunklere Farbtöne
   let color = "#";
   for (let i = 0; i < 6; i++) {
@@ -129,28 +129,29 @@ function getRandomColor() {
 }
 
 async function displayContactInfo(contactId) {
-  let contact;
-  if (contactId === 0) {
-    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-    contact = await searchForUser(activeUser.id);
-    contact.id = 0;
-  } else {
-    contact = await searchForContact(contactId);
-  }
+  const contact = await getContact(contactId);
   if (window.innerWidth <= 777) {
     return displayContactInfoMobile(contactId);
   }
   const contactInfoDiv = document.querySelector(".contacts-info-box");
   const contactInfoButtons = document.getElementById("button_edit_dialog");
-  contactInfoDiv.innerHTML = "";
   contactInfoDiv.innerHTML = generateContactInfo(contact);
   contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   if (contact.id === 0) {
-    document
-      .getElementById("for_active_user")
-      .classList.add("letter-circel-user");
+    document.getElementById("for_active_user").classList.add("letter-circel-user");
   }
   highlightContact(contact);
+}
+
+async function getContact(contactId) {
+  if (contactId === 0) {
+    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    const contact = await searchForUser(activeUser.id);
+    contact.id = 0;
+    return contact;
+  } else {
+    return await searchForContact(contactId);
+  }
 }
 
 function highlightContact(contact) {
@@ -168,22 +169,12 @@ async function displayContactInfoMobile(contactId) {
   let infoDiv = document.getElementById("mobile_contact_info");
   infoDiv.classList.remove("d-none");
   infoDiv.classList.add("pos-abs");
-  let contact;
-  if (contactId === 0) {
-    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-    contact = await searchForUser(activeUser.id);
-    contact.id = 0;
-  } else {
-    contact = await searchForContact(contactId);
-  }
+  const contact = await getContact(contactId); 
   const contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
   const contactInfoButtons = document.getElementById("button_edit_dialog");
-  contactInfoDiv.innerHTML = "";
   contactInfoDiv.innerHTML = generateContactInfo(contact);
   if (contact.id === 0) {
-    document
-      .getElementById("for_active_user")
-      .classList.add("letter-circel-user");
+    document.getElementById("for_active_user").classList.add("letter-circel-user");
   }
   contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   mobileEditContact();
@@ -214,7 +205,6 @@ async function deleteContact(contactId) {
 
 async function deleteContactInData(contactId) {
   let users = await fetchData("users");
-
   if (contactId >= 1 && contactId <= 10) {
     await deleteContactOnlyforUser(contactId, users);
   } else {
@@ -274,7 +264,7 @@ function deleteContactInLocalStorage(contactId) {
   localStorage.setItem("activeUser", JSON.stringify(activeUser));
 }
 
-function calculateInitials(name) {
+function getInitials(name) {
   const names = name.split(" "); // Den Namen in Wörter aufteilen
   if (names.length === 1) {
     return names[0].charAt(0).toUpperCase(); // Wenn es nur ein Wort gibt, nimm den ersten Buchstaben
@@ -284,7 +274,7 @@ function calculateInitials(name) {
   return firstInitial + lastInitial; // Initialen zurückgeben
 }
 
-function truncate(text, maxLength = 20) {
+function limitTextLength(text, maxLength = 20) {
   if (text.length > maxLength) {
     return text.substring(0, maxLength) + "...";
   }
@@ -330,6 +320,3 @@ async function searchForUser(contactId) {
   return contact;
 }
 
-window.addEventListener("load", updateCrossImage);
-
-window.addEventListener("resize", updateCrossImage);
