@@ -58,14 +58,7 @@ async function openDialog() {
 }
 
 async function openDialogEdit(contactId) {
-  if (contactId === 0) {
-    activeUser = JSON.parse(localStorage.getItem("activeUser"));
-    contactId = activeUser.id;
-    contact = await searchForUser(contactId);
-  } else {
-    contact = await searchForContact(contactId);
-  }
-
+  const contact = await getContact(contactId);
   const menu = document.getElementById("mobile_menu");
   if (menu.classList.contains("d-flex")) {
     menu.classList.remove("d-flex");
@@ -188,10 +181,7 @@ function validateInput(input, regex, errorMsg, errorId, maxLength) {
 
 function updateCrossImage() {
   const imgElements = document.querySelectorAll(".cross");
-
-  // Über alle Bild-Elemente mit der Klasse 'cross' iterieren
   imgElements.forEach((imgElement) => {
-    // Überprüfen der Fensterbreite
     if (window.innerWidth < 1240) {
       imgElement.src = "../assets/img/png/close-white.png"; // Kleineres Bild
     } else {
@@ -201,41 +191,37 @@ function updateCrossImage() {
 }
 
 async function editContact(contactId) {
-  let existingContact;
-  if (contactId === 0) {
-    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
-    contactId = activeUser.id;
-    existingContact = await searchForUser(contactId);
-  } else {
-    existingContact = await searchForContact(contactId);
-  }
-  const updatedName = document.getElementById("inputEditName").value;
-  const updatedEmail = document.getElementById("inputEditEmail").value;
-  const updatedPhone = document.getElementById("inputEditPhone").value;
-  const updatedInitials = calculateInitials(updatedName);
-  const updatedContact = {
-    ...existingContact, // Behalte die bestehenden Werte
-    name: updatedName,
-    email: updatedEmail,
-    phone: updatedPhone,
-    initials: updatedInitials,
-  };
-  if (existingContact.color === "#ffffff") {
-    await postData(`users/${contactId - 1}/`, updatedContact);
-  } else {
-    await postData(`contacts/${contactId - 1}/`, updatedContact);
-  }
-
+  const existingContact = await getContact(contactId);
+  const updatedContact = createUpdatedContact(existingContact);
+  const endpoint =
+    existingContact.color === "#ffffff"
+      ? `users/${contactId - 1}/`
+      : `contacts/${contactId - 1}/`;
+  await postData(endpoint, updatedContact);
   closeDialogEdit();
   await renderContent();
   if (window.innerWidth <= 777) {
-    let infoDiv = document.getElementById("mobile_contact_info");
+    const infoDiv = document.getElementById("mobile_contact_info");
     infoDiv.classList.add("d-none");
     infoDiv.classList.remove("pos-abs");
   } else {
     displayContactInfo(contactId);
   }
 }
+
+function createUpdatedContact(existingContact) {
+    const updatedName = document.getElementById("inputEditName").value;
+    const updatedEmail = document.getElementById("inputEditEmail").value;
+    const updatedPhone = document.getElementById("inputEditPhone").value;
+    const updatedInitials = getInitials(updatedName);
+    return {
+      ...existingContact,
+      name: updatedName,
+      email: updatedEmail,
+      phone: updatedPhone,
+      initials: updatedInitials,
+    };
+  }
 
 window.addEventListener("load", updateCrossImage);
 
