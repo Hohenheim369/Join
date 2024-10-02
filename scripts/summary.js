@@ -1,7 +1,7 @@
 /** wenn der DOM geladen wird wird die begrüßung geladen */
 document.addEventListener("DOMContentLoaded", () => {
   greeting();
-  displayTasks();
+  renderTasks();
   if (window.innerWidth <= 770) {
     checkAndShowGreeting();
   }
@@ -39,7 +39,7 @@ function greetingHtml(greetingMassage, greetingUser){
    return `${greetingMassage}, <div class="greeting-user">${greetingUser}</div> `
 }
 
-async function displayTasks() {
+async function renderTasks() {
   const tasks = await loadTasks();
   countToDo(tasks);
   countDone(tasks);
@@ -54,16 +54,12 @@ async function loadTasks() {
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
   if (activeUser && activeUser.tasks) {
     const taskIds = activeUser.tasks;
-    // Verwende Promise.all, um alle Tasks basierend auf den taskIds zu laden
     const tasks = await Promise.all(
       taskIds.map(async (taskId) => {
-        // Lade alle Tasks von Firebase
         const allTasks = await fetchData("tasks");
-        // Finde den Task, der mit der taskId übereinstimmt
         return allTasks.find((t) => t.id === taskId) || null;
       })
     );
-    // Filtere null-Werte heraus, falls keine passenden Tasks gefunden wurden
     return tasks.filter((task) => task !== null);
   }
   return [];
@@ -139,8 +135,6 @@ function navigatonToBoard(){
   window.location.href = "../html/board.html";
 }
 
-
-
 function mobileGreeting() {
   const greetingDialog = document.getElementById("greeting_mobile");
   if (greetingDialog) {
@@ -148,7 +142,7 @@ function mobileGreeting() {
     setTimeout(() => {
       greetingDialog.classList.add("d-none");
       greetingDialog.close();
-    }, 3000); 
+    }, 2500); 
   }
 }
 
