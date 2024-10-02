@@ -73,16 +73,12 @@ function taskAddedToBoard (){
 
 function editTaskTemplate(taskId){
   return  `<div class="bottom-edit-order">
-          <span class="alert-field">
-            <span class="required-sign">*</span>
-          This field is required</span>
-          <button 
-            onclick="enableEditButton(${taskId})"
-            id="create_button"
-            class="create-task-button"
-          >
+            <span class="alert-field">
+              <span class="required-sign">*</span>
+            This field is required</span>
+            <button onclick="enableEditButton(${taskId})" id="create_button" class="create-task-button">
               <span>Ok</span>
               <img src="../assets/img/png-old/check.png" alt="" />
-          </button>
+            </button>
           </div>`
 }
