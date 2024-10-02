@@ -236,7 +236,6 @@ async function displayContactInfoMobile(contactId) {
       .classList.add("letter-circel-user");
   }
   contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
-  highlightContact(contact);
   mobileEditContact();
   const menu = document.getElementById("mobile_menu");
   menu.innerHTML = generateMobileMenu(contact);
@@ -529,7 +528,7 @@ function updateCrossImage() {
   // Über alle Bild-Elemente mit der Klasse 'cross' iterieren
   imgElements.forEach((imgElement) => {
     // Überprüfen der Fensterbreite
-    if (window.innerWidth < 1024) {
+    if (window.innerWidth < 1241) {
       imgElement.src = "../assets/img/png/close-white.png"; // Kleineres Bild
     } else {
       imgElement.src = "../assets/img/png/close.png"; // Größeres Bild

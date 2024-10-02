@@ -28,7 +28,7 @@ h3 {
 }
 
 .contact-box {
-  padding: 32px 0px 0px 24px;
+  padding: 32px 0px 0px 0px;
   display: flex;
   width: clamp(333px, 27vw, 456px);
   height: calc(100vh - 96px);
@@ -44,7 +44,7 @@ h3 {
   width: clamp(261px, 23vw, 352px);
   height: 56px;
   padding: 12px 16px 12px 16px;
-  margin-right: 24px;
+  margin-right: 8px;
   gap: 16px;
   border-radius: 10px 10px 10px 10px;
   align-items: center;
@@ -117,7 +117,7 @@ h3 {
 
 .contact-seperator {
   width: clamp(261px, 23vw, 352px);
-  margin: 8px 12px 8px 0px;
+  margin: 8px 0px 8px 0px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -163,7 +163,7 @@ h3 {
 }
 
 .contacts-info-name {
-  width: clamp(300px, 57vw, 700px);
+  width: clamp(300px, 39vw, 700px);
   height: 120px;
   display: flex;
   gap: clamp(8px, 2vw, 54px);
@@ -176,7 +176,8 @@ h3 {
   font-weight: 500;
   display: flex;
   border-radius: 90px;
-  width: clamp(70px, 8vw, 120px);
+  border: 3px solid white;
+  width: clamp(78px, 8vw, 120px);
   height: clamp(70px, 8vw, 120px);
   justify-content: center;
   align-items: center;
@@ -185,6 +186,7 @@ h3 {
 .contact-box-name {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 8px;
   width: clamp(240px, 30vw, 510px);
   height: 88px;
@@ -396,8 +398,12 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #contact_list {
+  display: flex;
+  width: 100%;
   overflow: scroll;
   margin-top: 9px;
+  flex-direction: column;
+  align-items: center;
 }
 
 .user-profile-initials-box-contacts{

@@ -1,8 +1,6 @@
 @media screen and (max-width: 1240px) {
   .content {
     padding: 0px;
-    margin-left: clamp(116px, 14vw, 232px);
-    width: calc(100% - 116px);
   }
 
   .text-box {
@@ -17,7 +15,7 @@
   }
 
   .contacts {
-    width: clamp(306px, 23vw, 352px);
+    width: clamp(283px, 23vw, 352px);
   }
 
   .contact-seperator {
@@ -28,7 +26,9 @@
   .contact-info {
     font-size: clamp(12px, 5vw, 20px);
   }
+}
 
+@media screen and (max-width: 1024px) {
   #dialog_contacts {
     display: flex;
     width: clamp(290px, 88vw, 396px);
@@ -164,10 +164,6 @@
     display: none;
   }
 
-  #contact_list {
-    margin-left: 9px;
-  }
-
   .letter-box {
     width: clamp(300px, 77vw, 352px);
   }
@@ -186,13 +182,13 @@
   .contact-box {
     width: 100%;
     height: calc(100vh - 160px);
-    padding: 32px 0px;
+    padding: 0px 0px;
     align-items: flex-start;
   }
 
   .contact-seperator {
     margin-left: clamp(0px, 77vw, 12px);
-    width: clamp(270px, 77vw, 352px);
+    width:  clamp(270px, 83vw, 95%);
   }
 
   .mobile-add-contact {
@@ -223,4 +219,8 @@
   .contacts-information {
     height: unset;
   }
+
+  .contacts-info {
+    animation: slideInFromRight 0s ease-in;
+}
 }
