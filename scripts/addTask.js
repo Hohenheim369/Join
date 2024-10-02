@@ -4,21 +4,6 @@ let selectedPrio = "medium";
 let subTasks = [];
 let editSubTaskIndex = null;
 let taskStatus = "todo";
-// /**
-//  * This function loads the Add Task Template content
-//  * 
-//  * @param {string} domLocation This variable is the id where to load the template
-//  * @param {boolean} clear This variable is a state of true or false
-//  */
-// async function initTemplateAddTask(domLocation, clear) {
-//   const response = await fetch("../assets/templates/taskTemplate.html");
-//   const data = await response.text();
-//   document.getElementById(domLocation).innerHTML = data;
-//   getContacts();
-//   if (clear) {
-//     clearButton();
-//   }
-// }
 
 async function openAddTaskDialogFeedback() {
   document.getElementById("task_added_overlay").innerHTML = taskAddedToBoard();
@@ -31,14 +16,6 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// async function createTask() {
-//   const taskData = getTaskFormData();
-//   const taskId = await getNewId("tasks");
-
-//   saveTaskData(taskData, taskId);
-//   await handleTaskCreationCompletion(taskId);
-// }
-
 function getTaskFormData() {
   const title = document.getElementById("title_input").value;
   const description = document.getElementById("description_textarea").value;
@@ -48,18 +25,6 @@ function getTaskFormData() {
 
   return { title, description, dueDate, categorySeleced, assignedTo };
 }
-
-// function saveTaskData(taskData, taskId) {
-//   putTasksContent(
-//     taskData.title,
-//     taskData.description,
-//     taskData.dueDate,
-//     taskId,
-//     taskData.assignedTo,
-//     taskData.categorySeleced
-//   );
-//   putTaskToUser(taskId);
-// }
 
 async function handleTaskCreationCompletion() {
   openAddTaskDialogFeedback();
@@ -79,60 +44,6 @@ function getSubtasks() {
     done: false,
   }));
 }
-
-// function putTasksContent(
-//   title,
-//   description,
-//   dueDate,
-//   taskId,
-//   assignedTo,
-//   categorySeleced
-// ) {
-//   postData(`tasks/${taskId - 1}/`, {
-//     title: title,
-//     description: description,
-//     date: dueDate,
-//     priority: selectedPrio,
-//     category: categorySeleced,
-//     id: taskId,
-//     subtasks: getSubtasks(),
-//     assigned: assignedTo,
-//     status: taskStatus,
-//     user: Number(userId[0]),
-//   });
-// }
-
-// async function putTaskToUser(taskId) {
-//   if (!activeUser.tasks.includes(taskId)) {
-//     activeUser.tasks.push(taskId);
-//     localStorage.setItem("activeUser", JSON.stringify(activeUser));
-//     try {
-//       await updateUserTaskInDatabase(activeUser.id, taskId);
-//     } catch (error) {
-//       console.error("Fehler beim Hinzufügen des Tasks:", error);
-//       activeUser.tasks.pop();
-//       localStorage.setItem("activeUser", JSON.stringify(activeUser));
-//     }
-//   }
-// }
-
-// async function updateUserTaskInDatabase(userId, taskId) {
-//   if (userId != 0) {
-//     const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-//     return postData(path, taskId);
-//   }
-// }
-/**
- * This function fetches all contact data from the database
- */
-// async function getContacts() {
-//   document.getElementById("contact_contant").innerHTML = "";
-//   let contacts = await fetchData("contacts");
-//   let userContacts = activeUser.contacts
-//   const contactsToRender = contacts.filter((contact) => userContacts.includes(contact.id));
-//   window.allContacts = contactsToRender;
-//   displayContacts(contactsToRender);
-// }
 
 function displayContacts(contacts) {
   document.getElementById("contact_contant").innerHTML = "";
@@ -208,16 +119,6 @@ function updateSelectedUserDisplay() {
   const userColor = activeUser.color;
   selectedList.innerHTML += assignedUser(userInitials, activUserID, userColor);
 }
-
-// async function updateSelectedContactsDisplay() {
-//   const newContacts = await fetchData("contacts");
-//   const selectedList = document.getElementById("selected_contacts");
-//   selectedList.innerHTML = "";
-//   let userContacts = activeUser.contacts
-//   const contactsToRender = newContacts.filter((contact) => userContacts.includes(contact.id));
-//   window.allContacts = contactsToRender;
-//   displaySelectedContacts(contactsToRender, selectedList);
-// }
 
 function displaySelectedContacts(
   newContacts,
