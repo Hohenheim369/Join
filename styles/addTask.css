@@ -245,6 +245,7 @@ li {
   display: flex;
   justify-content: space-between;
   position: absolute;
+  bottom: 6px;
 }
 .bottom-edit-order {
   width: 46%;
@@ -252,7 +253,7 @@ li {
   display: flex;
   justify-content: space-between;
   position: absolute;
-  bottom: -160px;
+  bottom: 0px;
 }
 
 .alert-field {

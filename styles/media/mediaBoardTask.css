@@ -1,15 +1,19 @@
 @media screen and (max-width: 1200px) {
   .bottom-order {
-    width: calc(100% - 167px);
+    width: calc(100% - 150px);
   }
   .add-task-board-click {
     width: calc(100% - 60px);
   }
   .add-task-board {
-    height: calc(100vh - 240px);
+    height: calc(100vh - 130px);
   }
   .bottom-edit-order {
-    width: 160%;
+    width: 150%;
+  }
+  .content-order{
+    overflow-y: auto;
+    height: 552px;
   }
 }
 
@@ -21,13 +25,13 @@
     font-size: clamp(47px, 7vw, 61px);
   }
   .bottom-edit-order {
-    width: 124%;
+    width: 120%;
   }
 }
 
 @media screen and (max-width: 882px) {
   .add-task-board {
-    height: calc(100vh - 210px);
+    height: calc(100vh - 130px);
     padding: 50px 35px;
   }
   .div-button-order {
@@ -44,7 +48,7 @@
     padding-inline: 20px;
   }
   .edit-overflow {
-    height: 96%;
+    height: 90%;
     overflow-y: auto;
   }
   .single-edit-task {
@@ -85,7 +89,7 @@
     flex-direction: column;
     margin-top: 25px;
     overflow-y: auto;
-    height: calc(100vh - 452px);
+    height: calc(100vh - 375px);
   }
   .dividing-bar {
     display: none;
@@ -146,5 +150,12 @@
   }
   .bottom-edit-order {
     max-width: calc(100% - 5%);
+  }
+  .content-order {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    overflow-y: auto;
+    height: calc(100vh - 470px);
   }
 }
