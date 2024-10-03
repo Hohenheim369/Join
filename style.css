@@ -4,8 +4,10 @@
   border: none;
   margin: 0;
   font-family: "Inter", normal;
-  /* scrollbar-width: thin;
-  scrollbar-color: rgb(168, 168, 168) transparent; */
+}
+
+*:hover {
+  scrollbar-color: rgb(150, 150, 150) transparent;
 }
 
 html {
