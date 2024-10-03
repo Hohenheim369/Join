@@ -1,3 +1,12 @@
+/**
+ * Generiert HTML, um die Kontaktinformationen des aktiven Benutzers anzuzeigen.
+ * @param {Object} user - Das Benutzerobjekt.
+ * @param {number} user.id - Die eindeutige ID des Benutzers.
+ * @param {string} user.initials - Die Initialen des Benutzers.
+ * @param {string} user.name - Der vollständige Name des Benutzers.
+ * @param {string} user.email - Die E-Mail-Adresse des Benutzers.
+ * @returns {string} Der HTML-String, der den Kontakt des aktiven Benutzers darstellt.
+ */
 function generateActiveUserContact(user){
   return `
       <div id="contact${user.id}" class="contacts" onclick="displayContactInfo(${user.id})">
@@ -10,6 +19,16 @@ function generateActiveUserContact(user){
     `;
 }
 
+/**
+ * Generiert HTML für einen allgemeinen Kontakt.
+ * @param {Object} contact - Das Kontaktobjekt.
+ * @param {number} contact.id - Die eindeutige ID des Kontakts.
+ * @param {string} contact.initials - Die Initialen des Kontakts.
+ * @param {string} contact.name - Der vollständige Name des Kontakts.
+ * @param {string} contact.email - Die E-Mail-Adresse des Kontakts.
+ * @param {string} contact.color - Die Hintergrundfarbe für die Initialen.
+ * @returns {string} Der HTML-String, der den Kontakt darstellt.
+ */
 function generateContact(contact) {
   const limitNameLength = limitTextLength(contact.name);
   const limitEmailLength = limitTextLength(contact.email);
@@ -25,11 +44,27 @@ function generateContact(contact) {
     `;
 }
 
+/**
+ * Generiert eine Buchstabenbox, um Kontakte nach ihren Initialen zu gruppieren.
+ * @param {string} initials - Die Initialen, die angezeigt werden sollen.
+ * @returns {string} Der HTML-String für die Buchstabenbox.
+ */
 function generateLetterBox(initials) {
   return `<div class="letter-box">${initials}</div>
               <div class="contact-seperator"></div>`;
 }
 
+/**
+ * Generiert detaillierte Kontaktinformationen für die Anzeige.
+ * @param {Object} contact - Das Kontaktobjekt.
+ * @param {number} contact.id - Die eindeutige ID des Kontakts.
+ * @param {string} contact.initials - Die Initialen des Kontakts.
+ * @param {string} contact.name - Der vollständige Name des Kontakts.
+ * @param {string} contact.email - Die E-Mail-Adresse des Kontakts.
+ * @param {string} contact.phone - Die Telefonnummer des Kontakts.
+ * @param {string} contact.color - Die Hintergrundfarbe für die Initialen.
+ * @returns {string} Der HTML-String, der die Kontaktinformationen darstellt.
+ */
 function generateContactInfo(contact) {
   return `
     <div class="contacts-info">
@@ -70,6 +105,13 @@ function generateContactInfo(contact) {
       `;
 }
 
+/**
+ * Generiert den großen Buchstaben-Kreis für die Anzeige des aktiven Kontakts.
+ * @param {Object} contact - Das Kontaktobjekt.
+ * @param {string} contact.initials - Die Initialen des Kontakts.
+ * @param {string} contact.color - Die Hintergrundfarbe für die Initialen.
+ * @returns {string} Der HTML-String für den großen Buchstaben-Kreis.
+ */
 function generateBigLetterCircle(contact) {
   return `
       <div id="for_active_use_dialog_circel" class="edit-big-letter-circle" style="background-color: ${contact.color}";>${contact.initials}
@@ -77,6 +119,12 @@ function generateBigLetterCircle(contact) {
       `;
 }
 
+/**
+ * Generiert die Buttons für die Bearbeitung und das Löschen eines Kontakts.
+ * @param {Object} contact - Das Kontaktobjekt.
+ * @param {number} contact.id - Die eindeutige ID des Kontakts.
+ * @returns {string} Der HTML-String für die Buttons (Löschen und Speichern).
+ */
 function generateButtonsInContactInfo(contact) {
   return `
     <button onclick="deleteContact(${contact.id}), closeDialogEdit()" class="button-delete">
@@ -93,6 +141,12 @@ function generateButtonsInContactInfo(contact) {
     `;
 }
 
+/**
+ * Generiert das mobile Menü mit Bearbeitungs- und Lösch-Icons für einen Kontakt.
+ * @param {Object} contact - Das Kontaktobjekt.
+ * @param {number} contact.id - Die eindeutige ID des Kontakts.
+ * @returns {string} Der HTML-String für das mobile Menü.
+ */
 function generateMobileMenu(contact){
   return ` <img onclick="openDialogEdit(${contact.id})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
       <img onclick="deleteContact(${contact.id})" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
