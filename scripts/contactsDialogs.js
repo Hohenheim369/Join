@@ -45,7 +45,6 @@ async function validateForm() {
  * @param {number} contactId - Die ID des zu bearbeitenden Kontakts.
  * @returns {Promise<void>} - Führt die Kontakt-Bearbeitungslogik aus, wenn die Validierung erfolgreich ist.
  */
-
 async function validateEditForm(contactId) {
   const fields = [
     {
@@ -187,7 +186,6 @@ function getInputValue(id) {
 
 /**
  * Zeigt eine Fehlermeldung an und markiert das Eingabefeld als fehlerhaft.
- * 
  * @param {HTMLElement} inputElement - Das Eingabefeld, das überprüft wird.
  * @param {string} message - Die anzuzeigende Fehlermeldung.
  * @param {string} alertElementId - Die ID des Elements, das die Fehlermeldung anzeigt.
@@ -201,7 +199,6 @@ function setError(inputElement, message, alertElementId) {
 
 /**
  * Entfernt die Fehlermeldung und das Fehlerstyling vom Eingabefeld.
- * 
  * @param {HTMLElement} inputElement - Das Eingabefeld, dessen Fehler zurückgesetzt werden.
  * @param {string} alertElementId - Die ID des Elements, das die Fehlermeldung anzeigt.
  */
@@ -241,7 +238,6 @@ function clearEditForm() {
 
 /**
  * Überprüft die Eingabe eines Formularfeldes anhand eines regulären Ausdrucks und optionaler Maximallänge.
- * 
  * @param {HTMLElement} input - Das Eingabefeld, das überprüft wird.
  * @param {RegExp} regex - Der reguläre Ausdruck zur Überprüfung.
  * @param {string} errorMsg - Die Fehlermeldung, die angezeigt wird, wenn die Eingabe ungültig ist.
@@ -278,7 +274,6 @@ function updateCrossImage() {
 
 /**
  * Bearbeitet die Informationen eines Kontakts und aktualisiert sie in der Datenbank.
- * 
  * @param {number} contactId - Die ID des Kontakts, der bearbeitet wird.
  */
 async function editContact(contactId) {
@@ -302,7 +297,6 @@ async function editContact(contactId) {
 
 /**
  * Erstellt ein aktualisiertes Kontaktobjekt basierend auf den bearbeiteten Eingaben.
- * 
  * @param {Object} existingContact - Das bestehende Kontaktobjekt, das bearbeitet wird.
  * @returns {Object} - Das aktualisierte Kontaktobjekt.
  */
@@ -322,7 +316,6 @@ function createUpdatedContact(existingContact) {
 
 /**
  * Event-Listener, der beim Laden der Seite die Funktion updateCrossImage aufruft.
- * 
  * Dieser Listener sorgt dafür, dass das Schließen-Symbol (Cross) je nach Bildschirmgröße angepasst wird,
  * sobald die Seite vollständig geladen wurde.
  */
@@ -330,7 +323,6 @@ window.addEventListener("load", updateCrossImage);
 
 /**
  * Event-Listener, der die Funktion updateCrossImage beim Ändern der Bildschirmgröße aufruft.
- * 
  * Dieser Listener passt das Schließen-Symbol dynamisch an, wenn sich die Bildschirmgröße ändert
  * (z. B. bei der Größenänderung des Browserfensters).
  */
