@@ -1,14 +1,14 @@
 /**
- * Event-Listener, der ausgelöst wird, sobald das HTML-Dokument vollständig geladen und analysiert ist.
- * Dieser Listener ruft die Funktion `renderContent()` auf, um die Kontaktliste anzuzeigen.
+ * Event listener that is triggered once the HTML document is fully loaded and parsed.
+ * This listener calls the `renderContent()` function to display the contact list.
  */
 document.addEventListener("DOMContentLoaded", () => {
   renderContent();
 });
 
 /**
- * Lädt und rendert den Inhalt der Kontaktliste.
- * Diese Funktion gruppiert die Kontakte nach ihren Initialen und zeigt sie anschließend in der Benutzeroberfläche an.
+ * Loads and renders the content of the contact list.
+ * This function groups the contacts by their initials and displays them in the UI.
  */
 async function renderContent() {
   const groupedContacts = await groupContacts();
@@ -16,10 +16,10 @@ async function renderContent() {
 }
 
 /**
- * Gruppiert die Kontakte nach ihren Initialen.
- * Diese Funktion filtert die Kontakte des aktiven Benutzers und gruppiert sie basierend auf dem ersten Buchstaben
- * ihrer Initialen.
- * @returns {Object} Ein Objekt, das die Kontakte nach Initialen gruppiert enthält.
+ * Groups the contacts by their initials.
+ * This function filters the active user's contacts and groups them based on the first letter
+ * of their initials.
+ * @returns {Object} An object containing the contacts grouped by initials.
  */
 async function groupContacts() {
   userContacts = await filterUserContacts();
@@ -36,9 +36,9 @@ async function groupContacts() {
 }
 
 /**
- * Filtert die Kontakte des aktuell aktiven Benutzers.
- * Diese Funktion lädt die Kontakte aus der Datenbank und filtert nur die, die zum aktiven Benutzer gehören.
- * @returns {Array} Eine Liste der gefilterten Kontakte des aktiven Benutzers.
+ * Filters the contacts of the currently active user.
+ * This function loads the contacts from the database and filters only those that belong to the active user.
+ * @returns {Array} A list of the filtered contacts of the active user.
  */
 async function filterUserContacts() {
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
@@ -51,10 +51,10 @@ async function filterUserContacts() {
 }
 
 /**
- * Rendert die gruppierten Kontakte in der Kontaktliste.
- * Diese Funktion sortiert die Initialen, rendert für jede Initiale eine Buchstabenbox und zeigt die
- * dazugehörigen Kontakte an.
- * @param {Object} groupedContacts - Ein Objekt, das die Kontakte nach Initialen gruppiert enthält.
+ * Renders the grouped contacts in the contact list.
+ * This function sorts the initials, renders a letter box for each initial, and displays
+ * the corresponding contacts.
+ * @param {Object} groupedContacts - An object containing the contacts grouped by initials.
  */
 async function renderContactsList(groupedContacts) {
   const contactList = document.getElementById("contact_list");
@@ -68,8 +68,8 @@ async function renderContactsList(groupedContacts) {
 }
 
 /**
- * Initialisiert und zeigt die Informationen des aktiven Benutzers in der Kontaktliste an.
- * @param {HTMLElement} contactList - Das HTML-Element der Kontaktliste.
+ * Initializes and displays the information of the active user in the contact list.
+ * @param {HTMLElement} contactList - The HTML element of the contact list.
  */
 async function initActiveUser(contactList) {
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
@@ -81,18 +81,18 @@ async function initActiveUser(contactList) {
 }
 
 /**
- * Sortiert die Initialen alphabetisch.
- * @param {Array} initials - Ein Array von Initialen.
- * @returns {Array} Das alphabetisch sortierte Array von Initialen.
+ * Sorts the initials alphabetically.
+ * @param {Array} initials - An array of initials.
+ * @returns {Array} The alphabetically sorted array of initials.
  */
 function sortInitials(initials) {
   return initials.sort();
 }
 
 /**
- * Rendert alle Kontakte, die zu einer bestimmten Initiale gehören.
- * @param {Array} contacts - Die Kontakte, die unter einer bestimmten Initiale gruppiert sind.
- * @param {HTMLElement} contactList - Das HTML-Element der Kontaktliste.
+ * Renders all contacts that belong to a specific initial.
+ * @param {Array} contacts - The contacts grouped under a specific initial.
+ * @param {HTMLElement} contactList - The HTML element of the contact list.
  */
 function renderContactsByInitial(contacts, contactList) {
   contacts.forEach(({ contact }) => {
@@ -102,9 +102,9 @@ function renderContactsByInitial(contacts, contactList) {
 }
 
 /**
- * Initialisiert eine Buchstabenbox in der Kontaktliste.
- * @param {string} initial - Der Anfangsbuchstabe der Initialen.
- * @param {HTMLElement} contactList - Das HTML-Element der Kontaktliste.
+ * Initializes a letter box in the contact list.
+ * @param {string} initial - The starting letter of the initials.
+ * @param {HTMLElement} contactList - The HTML element of the contact list.
  */
 function initLetterBox(initial, contactList) {
   const letterBoxHtml = generateLetterBox(initial);
@@ -112,9 +112,9 @@ function initLetterBox(initial, contactList) {
 }
 
 /**
- * Fügt einen neuen Kontakt hinzu und aktualisiert die Benutzeroberfläche.
- * Diese Funktion erstellt einen neuen Kontakt, fügt ihn dem aktiven Benutzer hinzu und rendert die
- * aktualisierte Kontaktliste.
+ * Adds a new contact and updates the user interface.
+ * This function creates a new contact, adds it to the active user, and renders the
+ * updated contact list.
  */
 async function addContact() {
   const contactId = await postNewContact();
@@ -127,12 +127,12 @@ async function addContact() {
 }
 
 /**
- * Erstellt ein Kontaktobjekt mit den übergebenen Daten.
- * @param {string} name - Der Name des Kontakts.
- * @param {string} email - Die E-Mail-Adresse des Kontakts.
- * @param {string} phone - Die Telefonnummer des Kontakts.
- * @param {number} contactId - Die ID des Kontakts.
- * @returns {Object} Das erstellte Kontaktobjekt.
+ * Creates a contact object with the provided data.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email address of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @param {number} contactId - The ID of the contact.
+ * @returns {Object} The created contact object.
  */
 function createContact(name, email, phone, contactId) {
   return {
@@ -146,8 +146,8 @@ function createContact(name, email, phone, contactId) {
 }
 
 /**
- * Generiert eine zufällige Farbe in einem dunklen Farbton.
- * @returns {string} Ein Hexadezimal-Farbcode.
+ * Generates a random color in a dark shade.
+ * @returns {string} A hexadecimal color code.
  */
 function generateRandomColor() {
   const darkLetters = "0123456789ABC";
@@ -159,10 +159,10 @@ function generateRandomColor() {
 }
 
 /**
- * Zeigt die Informationen eines Kontakts auf dem Desktop an.
- * Diese Funktion lädt die Kontaktdaten und zeigt sie im Kontakt-Info-Bereich an.
- * Wenn der Bildschirm schmaler als 777px ist, wird stattdessen die mobile Ansicht angezeigt.
- * @param {number} contactId - Die ID des Kontakts, dessen Informationen angezeigt werden sollen.
+ * Displays the information of a contact on the desktop.
+ * This function loads the contact data and shows it in the contact info area.
+ * If the screen width is less than 777px, the mobile view will be displayed instead.
+ * @param {number} contactId - The ID of the contact whose information should be displayed.
  */
 async function displayContactInfo(contactId) {
   const contact = await getContact(contactId);
@@ -182,10 +182,10 @@ async function displayContactInfo(contactId) {
 }
 
 /**
- * Ruft die Kontaktdaten anhand der Kontakt-ID ab.
- * Diese Funktion unterscheidet zwischen dem aktiven Benutzer und einem regulären Kontakt.
- * @param {number} contactId - Die ID des Kontakts, der abgerufen werden soll.
- * @returns {Object} Die Daten des Kontakts.
+ * Retrieves the contact data based on the contact ID.
+ * This function distinguishes between the active user and a regular contact.
+ * @param {number} contactId - The ID of the contact to be retrieved.
+ * @returns {Object} The data of the contact.
  */
 async function getContact(contactId) {
   if (contactId === 0) {
@@ -199,9 +199,9 @@ async function getContact(contactId) {
 }
 
 /**
- * Hebt den aktuell ausgewählten Kontakt in der Kontaktliste hervor.
- * Diese Funktion setzt die Hintergrundfarbe des ausgewählten Kontakts und hebt ihn optisch hervor.
- * @param {Object} contact - Der Kontakt, der hervorgehoben werden soll.
+ * Highlights the currently selected contact in the contact list.
+ * This function sets the background color of the selected contact and visually highlights it.
+ * @param {Object} contact - The contact to be highlighted.
  */
 function highlightContact(contact) {
   const contacts = document.getElementsByClassName("contacts");
@@ -215,10 +215,10 @@ function highlightContact(contact) {
 }
 
 /**
- * Gibt die Initialen eines Namens zurück.
- * Diese Funktion extrahiert die ersten Buchstaben aus dem Namen und gibt sie als Initialen zurück.
- * @param {string} name - Der Name, aus dem die Initialen extrahiert werden sollen.
- * @returns {string} Die Initialen des Namens.
+ * Returns the initials of a name.
+ * This function extracts the first letters from the name and returns them as initials.
+ * @param {string} name - The name from which the initials should be extracted.
+ * @returns {string} The initials of the name.
  */
 function getInitials(name) {
   const names = name.split(" ");
@@ -231,11 +231,11 @@ function getInitials(name) {
 }
 
 /**
- * Beschränkt die Länge eines Textes auf eine maximale Länge.
- * Wenn der Text länger ist als die angegebene maximale Länge, wird er abgeschnitten und mit "..." ergänzt.
- * @param {string} text - Der zu begrenzende Text.
- * @param {number} [maxLength=20] - Die maximale Länge des Textes.
- * @returns {string} Der bearbeitete Text.
+ * Limits the length of a text to a maximum length.
+ * If the text is longer than the specified maximum length, it is truncated and appended with "...".
+ * @param {string} text - The text to be limited.
+ * @param {number} [maxLength=20] - The maximum length of the text.
+ * @returns {string} The processed text.
  */
 function limitTextLength(text, maxLength = 20) {
   if (text.length > maxLength) {
@@ -245,10 +245,10 @@ function limitTextLength(text, maxLength = 20) {
 }
 
 /**
- * Wartet für eine bestimmte Zeit.
- * Diese Funktion gibt ein Promise zurück, das nach der angegebenen Zeit aufgelöst wird.
- * @param {number} ms - Die Wartezeit in Millisekunden.
- * @returns {Promise} Ein Promise, das nach der Wartezeit aufgelöst wird.
+ * Waits for a specified amount of time.
+ * This function returns a promise that resolves after the specified time.
+ * @param {number} ms - The wait time in milliseconds.
+ * @returns {Promise} A promise that resolves after the wait time.
  */
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));

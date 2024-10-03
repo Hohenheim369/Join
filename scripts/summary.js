@@ -1,6 +1,7 @@
 /**
- * Fügt einen Event-Listener hinzu, der ausgelöst wird, wenn der DOM vollständig geladen ist.
- * Bei Auslösung werden die Begrüßung, die Aufgaben gerendert und die mobile Begrüßung überprüft.
+ * Adds an event listener that is triggered when the DOM is fully loaded.
+ * Upon triggering, the greeting is displayed, tasks are rendered, and 
+ * the mobile greeting is checked.
  */
 document.addEventListener("DOMContentLoaded", () => {
   greeting();
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Aktualisiert die Begrüßungsnachricht und zeigt sie an.
+ * Updates the greeting message and displays it.
  */
 function greeting() {
   let greeting = document.getElementById("greetings");
@@ -25,8 +26,8 @@ function greeting() {
 }
 
 /**
- * Ruft den Namen des Benutzers aus dem lokalen Speicher ab.
- * @returns {string} - Der Name des angemeldeten Benutzers.
+ * Retrieves the user's name from local storage.
+ * @returns {string} - The name of the logged-in user.
  */
 function getNameFromLocalStorage() {
   let activeUser = localStorage.getItem("activeUser");
@@ -35,8 +36,8 @@ function getNameFromLocalStorage() {
 }
 
 /**
- * Gibt die Begrüßungsnachricht basierend auf der aktuellen Uhrzeit zurück.
- * @returns {string} - Die Begrüßungsnachricht ("Guten Morgen", "Guten Nachmittag" oder "Guten Abend").
+ * Returns the greeting message based on the current time.
+ * @returns {string} - The greeting message ("Good morning", "Good afternoon", or "Good evening").
  */
 function getGreetingMessage() {
   const currentHour = new Date().getHours();
@@ -50,17 +51,17 @@ function getGreetingMessage() {
 }
 
 /**
- * Generiert die HTML für die Begrüßung.
- * @param {string} greetingMassage - Die Begrüßungsnachricht.
- * @param {string} greetingUser - Der Name des Benutzers.
- * @returns {string} - Die HTML-Darstellung der Begrüßung.
+ * Generates the HTML for the greeting.
+ * @param {string} greetingMassage - The greeting message.
+ * @param {string} greetingUser - The user's name.
+ * @returns {string} - The HTML representation of the greeting.
  */
 function greetingHtml(greetingMassage, greetingUser) {
   return `${greetingMassage}, <div class="greeting-user">${greetingUser}</div>`;
 }
 
 /**
- * Rendert die Aufgaben und aktualisiert die Zähler.
+ * Renders the tasks and updates the counters.
  * @returns {Promise<void>}
  */
 async function renderTasks() {
@@ -75,8 +76,8 @@ async function renderTasks() {
 }
 
 /**
- * Lädt die Aufgaben des aktiven Benutzers aus dem lokalen Speicher.
- * @returns {Promise<Array>} - Ein Array von Aufgaben.
+ * Loads the active user's tasks from local storage.
+ * @returns {Promise<Array>} - An array of tasks.
  */
 async function loadTasks() {
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
@@ -94,8 +95,8 @@ async function loadTasks() {
 }
 
 /**
- * Zählt die Anzahl der Aufgaben mit dem Status "todo" und aktualisiert die Anzeige.
- * @param {Array} tasks - Die Liste der Aufgaben.
+ * Counts the number of tasks with the status "todo" and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
 function countToDo(tasks) {
   let toDo = document.getElementById("count_to_do");
@@ -104,8 +105,8 @@ function countToDo(tasks) {
 }
 
 /**
- * Zählt die Anzahl der erledigten Aufgaben und aktualisiert die Anzeige.
- * @param {Array} tasks - Die Liste der Aufgaben.
+ * Counts the number of completed tasks and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
 function countDone(tasks) {
   let done = document.getElementById("count_done");
@@ -114,8 +115,8 @@ function countDone(tasks) {
 }
 
 /**
- * Zählt die Anzahl der Aufgaben mit einem Due-Date und aktualisiert die Anzeige.
- * @param {Array} tasks - Die Liste der Aufgaben.
+ * Counts the number of tasks with a due date and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
 function countTasksWithDueDate(tasks) {
   const tasksWithDueDate = tasks.filter((task) => task.date);
@@ -127,8 +128,8 @@ function countTasksWithDueDate(tasks) {
 }
 
 /**
- * Zählt die Gesamtzahl der Aufgaben und aktualisiert die Anzeige.
- * @param {Array} tasks - Die Liste der Aufgaben.
+ * Counts the total number of tasks and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
 function countTaskInBoard(tasks) {
   let taskInBoard = document.getElementById("count_tasks");
@@ -137,8 +138,8 @@ function countTaskInBoard(tasks) {
 }
 
 /**
- * Zählt die Anzahl der Aufgaben im Status "in progress" und aktualisiert die Anzeige.
- * @param {Array} tasks - Die Liste der Aufgaben.
+ * Counts the number of tasks in the "in progress" status and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
 function countTaskInProgress(tasks) {
   let taskInProgress = document.getElementById("count_progress");
@@ -147,8 +148,8 @@ function countTaskInProgress(tasks) {
 }
 
 /**
- * Zählt die Anzahl der Aufgaben im Status "await feedback" und aktualisiert die Anzeige.
- * @param {Array} tasks - Die Liste der Aufgaben.
+ * Counts the number of tasks in the "await feedback" status and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
 function countTaskInFeedback(tasks) {
   let taskInFeedback = document.getElementById("count_feedback");
@@ -157,8 +158,8 @@ function countTaskInFeedback(tasks) {
 }
 
 /**
- * Gibt das nächste Due-Date der Aufgaben aus und formatiert es.
- * @param {Array} tasks - Die Liste der Aufgaben.
+ * Outputs the next due date of the tasks and formats it.
+ * @param {Array} tasks - The list of tasks.
  */
 function deadlineDate(tasks) {
   const tasksWithDueDate = tasks.filter((task) => task.date);
@@ -176,14 +177,14 @@ function deadlineDate(tasks) {
 }
 
 /**
- * Navigiert zur Board-Seite.
+ * Navigates to the board page.
  */
 function navigatonToBoard() {
   window.location.href = "../html/board.html";
 }
 
 /**
- * Zeigt die mobile Begrüßung an und blendet sie nach 2,5 Sekunden aus.
+ * Displays the mobile greeting and hides it after 2.5 seconds.
  */
 function mobileGreeting() {
   const greetingDialog = document.getElementById("greeting_mobile");
@@ -197,7 +198,7 @@ function mobileGreeting() {
 }
 
 /**
- * Überprüft, ob die mobile Begrüßung angezeigt werden soll und zeigt sie gegebenenfalls an.
+ * Checks if the mobile greeting should be displayed and shows it if necessary.
  */
 function checkAndShowGreeting() {
   const greetingShown = localStorage.getItem("greetingShown");

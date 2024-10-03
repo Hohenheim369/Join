@@ -1,7 +1,7 @@
 /**
- * Zeigt die Kontaktinformationen auf mobilen Geräten an.
- * Diese Funktion lädt die Kontaktinformationen und zeigt sie in der mobilen Ansicht an.
- * @param {number} contactId - Die ID des Kontakts, dessen Informationen angezeigt werden sollen.
+ * Displays the contact information on mobile devices.
+ * This function loads the contact information and displays it in the mobile view.
+ * @param {number} contactId - The ID of the contact whose information is to be displayed.
  */
 async function displayContactInfoMobile(contactId) {
   let infoDiv = document.getElementById("mobile_contact_info");
@@ -23,8 +23,8 @@ async function displayContactInfoMobile(contactId) {
 }
 
 /**
- * Blendet den Bearbeiten-Button in der mobilen Ansicht aus.
- * Diese Funktion deaktiviert den Bearbeiten-Button in der mobilen Kontaktansicht.
+ * Hides the edit button in the mobile view.
+ * This function disables the edit button in the mobile contact view.
  */
 function mobileEditContact() {
   const contactMobileButton = document.querySelector(
@@ -34,8 +34,8 @@ function mobileEditContact() {
 }
 
 /**
- * Blendet die mobile Kontaktinformation aus und setzt die Anzeige zurück.
- * Diese Funktion entfernt die mobile Kontaktansicht und leert die Inhalte.
+ * Hides the mobile contact information and resets the display.
+ * This function removes the mobile contact view and clears the contents.
  */
 function goBackMobile() {
   document.getElementById("mobile_contact_info").classList.add("d-none");
@@ -45,9 +45,9 @@ function goBackMobile() {
 }
 
 /**
- * Öffnet das mobile Menü für einen Kontakt.
- * Diese Funktion zeigt das Menü an und ermöglicht das Schließen des Menüs durch Klicken außerhalb des Menüs.
- * @param {number} contactId - Die ID des Kontakts, für den das Menü geöffnet wird.
+ * Opens the mobile menu for a contact.
+ * This function displays the menu and allows closing it by clicking outside the menu.
+ * @param {number} contactId - The ID of the contact for which the menu is opened.
  */
 function openMobileMenu(contactId) {
   const menu = document.getElementById("mobile_menu");

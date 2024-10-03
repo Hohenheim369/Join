@@ -1,12 +1,12 @@
 /**
- * Validiert die Felder basierend auf einer Liste von Kriterien.
- * @param {Array} fields - Eine Liste von Objekten, die die Validierungsdetails für jedes Feld enthalten.
- * @param {string} fields[].id - Die ID des zu validierenden Eingabefelds.
- * @param {RegExp} fields[].regex - Das reguläre Ausdrucksmuster zur Validierung des Feldwerts.
- * @param {string} fields[].alert - Die ID des Elements, das den Fehler anzeigt.
- * @param {string} fields[].message - Die Fehlermeldung, die bei ungültigem Wert angezeigt wird.
- * @param {number} [fields[].maxLength] - Die maximale Zeichenlänge, die für das Feld erlaubt ist (optional).
- * @returns {boolean} - Gibt `true` zurück, wenn alle Felder gültig sind, andernfalls `false`.
+ * Validates the fields based on a list of criteria.
+ * @param {Array} fields - A list of objects containing validation details for each field.
+ * @param {string} fields[].id - The ID of the input field to be validated.
+ * @param {RegExp} fields[].regex - The regular expression pattern for validating the field value.
+ * @param {string} fields[].alert - The ID of the element that displays the error.
+ * @param {string} fields[].message - The error message shown for an invalid value.
+ * @param {number} [fields[].maxLength] - The maximum character length allowed for the field (optional).
+ * @returns {boolean} - Returns `true` if all fields are valid, otherwise `false`.
  */
 function validateFields(fields) {
   return fields.every(({ id, regex, alert, message, maxLength }) =>
@@ -15,8 +15,8 @@ function validateFields(fields) {
 }
 
 /**
- * Validiert das Formular für das Hinzufügen eines neuen Kontakts.
- * @returns {Promise<void>} - Führt die Kontakt-Hinzufügungslogik aus, wenn die Validierung erfolgreich ist.
+ * Validates the form for adding a new contact.
+ * @returns {Promise<void>} - Executes the contact addition logic if validation is successful.
  */
 async function validateForm() {
   const fields = [
@@ -41,9 +41,9 @@ async function validateForm() {
 }
 
 /**
- * Validiert das Formular für die Bearbeitung eines Kontakts.
- * @param {number} contactId - Die ID des zu bearbeitenden Kontakts.
- * @returns {Promise<void>} - Führt die Kontakt-Bearbeitungslogik aus, wenn die Validierung erfolgreich ist.
+ * Validates the form for editing a contact.
+ * @param {number} contactId - The ID of the contact to be edited.
+ * @returns {Promise<void>} - Executes the contact editing logic if validation is successful.
  */
 async function validateEditForm(contactId) {
   const fields = [
@@ -68,8 +68,8 @@ async function validateEditForm(contactId) {
 }
 
 /**
- * Öffnet den Dialog zum Hinzufügen eines Kontakts.
- * @returns {Promise<void>} - Zeigt den Dialog an.
+ * Opens the dialog for adding a contact.
+ * @returns {Promise<void>} - Displays the dialog.
  */
 async function openDialog() {
   const dialogContainer = document.getElementById("dialog_contacts");
@@ -81,9 +81,9 @@ async function openDialog() {
 }
 
 /**
- * Öffnet den Bearbeitungsdialog für einen Kontakt.
- * @param {number} contactId - Die ID des zu bearbeitenden Kontakts.
- * @returns {Promise<void>} - Zeigt den Bearbeitungsdialog an und füllt die Formularfelder mit den bestehenden Kontaktinformationen.
+ * Opens the edit dialog for a contact.
+ * @param {number} contactId - The ID of the contact to be edited.
+ * @returns {Promise<void>} - Displays the edit dialog and fills the form fields with existing contact information.
  */
 async function openDialogEdit(contactId) {
   const contact = await getContact(contactId);
@@ -102,8 +102,8 @@ async function openDialogEdit(contactId) {
 }
 
 /**
- * Schließt den Dialog zum Hinzufügen eines Kontakts.
- * @returns {Promise<void>} - Versteckt den Dialog und leert das Formular.
+ * Closes the dialog for adding a contact.
+ * @returns {Promise<void>} - Hides the dialog and clears the form.
  */
 async function closeDialog() {
   const dialogContainer = document.getElementById("dialog_contacts");
@@ -116,8 +116,8 @@ async function closeDialog() {
 }
 
 /**
- * Schließt den Bearbeitungsdialog.
- * @returns {Promise<void>} - Versteckt den Dialog und leert das Bearbeitungsformular.
+ * Closes the edit dialog.
+ * @returns {Promise<void>} - Hides the dialog and clears the edit form.
  */
 async function closeDialogEdit() {
   const dialogContainer = document.getElementById("dialog_edit");
@@ -130,8 +130,8 @@ async function closeDialogEdit() {
 }
 
 /**
- * Füllt die Bearbeitungsformularfelder mit den Informationen des Kontakts.
- * @param {Object} contact - Das Kontaktobjekt mit den Eigenschaften name, email und phone.
+ * Fills the edit form fields with the contact's information.
+ * @param {Object} contact - The contact object with properties name, email, and phone.
  */
 function populateFormFields(contact) {
   document.getElementById("inputEditName").value = contact.name;
@@ -143,8 +143,8 @@ function populateFormFields(contact) {
 }
 
 /**
- * Generiert und zeigt den großen Buchstaben-Kreis für das Dialogfeld an.
- * @param {Object} contact - Das Kontaktobjekt mit den Eigenschaften color und initials.
+ * Generates and displays the big letter circle for the dialog.
+ * @param {Object} contact - The contact object with properties color and initials.
  */
 function dialogBigLetterCircle(contact) {
   document.getElementById("big_letter_circle").innerHTML =
@@ -157,7 +157,7 @@ function dialogBigLetterCircle(contact) {
 }
 
 /**
- * Öffnet das Dialogfenster, das anzeigt, dass ein Kontakt erfolgreich erstellt wurde.
+ * Opens the dialog window indicating that a contact has been successfully created.
  */
 async function openDialogSuccessfully() {
   const dialogContainer = document.getElementById("succesfully_created");
@@ -175,20 +175,20 @@ async function openDialogSuccessfully() {
 }
 
 /**
- * Holt den Wert eines Eingabefeldes anhand seiner ID.
+ * Retrieves the value of an input field based on its ID.
  * 
- * @param {string} id - Die ID des Eingabefeldes.
- * @returns {string} - Der Wert des Eingabefeldes.
+ * @param {string} id - The ID of the input field.
+ * @returns {string} - The value of the input field.
  */
 function getInputValue(id) {
   return document.getElementById(id).value;
 }
 
 /**
- * Zeigt eine Fehlermeldung an und markiert das Eingabefeld als fehlerhaft.
- * @param {HTMLElement} inputElement - Das Eingabefeld, das überprüft wird.
- * @param {string} message - Die anzuzeigende Fehlermeldung.
- * @param {string} alertElementId - Die ID des Elements, das die Fehlermeldung anzeigt.
+ * Displays an error message and marks the input field as erroneous.
+ * @param {HTMLElement} inputElement - The input field being checked.
+ * @param {string} message - The error message to display.
+ * @param {string} alertElementId - The ID of the element displaying the error message.
  */
 function setError(inputElement, message, alertElementId) {
   const alertElement = document.getElementById(alertElementId);
@@ -198,9 +198,9 @@ function setError(inputElement, message, alertElementId) {
 }
 
 /**
- * Entfernt die Fehlermeldung und das Fehlerstyling vom Eingabefeld.
- * @param {HTMLElement} inputElement - Das Eingabefeld, dessen Fehler zurückgesetzt werden.
- * @param {string} alertElementId - Die ID des Elements, das die Fehlermeldung anzeigt.
+ * Removes the error message and error styling from the input field.
+ * @param {HTMLElement} inputElement - The input field for which to reset the error.
+ * @param {string} alertElementId - The ID of the element displaying the error message.
  */
 function clearError(inputElement, alertElementId) {
   const alertElement = document.getElementById(alertElementId);
@@ -210,7 +210,7 @@ function clearError(inputElement, alertElementId) {
 }
 
 /**
- * Löscht alle Eingaben im Formular und entfernt mögliche Fehleranzeigen.
+ * Clears all inputs in the form and removes any error displays.
  */
 function clearForm() {
   const nameInput = document.getElementById("name");
@@ -225,7 +225,7 @@ function clearForm() {
 }
 
 /**
- * Löscht alle Eingaben im Bearbeitungsformular und entfernt mögliche Fehleranzeigen.
+ * Clears all inputs in the edit form and removes any error displays.
  */
 function clearEditForm() {
   const nameEditInput = document.getElementById("inputEditName");
@@ -237,13 +237,13 @@ function clearEditForm() {
 }
 
 /**
- * Überprüft die Eingabe eines Formularfeldes anhand eines regulären Ausdrucks und optionaler Maximallänge.
- * @param {HTMLElement} input - Das Eingabefeld, das überprüft wird.
- * @param {RegExp} regex - Der reguläre Ausdruck zur Überprüfung.
- * @param {string} errorMsg - Die Fehlermeldung, die angezeigt wird, wenn die Eingabe ungültig ist.
- * @param {string} errorId - Die ID des Elements, das die Fehlermeldung anzeigt.
- * @param {number} [maxLength] - Optional, die maximale Länge der Eingabe.
- * @returns {boolean} - True, wenn die Eingabe gültig ist, andernfalls false.
+ * Checks the input of a form field against a regular expression and optional maximum length.
+ * @param {HTMLElement} input - The input field being checked.
+ * @param {RegExp} regex - The regular expression for validation.
+ * @param {string} errorMsg - The error message displayed if the input is invalid.
+ * @param {string} errorId - The ID of the element displaying the error message.
+ * @param {number} [maxLength] - The optional maximum length for the input (default is undefined).
+ * @returns {boolean} - Returns `true` if the input is valid, otherwise `false`.
  */
 function validateInput(input, regex, errorMsg, errorId, maxLength) {
   const valid = maxLength
@@ -259,7 +259,7 @@ function validateInput(input, regex, errorMsg, errorId, maxLength) {
 }
 
 /**
- * Aktualisiert die Bildquelle des Schließen-Symbols je nach Bildschirmbreite.
+ * Updates the source of the close icon based on screen width.
  */
 function updateCrossImage() {
   const imgElements = document.querySelectorAll(".cross");
@@ -273,8 +273,8 @@ function updateCrossImage() {
 }
 
 /**
- * Bearbeitet die Informationen eines Kontakts und aktualisiert sie in der Datenbank.
- * @param {number} contactId - Die ID des Kontakts, der bearbeitet wird.
+ * Edits a contact's information and updates it in the database.
+ * @param {number} contactId - The ID of the contact being edited.
  */
 async function editContact(contactId) {
   const existingContact = await getContact(contactId);
@@ -296,9 +296,9 @@ async function editContact(contactId) {
 }
 
 /**
- * Erstellt ein aktualisiertes Kontaktobjekt basierend auf den bearbeiteten Eingaben.
- * @param {Object} existingContact - Das bestehende Kontaktobjekt, das bearbeitet wird.
- * @returns {Object} - Das aktualisierte Kontaktobjekt.
+ * Creates an updated contact object based on the edited inputs.
+ * @param {Object} existingContact - The existing contact object being edited.
+ * @returns {Object} - The updated contact object.
  */
 function createUpdatedContact(existingContact) {
     const updatedName = document.getElementById("inputEditName").value;
@@ -315,15 +315,15 @@ function createUpdatedContact(existingContact) {
   }
 
 /**
- * Event-Listener, der beim Laden der Seite die Funktion updateCrossImage aufruft.
- * Dieser Listener sorgt dafür, dass das Schließen-Symbol (Cross) je nach Bildschirmgröße angepasst wird,
- * sobald die Seite vollständig geladen wurde.
+ * Event listener that calls the updateCrossImage function when the page loads.
+ * This listener ensures that the close icon is adjusted based on screen size
+ * as soon as the page is fully loaded.
  */
 window.addEventListener("load", updateCrossImage);
 
 /**
- * Event-Listener, der die Funktion updateCrossImage beim Ändern der Bildschirmgröße aufruft.
- * Dieser Listener passt das Schließen-Symbol dynamisch an, wenn sich die Bildschirmgröße ändert
- * (z. B. bei der Größenänderung des Browserfensters).
+ * Event listener that calls the updateCrossImage function when the screen size changes.
+ * This listener dynamically adjusts the close icon when the screen size changes
+ * (e.g., when resizing the browser window).
  */
 window.addEventListener("resize", updateCrossImage);

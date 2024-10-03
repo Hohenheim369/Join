@@ -1,6 +1,6 @@
 /**
- * Postet einen neuen Kontakt in die Datenbank und gibt die Kontakt-ID zurück.
- * @returns {number} Die ID des neu erstellten Kontakts.
+ * Posts a new contact to the database and returns the contact ID.
+ * @returns {number} The ID of the newly created contact.
  */
 async function postNewContact() {
   const name = getInputValue("name");
@@ -14,10 +14,10 @@ async function postNewContact() {
 }
 
 /**
- * Fügt einen Kontakt dem Benutzer hinzu und speichert ihn in der Datenbank.
- * Diese Funktion überprüft, ob der Benutzer den Kontakt bereits hat, und fügt ihn hinzu, wenn er nicht existiert.
- * @param {number} contactId - Die ID des hinzuzufügenden Kontakts.
- * @param {Object} activeUser - Der aktuell angemeldete Benutzer.
+ * Adds a contact to the user and saves it in the database.
+ * This function checks if the user already has the contact and adds it if it does not exist.
+ * @param {number} contactId - The ID of the contact to be added.
+ * @param {Object} activeUser - The currently logged-in user.
  */
 async function addContactToUser(contactId, activeUser) {
   const user = await searchForUser(activeUser.id);
@@ -28,9 +28,9 @@ async function addContactToUser(contactId, activeUser) {
 }
 
 /**
- * Fügt einen Kontakt zum lokalen Speicher des aktiven Benutzers hinzu.
- * Diese Funktion aktualisiert die Liste der Kontakte des Benutzers im Local Storage.
- * @param {number} contactId - Die ID des hinzuzufügenden Kontakts.
+ * Adds a contact to the local storage of the active user.
+ * This function updates the user's list of contacts in Local Storage.
+ * @param {number} contactId - The ID of the contact to be added.
  */
 function addContactToUserLocal(contactId) {
   const activeUser = JSON.parse(localStorage.getItem("activeUser"));
@@ -39,10 +39,10 @@ function addContactToUserLocal(contactId) {
 }
 
 /**
- * Löscht einen Kontakt, wenn die Kontakt-ID nicht 0 ist.
- * Diese Funktion überprüft, ob die Kontakt-ID 0 ist (was bedeutet, dass der aktive Benutzer nicht gelöscht werden kann).
- * Sie löscht den Kontakt und aktualisiert die Anzeige der Kontakte.
- * @param {number} contactId - Die ID des zu löschenden Kontakts.
+ * Deletes a contact if the contact ID is not 0.
+ * This function checks if the contact ID is 0 (indicating that the active user cannot be deleted).
+ * It deletes the contact and updates the display of contacts.
+ * @param {number} contactId - The ID of the contact to be deleted.
  */
 async function deleteContact(contactId) {
   if (contactId === 0) {
@@ -59,10 +59,10 @@ async function deleteContact(contactId) {
 }
 
 /**
- * Löscht einen Kontakt aus den Benutzerdaten.
- * Diese Funktion bestimmt, ob der Kontakt nur für den Benutzer oder für alle Benutzer gelöscht werden soll,
- * und führt die entsprechenden Löschvorgänge durch.
- * @param {number} contactId - Die ID des zu löschenden Kontakts.
+ * Deletes a contact from user data.
+ * This function determines whether the contact should be deleted only for the user or for all users,
+ * and performs the appropriate deletion actions.
+ * @param {number} contactId - The ID of the contact to be deleted.
  */
 async function deleteContactInData(contactId) {
   let users = await fetchData("users");
@@ -76,11 +76,12 @@ async function deleteContactInData(contactId) {
 }
 
 /**
- * Löscht einen Kontakt nur für den aktiven Benutzer.
- * Diese Funktion entfernt den Kontakt aus der Kontaktliste des aktiven Benutzers.
- * @param {number} contactId - Die ID des zu löschenden Kontakts.
- * @param {Array} users - Die Liste aller Benutzer.
+ * Deletes a contact only for the active user.
+ * This function removes the contact from the active user's contact list.
+ * @param {number} contactId - The ID of the contact to be deleted.
+ * @param {Array} users - The list of all users.
  */
+
 async function deleteContactOnlyforUser(contactId, users) {
   if (activeUser.id === 0) {
     return;
@@ -98,9 +99,9 @@ async function deleteContactOnlyforUser(contactId, users) {
 }
 
 /**
- * Löscht einen Kontakt aus allen Aufgaben.
- * Diese Funktion entfernt die Kontakt-ID aus der Liste der zugewiesenen Benutzer für alle Aufgaben.
- * @param {number} contactId - Die ID des zu löschenden Kontakts.
+ * Deletes a contact from all tasks.
+ * This function removes the contact ID from the list of assigned users for all tasks.
+ * @param {number} contactId - The ID of the contact to be deleted.
  */
 async function deleteContactFromTasks(contactId) {
   const allTasks = await fetchData("tasks");
@@ -117,10 +118,10 @@ async function deleteContactFromTasks(contactId) {
 }
 
 /**
- * Löscht einen Kontakt für alle Benutzer.
- * Diese Funktion löscht den Kontakt aus der Datenbank und entfernt ihn aus den Kontaktlisten aller Benutzer.
- * @param {number} contactId - Die ID des zu löschenden Kontakts.
- * @param {Array} users - Die Liste aller Benutzer.
+ * Deletes a contact for all users.
+ * This function deletes the contact from the database and removes it from the contact lists of all users.
+ * @param {number} contactId - The ID of the contact to be deleted.
+ * @param {Array} users - The list of all users.
  */
 async function deleteContactforAllUsers(contactId, users) {
   await deleteData("contacts", contactId);
@@ -135,9 +136,9 @@ async function deleteContactforAllUsers(contactId, users) {
 }
 
 /**
- * Löscht einen Kontakt aus dem lokalen Speicher des aktiven Benutzers.
- * Diese Funktion entfernt die Kontakt-ID aus der Liste der Kontakte im Local Storage.
- * @param {number} contactId - Die ID des zu löschenden Kontakts.
+ * Deletes a contact from the local storage of the active user.
+ * This function removes the contact ID from the list of contacts in Local Storage.
+ * @param {number} contactId - The ID of the contact to be deleted.
  */
 function deleteContactInLocalStorage(contactId) {
   let activeUser = JSON.parse(localStorage.getItem("activeUser"));
@@ -148,10 +149,10 @@ function deleteContactInLocalStorage(contactId) {
 }
 
 /**
- * Sucht nach einem Kontakt anhand seiner ID.
- * Diese Funktion gibt die Kontaktdaten zurück, die der angegebenen Kontakt-ID entsprechen.
- * @param {number} contactId - Die ID des gesuchten Kontakts.
- * @returns {Object} Der gefundene Kontakt.
+ * Searches for a contact by its ID.
+ * This function returns the contact data that corresponds to the specified contact ID.
+ * @param {number} contactId - The ID of the contact being searched for.
+ * @returns {Object} The found contact.
  */
 async function searchForContact(contactId) {
   const data = await fetchData("contacts");
@@ -161,10 +162,10 @@ async function searchForContact(contactId) {
 }
 
 /**
- * Sucht nach einem Benutzer anhand seiner ID.
- * Diese Funktion gibt die Benutzerdaten zurück, die der angegebenen Benutzer-ID entsprechen.
- * @param {number} contactId - Die ID des gesuchten Benutzers.
- * @returns {Object} Der gefundene Benutzer.
+ * Searches for a user by its ID.
+ * This function returns the user data that corresponds to the specified user ID.
+ * @param {number} contactId - The ID of the user being searched for.
+ * @returns {Object} The found user.
  */
 async function searchForUser(contactId) {
   const data = await fetchData("users");

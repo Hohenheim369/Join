@@ -1,7 +1,7 @@
 /**
- * Fügt einen Event-Listener hinzu, der ausgelöst wird, wenn der DOM vollständig geladen ist.
- * Bei Auslösung wird das Template geladen, die Benutzeroberfläche initialisiert 
- * und ein Event-Listener für das Ändern der Fenstergröße hinzugefügt.
+ * Adds an event listener that triggers when the DOM is fully loaded.
+ * Upon triggering, the template is loaded, the user interface is initialized,
+ * and an event listener for window resizing is added.
  */
 document.addEventListener("DOMContentLoaded", async () => {
   await loadTemplate();
@@ -10,12 +10,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 /**
- * Fügt einen Event-Listener hinzu, der bei Klicks im Benutzer-Menü ausgelöst wird.
+ * Adds an event listener that is triggered on clicks in the user menu.
  */
 document.addEventListener("click", handleClickUserMenu);
 
 /**
- * Lädt das Desktop-Template und fügt den Inhalt in das entsprechende HTML-Element ein.
+ * Loads the desktop template and inserts the content into the corresponding HTML element.
  * @returns {Promise<void>}
  */
 async function loadTemplate() {
@@ -24,8 +24,8 @@ async function loadTemplate() {
 }
 
 /**
- * Initialisiert die Benutzeroberfläche, indem sie die Initialen des Benutzers aktualisiert,
- * die Sichtbarkeit des Körpers auf sichtbar setzt, Sidebar-Icons aktualisiert und Links initialisiert.
+ * Initializes the user interface by updating the user's initials,
+ * setting the body's visibility to visible, updating sidebar icons, and initializing links.
  */
 function initializeUserInterface() {
   updateInitials();
@@ -36,7 +36,7 @@ function initializeUserInterface() {
 }
 
 /**
- * Aktualisiert die Icons in der Sidebar basierend auf der aktuellen Seite.
+ * Updates the icons in the sidebar based on the current page.
  */
 function updateSidebarIcons() {
   const currentPage = window.location.pathname.split("/").pop();
@@ -47,9 +47,9 @@ function updateSidebarIcons() {
 }
 
 /**
- * Aktualisiert den Status des Icons basierend auf der aktuellen Seite.
- * @param {string} page - Der Name der Seite.
- * @param {string} currentPage - Der Name der aktuellen Seite.
+ * Updates the icon status based on the current page.
+ * @param {string} page - The name of the page.
+ * @param {string} currentPage - The name of the current page.
  */
 function updateIconState(page, currentPage) {
   const link = document.querySelector(`.${page}-link`);
@@ -63,10 +63,10 @@ function updateIconState(page, currentPage) {
 }
 
 /**
- * Aktualisiert den Status eines Links in der Sidebar basierend auf der aktuellen Seite.
- * @param {string} page - Der Name der Seite.
- * @param {string} selector - Der CSS-Selektor des Links.
- * @param {string} currentPage - Der Name der aktuellen Seite.
+ * Updates the status of a link in the sidebar based on the current page.
+ * @param {string} page - The name of the page.
+ * @param {string} selector - The CSS selector of the link.
+ * @param {string} currentPage - The name of the current page.
  */
 function updatePageState(page, selector, currentPage) {
   const link = document.querySelector(selector);
@@ -78,7 +78,7 @@ function updatePageState(page, selector, currentPage) {
 }
 
 /**
- * Handhabt das Ändern der Fenstergröße und passt die Anzeige an.
+ * Handles window resizing and adjusts the display accordingly.
  */
 function handleResize() {
   hideSidebarAtMobile();
@@ -86,7 +86,7 @@ function handleResize() {
 }
 
 /**
- * Blendet die Sidebar auf mobilen Geräten aus und wenn kein aktiver Benutzer vorhanden ist.
+ * Hides the sidebar on mobile devices and when no active user is present.
  */
 function hideSidebarAtMobile() {
   if (!localStorage.getItem("activeUser") && window.innerWidth < 770) {
@@ -97,7 +97,7 @@ function hideSidebarAtMobile() {
 }
 
 /**
- * Fügt das Hilfe-Element zum Menü hinzu, je nach Bildschirmgröße.
+ * Adds the help element to the menu based on screen size.
  */
 function addHelpToMenu() {
   const isMobile = window.matchMedia("(max-width: 1240px)").matches;
@@ -113,7 +113,7 @@ function addHelpToMenu() {
 }
 
 /**
- * Initialisiert Links in der Benutzeroberfläche.
+ * Initializes links in the user interface.
  */
 function initializeLinks() {
   setupLink("policy_link", "privacyPolicy.html", handleLinkClick);
@@ -121,10 +121,10 @@ function initializeLinks() {
 }
 
 /**
- * Setzt einen Link mit einem Klick-Handler oder deaktiviert den Link.
- * @param {string} id - Die ID des Links.
- * @param {string} page - Der Zielseite des Links.
- * @param {Function} clickHandler - Der Klick-Handler für den Link.
+ * Sets up a link with a click handler or disables the link.
+ * @param {string} id - The ID of the link.
+ * @param {string} page - The target page of the link.
+ * @param {Function} clickHandler - The click handler for the link.
  */
 function setupLink(id, page, clickHandler) {
   const link = document.getElementById(id);
@@ -136,9 +136,9 @@ function setupLink(id, page, clickHandler) {
 }
 
 /**
- * Handhabt den Klick auf einen Link, indem die Standardaktion verhindert 
- * und der Link deaktiviert wird, bevor die Seite umgeleitet wird.
- * @param {Event} event - Das Klick-Ereignis.
+ * Handles a click on a link by preventing the default action,
+ * disabling the link, and then redirecting to the page.
+ * @param {Event} event - The click event.
  */
 function handleLinkClick(event) {
   event.preventDefault();
@@ -151,8 +151,8 @@ function handleLinkClick(event) {
 }
 
 /**
- * Handhabt Klicks im Benutzer-Menü und zeigt die Logout-Option an oder aus.
- * @param {Event} event - Das Klick-Ereignis.
+ * Handles clicks in the user menu and shows or hides the logout option.
+ * @param {Event} event - The click event.
  */
 function handleClickUserMenu(event) {
   const initials = document.getElementById("user_profile_initials");
@@ -166,9 +166,9 @@ function handleClickUserMenu(event) {
 }
 
 /**
- * Wechselt die Sichtbarkeit des Logout-Elements.
- * @param {HTMLElement} logOut - Das Logout-Element.
- * @param {HTMLElement} initials - Das Initialen-Element.
+ * Toggles the visibility of the logout element.
+ * @param {HTMLElement} logOut - The logout element.
+ * @param {HTMLElement} initials - The initials element.
  */
 function toggleVisibility(logOut, initials) {
   logOut.classList.toggle("d-none");
@@ -176,7 +176,7 @@ function toggleVisibility(logOut, initials) {
 }
 
 /**
- * Aktualisiert die Initialen des Benutzers in der Benutzeroberfläche.
+ * Updates the user's initials in the user interface.
  */
 function updateInitials() {
   const initials = JSON.parse(localStorage.getItem("activeUser"))?.initials;
