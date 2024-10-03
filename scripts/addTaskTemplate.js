@@ -1,3 +1,9 @@
+/**
+ * This function generates html to show the assigned user
+ * 
+ * @param {Object} activeUser - data of the active user
+ * @returns - the html elements with variable data
+ */
 function showAssignedUser(activeUser){
    return  `<div id="bg_task_0" onclick="addUserToTask('contact_to_task_0', 'task', 'bg_task_0', '${activeUser.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
             <div class="d-flex-center gap-16">
@@ -11,6 +17,12 @@ function showAssignedUser(activeUser){
           </div>`
 }
 
+/**
+ * This function generates html to show the assigned contacts
+ * 
+ * @param {Object} contact - data of all contacts
+ * @returns - the html elements with variable data
+ */
 function showAssignedContactList(contact){
   return  `<div id="bg_task_${contact.id}" onclick="addContactToTask('contact_to_task_${contact.id}', 'task', 'bg_task_${contact.id}', '${contact.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
             <div class="d-flex-center gap-16">
@@ -23,18 +35,38 @@ function showAssignedContactList(contact){
           </div>`
 }
 
+/**
+ * This function generates html if the user is assigned
+ * 
+ * @param {string} userInitials - is the initials of the user
+ * @param {number} activUserID - Id of the user
+ * @param {string} userColor - is the user background color
+ * @returns - the html elements with variable data
+ */
 function assignedUser(userInitials, activUserID, userColor){
   return  `<div id="assigned_${activUserID}" class="user-icon d-flex-center"  style="background-color: ${userColor};">
                 <span>${userInitials}</span>
           </div>`
 }
 
+/**
+ * This function generates html if contacts are assigned
+ * 
+ * 
+ * @param {Object} activeContacts - is the data of all contacts in the users list
+ * @returns - the html elements with variable data
+ */
 function assignedContacts(activeContacts){
   return  `<div id="assigned_${activeContacts.id}" class="contact-icon d-flex-center"  style="background-color: ${activeContacts.color};">
                 <span>${activeContacts.initials}</span>
           </div>`
 }
 
+/**
+ * This function generates html and shows the category list 
+ * 
+ * @returns - the html elements with variable data
+ */
 function showCategory(){
   return  `<div class="category-list padding-7-16 font-s-20 cursor-p"  onclick="selectCategory('Technical Task')">
             <span>Technical Task</span>
@@ -44,6 +76,13 @@ function showCategory(){
           </div>`
 }
 
+/**
+ * This function generates html and displays all subtasks created by the user
+ * 
+ * @param {string} subtasksInput - is the input text for a subtasks
+ * @param {number} id - Id of each subtasks created
+ * @returns - the html elements with variable data
+ */
 function addSubtasksToList(subtasksInput, id) {
   return  `<div id="listItem_${id}" class="list-item pos-rel li-hover">
             <li id="list_subtask_${id}" ondblclick="editSubtask(this, ${id})">${subtasksInput}</li>
@@ -63,6 +102,11 @@ function addSubtasksToList(subtasksInput, id) {
           </div>` 
 }
 
+/**
+ * This function generates html and diyplays the task added feedback
+ * 
+ * @returns - the html elements 
+ */
 function taskAddedToBoard (){
   document.getElementById('task_added_overlay').classList.remove('d-none')
   return  `<div class="font-s-20 added-overlay d-flex-center gap-10">
@@ -71,6 +115,12 @@ function taskAddedToBoard (){
           </div>`
 }
 
+/**
+ * This function generates html and shows the edit design
+ * 
+ * @param {*} taskId - Id of the task
+ * @returns - the html elements with variable data
+ */
 function editTaskTemplate(taskId){
   return  `<div class="bottom-edit-order">
             <span class="alert-field">

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: addTaskTemplate.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: addTaskTemplate.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This function generates html to show the assigned user
+ * 
+ * @param {Object} activeUser - data of the active user
+ * @returns - the html elements with variable data
+ */
+function showAssignedUser(activeUser){
+   return  `&lt;div id="bg_task_0" onclick="addUserToTask('contact_to_task_0', 'task', 'bg_task_0', '${activeUser.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
+            &lt;div class="d-flex-center gap-16">
+              &lt;div class="user-icon d-flex-center" style="background-color: ${activeUser.color};">
+                  &lt;span>${activeUser.initials}&lt;/span>
+              &lt;/div>
+              &lt;span id="task_name_${activeUser.id}">${activeUser.name}&lt;/span>
+              &lt;span>(You)&lt;/span>
+            &lt;/div>
+            &lt;img id="contact_to_task_0" src="../assets/img/png/check-task-false.png" alt="">
+          &lt;/div>`
+}
+
+/**
+ * This function generates html to show the assigned contacts
+ * 
+ * @param {Object} contact - data of all contacts
+ * @returns - the html elements with variable data
+ */
+function showAssignedContactList(contact){
+  return  `&lt;div id="bg_task_${contact.id}" onclick="addContactToTask('contact_to_task_${contact.id}', 'task', 'bg_task_${contact.id}', '${contact.id}')" class="contact-list padding-7-16 font-s-20 cursor-p d-flex-spbe-center">
+            &lt;div class="d-flex-center gap-16">
+              &lt;div class="contact-icon d-flex-center" style="background-color: ${contact.color};">
+                  &lt;span>${contact.initials}&lt;/span>
+              &lt;/div>
+              &lt;span id="task_name_${contact.id}">${contact.name}&lt;/span>
+            &lt;/div>
+            &lt;img id="contact_to_task_${contact.id}" src="../assets/img/png/check-task-false.png" alt="">
+          &lt;/div>`
+}
+
+/**
+ * This function generates html if the user is assigned
+ * 
+ * @param {string} userInitials - is the initials of the user
+ * @param {number} activUserID - Id of the user
+ * @param {string} userColor - is the user background color
+ * @returns - the html elements with variable data
+ */
+function assignedUser(userInitials, activUserID, userColor){
+  return  `&lt;div id="assigned_${activUserID}" class="user-icon d-flex-center"  style="background-color: ${userColor};">
+                &lt;span>${userInitials}&lt;/span>
+          &lt;/div>`
+}
+
+/**
+ * This function generates html if contacts are assigned
+ * 
+ * 
+ * @param {Object} activeContacts - is the data of all contacts in the users list
+ * @returns - the html elements with variable data
+ */
+function assignedContacts(activeContacts){
+  return  `&lt;div id="assigned_${activeContacts.id}" class="contact-icon d-flex-center"  style="background-color: ${activeContacts.color};">
+                &lt;span>${activeContacts.initials}&lt;/span>
+          &lt;/div>`
+}
+
+/**
+ * This function generates html and shows the category list 
+ * 
+ * @returns - the html elements with variable data
+ */
+function showCategory(){
+  return  `&lt;div class="category-list padding-7-16 font-s-20 cursor-p"  onclick="selectCategory('Technical Task')">
+            &lt;span>Technical Task&lt;/span>
+          &lt;/div>
+          &lt;div class="category-list padding-7-16 font-s-20 cursor-p" onclick="selectCategory('User Story')">
+            &lt;span>User Story&lt;/span>
+          &lt;/div>`
+}
+
+/**
+ * This function generates html and displays all subtasks created by the user
+ * 
+ * @param {string} subtasksInput - is the input text for a subtasks
+ * @param {number} id - Id of each subtasks created
+ * @returns - the html elements with variable data
+ */
+function addSubtasksToList(subtasksInput, id) {
+  return  `&lt;div id="listItem_${id}" class="list-item pos-rel li-hover">
+            &lt;li id="list_subtask_${id}" ondblclick="editSubtask(this, ${id})">${subtasksInput}&lt;/li>
+            &lt;div id="list_imgs_activ_${id}" class="d-flex-center gap-4 pos-abs imgs-pos-activ list-imgs-activ">
+              &lt;img class="hover-circle-subtask-active" onclick="editSubtask(document.querySelector('#listItem_${id} li'), ${id})" src="../assets/img/png/subtasks-edit.png" alt="">
+              &lt;div class="dividing-border">&lt;/div>
+              &lt;img class="hover-circle-subtask-active" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
+            &lt;/div>
+          &lt;/div>
+          &lt;div id="listItem_${id}" class="pos-rel li-hover">
+            &lt;input id="input_subtask_${id}" onkeydown="return checkEnterKey(event, ${id})" type="text" class="subtasks-input font-s-16 d-none">
+            &lt;div id="list_imgs_inactiv_${id}" class="d-flex-center gap-4 pos-abs imgs-pos d-none">
+              &lt;img class="hover-circle-subtask" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
+              &lt;div class="dividing-border">&lt;/div>
+              &lt;img class="hover-circle-subtask" onclick="saveInput(${id})" src="../assets/img/png/subtasks-checkmark.png" alt="">
+            &lt;/div>
+          &lt;/div>` 
+}
+
+/**
+ * This function generates html and diyplays the task added feedback
+ * 
+ * @returns - the html elements 
+ */
+function taskAddedToBoard (){
+  document.getElementById('task_added_overlay').classList.remove('d-none')
+  return  `&lt;div class="font-s-20 added-overlay d-flex-center gap-10">
+            &lt;span>Task added to board&lt;/span>
+            &lt;img src="../assets/img/png/board-white.png" alt="">
+          &lt;/div>`
+}
+
+/**
+ * This function generates html and shows the edit design
+ * 
+ * @param {*} taskId - Id of the task
+ * @returns - the html elements with variable data
+ */
+function editTaskTemplate(taskId){
+  return  `&lt;div class="bottom-edit-order">
+            &lt;span class="alert-field">
+              &lt;span class="required-sign">*&lt;/span>
+            This field is required&lt;/span>
+            &lt;button onclick="enableEditButton(${taskId})" id="create_button" class="create-task-button">
+              &lt;span>Ok&lt;/span>
+              &lt;img src="../assets/img/png-old/check.png" alt="" />
+            &lt;/button>
+          &lt;/div>`
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addSubtasksToList">addSubtasksToList</a></li><li><a href="global.html#assignedContacts">assignedContacts</a></li><li><a href="global.html#assignedUser">assignedUser</a></li><li><a href="global.html#editTaskTemplate">editTaskTemplate</a></li><li><a href="global.html#showAssignedContactList">showAssignedContactList</a></li><li><a href="global.html#showAssignedUser">showAssignedUser</a></li><li><a href="global.html#showCategory">showCategory</a></li><li><a href="global.html#taskAddedToBoard">taskAddedToBoard</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu Oct 03 2024 19:59:42 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
