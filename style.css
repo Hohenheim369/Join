@@ -4,6 +4,8 @@
   border: none;
   margin: 0;
   font-family: "Inter", normal;
+  /* scrollbar-width: thin;
+  scrollbar-color: rgb(168, 168, 168) transparent; */
 }
 
 html {

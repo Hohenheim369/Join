@@ -1,3 +1,14 @@
+/**
+ * Generates a task representation for the board.
+ *
+ * @param {number} id - The unique identifier of the task.
+ * @param {string} title - The title of the task.
+ * @param {string} shortDescription - A brief description of the task.
+ * @param {string} category - The category to which the task belongs.
+ * @param {string} categoryColor - The color associated with the task's category.
+ * @param {string} prio - The priority level of the task.
+ * @returns {string} HTML string representing the task on the board.
+ */
 function generateTasksOnBoard(
   id,
   title,
@@ -42,10 +53,22 @@ function generateTasksOnBoard(
           `;
 }
 
+/**
+ * Generates HTML for a "No tasks To do" message.
+ *
+ * @returns {string} HTML string representing a div with a "No tasks To do" message.
+ */
 function generateNoTaskField() {
   return `<div class="task-none d-flex-center">No tasks To do</div>`;
 }
 
+/**
+ * Generates HTML for displaying subtask progress.
+ *
+ * @param {number} sumDoneSubtasks - The number of completed subtasks.
+ * @param {number} sumAllSubtasks - The total number of subtasks.
+ * @returns {string} HTML string representing the subtask progress bar and count.
+ */
 function generateSubtasks(sumDoneSubtasks, sumAllSubtasks) {
   return `
       <div class="task-subtasks-bar"></div>
@@ -54,38 +77,73 @@ function generateSubtasks(sumDoneSubtasks, sumAllSubtasks) {
       </span>`;
 }
 
+/**
+ * Generates HTML for an assignee field.
+ *
+ * @param {Object} contact - The contact object for the assignee.
+ * @param {string} contact.color - The background color for the assignee field.
+ * @param {string} contact.initials - The initials of the assignee.
+ * @returns {string} HTML string representing an assignee field with initials and color.
+ */
 function generateAssigneeField(contact) {
   return `<span class="assignee font-s-12 font-c-white mar-r-8 wh-32 d-flex-center" 
             style="background-color: ${contact.color};">${contact.initials}
       </span>`;
 }
 
+/**
+ * Generates HTML for displaying additional assignees count.
+ *
+ * @param {number} remainingCount - The number of additional assignees.
+ * @returns {string} HTML string representing a field showing the count of additional assignees.
+ */
 function generateAdditionallyAssigneeField(remainingCount) {
   return `<span class="additionally-assignee wh-32 d-flex-center">
         +${remainingCount}
       </span>`;
 }
 
+/**
+ * Generates HTML for a user field.
+ *
+ * @param {Object} activeUser - The active user object.
+ * @returns {string} HTML string representing a user field with initials and color.
+ */
 function generateUserField(activeUser) {
   return `<span class="user font-s-12 mar-r-8 wh-32 d-flex-center" 
             style="background-color: ${activeUser.color};">${activeUser.initials}
       </span>`;
 }
 
+/**
+ * Generates HTML for an upward arrow icon to move a task.
+ *
+ * @param {Object} task - The task object.
+ */
 function generateArrowTop(task) {
   return `<img class="task-arrow cursor-p" onclick="moveToStatus(${task.id}, '${task.status}', -1)" 
             src="../assets/img/png/arrow-drop-up.png"/>`;
 }
 
+/**
+ * Generates HTML for a downward arrow icon to move a task.
+ *
+ * @param {Object} task - The task object.
+ * @returns {string} HTML string representing a downward arrow icon with onclick event.
+ */
 function generateArrowBottom(task) {
   return `<img class="task-arrow cursor-p" onclick="moveToStatus(${task.id}, '${task.status}', 1)" 
             src="../assets/img/png/arrow-drop-down.png"/>`;
 }
 
-function generateSingleTasks(
-  singleTask,
-  categoryColor
-) {
+/**
+ * Generates HTML for a single task representation.
+ *
+ * @param {Object} singleTask - The task object containing task details.
+ * @param {string} categoryColor - The color associated with the task's category.
+ * @returns {string} HTML string representing a single task with its details.
+ */
+function generateSingleTasks(singleTask, categoryColor) {
   return `
           <div class="single-task-content d-flex-column gap-24">
             <div class="d-flex-spbe-center">
@@ -156,6 +214,11 @@ function generateSingleTasks(
           </div>`;
 }
 
+/**
+ * Generates HTML for displaying the active user as an assignee.
+ *
+ * @returns {string} HTML string representing the active user as an assignee.
+ */
 function generateSingleUserAsAssignee() {
   return `
          <div class="single-task-assignee">
@@ -165,6 +228,12 @@ function generateSingleUserAsAssignee() {
           </div>`;
 }
 
+/**
+ * Generates HTML for displaying a single assignee.
+ *
+ * @param {Object} contact - The contact object representing the assignee.
+ * @returns {string} HTML string representing a single assignee.
+ */
 function generateSingleAssignee(contact) {
   return `
           <div class="single-task-assignee">
@@ -174,6 +243,13 @@ function generateSingleAssignee(contact) {
           </div>`;
 }
 
+/**
+ * Generates HTML for displaying a single subtask.
+ *
+ * @param {Object} subtask - The subtask object.
+ * @param {number} id - The ID of the parent task.
+ * @returns {string} HTML string representing a single subtask with a toggle button.
+ */
 function generateSingleSubtasks(subtask, id) {
   return `
           <div onclick="updateSubtaskStatus(${id}, ${subtask.subId})" class="single-task-subtasks cursor-p">
@@ -186,18 +262,34 @@ function generateSingleSubtasks(subtask, id) {
           </div>`;
 }
 
+/**
+ * Generates HTML for displaying a message when no assignees are selected.
+ *
+ * @returns {string} HTML string representing a message for no assignees.
+ */
 function generateNoAssigneeField() {
   return `<div class="single-task-subtasks font-s-16">
             No assignee have been selected yet.
           </div>`;
 }
 
+/**
+ * Generates HTML for displaying a message when no subtasks are created.
+ *
+ * @returns {string} HTML string representing a message for no subtasks.
+ */
 function generateNoSubtaskField() {
   return `<div class="single-task-subtasks">
             No subtasks have been created yet.
           </div>`;
 }
 
+/**
+ * Generates HTML for a delete button for a specific task.
+ *
+ * @param {number} taskId - The ID of the task to be deleted.
+ * @returns {string} HTML string representing a delete button with an onclick event.
+ */
 function generateDeleteButton(taskId) {
   return `<button class="clear-button"
            onclick="deleteTask(${taskId})">YES

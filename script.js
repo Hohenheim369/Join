@@ -158,3 +158,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function bubblingPrevention(event) {
   event.stopPropagation();
 }
+
+/**
+ * Deletes the activeUser data and redirects to the log in page
+ */
+function logOut() {
+  localStorage.removeItem("activeUser");
+  window.location.href = "../index.html";  
+}
