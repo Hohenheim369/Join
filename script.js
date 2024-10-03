@@ -22,8 +22,7 @@ async function fetchData(path = "") {
  * Uploads the data from the database depending on the deposit and ID.
  * 
  * @param {string} path - The path in the database for which a new ID should be generated.
- * @param {*} data - 
- * @returns 
+ * @param {*} data - Data to be uploaded
  */
 async function postData(path = "", data = {}) {
   const response = await fetch(`${BASE_URL}/${path}/.json`, {
