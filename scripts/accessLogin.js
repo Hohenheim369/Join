@@ -1,3 +1,7 @@
+/**
+ * Logs in the user as a guest with predefined settings.
+ * Clears remember me data, sets active user, and redirects to summary page.
+ */
 function loginAsGuest() {
   activeUser = {
     name: "Guest",
@@ -13,6 +17,10 @@ function loginAsGuest() {
   window.location.href = "./html/summary.html";
 }
 
+/**
+ * Attempts to log in a user with provided email and password.
+ * Fetches user data, validates credentials, and handles login outcome.
+ */
 async function loginAsUser() {
   const loginEmail = document.getElementById("login_email").value.trim();
   const loginPassword = document.getElementById("login_password").value;
@@ -30,6 +38,10 @@ async function loginAsUser() {
   }
 }
 
+/**
+ * Resets login form alert states.
+ * Clears notice field and removes alert borders from input fields.
+ */
 function resetLoginAlert() {
   const noticeField = document.getElementById("login_notice_field");
   noticeField.innerHTML = "";
@@ -38,6 +50,12 @@ function resetLoginAlert() {
   document.getElementById("login_password").classList.remove("border-alert");
 }
 
+/**
+ * Handles actions after successful user login.
+ * Manages remember me feature, loads user data, and redirects to summary page.
+ *
+ * @param {Object} user - The user object of the logged-in user
+ */
 async function handleSuccessfulLogin(user) {
   handleRememberMe(user);
 
@@ -49,6 +67,12 @@ async function handleSuccessfulLogin(user) {
   window.location.href = "./html/summary.html";
 }
 
+/**
+ * Manages the remember me functionality based on user choice.
+ * Saves or removes remember me data in local storage.
+ *
+ * @param {Object} user - The user object to potentially remember
+ */
 async function handleRememberMe(user) {
   if (isRememberMeChecked()) {
     const saveData = await loadRememberMeData(user);
@@ -60,12 +84,23 @@ async function handleRememberMe(user) {
   }
 }
 
+/**
+ * Checks if the remember me option is selected.
+ *
+ * @returns {boolean} True if remember me is checked, false otherwise
+ */
 function isRememberMeChecked() {
   const checkButton = document.getElementById("login_check_off");
   const isChecked = checkButton.src.includes("true");
   return isChecked;
 }
 
+/**
+ * Prepares user data for remember me functionality.
+ *
+ * @param {Object} user - The user object to remember
+ * @returns {Object} Object containing email and password
+ */
 async function loadRememberMeData(user) {
   return {
     email: user.email,
@@ -73,6 +108,12 @@ async function loadRememberMeData(user) {
   };
 }
 
+/**
+ * Extracts relevant user data for active session.
+ *
+ * @param {Object} user - The full user object
+ * @returns {Object} Object containing essential user data
+ */
 async function loadUserData(user) {
   return {
     name: user.name,
@@ -84,6 +125,10 @@ async function loadUserData(user) {
   };
 }
 
+/**
+ * Resets login form inputs and remember me checkbox.
+ * Clears email and password fields, unchecks remember me.
+ */
 function resetLoginFormInputs() {
   document.getElementById("login_email").value = "";
   document.getElementById("login_password").value = "";
@@ -92,6 +137,10 @@ function resetLoginFormInputs() {
   legalButton.src = `./assets/img/png/check-button-false.png`;
 }
 
+/**
+ * Handles failed login attempt.
+ * Displays error message and highlights input fields.
+ */
 function handleLoginError() {
   const noticeField = document.getElementById("login_notice_field");
   noticeField.innerHTML += `<div>Check your email and password. Please try again.</div>`;
