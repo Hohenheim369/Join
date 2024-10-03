@@ -23,14 +23,13 @@ async function openSingleTask(taskId) {
  * @param {string} categoryColor - Color of the category
  * @param {Array} contacts - All contacts from firebase
  */
-function displaySingleTask(singleTask, categoryColor, contacts) {
+function displaySingleTask(singleTask, categoryColor) {
   let singleTaskArea = document.getElementById(`single_task`);
   singleTaskArea.innerHTML = "";
 
   singleTaskArea.innerHTML += generateSingleTasks(
     singleTask,
-    categoryColor,
-    contacts
+    categoryColor
   );
 }
 
