@@ -68,6 +68,7 @@ async function renderTasks() {
   countToDo(tasks);
   countDone(tasks);
   countTasksWithDueDate(tasks);
+  deadlineDate(tasks);
   countTaskInBoard(tasks);
   countTaskInProgress(tasks);
   countTaskInFeedback(tasks);
