@@ -4,7 +4,9 @@ let selectedPrio = "medium";
 let subTasks = [];
 let editSubTaskIndex = null;
 let taskStatus = "todo";
+let selectedButton = "medium";
 
+/**This function opens a Dialog after creating a Task */
 async function openAddTaskDialogFeedback() {
   document.getElementById("task_added_overlay").innerHTML = taskAddedToBoard();
   await sleep(10);
@@ -12,10 +14,21 @@ async function openAddTaskDialogFeedback() {
   slidingDiv.classList.toggle("visible");
 }
 
+/**
+ * This function sets a delays between functions
+ * 
+ * @param {number} ms - This variable is the time of the delay in miliseconds
+ * @returns - the Timeout
+ */
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * This function is getting id´s from elements
+ * 
+ * @returns - all variables set
+ */
 function getTaskFormData() {
   const title = document.getElementById("title_input").value;
   const description = document.getElementById("description_textarea").value;
@@ -26,17 +39,18 @@ function getTaskFormData() {
   return { title, description, dueDate, categorySeleced, assignedTo };
 }
 
+/** This function opens the Dialog function sets a delay and direct the User to Board.html */
 async function handleTaskCreationCompletion() {
   openAddTaskDialogFeedback();
   await sleep(1500);
-  redirectToBoard();
-}
-
-function redirectToBoard() {
   window.location.href = "../html/board.html";
 }
 
-
+/**
+ * This function is mapping through the Array subTasks
+ * 
+ * @returns - an Object 
+ */
 function getSubtasks() {  
   return subTasks.map((subName, index) => ({
     subTaskName: subName,
@@ -45,6 +59,11 @@ function getSubtasks() {
   }));
 }
 
+/**
+ * This function renders the active User and all contacts 
+ * 
+ * @param {string} contacts - is a variable with all informations about the Contacts from the Database
+ */
 function displayContacts(contacts) {
   document.getElementById("contact_contant").innerHTML = "";
   const userHtml = showAssignedUser(activeUser);
@@ -56,6 +75,14 @@ function displayContacts(contacts) {
   }
 }
 
+/**
+ * This function toggles Color and Icon if you select a Contact from Assigned to
+ * 
+ * @param {StringId} CheckButtonId - The Id for Checkmark 
+ * @param {String} CheckTaskButton - The String to locate if its true
+ * @param {StringId} bgChange - The Id for Background Color switch
+ * @param {NumberId} contactId - The Contact Id 
+ */
 function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {  
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
@@ -69,6 +96,14 @@ function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
   }
 }
 
+/**
+ * This function toggles Color and Icon if you select the User from Assigned to
+ * 
+ * @param {StringId} CheckButtonId - The Id for Checkmark 
+ * @param {String} CheckTaskButton - The String to locate if its true
+ * @param {StringId} bgChange - The Id for Background Color switch
+ * @param {NumberId} activUserId - The active User Id 
+ */
 function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
   toggleCheckButton(CheckButtonId, CheckTaskButton);
   let colorChange = document.getElementById(bgChange);
@@ -82,6 +117,11 @@ function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
   }
 }
 
+/**
+ * This function proves if the Contact is selected or not
+ * 
+ * @param {NumberId} contactId - The active User Id 
+ */
 function addContactAssigned(contactId) {
   if (!selectedContacts.some((contact) => contact.contactId === contactId)) {
     selectedContacts.push(contactId);
@@ -89,6 +129,11 @@ function addContactAssigned(contactId) {
   }
 }
 
+/**
+ * This function proves if the active User is selected or not
+ * 
+ * @param {NumberId} activUserId - The active User Id 
+ */
 function addUserAssigned(activUserId) {
   if (!userId.some((user) => user.activUserId === activUserId)) {
     userId.push(activUserId);
@@ -96,6 +141,11 @@ function addUserAssigned(activUserId) {
   }
 }
 
+/**
+ * This function removes the selected Contact if you onclick it agian
+ * 
+ * @param {number} index - is the length of the Array
+ */
 function removeContactAssigned(index) {
   if (index > -1) {
     selectedContacts.splice(index, 1);
@@ -103,6 +153,11 @@ function removeContactAssigned(index) {
   }
 }
 
+/**
+ * This function removes the selected User if you onclick it agian
+ * 
+ * @param {number} index - is the length of the Array
+ */
 function removeUserAssigned(index) {
   if (index > -1) {
     userId = [];
@@ -111,6 +166,7 @@ function removeUserAssigned(index) {
   }
 }
 
+/**This function updates the User Icon shown after select or remove from assigned to */
 function updateSelectedUserDisplay() {
   let selectedList = document.getElementById("activ_user");
   selectedList.innerHTML = "";
@@ -120,15 +176,14 @@ function updateSelectedUserDisplay() {
   selectedList.innerHTML += assignedUser(userInitials, activUserID, userColor);
 }
 
-function displaySelectedContacts(
-  newContacts,
-  selectedList,
-) {
-  for (
-    let i = 0;
-    i < Math.min(selectedContacts.length);
-    i++
-  ) {
+/**
+ * This function updates the Contact Icon shown after select or remove from assigned to
+ * 
+ * @param {number} newContacts - Those are the Id Numbers of all Contacts
+ * @param {*} selectedList - Those are the Id Numbers of all selected Contacts
+ */
+function displaySelectedContacts(newContacts, selectedList) {
+  for (let i = 0; i < Math.min(selectedContacts.length); i++) {
     let contactId = Number(selectedContacts[i]);
     const activeContacts = newContacts.find(
       (contact) => contact.id === contactId
@@ -137,6 +192,7 @@ function displaySelectedContacts(
   }
 }
 
+/** This function searches through all contacts oninput */
 function searchContact() {
   let searContact = document.getElementById("assigned_to").value.toLowerCase();
   let filteredContacts = window.allContacts.filter((contact) =>
@@ -145,16 +201,31 @@ function searchContact() {
   displayContacts(filteredContacts);
 }
 
+/**
+ * This function handles the selected Priority
+ * 
+ * @param {string} priority - is the Priority the User has selected
+ */
 function handleSelectedPriority(priority) {
   selectedPrio = `${priority}`;
 }
 
+/**
+ * This function sets the selected Category after onclick
+ * 
+ * @param {string} category - is the Text the User has selected in Category
+ */
 function selectCategory(category) {
   document.getElementById("category").innerText = category;
   closeSelectCategory();
   resetrequiredCategory();
 }
 
+/**
+ * This function saves the Input the User has made at Subtasks
+ *  
+ * @param {number} index - is the Index Number of the Array
+ */
 function saveInput(index) {
   let subInput = document.getElementById(`input_subtask_${index}`).value;
   document.getElementById(`list_subtask_${index}`).innerText = subInput;
@@ -162,41 +233,58 @@ function saveInput(index) {
   handleInputBlur(subInput, index);
 }
 
+/**
+ * This function opens the edit Field to edit the Subtasks
+ * 
+ * @param {string} li - is the current list Element
+ * @param {number} index - is the Id of the selected Subtask to edit
+ */
 function editSubtask(li, index) {
   const currentText = li.innerText;
   let subInput = document.getElementById(`input_subtask_${index}`);
   handlePreviousEdit(index);
-  setInputValue(subInput, currentText);
+  subInput.value = currentText;
   toggleSubtasksImgs(index);
   editSubTaskIndex = index;
   subInput.focus();
 }
 
+/**
+ * This function proves if there are allready changes in the Array or not
+ * 
+ * @param {number} index - is the Id of the selected Subtask to edit
+ */
 function handlePreviousEdit(index) {
   if (editSubTaskIndex !== null && editSubTaskIndex !== index) {
     toggleSubtasksImgs(editSubTaskIndex);
   }
 }
 
-function setInputValue(subInput, value) {
-  subInput.value = value;
-}
-
+/**
+ * This function allows the User to submit Input with the Enter key
+ * 
+ * @param {string} event - location of enter event
+ * @param {number} index - Id of the event Element
+ * @returns - boolean of true or false
+ */
 function checkEnterKey(event, index) {
   let subInput = document.getElementById(`input_subtask_${index}`);
   if (event.key === "Enter") {
     subInput.blur();
     saveInput(index);
-    resetEditIndex();
+    editSubTaskIndex = null;
     return false;
   }
   return true;
 }
 
-function resetEditIndex() {
-  editSubTaskIndex = null;
-}
-
+/**
+ * This function handles the Inputfield of focus and proves if the Element is empty
+ * 
+ * @param {string} li - is the current list Element
+ * @param {number} index - is the Id of the selected Subtask to edit
+ * @returns - the removeSubtask function
+ */
 function handleInputBlur(li, index) {
   let input = document.getElementById(`list_subtask_${index}`).innerText;
   if (input.trim() !== "") {
@@ -210,25 +298,33 @@ function handleInputBlur(li, index) {
 /**
  *This function saves all changes after editing a subtask
  *  
- * @param {string} subtasksInput 
- * @param {number} index 
+ * @param {ElementId} subtasksInput - is the Inputfield on focus
+ * @param {NumberId} index - is the Id of the Element
  */
 function saveChanges(subtasksInput, index) {
   let newValue = subtasksInput;
   subTasks[index] = newValue;
 }
 
+/**
+ * This function removes Subtasks from the List
+ * 
+ * @param {string} li - is the current list Element
+ * @param {number} index - is the Id of the selected Subtask to edit
+ */
 function removeSubtask(li, index) {
   li.parentNode.remove();
   subTasks.splice(index, 1);
 }
 
+/** This function proves all required Fields */
 function requiredFields() {
   requiredTitle();
   requiredDate();
   requiredCategory();
 }
 
+/** This function proves the Title Element Input */
 function requiredTitle() {
   let title = document.getElementById("title_input");
   let alertTitle = document.getElementById("title_field_alert");
@@ -238,6 +334,7 @@ function requiredTitle() {
   }
 }
 
+/** This function proves the Date Element Input */
 function requiredDate() {
   let date = document.getElementById("due_date");
   let alertDate = document.getElementById("date_field_alert");
@@ -247,6 +344,7 @@ function requiredDate() {
   }
 }
 
+/** This function proves the Category Element Input */
 function requiredCategory() {
   let categoryValue = document.getElementById("category");
   let category = document.getElementById("category_contant");
@@ -258,12 +356,14 @@ function requiredCategory() {
   }
 }
 
+/** This function resets all required Fields to default */
 function resetrequiredFields() {
   resetrequiredTitle();
   resetrequiredDate();
   resetrequiredCategory();
 }
 
+/** This function resets the Title Element */
 function resetrequiredTitle() {
   let title = document.getElementById("title_input");
   let alertTitle = document.getElementById("title_field_alert");
@@ -271,6 +371,7 @@ function resetrequiredTitle() {
   alertTitle.classList.add("d-none");
 }
 
+/** This function resets the Date Element */
 function resetrequiredDate() {
   let date = document.getElementById("due_date");
   let alertDate = document.getElementById("date_field_alert");
@@ -278,6 +379,7 @@ function resetrequiredDate() {
   alertDate.classList.add("d-none");
 }
 
+/** This function resets the Category Element */
 function resetrequiredCategory() {
   let categoryValue = document.getElementById("category");
   let category = document.getElementById("category_contant");
@@ -289,6 +391,11 @@ function resetrequiredCategory() {
   }
 }
 
+/**
+ * This function checks a click event and activates closing functions
+ * 
+ * @param {string} event - locates the event
+ */
 function closeTaskIfOutside(event) {
   if (event.target.id === 'add_task_board'||'edit_task_board'||'add_task_content') {
     closeSelect();
