@@ -2,7 +2,7 @@ let dbBackupTask = [
   {
     assigned: [1, 2, 3, 4],
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-10-05",
     description: "Welcome to Join. Here you can find your default board. This board represents your project and contains four default lists: \"To do\", \"In progress\", \"Await feedback\" and \"Done\".",
     id: 1,
     priority: "low",
@@ -25,7 +25,7 @@ let dbBackupTask = [
   {
     assigned: [10],
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-10-03",
     description: "In your Join you will find 5 tasks and 10 contacts to try out. Feel free to edit these, but the changes will be reset after you log in again. If you delete them, they are permanently removed from your Join board.",
     id: 2,
     priority: "urgent",
@@ -35,7 +35,7 @@ let dbBackupTask = [
   },
   {
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-10-20",
     description: "Feel free to edit your cards. You can move tasks between sections.",
     id: 3,
     priority: "low",
@@ -73,7 +73,7 @@ let dbBackupTask = [
   {
     assigned: [4, 5, 6, 7, 8],
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-11-10",
     description: "Cards represent individual tasks. Click the \"+\" above the list to create a new task. To create new task you can also go to the \"Add Task\" in the main menu. Enter the task details in the card.",
     id: 4,
     priority: "medium",
@@ -96,7 +96,7 @@ let dbBackupTask = [
   {
     assigned: [7, 8, 9],
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-10-29",
     description: "You can add new contacts to your projects. Go to the \"Contacts\" in the main menu, click on \"Add new contact\". Once added, these contacts can get tasks assigned and can edit them.",
     id: 5,
     priority: "medium",
@@ -115,7 +115,7 @@ let dbBackupTask = [
   {
     assigned: [1, 2, 3, 4],
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-10-04",
     description: "Welcome to Join. Here you can find your default board. This board represents your project and contains four default lists: \"To do\", \"In progress\", \"Await feedback\" and \"Done\".",
     id: 6,
     priority: "low",
@@ -138,7 +138,7 @@ let dbBackupTask = [
   {
     assigned: [10],
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-10-04",
     description: "In your Join you will find 5 tasks and 10 contacts to try out. Feel free to edit these, but the changes will be reset after you log in again. If you delete them, they are permanently removed from your Join board.",
     id: 7,
     priority: "urgent",
@@ -148,7 +148,7 @@ let dbBackupTask = [
   },
   {
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-10-23",
     description: "Feel free to edit your cards. You can move tasks between sections.",
     id: 8,
     priority: "low",
@@ -186,7 +186,7 @@ let dbBackupTask = [
   {
     assigned: [4, 5, 6, 7, 8],
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-10-11",
     description: "Cards represent individual tasks. Click the \"+\" above the list to create a new task. To create new task you can also go to the \"Add Task\" in the main menu. Enter the task details in the card.",
     id: 9,
     priority: "medium",
@@ -209,7 +209,7 @@ let dbBackupTask = [
   {
     assigned: [7, 8, 9],
     category: "Tutorial",
-    date: "2024-09-20",
+    date: "2024-11-25",
     description: "You can add new contacts to your projects. Go to the \"Contacts\" in the main menu, click on \"Add new contact\". Once added, these contacts can get tasks assigned and can edit them.",
     id: 10,
     priority: "medium",
