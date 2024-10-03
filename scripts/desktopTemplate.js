@@ -86,7 +86,7 @@ function handleResize() {
 }
 
 /**
- * Blendet die Sidebar auf mobilen Geräten aus, wenn kein aktiver Benutzer vorhanden ist.
+ * Blendet die Sidebar auf mobilen Geräten aus und wenn kein aktiver Benutzer vorhanden ist.
  */
 function hideSidebarAtMobile() {
   if (!localStorage.getItem("activeUser") && window.innerWidth < 770) {
@@ -121,7 +121,7 @@ function initializeLinks() {
 }
 
 /**
- * Setzt einen Link mit einem Klick-Handler.
+ * Setzt einen Link mit einem Klick-Handler oder deaktiviert den Link.
  * @param {string} id - Die ID des Links.
  * @param {string} page - Der Zielseite des Links.
  * @param {Function} clickHandler - Der Klick-Handler für den Link.
