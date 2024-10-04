@@ -1,4 +1,4 @@
-@media screen and (max-width: 1200px) {
+/* @media screen and (max-width: 1200px) {
   .bottom-order {
     width: calc(100% - 150px);
   }
@@ -157,5 +157,118 @@
     margin-top: 25px;
     overflow-y: auto;
     height: calc(100vh - 470px);
+  }
+} */
+@media screen and (max-width: 1440px) {
+  .content-order {
+    display: flex;
+    margin-top: 25px;
+    overflow-y: auto;
+    max-height: calc(100vh - 400px);
+  }
+  .bottom-order {
+    margin-top: 16px;
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  .add-task-board {
+    padding: 40px 40px;
+  }
+}
+
+@media screen and (max-width: 777px) {
+  .add-task-board-click {
+    width: clamp(304px, 92vw, 745px);
+  }
+  .add-task-board {
+    padding-inline: clamp(8px, 1vw, 40px);
+  }
+  .add-task-h1 {
+    display: none;
+  }
+  .bottom-order {
+    width: 100%;
+    bottom: 28px;
+    left: 0px;
+    background-color: rgb(246, 247, 248);
+    padding: 0px 16px;
+    position: absolute;
+  }
+  .content-order {
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    overflow-y: auto;
+    max-height: calc(100vh - 300px);
+  }
+  .dividing-bar {
+    display: none;
+  }
+  .clear-button {
+    display: none;
+  }
+  .add-task-form-left {
+    padding: 0px 16px;
+    width: auto;
+  }
+  .add-task-form-right {
+    padding: 0px 16px;
+    width: auto;
+  }
+  .div-button-order {
+    justify-content: space-between;
+  }
+  label {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  input {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  textarea {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .div-input {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .prio-span {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  button {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .alert-field {
+    font-size: clamp(12px, 4vw, 16px);
+  }
+}
+
+@media screen and (max-width: 516px) {
+  .div-button-order {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  ::-webkit-calendar-picker-indicator {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+@media screen and (max-height: 960px) {
+  .content-order {
+    display: flex;
+    margin-top: 25px;
+    overflow-y: auto;
+  }
+  .bottom-order {
+    margin-top: 16px;
+  }
+}
+
+@media screen and (max-height: 860px) {
+  .add-task-h1 {
+    font-size: 40px;
   }
 }
