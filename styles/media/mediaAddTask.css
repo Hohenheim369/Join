@@ -1,47 +1,41 @@
-@media screen and (max-width: 1440px) {
-  .content{
-    /* padding: 16px; */
-  }
-}
-@media screen and (max-width: 1240px) {
-  .content{
-    margin-left: 144px;
-  }
-}
-/* @media screen and (max-width: 1145px) {
-  .bottom-order {
-    width: calc(100% - 167px);
+@media screen and (max-width: 1152px) {
+  .content {
+    padding: 16px;
   }
 }
 
-@media screen and (max-width: 999px) {
-  .bottom-order {
-    width: calc(100% - 17%);
+@media screen and (max-width: 1280px) {
+  .content-order {
+    display: flex;
+    margin-top: 25px;
+    overflow-y: auto;
+    height: calc(100vh - 285px);
   }
 }
 
 @media screen and (max-width: 777px) {
   .add-task-h1 {
-    padding-inline: 16px;
+    display: none;
   }
   .content {
     width: 100%;
     margin-top: 10px;
     margin-left: 0;
-}
+  }
   .bottom-order {
     width: 100%;
     bottom: 80px;
     left: 0px;
     background-color: rgb(246, 247, 248);
     padding: 16px 16px;
+    position: absolute;
   }
   .content-order {
     display: flex;
     flex-direction: column;
-    margin-top: 25px;
+    margin-top: 70px;
     overflow-y: auto;
-    height: calc(100vh - 452px);
+    height: calc(100vh - 265px);
   }
   .dividing-bar {
     display: none;
@@ -57,6 +51,27 @@
   .div-button-order {
     justify-content: space-between;
   }
+  label {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  input {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  textarea {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .div-input {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .prio-span {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  button {
+    font-size: clamp(16px, 4vw, 20px);
+  }
+  .alert-field {
+    font-size: clamp(12px, 4vw, 16px);
+  }
 }
 
 @media screen and (max-width: 516px) {
@@ -67,4 +82,23 @@
     align-items: flex-start;
     flex-direction: column;
   }
-} */
+}
+
+@media screen and (max-width: 500px) {
+  ::-webkit-calendar-picker-indicator {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+@media screen and (max-height: 960px) {
+  .content {
+    padding: 16px;
+  }
+}
+
+@media screen and (max-height: 860px) {
+  .add-task-h1 {
+    font-size: 40px;
+  }
+}
