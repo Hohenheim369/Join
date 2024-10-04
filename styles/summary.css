@@ -1,6 +1,10 @@
 body {
   background-color: #f5f6f7;
 }
+.content{
+  margin-top: clamp(19px, 9vh, 96px);
+}
+
 
 .d-flex {
   display: flex;
@@ -70,7 +74,7 @@ span {
 .upper-task-block {
   display: flex;
   background-color: white;
-  height: clamp(82px, 22vw, 168px);
+  height: clamp(82px, 15vh, 168px);
   width: clamp(172px, 100%, 264px);
   border-radius: 30px;
   justify-content: center;
@@ -92,7 +96,7 @@ span {
 }
 
 .upper-task-block:hover .edit img {
-  content: url("../assets/img/png/editBlue.png"); 
+  content: url("../assets/img/png/editBlue.png");
   transform: scale(1);
 }
 
@@ -118,7 +122,7 @@ span {
 .priority-block {
   display: flex;
   background-color: white;
-  height: clamp(99px, 23vw, 169px);
+  height: clamp(99px, 15vh, 169px);
   border-radius: 30px;
   justify-content: center;
   align-items: center;
@@ -158,7 +162,7 @@ span {
   display: flex;
   background-color: white;
   width: clamp(116px, 27vw, 168px);
-  height: 168px;
+  height: clamp(96px, 17vh, 168px);
   border-radius: 30px;
   flex-direction: column;
   align-items: center;

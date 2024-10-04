@@ -23,13 +23,13 @@
 @media screen and (max-width: 777px) {
   .content {
     height: calc(100% - 160px);
-    width: 100%; 
+    width: 100%;
     margin: 80px 0px 192px;
     padding: 30px 16px 0px;
   }
 
   .content-tasks {
-    height: clamp(316px, 77vw, 560px);
+    height: clamp(316px, 49vh, 560px);
     justify-content: unset;
   }
 
@@ -60,7 +60,7 @@
   }
 
   .task-in-block {
-    height: clamp(75px, 23vw, 168px);
+    height: clamp(75px, 16vh, 168px);
   }
 
   .seperator-grey {
@@ -87,5 +87,11 @@
 
   .greeting-user {
     font-size: clamp(36px, 11vw, 47px);
+  }
+}
+
+@media screen and (max-height: 900px) {
+  .greeting {
+    display: none;
   }
 }
