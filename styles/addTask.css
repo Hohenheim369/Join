@@ -132,7 +132,7 @@ textarea {
 }
 
 ::-webkit-calendar-picker-indicator {
-  background-image: url(../assets/img/png-old/calendar_icon.png);
+  background-image: url(../assets/img/png/calendar.png);
   background-size: 18px 20px;
   position: absolute;
   right: 16px;
@@ -240,12 +240,14 @@ li {
   margin-bottom: 16px;
 }
 
+.add-task-h1{
+  width: 100%;
+}
+
 .bottom-order {
-  width: 976px;
+  max-width: 976px;
   display: flex;
   justify-content: space-between;
-  position: absolute;
-  bottom: 6px;
 }
 .bottom-edit-order {
   width: 46%;

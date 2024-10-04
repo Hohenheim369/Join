@@ -13,7 +13,7 @@ function showAssignedUser(activeUser){
               <span id="task_name_${activeUser.id}">${activeUser.name}</span>
               <span>(You)</span>
             </div>
-            <img id="contact_to_task_0" src="../assets/img/png/check-task-false.png" alt="">
+            <img id="contact_to_task_0" src="../assets/img/png/check-task-false.png" alt="Empty checkbox">
           </div>`
 }
 
@@ -31,7 +31,7 @@ function showAssignedContactList(contact){
               </div>
               <span id="task_name_${contact.id}">${contact.name}</span>
             </div>
-            <img id="contact_to_task_${contact.id}" src="../assets/img/png/check-task-false.png" alt="">
+            <img id="contact_to_task_${contact.id}" src="../assets/img/png/check-task-false.png" alt="Empty checkbox">
           </div>`
 }
 
@@ -87,17 +87,17 @@ function addSubtasksToList(subtasksInput, id) {
   return  `<div id="listItem_${id}" class="list-item pos-rel li-hover">
             <li id="list_subtask_${id}" ondblclick="editSubtask(this, ${id})">${subtasksInput}</li>
             <div id="list_imgs_activ_${id}" class="d-flex-center gap-4 pos-abs imgs-pos-activ list-imgs-activ">
-              <img class="hover-circle-subtask-active" onclick="editSubtask(document.querySelector('#listItem_${id} li'), ${id})" src="../assets/img/png/subtasks-edit.png" alt="">
+              <img class="hover-circle-subtask-active" onclick="editSubtask(document.querySelector('#listItem_${id} li'), ${id})" src="../assets/img/png/subtasks-edit.png" alt="Edit pencil">
               <div class="dividing-border"></div>
-              <img class="hover-circle-subtask-active" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
+              <img class="hover-circle-subtask-active" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="Delet cross">
             </div>
           </div>
           <div id="listItem_${id}" class="pos-rel li-hover">
             <input id="input_subtask_${id}" onkeydown="return checkEnterKey(event, ${id})" type="text" class="subtasks-input font-s-16 d-none">
             <div id="list_imgs_inactiv_${id}" class="d-flex-center gap-4 pos-abs imgs-pos d-none">
-              <img class="hover-circle-subtask" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="">
+              <img class="hover-circle-subtask" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="Delet cross">
               <div class="dividing-border"></div>
-              <img class="hover-circle-subtask" onclick="saveInput(${id})" src="../assets/img/png/subtasks-checkmark.png" alt="">
+              <img class="hover-circle-subtask" onclick="saveInput(${id})" src="../assets/img/png/subtasks-checkmark.png" alt="Checkmark">
             </div>
           </div>` 
 }
@@ -111,7 +111,7 @@ function taskAddedToBoard (){
   document.getElementById('task_added_overlay').classList.remove('d-none')
   return  `<div class="font-s-20 added-overlay d-flex-center gap-10">
             <span>Task added to board</span>
-            <img src="../assets/img/png/board-white.png" alt="">
+            <img src="../assets/img/png/board-white.png" alt="Board symbol">
           </div>`
 }
 
@@ -128,7 +128,7 @@ function editTaskTemplate(taskId){
             This field is required</span>
             <button onclick="enableEditButton(${taskId})" id="create_button" class="create-task-button">
               <span>Ok</span>
-              <img src="../assets/img/png-old/check.png" alt="" />
+              <img src="../assets/img/png/create-check-mark.png" alt="Checkmark" />
             </button>
           </div>`
 }

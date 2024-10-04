@@ -1,4 +1,14 @@
-@media screen and (max-width: 1145px) {
+@media screen and (max-width: 1440px) {
+  .content{
+    /* padding: 16px; */
+  }
+}
+@media screen and (max-width: 1240px) {
+  .content{
+    margin-left: 144px;
+  }
+}
+/* @media screen and (max-width: 1145px) {
   .bottom-order {
     width: calc(100% - 167px);
   }
@@ -57,4 +67,4 @@
     align-items: flex-start;
     flex-direction: column;
   }
-}
+} */
