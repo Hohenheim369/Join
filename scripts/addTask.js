@@ -8,7 +8,9 @@ let selectedButton = "medium";
 
 /**This function opens a Dialog after creating a Task */
 async function openAddTaskDialogFeedback() {
-  document.getElementById("task_added_overlay").innerHTML = taskAddedToBoard();
+  let overlayFeedback = document.getElementById("task_added_overlay");
+  overlayFeedback.innerHTML ="";
+  overlayFeedback.innerHTML = taskAddedToBoard();
   await sleep(10);
   const slidingDiv = document.getElementById("task_added_overlay");
   slidingDiv.classList.toggle("visible");

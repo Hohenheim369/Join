@@ -349,5 +349,6 @@ function createSubtaskObject(subName, index, filteredSubtasks) {
 /** This function closes the dialog feedback after editing a task */
 function closeAddTaskDialogFeedback() {
   const slidingDiv = document.getElementById("task_added_overlay");
-  slidingDiv.classList.toggle("d-none");
+  slidingDiv.innerHTML = "";
+  slidingDiv.classList.toggle("visible");
 }
