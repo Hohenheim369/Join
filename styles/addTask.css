@@ -378,10 +378,9 @@ li {
 }
 
 .add-task-board-click{
-  width: 100%;
+  width: clamp(745px, 79vw, 1135px);
   display: flex;
   justify-content: center;
-  margin-inline: 100%;
 }
 
 .edit-task-board-click{
