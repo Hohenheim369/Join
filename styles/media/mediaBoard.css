@@ -1,13 +1,13 @@
 @media screen and (min-width: 1441px) {
   .board {
-    padding-inline: calc(44px + (100vw - 1440px) / 2);
+    padding-inline: calc(64px + (100vw - 1440px) / 2);
   }
 }
 
 @media screen and (max-width: 1440px) {
   .board {
-    padding-inline: clamp(0px, 2vw, 44px);
-    padding-top: clamp(40px, 4vw, 80px);
+    padding-inline: clamp(24px, 4vw, 64px);
+    padding-top: clamp(40px, 5vw, 80px);
     gap: clamp(32px, 1vw, 55px);
   }
 
