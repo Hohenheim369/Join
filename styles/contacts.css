@@ -107,6 +107,10 @@ h3 {
   color: #007cee;
 }
 
+.contact-info a:hover {
+  color: #007eed !important;
+}
+
 .contact-seperator {
   width: clamp(261px, 23vw, 352px);
   margin: 8px 0px 8px 0px;

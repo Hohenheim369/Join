@@ -237,7 +237,7 @@ function getInitials(name) {
  * @param {number} [maxLength=20] - The maximum length of the text.
  * @returns {string} The processed text.
  */
-function limitTextLength(text, maxLength = 20) {
+function limitTextLength(text, maxLength = 15) {
   if (text.length > maxLength) {
     return text.substring(0, maxLength) + "...";
   }
