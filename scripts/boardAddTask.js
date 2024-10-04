@@ -4,12 +4,7 @@
  * @param {string} status - of location
  */
 function openAddTask(status) {
-  //hier könnten wir die toggleOverlay mit einfügen...
-  toggleOverlay('board_addtask_overlay')
-
-  // let overlay = document.getElementById("board_addtask_overlay");
-  // overlay.classList.remove("d-none");
-
+  toggleOverlay('board_addtask_overlay');
   taskStatus = status;
 }
 
@@ -28,9 +23,9 @@ function openEditDialog(taskId) {
   document.getElementById("dividing_bar").classList.add("d-none");
   document.getElementById("add_task_h1").classList.add("d-none");
   document.getElementById("content_order").classList.remove("content-order");
-  document.getElementById("edit_overflow").classList.add("overflow");
-  document.getElementById("edit_task_board").classList.add("edit-task-height");
-
+  document.getElementById("content_order").classList.add("edit-content-order");
+  document.getElementById('bottom_button_order').classList.add('edit-bottom-button-order');
+  document.getElementById('create_button_div').classList.add('edit-ok-button');
   editTaskButton.innerHTML = editTaskTemplate(taskId);
 }
 

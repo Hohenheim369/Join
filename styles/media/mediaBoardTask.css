@@ -189,11 +189,8 @@
   }
   .bottom-order {
     width: 100%;
-    bottom: 28px;
-    left: 0px;
     background-color: rgb(246, 247, 248);
     padding: 0px 16px;
-    position: absolute;
   }
   .content-order {
     display: flex;
@@ -201,6 +198,7 @@
     margin-top: 70px;
     overflow-y: auto;
     max-height: calc(100vh - 300px);
+    padding-bottom: 30px;
   }
   .dividing-bar {
     display: none;
@@ -240,6 +238,20 @@
   .alert-field {
     font-size: clamp(12px, 4vw, 16px);
   }
+  .single-edit-task {
+    width: clamp(304px, 82vw, 530px);
+    padding-inline: clamp(16px, 3vw, 40px);
+  }
+  .bottom-edit-order {
+    background-color: rgb(246, 247, 248);
+    padding-inline: 16px;
+  }
+  .edit-content-order {
+    max-height: calc(100vh - 250px);
+  }
+  .edit-overflow {
+    height: 95vh;
+  }
 }
 
 @media screen and (max-width: 516px) {
@@ -262,6 +274,9 @@
     margin-top: 25px;
     overflow-y: auto;
   }
+  /* .edit-content-order {
+    overflow-y: auto;
+  } */
   .bottom-order {
     margin-top: 16px;
   }

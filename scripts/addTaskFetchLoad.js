@@ -12,6 +12,10 @@ async function initTemplateAddTask(domLocation, clear) {
   if (clear) {
     clearButton();
   }
+  document.getElementById("content_order").classList.add("content-order");
+  document.getElementById("content_order").classList.remove("edit-content-order");
+  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
+  document.getElementById('create_button_div').classList.remove('edit-ok-button');
 }
 
 /** This function gathers all data to create a task */

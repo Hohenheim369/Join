@@ -379,10 +379,6 @@
   transition: transform 0.5s ease;
 }
 
-.edit-task-height {
-  max-height: calc(100vh - 15px);
-}
-
 .close-add-task-button {
   height: 24px;
   width: 24px;

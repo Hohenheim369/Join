@@ -197,11 +197,11 @@ li {
   height: 32px;
 }
 
-.li-hover  {
+.li-hover {
   overflow-x: hidden;
 }
 
-.li-hover:hover  {
+.li-hover:hover {
   background-color: #eeeeee;
   border-radius: 10px;
 }
@@ -240,7 +240,7 @@ li {
   margin-bottom: 16px;
 }
 
-.add-task-h1{
+.add-task-h1 {
   width: 100%;
 }
 
@@ -250,12 +250,10 @@ li {
   justify-content: space-between;
 }
 .bottom-edit-order {
-  width: 46%;
   height: 56px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  position: absolute;
-  bottom: 0px;
 }
 
 .alert-field {
@@ -277,7 +275,7 @@ li {
 
 .addTask-link {
   background-color: #091931;
-  color: white ;
+  color: white;
 }
 
 .space-bottom {
@@ -377,13 +375,13 @@ li {
   transform: scale(1.1);
 }
 
-.add-task-board-click{
+.add-task-board-click {
   width: clamp(745px, 79vw, 1135px);
   display: flex;
   justify-content: center;
 }
 
-.edit-task-board-click{
+.edit-task-board-click {
   max-width: 100%;
   display: flex;
   justify-content: center;
@@ -391,11 +389,18 @@ li {
 }
 
 .single-edit-task {
-  height: calc(100vh - 15px);
-  width: 525px;
-  background-color: white;
+  max-height: 95vh;
+  width: 530px;
   padding-block: 48px;
   padding-inline: 40px;
   border-radius: 30px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+  max-height: calc(100vh - 55px);
+  background-color: rgb(246, 247, 248);
+}
+
+.edit-content-order {
+  overflow-y: auto;
+  max-height: calc(100vh - 230px);
+  margin-top: 24px;
 }
