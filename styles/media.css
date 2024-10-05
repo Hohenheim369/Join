@@ -1,4 +1,4 @@
-@media screen and (max-width: 900px) and (orientation: landscape) {
+@media screen and (max-width: 1024px) and (orientation: landscape) {
   body {
     transform: rotate(-90deg);
     transform-origin: left top;
