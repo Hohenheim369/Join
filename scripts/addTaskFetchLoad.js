@@ -1,5 +1,5 @@
 /**
- * This function loads the Add Task Template content
+ * This function loads the Add Task Template content an finds the exact location to render
  *
  * @param {string} domLocation This variable is the id where to load the template
  * @param {boolean} clear This variable is a state of true or false
@@ -8,10 +8,30 @@ async function initTemplateAddTask(domLocation, clear) {
   const response = await fetch("../assets/templates/taskTemplate.html");
   const data = await response.text();
   document.getElementById(domLocation).innerHTML = data;
+
+  clearTemplate(clear);
+
   getContacts();
   if (clear) {
-    clearButton();
+      clearButton();
+      renderEditButtons();
   }
+}
+
+/**
+ * This function clears the closed template
+ * 
+ * @param {boolean} clear This variable is a state of true or false
+ */
+function clearTemplate(clear) {
+  if (clear === true) {
+      document.getElementById('edit_task_template').innerHTML = "";
+  } else if (clear === false) {
+      document.getElementById('add_task_template').innerHTML = "";
+  }
+}
+
+function renderEditButtons(){
   document.getElementById("content_order").classList.add("content-order");
   document.getElementById("content_order").classList.remove("edit-content-order");
   document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
