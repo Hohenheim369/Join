@@ -142,6 +142,27 @@ function enterValue() {
   });
 }
 
+/**
+ * This function adds and removes d-none
+ * 
+ * @param {Object} event - PointerEvent 
+ */
+function changeSubtasksImagesClick(event){
+  if (event.target.id === 'add_task_board'||'edit_task_board'||'add_task_content') {
+    document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
+    document.getElementById("subtasks_activ_img").classList.add("d-none");
+  }
+}
+
+/**
+ * This function prevents from executing on the Parend element
+ * 
+ * @param {Object} event - PointerEvent 
+ */
+function changeSubtasksImagesClickPrevention(event) {
+  event.stopPropagation();
+}
+
 /** This function cancels the subtask and changes the element back to default */
 function cancelSubtasks() {
   document.getElementById("subtasks_inactiv_img").classList.remove("d-none");

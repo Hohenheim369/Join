@@ -402,7 +402,5 @@ function closeTaskIfOutside(event) {
   if (event.target.id === 'add_task_board'||'edit_task_board'||'add_task_content') {
     closeSelect();
     closeSelectCategory();
-    document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
-    document.getElementById("subtasks_activ_img").classList.add("d-none");
   }
 }

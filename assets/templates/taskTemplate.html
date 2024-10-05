@@ -130,7 +130,7 @@
     <div class="form-child-order space-bottom">
       <label>Subtasks</label>
       <div id="subtasks_contant" class="subtasks-container">
-        <div id="subtasks_inactiv">
+        <div onclick="changeSubtasksImagesClickPrevention(event)" id="subtasks_inactiv">
           <input
             onclick="enterValue()"
             type="text"
@@ -161,7 +161,7 @@
             <div class="dividing-border"></div>
             <div class="hover-circle d-flex-center">
               <img
-                onclick="addSubtasks(subTasks)"
+                onclick="addSubtasksHandle(subTasks)"
                 src="../assets/img/png/subtasks-checkmark.png"
                 alt="Checkmark"
               />
