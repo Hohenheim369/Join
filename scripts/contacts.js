@@ -121,7 +121,7 @@ async function addContact() {
   addContactToUser(contactId, activeUser);
   addContactToUserLocal(contactId, activeUser);
   closeDialog();
-  await openDialogSuccessfully();
+  await openDialogSuccessfully('created');
   clearForm();
   renderContent();
 }

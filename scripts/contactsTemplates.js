@@ -164,3 +164,7 @@ function generateDeleteButton(contactId) {
            onclick="deleteContact(${contactId});toggleOverlay('contact_delete_overlay'); closeDialogEdit() ">YES
       </button>`;
 }
+
+function generateSuccesssfullyHtml(operationStatus){
+  return `<span>Contacts successfully ${operationStatus}</span>`;
+}

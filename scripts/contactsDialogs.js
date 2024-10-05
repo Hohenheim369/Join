@@ -159,20 +159,23 @@ function dialogBigLetterCircle(contact) {
 /**
  * Opens the dialog window indicating that a contact has been successfully created.
  */
-async function openDialogSuccessfully() {
+async function openDialogSuccessfully(operation) {
   const dialogContainer = document.getElementById("succesfully_created");
+  dialogContainer.innerHTML = generateSuccesssfullyHtml(operation);
   setTimeout(async () => {
     dialogContainer.open = true;
     await sleep(300);
     dialogContainer.classList.add("dialog-open");
     dialogContainer.classList.add("d-flex");
-    await sleep(1000);
+    await sleep(1500);
     dialogContainer.classList.remove("dialog-open");
     await sleep(300);
     dialogContainer.classList.remove("d-flex");
     dialogContainer.open = false;
   }, 300);
 }
+
+
 
 /**
  * Retrieves the value of an input field based on its ID.
@@ -289,13 +292,14 @@ async function editContact(contactId) {
       : `contacts/${existingContact.id - 1}/`;
   await postData(endpoint, updatedContact);
   closeDialogEdit();
+  openDialogSuccessfully('edited');
   await renderContent();
   if (window.innerWidth <= 777) {
     const infoDiv = document.getElementById("mobile_contact_info");
     infoDiv.classList.add("d-none");
     infoDiv.classList.remove("pos-abs");
   } else {
-    displayContactInfo(contactId);
+    displayContactInfo(existingContact.id);
   }
 }
 

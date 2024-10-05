@@ -50,6 +50,7 @@ async function deleteContact(contactId) {
     return;
   }
   await deleteContactInData(contactId);
+  openDialogSuccessfully('deleted');
   await renderContent();
   document.querySelector(".contacts-info-box").innerHTML = "";
   if (window.innerWidth < 777) {
@@ -81,7 +82,6 @@ async function deleteContactInData(contactId) {
  * @param {number} contactId - The ID of the contact to be deleted.
  * @param {Array} users - The list of all users.
  */
-
 async function deleteContactOnlyforUser(contactId, users) {
   if (activeUser.id === 0) {
     return;
