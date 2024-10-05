@@ -66,6 +66,7 @@ function generateLetterBox(initials) {
  * @returns {string} The HTML string representing the contact information.
  */
 function generateContactInfo(contact) {
+  const phone = contact.phone !== undefined ? contact.phone : "";
   return `
     <div class="contacts-info">
         <div class="contacts-info-name">
@@ -98,7 +99,7 @@ function generateContactInfo(contact) {
           </div>
           <div class="contacts-info-phone">
             <span style="font-weight: 700;">Phone</span>
-            <span>${contact.phone}</span>
+            <span>${phone}</span>
           </div>
         </div>
         </div>

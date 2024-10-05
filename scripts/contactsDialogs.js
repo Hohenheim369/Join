@@ -278,11 +278,15 @@ function updateCrossImage() {
  */
 async function editContact(contactId) {
   const existingContact = await getContact(contactId);
+  if(contactId === 0) {
+    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    existingContact.id = activeUser.id;
+  }
   const updatedContact = createUpdatedContact(existingContact);
   const endpoint =
     existingContact.color === "#ffffff"
-      ? `users/${contactId - 1}/`
-      : `contacts/${contactId - 1}/`;
+      ? `users/${existingContact.id - 1}/`
+      : `contacts/${existingContact.id - 1}/`;
   await postData(endpoint, updatedContact);
   closeDialogEdit();
   await renderContent();
