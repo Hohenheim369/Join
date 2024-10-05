@@ -57,9 +57,9 @@ async function deleteData(path = "", id) {
 }
 
 /**
- * Checks whether data exists in the database and returns the new ID.
+ * Fetches data from the specified path and generates a new unique ID.
  * 
- * @param {string} path - The path in the database for which a new ID should be generated.
+ * @param {string} path - The API endpoint path
  * @returns {Number} - New ID
  */
 async function getNewId(path = "") {
@@ -75,10 +75,10 @@ async function getNewId(path = "") {
 }
 
 /**
- * Returns the new ID depending on the existing data in the database.
+ * Calculates the next available ID based on the last entry in the response.
  * 
- * @param {number} responseToJson 
- * @returns {Number} - New ID
+ * @param {Object} responseToJson - The JSON response object containing existing entries
+ * @returns {number} - The next available ID
  */
 function countId(responseToJson) {
   let keys = Object.keys(responseToJson);
@@ -89,7 +89,8 @@ function countId(responseToJson) {
 }
 
 /**
- * Loads the user's data for the activeUser into the LocalStorage
+ * Loads the user's data for the activeUser into the LocalStorage.
+ * 
  * @returns {Objekt} - ActiveUser data 
  */
 function getActiveUser() {
@@ -119,8 +120,8 @@ async function resetTheDatabase() {
 /**
  * Changes the image of the check button.
  * 
- * @param {number} CheckButtonId Id of the check-button
- * @param {HTMLElement} CheckTaskButton The HTML element where the button is displayed
+ * @param {number} CheckButtonId - Id of the check-button
+ * @param {HTMLElement} CheckTaskButton - The HTML element where the button is displayed
  */
 function toggleCheckButton(CheckButtonId, CheckTaskButton) {
   const checkButton = document.getElementById(CheckButtonId);
@@ -148,7 +149,9 @@ function goBack() {
 }
 
 /**
- * Prevents the function from executing on the Parend element.
+ * Prevents event bubbling up the DOM tree.
+ * 
+ * @param {Event} event - The event object
  */
 function bubblingPrevention(event) {
   event.stopPropagation();
