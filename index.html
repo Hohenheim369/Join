@@ -23,11 +23,11 @@
   </head>
   <body onload="initAccess()">
     <div class="logo-container">
-      <img class="img-logo" src="./assets/img/png/logo-big.png" alt="" />
+      <img class="img-logo"  alt="" />
     </div>
 
     <div id="change_access" class="change-access d-flex-spbe-center">
-      <div class="font-s-20 font-c-black">Not a Join user?</div>
+      <div class="font-c-black">Not a Join user?</div>
       <button
         class="font-s-16"
         onclick="toggleAccessWindow(), resetSignupFormInputs(), resetSignupAlert(), removeNoticeButtonBg()"
@@ -44,15 +44,15 @@
     <form
       id="Login"
       onsubmit="loginAsUser(); return false"
-      class="access-window d-flex-column-center gap-32"
+      class="access-window window-login d-flex-column-center"
     >
-      <div class="d-flex-column-center gap-16">
+      <div class="access-headline d-flex-column-center">
         <h1>Log in</h1>
         <div class="blue-line"></div>
       </div>
 
-      <div class="w-100 d-flex-column-center gap-20">
-        <div class="w-100 d-flex-column-center gap-32">
+      <div class="content-area w-100 d-flex-column-center">
+        <div class="input-space-login w-100 d-flex-column-center">
           <div class="w-100 d-flex-column pos-rel">
             <input
               id="login_email"
@@ -122,7 +122,7 @@
     <form
       onsubmit="signUp(); return false"
       id="Signup"
-      class="access-window w-598 d-flex-column-center gap-32 d-none"
+      class="access-window window-signup d-flex-column-center d-none"
     >
       <img
         class="litte-button wh-32 d-flex-center arrow"
@@ -131,13 +131,13 @@
         alt=""
       />
 
-      <div class="d-flex-column-center gap-16">
+      <div class="access-headline d-flex-column-center">
         <h1>Sign up</h1>
         <div class="blue-line"></div>
       </div>
 
-      <div class="w-100 d-flex-column-center gap-16">
-        <div class="w-100 d-flex-column-center gap-24">
+      <div class="content-area w-100 d-flex-column-center">
+        <div class="input-space-signup w-100 d-flex-column-center">
           <div class="w-100 d-flex-column pos-rel">
             <input
               id="signup_email"
@@ -223,7 +223,7 @@
         </div>
       </div>
 
-      <button class="h-48" type="submit">Sign up</button>
+      <button class="signup-btn" type="submit">Sign up</button>
     </form>
     <div id="successfully_signed_up" class="overlay d-flex-center d-none">
       <div class="signup-message d-flex-center font-s-20 font-c-white">

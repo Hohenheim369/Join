@@ -29,6 +29,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  content: url(../assets/img/png/logo-big.png);
 }
 
 .logo-small {
@@ -38,15 +39,17 @@ body {
   top: 80px;
   left: 77px;
   transform: none;
+  content: url(../assets/img/png/logo-big.png);
 }
 
 .container-transparent {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .change-access {
   width: 279px;
-  height: 49px;
+  height: 48px;
+  font-size: 20px;
   position: absolute;
   top: 67px;
   right: 122px;
@@ -60,15 +63,19 @@ body {
 }
 
 .access-window {
-  width: 652px;
   position: relative;
   background-color: white;
   padding: 48px 115px;
   border-radius: 30px;
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+  gap: 32px;
 }
 
-.w-598 {
+.window-login{
+  width: 652px;
+}
+
+.window-signup{
   width: 598px;
 }
 
@@ -78,10 +85,31 @@ body {
     left: 48px;
 }
 
+.access-headline{
+  gap: 16px;
+}
+
 .blue-line {
   width: 150px;
   height: 3px;
   background-color: rgb(41, 171, 226);
+}
+
+.content-area{
+  gap: 16px;
+}
+
+.top12-right21{
+  top: 12px;
+  right: 21px;
+}
+
+.input-space-login{
+  gap: 32px;
+}
+
+.input-space-signup{
+  gap: 24px;
 }
 
 .remember{
@@ -116,7 +144,7 @@ body {
   text-decoration: underline;
 }
 
-.h-48{
+.signup-btn{
   height: 48px;
 }
 
@@ -155,4 +183,14 @@ body {
 
 .d-none {
   display: none;
+}
+
+@media (max-width: 777px) {
+  .img-logo {
+    content: url(../assets/img/png/logo-big-white.png);
+  }
+
+  .logo-small {
+    content: url(../assets/img/png/logo-big.png);
+  }
 }
