@@ -157,7 +157,14 @@ function dialogBigLetterCircle(contact) {
 }
 
 /**
- * Opens the dialog window indicating that a contact has been successfully created.
+ * Opens the dialog window indicating that a contact operation has been successfully completed.
+ *
+ * @param {string} operation - The type of operation that was performed on the contact.
+ *                             It can be one of the following values:
+ *                             - "created" for a newly added contact,
+ *                             - "edited" for an updated contact,
+ *                             - "deleted" for a removed contact.
+ * @returns {Promise<void>} A promise that resolves when the dialog has been fully displayed and closed.
  */
 async function openDialogSuccessfully(operation) {
   const dialogContainer = document.getElementById("succesfully_created");
@@ -174,8 +181,6 @@ async function openDialogSuccessfully(operation) {
     dialogContainer.open = false;
   }, 300);
 }
-
-
 
 /**
  * Retrieves the value of an input field based on its ID.

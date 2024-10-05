@@ -165,6 +165,16 @@ function generateDeleteButton(contactId) {
       </button>`;
 }
 
-function generateSuccesssfullyHtml(operationStatus){
-  return `<span>Contacts successfully ${operationStatus}</span>`;
+/**
+ * Generates an HTML string that indicates the status of a contact operation.
+ *
+ * @param {string} operation - The type of operation performed on the contact.
+ *                              It can be one of the following values:
+ *                              - "created" for a newly added contact,
+ *                              - "edited" for an updated contact,
+ *                              - "deleted" for a removed contact.
+ * @returns {string} An HTML string that displays a success message.
+ */
+function generateSuccesssfullyHtml(operation){
+  return `<span>Contacts successfully ${operation}</span>`;
 }
