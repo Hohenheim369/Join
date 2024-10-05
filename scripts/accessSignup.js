@@ -141,7 +141,7 @@ function removeNoticeButtonBg() {
 }
 
 /**
- * Displays and then hides a success message overlay after signup.
+ * Displays a message that Kevin cannot log in.
  */
 function showKevinAlert() {
   return new Promise((resolve) => {
