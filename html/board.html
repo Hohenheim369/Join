@@ -224,7 +224,7 @@
           class="single-edit-task content-overlay pos-rel"
           onclick="closeTaskIfOutside(event)"
         >
-          <div id="edit_overflow" class="edit-overflow"><div class="pos-rel" id="edit_task_template"></div></div>
+          <div id="edit_overflow" class="edit-overflow"><div onclick="changeSubtasksImagesClick(event)" class="pos-rel" id="edit_task_template"></div></div>
           <div
             onclick="toggleOverlay('edit_task_overlay')"
             class="close-add-task-button d-flex-center"
@@ -246,7 +246,7 @@
           class="add-task-board content-overlay pos-rel"
           onclick="closeTaskIfOutside(event)"
         >
-          <div id="add_task_template"></div>
+          <div onclick=" changeSubtasksImagesClick(event)" id="add_task_template"></div>
           <div
             onclick="toggleOverlay('board_addtask_overlay')"
             class="close-add-task-button d-flex-center"

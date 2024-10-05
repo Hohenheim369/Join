@@ -8,9 +8,7 @@ async function initTemplateAddTask(domLocation, clear) {
   const response = await fetch("../assets/templates/taskTemplate.html");
   const data = await response.text();
   document.getElementById(domLocation).innerHTML = data;
-
   clearTemplate(clear);
-
   getContacts();
   if (clear) {
       clearButton();
