@@ -49,6 +49,28 @@
       </div>
     </div>
 
+    <section
+      class="overlay d-flex-center d-none"
+      id="contact_delete_overlay"
+      onclick="toggleOverlay('contact_delete_overlay')"
+    >
+      <div
+        class="delete-contact d-flex-column-center gap-32"
+        onclick="bubblingPrevention(event)"
+      >
+        <div class="font-w-700 font-c-66-82-110">Delete task permanently?</div>
+        <div class="delte-contact-button-area d-flex-center">
+          <div class="delete-btn" id="delete_yes_btn"></div>
+          <button
+            class="clear-button"
+            onclick="toggleOverlay('contact_delete_overlay')"
+          >
+            NO
+          </button>
+        </div>
+      </div>
+    </section>
+
     <dialog id="dialog_contacts">
       <div class="dialog-left">
         <img
@@ -195,7 +217,7 @@
       class="grey-background hidden"
     ></div>
 
-    <div id="mobile_contact_info"  class="mobile-contact-info d-none">
+    <div id="mobile_contact_info" class="mobile-contact-info d-none">
       <div class="text-box">
         <h1>Contacts</h1>
         <div class="text-seperator"></div>
@@ -208,17 +230,25 @@
           alt=""
         />
       </div>
-      <div class="mobile-contacts-info-box" ></div>
+      <div class="mobile-contacts-info-box"></div>
       <div onclick="openMobileMenu()" class="mobile-delete-edit">
-        <img src="../assets/img/png/three_dots.png" alt="">
+        <img src="../assets/img/png/three_dots.png" alt="" />
       </div>
     </div>
 
     <div id="mobile_menu" class="mobile-menu">
-      <img class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
-      <img class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete">
+      <img
+        class="mobile-edit-img"
+        src="../assets/img/png/edit-default.png"
+        alt="edit"
+      />
+      <img
+        class="mobile-delete-img"
+        src="../assets/img/png/delete-default.png"
+        alt="delete"
+      />
     </div>
-  
+
     <div onclick="openDialog()" class="mobile-add-contact">
       <img src="../assets/img/png/person_add.png" alt="" />
     </div>
