@@ -6,12 +6,12 @@
   height: 592px;
   text-align: center;
   top: 50%;
-  left: 200%; 
+  left: 200%;
   transform: translate(-50%, -50%);
   border-radius: 33px;
   padding: 0;
   border: 0px;
-  transition: left 0.4s ease-out; 
+  transition: left 0.4s ease-out;
 }
 
 #dialog_contacts.dialog-open {
@@ -26,12 +26,12 @@
   height: 592px;
   text-align: center;
   top: 50%;
-  left: 200%; /* Start off-screen */
+  left: 200%;
   transform: translate(-50%, -50%);
   border-radius: 33px;
   padding: 0;
   border: 0px;
-  transition: left 0.4s ease-out; /* Transition for the sliding effect */
+  transition: left 0.4s ease-out;
 }
 
 #dialog_edit.dialog-open {
@@ -335,10 +335,6 @@ button {
   color: #ff8190;
 }
 
-.img-delete:hover {
-  content: url(../assets/img/png/delete-hover.png);
-}
-
 .delete-contact {
   width: 360px;
   font-size: 20px;
@@ -358,10 +354,9 @@ button {
   height: 100%;
 }
 
-.delete-btn:hover{
+.delete-btn:hover {
   cursor: pointer;
 }
-
 
 .delete-message {
   height: 74px;
@@ -393,60 +388,13 @@ button {
   content: url(../assets/img/png/clear-button-lightblue.png);
 }
 
-.clear-button:active{
+.clear-button:active {
   background-color: transparent;
   border-color: #091931;
   color: #091931;
-  box-shadow:none;
+  box-shadow: none;
 }
 
 .clear-button:active img {
   content: url(../assets/img/png/clear-button-darkblue.png);
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1002;
-}
-
-.overlay.active {
-  display: flex;
-}
-
-.overlay.visible {
-  opacity: 1;
-}
-
-.overlay.visible .single-task,
-.overlay.visible .add-task-board {
-  transform: translateY(0);
-}
-
-.overlay-delete {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1002;
-  opacity: 0;
-  transition: background-color 0.5s ease;
-}
-
-.overlay-delete.active {
-  display: flex;
-}
-
-.overlay-delete.visible {
-  opacity: 1;
-}
-
-.overlay-delete.visible .delete-message {
-  transform: translateY(0);
 }
