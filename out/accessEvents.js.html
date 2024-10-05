@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: addTaskFetchLoad.js</title>
+    <title>JSDoc: Source: accessEvents.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: addTaskFetchLoad.js</h1>
+    <h1 class="page-title">Source: accessEvents.js</h1>
 
     
 
@@ -27,159 +27,252 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This function loads the Add Task Template content an finds the exact location to render
+ * Initializes access-related functionality for the application.
+ */
+function initAccess() {
+  setupRememberMeFieldListeners();
+  loginPasswordField();
+  signupPasswordField();
+  signupConfirmPasswordField();
+  resetTheDatabase();
+}
+
+/**
+ * Toggles the state of a check button image.
  *
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
+ * @param {string} CheckButtonId - The ID of the check button element
+ * @param {string} CheckTaskButton - The type of check button
  */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  clearTemplate(clear);
-  getContacts();
-  if (clear) {
-      clearButton();
-      renderEditButtons();
-  }
+function toggleCheckButtonAccess(CheckButtonId, CheckTaskButton) {
+  const checkButton = document.getElementById(CheckButtonId);
+  const isChecked = checkButton.src.includes("true");
+  checkButton.src = `./assets/img/png/check-${CheckTaskButton}-${
+    isChecked ? "false" : "true"
+  }.png`;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const logoContainer = document.querySelector(".logo-container");
+  const logo = document.querySelector(".img-logo");
+
+  setTimeout(() => {
+    logo.classList.add("logo-small");
+    logoContainer.classList.add("container-transparent");
+  }, 1000);
+
+  setTimeout(() => {
+    logoContainer.style.pointerEvents = "none";
+    logo.style.zIndex = "1001";
+  }, 1500);
+
+  checkRememberMeData();
+});
 
 /**
- * This function clears the closed template
- * 
- * @param {boolean} clear This variable is a state of true or false
+ * Checks for stored "Remember Me" data and fills the login form if available.
  */
-function clearTemplate(clear) {
-  if (clear === true) {
-      document.getElementById('edit_task_template').innerHTML = "";
-  } else if (clear === false) {
-      document.getElementById('add_task_template').innerHTML = "";
-  }
-}
+function checkRememberMeData() {
+  const rememberMeData = localStorage.getItem("rememberMeData");
 
-function renderEditButtons(){
-  document.getElementById("content_order").classList.add("content-order");
-  document.getElementById("content_order").classList.remove("edit-content-order");
-  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.remove('edit-ok-button');
-}
-
-/** This function gathers all data to create a task */
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
-
-  setTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
-}
-
-/**
- * This function sets all data
- * 
- * @param {Objekt} taskData - all user inputs for a task
- * @param {number} taskId - Id of the task
- */
-function setTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
-  );
-  putTaskToUser(taskId);
-}
-
-/**
- * This function checks if the task Id is includes in active user data 
- * 
- * @param {number} taskId - Id of the task
- */
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
+  if (rememberMeData) {
     try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
+      const { email, password } = JSON.parse(rememberMeData);
+      fillLoginForm(email, password);
+      toggleCheckButtonAccess("login_check_off", "button");
     } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
+      console.error("Fehler beim Parsen der gespeicherten Login-Daten:", error);
     }
   }
 }
 
 /**
- * Thias function updates the user database Informations
- * 
- * @param {number} userId - Id of the active user
- * @param {number} taskId - Id of the task
- * @returns - activates the pstData function
+ * Fills the login form with stored email and password.
+ *
+ * @param {string} email - The stored email address
+ * @param {string} password - The stored password
  */
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
+function fillLoginForm(email, password) {
+  const emailInput = document.getElementById("login_email");
+  const passwordInput = document.getElementById("login_password");
+
+  if (emailInput &amp;&amp; passwordInput) {
+    emailInput.value = email;
+    passwordInput.value = password;
+  } else {
+    console.error("Login-Formularfelder nicht gefunden");
   }
 }
 
 /**
- * This function puts all informations of the task together
- * 
- * @param {string} title - key of input value of the title
- * @param {string} description - key of input value of the description
- * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
- * @param {number} assignedTo - key of Id of all selcted assigned
- * @param {string} categorySeleced - key of text of the selected category
+ * Toggles visibility between login and signup windows.
  */
-function putTasksContent(
-  title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
-) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
+function toggleAccessWindow() {
+  let logIn = document.getElementById("Login");
+  let signUp = document.getElementById("Signup");
+  let changeAccess = document.getElementById("change_access");
+
+  logIn.classList.toggle("d-none");
+  signUp.classList.toggle("d-none");
+  changeAccess.classList.toggle("d-none");
+}
+
+/**
+ * Sets up event listeners for the "Remember Me" functionality in the login form.
+ */
+function setupRememberMeFieldListeners() {
+  const emailInput = document.getElementById("login_email");
+  const passwordInput = document.getElementById("login_password");
+  const legalButton = document.getElementById("login_check_off");
+
+  emailInput.addEventListener("input", function () {
+    if (this.value === "") {
+      legalButton.src = `./assets/img/png/check-button-false.png`;
+      passwordInput.value = "";
+    }
   });
 }
 
-/** This function fetches all contact data from the database */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
+/**
+ * Sets up password field interactions for the login form.
+ */
+function loginPasswordField() {
+  const passwordField = document.getElementById("login_password");
+  const lockIcon = document.getElementById("login_lock_icon");
+  const togglePassword = document.getElementById("login_toggle_password");
+
+  setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
+
+  updateVisibility(passwordField, lockIcon, togglePassword);
 }
 
-/** This function fetches all selected contact data from the database */
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
-    userContacts.includes(contact.id)
+/**
+ * Sets up password field interactions for the signup form.
+ */
+function signupPasswordField() {
+  const passwordField = document.getElementById("signup_password");
+  const lockIcon = document.getElementById("signup_lock_icon");
+  const togglePassword = document.getElementById("signup_toggle_password");
+
+  setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
+
+  updateVisibility(passwordField, lockIcon, togglePassword);
+}
+
+/**
+ * Sets up password field interactions for the confirm password field in the signup form.
+ */
+function signupConfirmPasswordField() {
+  const passwordField = document.getElementById("signup_c_password");
+  const lockIcon = document.getElementById("signup_c_lock_icon");
+  const togglePassword = document.getElementById("signup_c_toggle_password");
+
+  setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
+
+  updateVisibility(passwordField, lockIcon, togglePassword);
+}
+
+/**
+ * Sets up all password field interactions.
+ *
+ * @param {HTMLElement} passwordField - The password input element
+ * @param {HTMLElement} lockIcon - The lock icon element
+ * @param {HTMLElement} togglePassword - The toggle password visibility element
+ */
+function setupPasswordFieldInteractions(
+  passwordField,
+  lockIcon,
+  togglePassword
+) {
+  setupInputListener(passwordField, lockIcon, togglePassword);
+  setupMouseListeners(passwordField, togglePassword);
+  setupTouchListeners(passwordField, togglePassword);
+}
+
+/**
+ * Sets up the input event listener for the password field.
+ *
+ * @param {HTMLElement} passwordField - The password input element
+ * @param {HTMLElement} lockIcon - The lock icon element
+ * @param {HTMLElement} togglePassword - The toggle password visibility element
+ */
+function setupInputListener(passwordField, lockIcon, togglePassword) {
+  passwordField.addEventListener("input", () =>
+    updateVisibility(passwordField, lockIcon, togglePassword)
   );
-  window.allContacts = contactsToRender;
-  displaySelectedContacts(contactsToRender, selectedList);
-}</code></pre>
+}
+
+/**
+ * Sets up mouse event listeners for password visibility toggle.
+ *
+ * @param {HTMLElement} passwordField - The password input element
+ * @param {HTMLElement} togglePassword - The toggle password visibility element
+ */
+function setupMouseListeners(passwordField, togglePassword) {
+  togglePassword.addEventListener("mousedown", () =>
+    showPassword(passwordField, togglePassword)
+  );
+  togglePassword.addEventListener("mouseup", () =>
+    hidePassword(passwordField, togglePassword)
+  );
+  togglePassword.addEventListener("mouseleave", () =>
+    hidePassword(passwordField, togglePassword)
+  );
+}
+
+/**
+ * Sets up touch event listeners for password visibility toggle.
+ *
+ * @param {HTMLElement} passwordField - The password input element
+ * @param {HTMLElement} togglePassword - The toggle password visibility element
+ */
+function setupTouchListeners(passwordField, togglePassword) {
+  togglePassword.addEventListener(
+    "touchstart",
+    () => showPassword(passwordField, togglePassword),
+    { passive: true }
+  );
+  togglePassword.addEventListener(
+    "touchend",
+    () => hidePassword(passwordField, togglePassword),
+    { passive: true }
+  );
+}
+
+/**
+ * Updates the visibility of password-related elements based on the password field's content.
+ *
+ * @param {HTMLElement} passwordField - The password input element
+ * @param {HTMLElement} lockIcon - The lock icon element
+ * @param {HTMLElement} togglePassword - The toggle password visibility element
+ */
+function updateVisibility(passwordField, lockIcon, togglePassword) {
+  const isEmpty = passwordField.value.length === 0;
+  lockIcon.classList.toggle("d-none", !isEmpty);
+  togglePassword.classList.toggle("d-none", isEmpty);
+}
+
+/**
+ * Shows the password in clear text.
+ *
+ * @param {HTMLElement} passwordField - The password input element
+ * @param {HTMLElement} togglePassword - The toggle password visibility element
+ */
+function showPassword(passwordField, togglePassword) {
+  passwordField.type = "text";
+  togglePassword.src = "./assets/img/png/visibility.png";
+}
+
+/**
+ * Hides the password by changing it back to password type.
+ *
+ * @param {HTMLElement} passwordField - The password input element
+ * @param {HTMLElement} togglePassword - The toggle password visibility element
+ */
+function hidePassword(passwordField, togglePassword) {
+  passwordField.type = "password";
+  togglePassword.src = "./assets/img/png/visibility_off.png";
+}
+</code></pre>
         </article>
     </section>
 

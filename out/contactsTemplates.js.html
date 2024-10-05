@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: addTaskFetchLoad.js</title>
+    <title>JSDoc: Source: contactsTemplates.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: addTaskFetchLoad.js</h1>
+    <h1 class="page-title">Source: contactsTemplates.js</h1>
 
     
 
@@ -27,158 +27,184 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This function loads the Add Task Template content an finds the exact location to render
+ * Generates HTML to display the contact information of the active user.
+ * @param {Object} user - The user object.
+ * @param {number} user.id - The unique ID of the user.
+ * @param {string} user.initials - The initials of the user.
+ * @param {string} user.name - The full name of the user.
+ * @param {string} user.email - The email address of the user.
+ * @returns {string} The HTML string representing the active user's contact.
+ */
+function generateActiveUserContact(user){
+  return `
+      &lt;div id="contact${user.id}" class="contacts" onclick="displayContactInfo(${user.id})">
+        &lt;div class="letter-circle letter-circel-user" style="background-color: white;">${user.initials}&lt;/div>
+        &lt;div class="contact-info">
+          &lt;span>${user.name}(YOU)&lt;/span>
+          &lt;a class="contact-email" href="#">${user.email}&lt;/a>
+        &lt;/div>
+      &lt;/div>
+    `;
+}
+
+/**
+ * Generates HTML for a general contact.
+ * @param {Object} contact - The contact object.
+ * @param {number} contact.id - The unique ID of the contact.
+ * @param {string} contact.initials - The initials of the contact.
+ * @param {string} contact.name - The full name of the contact.
+ * @param {string} contact.email - The email address of the contact.
+ * @param {string} contact.color - The background color for the initials.
+ * @returns {string} The HTML string representing the contact.
+ */
+function generateContact(contact) {
+  const limitNameLength = limitTextLength(contact.name);
+  const limitEmailLength = limitTextLength(contact.email);
+
+  return `
+      &lt;div id="contact${contact.id}" class="contacts" onclick="displayContactInfo(${contact.id})">
+        &lt;div class="letter-circle" style="background-color: ${contact.color};">${contact.initials}&lt;/div>
+        &lt;div class="contact-info">
+          &lt;span>${limitNameLength}&lt;/span>
+          &lt;a class="contact-email" href="#">${limitEmailLength}&lt;/a>
+        &lt;/div>
+      &lt;/div>
+    `;
+}
+
+/**
+ * Generates a letter box to group contacts by their initials.
+ * @param {string} initials - The initials to be displayed.
+ * @returns {string} The HTML string for the letter box.
+ */
+function generateLetterBox(initials) {
+  return `&lt;div class="letter-box">${initials}&lt;/div>
+              &lt;div class="contact-seperator">&lt;/div>`;
+}
+
+/**
+ * Generates detailed contact information for display.
+ * @param {Object} contact - The contact object.
+ * @param {number} contact.id - The unique ID of the contact.
+ * @param {string} contact.initials - The initials of the contact.
+ * @param {string} contact.name - The full name of the contact.
+ * @param {string} contact.email - The email address of the contact.
+ * @param {string} contact.phone - The phone number of the contact.
+ * @param {string} contact.color - The background color for the initials.
+ * @returns {string} The HTML string representing the contact information.
+ */
+function generateContactInfo(contact) {
+  const phone = contact.phone !== undefined ? contact.phone : "";
+  return `
+    &lt;div class="contacts-info">
+        &lt;div class="contacts-info-name">
+          &lt;div id="for_active_user" class="big-letter-circle" style="background-color: ${contact.color};">${contact.initials}&lt;/div>
+          &lt;div class="contact-box-name">
+            &lt;h3>${contact.name}&lt;/h3>
+            &lt;div class="contact-box-edit-delete">
+              &lt;div onclick="openDialogEdit(${contact.id})" class="edit-link">
+                &lt;svg class="icon-edit" width="18" height="18" viewBox="0 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                  &lt;path d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3042 0.75 14.8625 0.75C15.4208 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.57083 18.275 4.1125C18.2917 4.65417 18.1083 5.11667 17.725 5.5L16.3 6.925ZM14.85 8.4L4.25 19H0V14.75L10.6 4.15L14.85 8.4Z" />
+                &lt;/svg>Edit
+              &lt;/div>
+              &lt;div onclick="openDeleteDialog(${contact.id})" class="delete-link">
+                &lt;svg class="icon-delete" width="16" height="18" viewBox="0 0 16 18" xmlns="http://www.w3.org/2000/svg">
+                  &lt;path d="M3 18C2.45 18 1.97917 17.8042 1.5875 17.4125C1.19583 17.0208 1 16.55 1 16V3C0.716667 3 0.479167 2.90417 0.2875 2.7125C0.0958333 2.52083 0 2.28333 0 2C0 1.71667 0.0958333 1.47917 0.2875 1.2875C0.479167 1.09583 0.716667 1 1 1H5C5 0.716667 5.09583 0.479167 5.2875 0.2875C5.47917 0.0958333 5.71667 0 6 0H10C10.2833 0 10.5208 0.0958333 10.7125 0.2875C10.9042 0.479167 11 0.716667 11 1H15C15.2833 1 15.5208 1.09583 15.7125 1.2875C15.9042 1.47917 16 1.71667 16 2C16 2.28333 15.9042 2.52083 15.7125 2.7125C15.5208 2.90417 15.2833 3 15 3V16C15 16.55 14.8042 17.0208 14.4125 17.4125C14.0208 17.8042 13.55 18 13 18H3ZM3 3V16H13V3H3ZM5 13C5 13.2833 5.09583 13.5208 5.2875 13.7125C5.47917 13.9042 5.71667 14 6 14C6.28333 14 6.52083 13.9042 6.7125 13.7125C6.90417 13.5208 7 13.2833 7 13V6C7 5.71667 6.90417 5.47917 6.7125 5.2875C6.52083 5.09583 6.28333 5 6 5C5.71667 5 5.47917 5.09583 5.2875 5.2875C5.09583 5.47917 5 5.71667 5 6V13ZM9 13C9 13.2833 9.09583 13.5208 9.2875 13.7125C9.47917 13.9042 9.71667 14 10 14C10.2833 14 10.5208 13.9042 10.7125 13.7125C10.9042 13.5208 11 13.2833 11 13V6C11 5.71667 10.9042 5.47917 10.7125 5.2875C10.5208 5.09583 10.2833 5 10 5C9.71667 5 9.47917 5.09583 9.2875 5.2875C9.09583 5.47917 9 5.71667 9 6V13Z" />
+                &lt;/svg>Delete
+              &lt;/div>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+        &lt;div class="contacts-information">
+          &lt;span>Contact Information&lt;/span>
+        &lt;/div>
+        &lt;div class="contacts-info-email-phone">
+          &lt;div class="contacts-info-email">
+            &lt;span style="font-weight: 700;">Email&lt;/span>
+            &lt;span style="color: #007CEE;"> 
+              &lt;a class="contact-email" href="mailto:${contact.email}">${contact.email}&lt;/a>
+            &lt;/span>
+          &lt;/div>
+          &lt;div class="contacts-info-phone">
+            &lt;span style="font-weight: 700;">Phone&lt;/span>
+            &lt;span>${phone}&lt;/span>
+          &lt;/div>
+        &lt;/div>
+        &lt;/div>
+      `;
+}
+
+/**
+ * Generates the large letter circle for displaying the active contact.
+ * @param {Object} contact - The contact object.
+ * @param {string} contact.initials - The initials of the contact.
+ * @param {string} contact.color - The background color for the initials.
+ * @returns {string} The HTML string for the large letter circle.
+ */
+function generateBigLetterCircle(contact) {
+  return `
+      &lt;div id="for_active_use_dialog_circel" class="edit-big-letter-circle" style="background-color: ${contact.color}";>${contact.initials}
+      &lt;/div>
+      `;
+}
+
+/**
+ * Generates the buttons for editing and deleting a contact.
+ * @param {Object} contact - The contact object.
+ * @param {number} contact.id - The unique ID of the contact.
+ * @returns {string} The HTML string for the buttons (Delete and Save).
+ */
+function generateButtonsInContactInfo(contact) {
+  return `
+    &lt;button onclick="openDeleteDialog(${contact.id})" class="button-delete">
+    Delete
+  &lt;/button>
+  &lt;button onclick="validateEditForm(${contact.id})" class="button-save">
+    Save
+    &lt;img
+      class="check-icon-button"
+      src="../assets/img/png/check.png"
+      alt="check"
+    />
+  &lt;/button>
+    `;
+}
+
+/**
+ * Generates the mobile menu with edit and delete icons for a contact.
+ * @param {Object} contact - The contact object.
+ * @param {number} contact.id - The unique ID of the contact.
+ * @returns {string} The HTML string for the mobile menu.
+ */
+function generateMobileMenu(contact){
+  return ` &lt;img onclick="openDialogEdit(${contact.id})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
+      &lt;img onclick="openDeleteDialog(${contact.id})" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete">&lt;/img>`;
+  
+}
+/**
+ * Generates HTML for a delete button for a specific contact.
  *
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
+ * @param {number} contactId - The ID of the contact to be deleted.
+ * @returns {string} HTML string representing a delete button with an onclick event.
  */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  clearTemplate(clear);
-  getContacts();
-  if (clear) {
-      clearButton();
-      renderEditButtons();
-  }
+function generateDeleteButton(contactId) {
+  return `&lt;button class="clear-button"
+           onclick="deleteContact(${contactId});toggleOverlay('contact_delete_overlay'); closeDialogEdit() ">YES
+      &lt;/button>`;
 }
 
 /**
- * This function clears the closed template
- * 
- * @param {boolean} clear This variable is a state of true or false
+ * Generates an HTML string that indicates the status of a contact operation.
+ *
+ * @param {string} operation - The type of operation performed on the contact.
+ *                              It can be one of the following values:
+ *                              - "created" for a newly added contact,
+ *                              - "edited" for an updated contact,
+ *                              - "deleted" for a removed contact.
+ * @returns {string} An HTML string that displays a success message.
  */
-function clearTemplate(clear) {
-  if (clear === true) {
-      document.getElementById('edit_task_template').innerHTML = "";
-  } else if (clear === false) {
-      document.getElementById('add_task_template').innerHTML = "";
-  }
-}
-
-function renderEditButtons(){
-  document.getElementById("content_order").classList.add("content-order");
-  document.getElementById("content_order").classList.remove("edit-content-order");
-  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.remove('edit-ok-button');
-}
-
-/** This function gathers all data to create a task */
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
-
-  setTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
-}
-
-/**
- * This function sets all data
- * 
- * @param {Objekt} taskData - all user inputs for a task
- * @param {number} taskId - Id of the task
- */
-function setTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
-  );
-  putTaskToUser(taskId);
-}
-
-/**
- * This function checks if the task Id is includes in active user data 
- * 
- * @param {number} taskId - Id of the task
- */
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
-    } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    }
-  }
-}
-
-/**
- * Thias function updates the user database Informations
- * 
- * @param {number} userId - Id of the active user
- * @param {number} taskId - Id of the task
- * @returns - activates the pstData function
- */
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
-  }
-}
-
-/**
- * This function puts all informations of the task together
- * 
- * @param {string} title - key of input value of the title
- * @param {string} description - key of input value of the description
- * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
- * @param {number} assignedTo - key of Id of all selcted assigned
- * @param {string} categorySeleced - key of text of the selected category
- */
-function putTasksContent(
-  title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
-) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
-  });
-}
-
-/** This function fetches all contact data from the database */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
-}
-
-/** This function fetches all selected contact data from the database */
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displaySelectedContacts(contactsToRender, selectedList);
+function generateSuccesssfullyHtml(operation){
+  return `&lt;span>Contacts successfully ${operation}&lt;/span>`;
 }</code></pre>
         </article>
     </section>

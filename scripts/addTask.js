@@ -122,7 +122,7 @@ function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
 /**
  * This function proves if the Contact is selected or not
  * 
- * @param {NumberId} contactId - The active User Id 
+ * @param {NumberId} contactId - is the contact Id 
  */
 function addContactAssigned(contactId) {
   if (!selectedContacts.some((contact) => contact.contactId === contactId)) {
@@ -134,7 +134,7 @@ function addContactAssigned(contactId) {
 /**
  * This function proves if the active User is selected or not
  * 
- * @param {NumberId} activUserId - The active User Id 
+ * @param {NumberId} activUserId - is the active User Id 
  */
 function addUserAssigned(activUserId) {
   if (!userId.some((user) => user.activUserId === activUserId)) {
@@ -182,7 +182,7 @@ function updateSelectedUserDisplay() {
  * This function updates the Contact Icon shown after select or remove from assigned to
  * 
  * @param {number} newContacts - Those are the Id Numbers of all Contacts
- * @param {*} selectedList - Those are the Id Numbers of all selected Contacts
+ * @param {number} selectedList - Those are the Id Numbers of all selected Contacts
  */
 function displaySelectedContacts(newContacts, selectedList) {
   for (let i = 0; i < Math.min(selectedContacts.length); i++) {

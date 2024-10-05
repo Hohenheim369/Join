@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: addTaskFetchLoad.js</title>
+    <title>JSDoc: Source: contacts.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: addTaskFetchLoad.js</h1>
+    <h1 class="page-title">Source: contacts.js</h1>
 
     
 
@@ -27,159 +27,263 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This function loads the Add Task Template content an finds the exact location to render
- *
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
+ * Event listener that is triggered once the HTML document is fully loaded and parsed.
+ * This listener calls the `renderContent()` function to display the contact list.
  */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  clearTemplate(clear);
-  getContacts();
-  if (clear) {
-      clearButton();
-      renderEditButtons();
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  renderContent();
+});
+
+/**
+ * Loads and renders the content of the contact list.
+ * This function groups the contacts by their initials and displays them in the UI.
+ */
+async function renderContent() {
+  const groupedContacts = await groupContacts();
+  renderContactsList(groupedContacts);
 }
 
 /**
- * This function clears the closed template
- * 
- * @param {boolean} clear This variable is a state of true or false
+ * Groups the contacts by their initials.
+ * This function filters the active user's contacts and groups them based on the first letter
+ * of their initials.
+ * @returns {Object} An object containing the contacts grouped by initials.
  */
-function clearTemplate(clear) {
-  if (clear === true) {
-      document.getElementById('edit_task_template').innerHTML = "";
-  } else if (clear === false) {
-      document.getElementById('add_task_template').innerHTML = "";
-  }
-}
-
-function renderEditButtons(){
-  document.getElementById("content_order").classList.add("content-order");
-  document.getElementById("content_order").classList.remove("edit-content-order");
-  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.remove('edit-ok-button');
-}
-
-/** This function gathers all data to create a task */
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
-
-  setTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
-}
-
-/**
- * This function sets all data
- * 
- * @param {Objekt} taskData - all user inputs for a task
- * @param {number} taskId - Id of the task
- */
-function setTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
-  );
-  putTaskToUser(taskId);
-}
-
-/**
- * This function checks if the task Id is includes in active user data 
- * 
- * @param {number} taskId - Id of the task
- */
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
-    } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
+async function groupContacts() {
+  userContacts = await filterUserContacts();
+  return userContacts.reduce((acc, contact, index) => {
+    if (contact &amp;&amp; contact.initials) {
+      let firstInitial = contact.initials.charAt(0).toUpperCase();
+      if (!acc[firstInitial]) {
+        acc[firstInitial] = [];
+      }
+      acc[firstInitial].push({ contact, initials: contact.initials, index });
     }
-  }
+    return acc;
+  }, {});
 }
 
 /**
- * Thias function updates the user database Informations
- * 
- * @param {number} userId - Id of the active user
- * @param {number} taskId - Id of the task
- * @returns - activates the pstData function
+ * Filters the contacts of the currently active user.
+ * This function loads the contacts from the database and filters only those that belong to the active user.
+ * @returns {Array} A list of the filtered contacts of the active user.
  */
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
-  }
+async function filterUserContacts() {
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  const data = await fetchData("contacts");
+  const contacts = Object.values(data);
+  const userContacts = contacts.filter((contact) =>
+    activeUser.contacts.includes(contact.id)
+  );
+  return userContacts;
 }
 
 /**
- * This function puts all informations of the task together
- * 
- * @param {string} title - key of input value of the title
- * @param {string} description - key of input value of the description
- * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
- * @param {number} assignedTo - key of Id of all selcted assigned
- * @param {string} categorySeleced - key of text of the selected category
+ * Renders the grouped contacts in the contact list.
+ * This function sorts the initials, renders a letter box for each initial, and displays
+ * the corresponding contacts.
+ * @param {Object} groupedContacts - An object containing the contacts grouped by initials.
  */
-function putTasksContent(
-  title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
-) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
+async function renderContactsList(groupedContacts) {
+  const contactList = document.getElementById("contact_list");
+  contactList.innerHTML = "";
+  await initActiveUser(contactList);
+  const sortedInitials = sortInitials(Object.keys(groupedContacts));
+  sortedInitials.forEach((initial) => {
+    initLetterBox(initial, contactList);
+    renderContactsByInitial(groupedContacts[initial], contactList);
   });
 }
 
-/** This function fetches all contact data from the database */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
+/**
+ * Initializes and displays the information of the active user in the contact list.
+ * @param {HTMLElement} contactList - The HTML element of the contact list.
+ */
+async function initActiveUser(contactList) {
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  const user = await searchForUser(activeUser.id);
+  if (user) {
+    user.id = 0;
+    contactList.innerHTML = generateActiveUserContact(user);
+  }
 }
 
-/** This function fetches all selected contact data from the database */
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displaySelectedContacts(contactsToRender, selectedList);
-}</code></pre>
+/**
+ * Sorts the initials alphabetically.
+ * @param {Array} initials - An array of initials.
+ * @returns {Array} The alphabetically sorted array of initials.
+ */
+function sortInitials(initials) {
+  return initials.sort();
+}
+
+/**
+ * Renders all contacts that belong to a specific initial.
+ * @param {Array} contacts - The contacts grouped under a specific initial.
+ * @param {HTMLElement} contactList - The HTML element of the contact list.
+ */
+function renderContactsByInitial(contacts, contactList) {
+  contacts.forEach(({ contact }) => {
+    const contactHtml = generateContact(contact);
+    contactList.innerHTML += contactHtml;
+  });
+}
+
+/**
+ * Initializes a letter box in the contact list.
+ * @param {string} initial - The starting letter of the initials.
+ * @param {HTMLElement} contactList - The HTML element of the contact list.
+ */
+function initLetterBox(initial, contactList) {
+  const letterBoxHtml = generateLetterBox(initial);
+  contactList.innerHTML += letterBoxHtml;
+}
+
+/**
+ * Adds a new contact and updates the user interface.
+ * This function creates a new contact, adds it to the active user, and renders the
+ * updated contact list.
+ */
+async function addContact() {
+  const contactId = await postNewContact();
+  addContactToUser(contactId, activeUser);
+  addContactToUserLocal(contactId, activeUser);
+  closeDialog();
+  await openDialogSuccessfully('created');
+  clearForm();
+  renderContent();
+}
+
+/**
+ * Creates a contact object with the provided data.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email address of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @param {number} contactId - The ID of the contact.
+ * @returns {Object} The created contact object.
+ */
+function createContact(name, email, phone, contactId) {
+  return {
+    id: contactId,
+    name: name,
+    email: email,
+    phone: phone,
+    color: generateRandomColor(),
+    initials: getInitials(name),
+  };
+}
+
+/**
+ * Generates a random color in a dark shade.
+ * @returns {string} A hexadecimal color code.
+ */
+function generateRandomColor() {
+  const darkLetters = "0123456789ABC";
+  let color = "#";
+  for (let i = 0; i &lt; 6; i++) {
+    color += darkLetters[Math.floor(Math.random() * darkLetters.length)];
+  }
+  return color;
+}
+
+/**
+ * Displays the information of a contact on the desktop.
+ * This function loads the contact data and shows it in the contact info area.
+ * If the screen width is less than 777px, the mobile view will be displayed instead.
+ * @param {number} contactId - The ID of the contact whose information should be displayed.
+ */
+async function displayContactInfo(contactId) {
+  const contact = await getContact(contactId);
+  if (window.innerWidth &lt;= 777) {
+    return displayContactInfoMobile(contactId);
+  }
+  const contactInfoDiv = document.querySelector(".contacts-info-box");
+  const contactInfoButtons = document.getElementById("button_edit_dialog");
+  contactInfoDiv.innerHTML = generateContactInfo(contact);
+  contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
+  if (contact.id === 0) {
+    document
+      .getElementById("for_active_user")
+      .classList.add("letter-circel-user");
+  }
+  highlightContact(contact);
+}
+
+/**
+ * Retrieves the contact data based on the contact ID.
+ * This function distinguishes between the active user and a regular contact.
+ * @param {number} contactId - The ID of the contact to be retrieved.
+ * @returns {Object} The data of the contact.
+ */
+async function getContact(contactId) {
+  if (contactId === 0) {
+    const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    const contact = await searchForUser(activeUser.id);
+    contact.id = 0;
+    return contact;
+  } else {
+    return await searchForContact(contactId);
+  }
+}
+
+/**
+ * Highlights the currently selected contact in the contact list.
+ * This function sets the background color of the selected contact and visually highlights it.
+ * @param {Object} contact - The contact to be highlighted.
+ */
+function highlightContact(contact) {
+  const contacts = document.getElementsByClassName("contacts");
+  for (let i = 0; i &lt; contacts.length; i++) {
+    contacts[i].style.backgroundColor = "";
+    contacts[i].style.color = "black";
+  }
+  document.getElementById(`contact${contact.id}`).style.backgroundColor =
+    "#27364a";
+  document.getElementById(`contact${contact.id}`).style.color = "white";
+}
+
+/**
+ * Returns the initials of a name.
+ * This function extracts the first letters from the name and returns them as initials.
+ * @param {string} name - The name from which the initials should be extracted.
+ * @returns {string} The initials of the name.
+ */
+function getInitials(name) {
+  const names = name.split(" ");
+  if (names.length === 1) {
+    return names[0].charAt(0).toUpperCase();
+  }
+  const firstInitial = names[0].charAt(0).toUpperCase();
+  const lastInitial = names[names.length - 1].charAt(0).toUpperCase();
+  return firstInitial + lastInitial;
+}
+
+/**
+ * Limits the length of a text to a maximum length.
+ * If the text is longer than the specified maximum length, it is truncated and appended with "...".
+ * @param {string} text - The text to be limited.
+ * @param {number} [maxLength=20] - The maximum length of the text.
+ * @returns {string} The processed text.
+ */
+function limitTextLength(text, maxLength = 15) {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + "...";
+  }
+  return text;
+}
+
+/**
+ * Waits for a specified amount of time.
+ * This function returns a promise that resolves after the specified time.
+ * @param {number} ms - The wait time in milliseconds.
+ * @returns {Promise} A promise that resolves after the wait time.
+ */
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+
+</code></pre>
         </article>
     </section>
 

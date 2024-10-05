@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: addTaskFetchLoad.js</title>
+    <title>JSDoc: Source: boardTasks.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: addTaskFetchLoad.js</h1>
+    <h1 class="page-title">Source: boardTasks.js</h1>
 
     
 
@@ -27,159 +27,307 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This function loads the Add Task Template content an finds the exact location to render
+ * Updates the Kanban board by cleaning it and rendering tasks in their respective status areas.
+ */
+async function updateTasksOnBoard() {
+  cleanBoard(statuses);
+  await renderTasksInStatusArea(statuses);
+}
+
+/**
+ * Cleans the Kanban board by removing all tasks from each status column.
  *
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
+ * @param {string} statuses - An array of status names
  */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  clearTemplate(clear);
-  getContacts();
-  if (clear) {
-      clearButton();
-      renderEditButtons();
-  }
-}
-
-/**
- * This function clears the closed template
- * 
- * @param {boolean} clear This variable is a state of true or false
- */
-function clearTemplate(clear) {
-  if (clear === true) {
-      document.getElementById('edit_task_template').innerHTML = "";
-  } else if (clear === false) {
-      document.getElementById('add_task_template').innerHTML = "";
-  }
-}
-
-function renderEditButtons(){
-  document.getElementById("content_order").classList.add("content-order");
-  document.getElementById("content_order").classList.remove("edit-content-order");
-  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.remove('edit-ok-button');
-}
-
-/** This function gathers all data to create a task */
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
-
-  setTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
-}
-
-/**
- * This function sets all data
- * 
- * @param {Objekt} taskData - all user inputs for a task
- * @param {number} taskId - Id of the task
- */
-function setTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
-  );
-  putTaskToUser(taskId);
-}
-
-/**
- * This function checks if the task Id is includes in active user data 
- * 
- * @param {number} taskId - Id of the task
- */
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
-    } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    }
-  }
-}
-
-/**
- * Thias function updates the user database Informations
- * 
- * @param {number} userId - Id of the active user
- * @param {number} taskId - Id of the task
- * @returns - activates the pstData function
- */
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
-  }
-}
-
-/**
- * This function puts all informations of the task together
- * 
- * @param {string} title - key of input value of the title
- * @param {string} description - key of input value of the description
- * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
- * @param {number} assignedTo - key of Id of all selcted assigned
- * @param {string} categorySeleced - key of text of the selected category
- */
-function putTasksContent(
-  title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
-) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
+function cleanBoard(statuses) {
+  statuses.forEach((status) => {
+    const statusColumn = document.getElementById(`kanban_${status}`);
+    statusColumn.innerHTML = "";
   });
 }
 
-/** This function fetches all contact data from the database */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
-    userContacts.includes(contact.id)
+/**
+ * Renders filtered tasks in their respective status areas on the Kanban board.
+ *
+ * @param {string} statuses - An array of status names
+ */
+async function renderTasksInStatusArea(statuses) {
+  let tasksToRender = await filterUserTasks();
+  tasksToRender = filterSoughtTaskToRender(tasksToRender);
+  const contacts = await fetchData("contacts");
+
+  statuses.forEach((status) =>
+    renderStatusArea(status, tasksToRender, contacts)
   );
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
 }
 
-/** This function fetches all selected contact data from the database */
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
-    userContacts.includes(contact.id)
+/**
+ * Filters tasks assigned to the active user.
+ *
+ * @returns {Object} An array of task objects assigned to the active user
+ */
+async function filterUserTasks() {
+  let userTasks = activeUser.tasks;
+  let allTasks = await fetchData("tasks");
+
+  const tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
+  return tasksToRender;
+}
+
+/**
+ * Filters tasks based on a search query in their title or description.
+ *
+ * @param {Object} tasksToRender - An array of task objects to filter
+ * @returns {Object} An array of filtered task objects matching the search query
+ */
+function filterSoughtTaskToRender(tasksToRender) {
+  let soughtTask = getSoughtTask();
+
+  if (soughtTask.length != 0) {
+    return tasksToRender.filter(
+      (task) =>
+        task.title.toLowerCase().includes(soughtTask) ||
+        task.description.toLowerCase().includes(soughtTask)
+    );
+  }
+
+  return tasksToRender;
+}
+
+/**
+ * Retrieves the search query from both desktop and mobile input fields.
+ *
+ * @returns {string} The lowercase search query
+ */
+function getSoughtTask() {
+  const soughtedTaskDesktop = document.getElementById("sought_task").value;
+  const soughtedTaskMobile =
+    document.getElementById("sought_task_mobile").value;
+  return (soughtedTaskDesktop || soughtedTaskMobile).toLowerCase();
+}
+
+/**
+ * Renders tasks in a specific status area on the Kanban board.
+ *
+ * @param {string} status - The status of the tasks to render
+ * @param {Array} tasks - An array of all tasks
+ * @param {Array} contacts - An array of contact objects
+ */
+function renderStatusArea(status, tasks, contacts) {
+  let statusArea = document.getElementById(`kanban_${status}`);
+  statusArea.innerHTML = "";
+
+  let statusTasks = tasks.filter((task) => task.status == status);
+
+  if (statusTasks == "") {
+    statusArea.innerHTML = generateNoTaskField();
+  } else {
+    renderStatusTasks(statusTasks, statusArea, contacts);
+  }
+}
+
+/**
+ * Renders individual tasks in a specific status area.
+ *
+ * @param {Array} tasks - An array of tasks to render
+ * @param {HTMLElement} area - The HTML element to render tasks in
+ * @param {Array} contacts - An array of contact objects
+ */
+function renderStatusTasks(tasks, area, contacts) {
+  tasks.forEach((task) => {
+    let shortDescription = shortenDescription(task.description);
+    let categoryColor = task.category.replace(/\s+/g, "").toLowerCase();
+
+    area.innerHTML += generateTasksOnBoard(
+      task.id,
+      task.title,
+      shortDescription,
+      task.category,
+      categoryColor,
+      task.priority
+    );
+    displaySubtasks(task);
+    displayAssigneesForTask(task, contacts);
+    displayStatusArrows(task);
+  });
+}
+
+/**
+ * Shortens a task description to a maximum of 6 words.
+ *
+ * @param {string} description - The full task description
+ * @returns {string} - The shortened description
+ */
+function shortenDescription(description) {
+  const words = description.split(/\s+/);
+  if (words.length &lt;= 6) return description;
+  return words.slice(0, 6).join(" ") + "...";
+}
+
+/**
+ * Displays subtasks for a given task on the Kanban board.
+ *
+ * @param {Object} task - The task object containing subtasks
+ */
+function displaySubtasks(task) {
+  let subtaskArea = document.getElementById(`subtasks_${task.id}`);
+  subtaskArea.innerHTML = "";
+  subtaskArea.classList.add("d-none");
+
+  addSubtasksOnBoardTasks(subtaskArea, task);
+}
+
+/**
+ * Adds subtasks to a task card on the Kanban board.
+ *
+ * @param {HTMLElement} subtaskArea - The DOM element to render subtasks in
+ * @param {Object} task - The task object containing subtasks
+ */
+function addSubtasksOnBoardTasks(subtaskArea, task) {
+  if (task.subtasks || Array.isArray(task.subtasks)) {
+    subtaskArea.classList.remove("d-none");
+    let sumAllSubtasks = task.subtasks.length;
+    let sumDoneSubtasks = task.subtasks.filter(
+      (subtask) => subtask.done
+    ).length;
+
+    subtaskArea.innerHTML = generateSubtasks(sumDoneSubtasks, sumAllSubtasks);
+
+    updateSubtasksBar(task.id, sumDoneSubtasks, sumAllSubtasks);
+  }
+}
+
+/**
+ * Updates the visual progress bar for subtasks on a task card.
+ *
+ * @param {number} taskId - The ID of the task
+ * @param {number} sumDoneSubtasks - The number of completed subtasks
+ * @param {number} sumAllSubtasks - The total number of subtasks
+ */
+function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
+  const taskElement = document.getElementById(`task_${taskId}`);
+  const subtasksBar = taskElement.querySelector(".task-subtasks-bar");
+
+  const percentage = (sumDoneSubtasks / sumAllSubtasks) * 100;
+  subtasksBar.style.setProperty("--progress", `${percentage}%`);
+}
+
+/**
+ * Displays assignees for a given task on the Kanban board.
+ *
+ * @param {Object} task - The task object
+ * @param {Array} contacts - An array of contact objects
+ */
+function displayAssigneesForTask(task, contacts) {
+  const assignedField = document.getElementById(`assignees_task_${task.id}`);
+  assignedField.innerHTML = "";
+  let maxDisplayed = determineMaxDisplayed(task);
+  const validContacts = contacts.filter(
+    (contact) =>
+      activeUser.contacts.includes(contact.id)
   );
-  window.allContacts = contactsToRender;
-  displaySelectedContacts(contactsToRender, selectedList);
-}</code></pre>
+
+  if (task.assigned) {
+    let assignees = task.assigned.filter((data) => data !== null);
+    displayAssignees(assignees, validContacts, assignedField, maxDisplayed);
+    displayCount(task, assignees, maxDisplayed);
+  }
+
+  displayUser(task, assignedField);
+}
+
+/**
+ * Determines the maximum number of assignees to display on a task card.
+ *
+ * @param {Object} task - The task object
+ * @returns {number} - The maximum number of assignees to display
+ */
+function determineMaxDisplayed(task) {
+  if (task.user === activeUser.id) {
+    return 2;
+  }
+  return 3;
+}
+
+/**
+ * Renders assignees on a task card up to a maximum number.
+ *
+ * @param {Array} assignees - An array of assignee IDs
+ * @param {Array} contacts - An array of contact objects
+ * @param {HTMLElement} assignedField - The HTML element to render assignees in
+ * @param {number} maxDisplayed - The maximum number of assignees to display
+ */
+function displayAssignees(assignees, contacts, assignedField, maxDisplayed) {
+  assignees
+    .slice(0, maxDisplayed)
+    .forEach((contactId) => renderAssignee(contactId, contacts, assignedField));
+}
+
+/**
+ * Renders a single assignee on a task card.
+ *
+ * @param {string} contactId - The ID of the contact to render
+ * @param {Array} contacts - An array of contact objects
+ * @param {HTMLElement} assignedField - The HTML element to render the assignee in
+ */
+function renderAssignee(contactId, contacts, assignedField) {
+  const contact = contacts.find((c) => c.id === contactId);
+
+  if (contact) {
+    assignedField.innerHTML += generateAssigneeField(contact);
+  }
+}
+
+/**
+ * Displays the count of additional assignees if there are more than the maximum displayed.
+ *
+ * @param {Object} task - The task object
+ * @param {Array} assignees - An array of assignee IDs
+ * @param {number} maxDisplayed - The maximum number of assignees displayed
+ */
+function displayCount(task, assignees, maxDisplayed) {
+  const numberField = document.getElementById(`assignees_number_${task.id}`);
+  numberField.innerHTML = "";
+
+  if (assignees.length > maxDisplayed) {
+    const remainingCount = assignees.length - maxDisplayed;
+    numberField.innerHTML += generateAdditionallyAssigneeField(remainingCount);
+  }
+}
+
+/**
+ * Displays the active user on the task card if they are assigned to the task.
+ *
+ * @param {Object} task - The task object
+ * @param {HTMLElement} assignedField - The DOM element to render the user in
+ */
+function displayUser(task, assignedField) {
+  if (task.user === activeUser.id) {
+    assignedField.innerHTML += generateUserField(activeUser);
+  }
+}
+
+/**
+ * Displays status change arrows on a task card based on its current status.
+ *
+ * @param {Object} task - The task object
+ */
+function displayStatusArrows(task) {
+  let taskCard = document.getElementById(`task_card_${task.id}`);
+  let arrowTop = document.getElementById(`arrow_area_top_${task.id}`);
+  let arrowBottom = document.getElementById(`arrow_area_bottom_${task.id}`);
+
+  if (task.status != "todo") {
+    arrowTop.innerHTML = generateArrowTop(task);
+    taskCard.classList.add("task-arrow-top");
+  }
+
+  if (task.status != "done") {
+    arrowBottom.innerHTML = generateArrowBottom(task);
+    taskCard.classList.add("task-arrow-bottom");
+  }
+}
+</code></pre>
         </article>
     </section>
 

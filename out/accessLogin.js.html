@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: addTaskFetchLoad.js</title>
+    <title>JSDoc: Source: accessLogin.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: addTaskFetchLoad.js</h1>
+    <h1 class="page-title">Source: accessLogin.js</h1>
 
     
 
@@ -27,159 +27,156 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This function loads the Add Task Template content an finds the exact location to render
+ * Logs in the user as a guest with predefined settings.
+ * Clears remember me data, sets active user, and redirects to summary page.
+ */
+function loginAsGuest() {
+  activeUser = {
+    name: "Guest",
+    initials: "G",
+    id: 0,
+    color: "#ffffff",
+    tasks: [1, 2, 3, 4, 5],
+    contacts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  };
+  localStorage.removeItem("rememberMeData");
+  localStorage.setItem("activeUser", JSON.stringify(activeUser));
+  localStorage.setItem("greetingShown", "false");
+  window.location.href = "./html/summary.html";
+}
+
+/**
+ * Attempts to log in a user with provided email and password.
+ * Fetches user data, validates credentials, and handles login outcome.
+ */
+async function loginAsUser() {
+  const loginEmail = document.getElementById("login_email").value.trim();
+  const loginPassword = document.getElementById("login_password").value;
+  const users = await fetchData("users");
+  const user = users.find(
+    (user) => user.email.toLowerCase() === loginEmail.toLowerCase()
+  );
+
+  resetLoginAlert();
+
+  if (user &amp;&amp; user.password === loginPassword) {
+    await handleSuccessfulLogin(user);
+  } else {
+    handleLoginError();
+  }
+}
+
+/**
+ * Resets login form alert states.
+ * Clears notice field and removes alert borders from input fields.
+ */
+function resetLoginAlert() {
+  const noticeField = document.getElementById("login_notice_field");
+  noticeField.innerHTML = "";
+
+  document.getElementById("login_email").classList.remove("border-alert");
+  document.getElementById("login_password").classList.remove("border-alert");
+}
+
+/**
+ * Handles actions after successful user login.
+ * Manages remember me feature, loads user data, and redirects to summary page.
  *
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
+ * @param {Object} user - The user object of the logged-in user
  */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  clearTemplate(clear);
-  getContacts();
-  if (clear) {
-      clearButton();
-      renderEditButtons();
+async function handleSuccessfulLogin(user) {
+  handleRememberMe(user);
+
+  const userData = await loadUserData(user);
+
+  localStorage.setItem("activeUser", JSON.stringify(userData));
+  localStorage.setItem("greetingShown", "false");
+  resetLoginFormInputs();
+  window.location.href = "./html/summary.html";
+}
+
+/**
+ * Manages the remember me functionality based on user choice.
+ * Saves or removes remember me data in local storage.
+ *
+ * @param {Object} user - The user object to potentially remember
+ */
+async function handleRememberMe(user) {
+  if (isRememberMeChecked()) {
+    const saveData = await loadRememberMeData(user);
+    localStorage.setItem("rememberMeData", JSON.stringify(saveData));
+  }
+
+  if (!isRememberMeChecked()) {
+    localStorage.removeItem("rememberMeData");
   }
 }
 
 /**
- * This function clears the closed template
- * 
- * @param {boolean} clear This variable is a state of true or false
+ * Checks if the remember me option is selected.
+ *
+ * @returns {boolean} True if remember me is checked, false otherwise
  */
-function clearTemplate(clear) {
-  if (clear === true) {
-      document.getElementById('edit_task_template').innerHTML = "";
-  } else if (clear === false) {
-      document.getElementById('add_task_template').innerHTML = "";
-  }
-}
-
-function renderEditButtons(){
-  document.getElementById("content_order").classList.add("content-order");
-  document.getElementById("content_order").classList.remove("edit-content-order");
-  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.remove('edit-ok-button');
-}
-
-/** This function gathers all data to create a task */
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
-
-  setTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
+function isRememberMeChecked() {
+  const checkButton = document.getElementById("login_check_off");
+  const isChecked = checkButton.src.includes("true");
+  return isChecked;
 }
 
 /**
- * This function sets all data
- * 
- * @param {Objekt} taskData - all user inputs for a task
- * @param {number} taskId - Id of the task
+ * Prepares user data for remember me functionality.
+ *
+ * @param {Object} user - The user object to remember
+ * @returns {Object} Object containing email and password
  */
-function setTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
-  );
-  putTaskToUser(taskId);
+async function loadRememberMeData(user) {
+  return {
+    email: user.email,
+    password: user.password,
+  };
 }
 
 /**
- * This function checks if the task Id is includes in active user data 
- * 
- * @param {number} taskId - Id of the task
+ * Extracts relevant user data for active session.
+ *
+ * @param {Object} user - The full user object
+ * @returns {Object} Object containing essential user data
  */
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
-    } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    }
-  }
+async function loadUserData(user) {
+  return {
+    name: user.name,
+    initials: user.initials,
+    id: user.id,
+    color: user.color,
+    tasks: user.tasks,
+    contacts: user.contacts,
+  };
 }
 
 /**
- * Thias function updates the user database Informations
- * 
- * @param {number} userId - Id of the active user
- * @param {number} taskId - Id of the task
- * @returns - activates the pstData function
+ * Resets login form inputs and remember me checkbox.
+ * Clears email and password fields, unchecks remember me.
  */
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
-  }
+function resetLoginFormInputs() {
+  document.getElementById("login_email").value = "";
+  document.getElementById("login_password").value = "";
+
+  let legalButton = document.getElementById("login_check_off");
+  legalButton.src = `./assets/img/png/check-button-false.png`;
 }
 
 /**
- * This function puts all informations of the task together
- * 
- * @param {string} title - key of input value of the title
- * @param {string} description - key of input value of the description
- * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
- * @param {number} assignedTo - key of Id of all selcted assigned
- * @param {string} categorySeleced - key of text of the selected category
+ * Handles failed login attempt.
+ * Displays error message and highlights input fields.
  */
-function putTasksContent(
-  title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
-) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
-  });
+function handleLoginError() {
+  const noticeField = document.getElementById("login_notice_field");
+  noticeField.innerHTML += `&lt;div>Check your email and password. Please try again.&lt;/div>`;
+  document.getElementById("login_email").classList.add("border-alert");
+  document.getElementById("login_password").classList.add("border-alert");
+  console.error(errorMessage);
 }
-
-/** This function fetches all contact data from the database */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
-}
-
-/** This function fetches all selected contact data from the database */
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displaySelectedContacts(contactsToRender, selectedList);
-}</code></pre>
+</code></pre>
         </article>
     </section>
 

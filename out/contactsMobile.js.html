@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: addTaskFetchLoad.js</title>
+    <title>JSDoc: Source: contactsMobile.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: addTaskFetchLoad.js</h1>
+    <h1 class="page-title">Source: contactsMobile.js</h1>
 
     
 
@@ -27,159 +27,70 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This function loads the Add Task Template content an finds the exact location to render
- *
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
+ * Displays the contact information on mobile devices.
+ * This function loads the contact information and displays it in the mobile view.
+ * @param {number} contactId - The ID of the contact whose information is to be displayed.
  */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  clearTemplate(clear);
-  getContacts();
-  if (clear) {
-      clearButton();
-      renderEditButtons();
+async function displayContactInfoMobile(contactId) {
+  let infoDiv = document.getElementById("mobile_contact_info");
+  infoDiv.classList.remove("d-none");
+  infoDiv.classList.add("pos-abs");
+  const contact = await getContact(contactId);
+  const contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
+  const contactInfoButtons = document.getElementById("button_edit_dialog");
+  contactInfoDiv.innerHTML = generateContactInfo(contact);
+  if (contact.id === 0) {
+    document
+      .getElementById("for_active_user")
+      .classList.add("letter-circel-user");
   }
+  contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
+  mobileEditContact();
+  const menu = document.getElementById("mobile_menu");
+  menu.innerHTML = generateMobileMenu(contact);
 }
 
 /**
- * This function clears the closed template
- * 
- * @param {boolean} clear This variable is a state of true or false
+ * Hides the edit button in the mobile view.
+ * This function disables the edit button in the mobile contact view.
  */
-function clearTemplate(clear) {
-  if (clear === true) {
-      document.getElementById('edit_task_template').innerHTML = "";
-  } else if (clear === false) {
-      document.getElementById('add_task_template').innerHTML = "";
-  }
-}
-
-function renderEditButtons(){
-  document.getElementById("content_order").classList.add("content-order");
-  document.getElementById("content_order").classList.remove("edit-content-order");
-  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.remove('edit-ok-button');
-}
-
-/** This function gathers all data to create a task */
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
-
-  setTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
-}
-
-/**
- * This function sets all data
- * 
- * @param {Objekt} taskData - all user inputs for a task
- * @param {number} taskId - Id of the task
- */
-function setTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
+function mobileEditContact() {
+  const contactMobileButton = document.querySelector(
+    ".contact-box-edit-delete"
   );
-  putTaskToUser(taskId);
+  contactMobileButton.classList.add("d-none");
 }
 
 /**
- * This function checks if the task Id is includes in active user data 
- * 
- * @param {number} taskId - Id of the task
+ * Hides the mobile contact information and resets the display.
+ * This function removes the mobile contact view and clears the contents.
  */
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
-    } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
+function goBackMobile() {
+  document.getElementById("mobile_contact_info").classList.add("d-none");
+  document.getElementById("mobile_contact_info").classList.remove("pos-abs");
+  const contactInfoDiv = document.querySelector(".mobile-contacts-info-box");
+  contactInfoDiv.innerHTML = "";
+}
+
+/**
+ * Opens the mobile menu for a contact.
+ * This function displays the menu and allows closing it by clicking outside the menu.
+ * @param {number} contactId - The ID of the contact for which the menu is opened.
+ */
+function openMobileMenu(contactId) {
+  const menu = document.getElementById("mobile_menu");
+  menu.classList.add("d-flex");
+  const handleClickOutside = (event) => {
+    if (!menu.contains(event.target)) {
+      menu.classList.remove("d-flex");
+      document.removeEventListener("click", handleClickOutside);
     }
-  }
+  };
+  setTimeout(() => {
+    document.addEventListener("click", handleClickOutside);
+  }, 0);
 }
-
-/**
- * Thias function updates the user database Informations
- * 
- * @param {number} userId - Id of the active user
- * @param {number} taskId - Id of the task
- * @returns - activates the pstData function
- */
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
-  }
-}
-
-/**
- * This function puts all informations of the task together
- * 
- * @param {string} title - key of input value of the title
- * @param {string} description - key of input value of the description
- * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
- * @param {number} assignedTo - key of Id of all selcted assigned
- * @param {string} categorySeleced - key of text of the selected category
- */
-function putTasksContent(
-  title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
-) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
-  });
-}
-
-/** This function fetches all contact data from the database */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
-}
-
-/** This function fetches all selected contact data from the database */
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displaySelectedContacts(contactsToRender, selectedList);
-}</code></pre>
+</code></pre>
         </article>
     </section>
 

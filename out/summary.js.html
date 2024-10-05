@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: addTaskFetchLoad.js</title>
+    <title>JSDoc: Source: summary.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: addTaskFetchLoad.js</h1>
+    <h1 class="page-title">Source: summary.js</h1>
 
     
 
@@ -27,158 +27,213 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This function loads the Add Task Template content an finds the exact location to render
- *
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
+ * Adds an event listener that is triggered when the DOM is fully loaded.
+ * Upon triggering, the greeting is displayed, tasks are rendered, and 
+ * the mobile greeting is checked.
  */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  clearTemplate(clear);
-  getContacts();
-  if (clear) {
-      clearButton();
-      renderEditButtons();
+document.addEventListener("DOMContentLoaded", () => {
+  greeting();
+  renderTasks();
+  if (window.innerWidth &lt;= 770) {
+    checkAndShowGreeting();
+  }
+});
+
+/**
+ * Updates the greeting message and displays it.
+ */
+function greeting() {
+  let greeting = document.getElementById("greetings");
+  let greetingMobile = document.getElementById("greeting_mobile");
+  let greetingUser = getNameFromLocalStorage();
+  let greetingMassage = getGreetingMessage();
+  greeting.innerHTML = "";
+  greetingMobile.innerHTML = "";
+  greeting.innerHTML = greetingHtml(greetingMassage, greetingUser);
+  greetingMobile.innerHTML = greetingHtml(greetingMassage, greetingUser);
+}
+
+/**
+ * Retrieves the user's name from local storage.
+ * @returns {string} - The name of the logged-in user.
+ */
+function getNameFromLocalStorage() {
+  let activeUser = localStorage.getItem("activeUser");
+  const loggedInUser = JSON.parse(activeUser);
+  return loggedInUser.name;
+}
+
+/**
+ * Returns the greeting message based on the current time.
+ * @returns {string} - The greeting message ("Good morning", "Good afternoon", or "Good evening").
+ */
+function getGreetingMessage() {
+  const currentHour = new Date().getHours();
+  if (currentHour &lt; 12) {
+    return "Good morning";
+  } else if (currentHour &lt; 18) {
+    return "Good afternoon";
+  } else {
+    return "Good evening";
   }
 }
 
 /**
- * This function clears the closed template
- * 
- * @param {boolean} clear This variable is a state of true or false
+ * Generates the HTML for the greeting.
+ * @param {string} greetingMassage - The greeting message.
+ * @param {string} greetingUser - The user's name.
+ * @returns {string} - The HTML representation of the greeting.
  */
-function clearTemplate(clear) {
-  if (clear === true) {
-      document.getElementById('edit_task_template').innerHTML = "";
-  } else if (clear === false) {
-      document.getElementById('add_task_template').innerHTML = "";
+function greetingHtml(greetingMassage, greetingUser) {
+  return `${greetingMassage}, &lt;div class="greeting-user">${greetingUser}&lt;/div>`;
+}
+
+/**
+ * Renders the tasks and updates the counters.
+ * @returns {Promise&lt;void>}
+ */
+async function renderTasks() {
+  const tasks = await loadTasks();
+  countToDo(tasks);
+  countDone(tasks);
+  countTasksWithDueDate(tasks);
+  deadlineDate(tasks);
+  countTaskInBoard(tasks);
+  countTaskInProgress(tasks);
+  countTaskInFeedback(tasks);
+}
+
+/**
+ * Loads the active user's tasks from local storage.
+ * @returns {Promise&lt;Array>} - An array of tasks.
+ */
+async function loadTasks() {
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"));
+  if (activeUser &amp;&amp; activeUser.tasks) {
+    const taskIds = activeUser.tasks;
+    const tasks = await Promise.all(
+      taskIds.map(async (taskId) => {
+        const allTasks = await fetchData("tasks");
+        return allTasks.find((t) => t.id === taskId) || null;
+      })
+    );
+    return tasks.filter((task) => task !== null);
   }
-}
-
-function renderEditButtons(){
-  document.getElementById("content_order").classList.add("content-order");
-  document.getElementById("content_order").classList.remove("edit-content-order");
-  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.remove('edit-ok-button');
-}
-
-/** This function gathers all data to create a task */
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
-
-  setTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
+  return [];
 }
 
 /**
- * This function sets all data
- * 
- * @param {Objekt} taskData - all user inputs for a task
- * @param {number} taskId - Id of the task
+ * Counts the number of tasks with the status "todo" and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
-function setTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
-  );
-  putTaskToUser(taskId);
+function countToDo(tasks) {
+  let toDo = document.getElementById("count_to_do");
+  let count = tasks.filter((task) => task.status === "todo").length;
+  toDo.innerHTML = `${count}`;
 }
 
 /**
- * This function checks if the task Id is includes in active user data 
- * 
- * @param {number} taskId - Id of the task
+ * Counts the number of completed tasks and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
-    } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    }
-  }
+function countDone(tasks) {
+  let done = document.getElementById("count_done");
+  let count = tasks.filter((task) => task.status === "done").length;
+  done.innerHTML = `${count}`;
 }
 
 /**
- * Thias function updates the user database Informations
- * 
- * @param {number} userId - Id of the active user
- * @param {number} taskId - Id of the task
- * @returns - activates the pstData function
+ * Counts the number of tasks with a due date and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
-  }
+function countTasksWithDueDate(tasks) {
+  const tasksWithDueDate = tasks.filter((task) => task.date);
+  tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
+  const nextDueDate = tasksWithDueDate[0]?.date;
+  const tasksWithSameDueDate = tasks.filter((task) => task.date === nextDueDate);
+  const taskCountElement = document.getElementById("count_priority_urgent");
+  taskCountElement.innerHTML = `${tasksWithSameDueDate.length}`;
 }
 
 /**
- * This function puts all informations of the task together
- * 
- * @param {string} title - key of input value of the title
- * @param {string} description - key of input value of the description
- * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
- * @param {number} assignedTo - key of Id of all selcted assigned
- * @param {string} categorySeleced - key of text of the selected category
+ * Counts the total number of tasks and updates the display.
+ * @param {Array} tasks - The list of tasks.
  */
-function putTasksContent(
-  title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
-) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
+function countTaskInBoard(tasks) {
+  let taskInBoard = document.getElementById("count_tasks");
+  let count = tasks.length;
+  taskInBoard.innerHTML = `${count}`;
+}
+
+/**
+ * Counts the number of tasks in the "in progress" status and updates the display.
+ * @param {Array} tasks - The list of tasks.
+ */
+function countTaskInProgress(tasks) {
+  let taskInProgress = document.getElementById("count_progress");
+  let count = tasks.filter((task) => task.status === "inprogress").length;
+  taskInProgress.innerHTML = `${count}`;
+}
+
+/**
+ * Counts the number of tasks in the "await feedback" status and updates the display.
+ * @param {Array} tasks - The list of tasks.
+ */
+function countTaskInFeedback(tasks) {
+  let taskInFeedback = document.getElementById("count_feedback");
+  let count = tasks.filter((task) => task.status === "awaitfeedback").length;
+  taskInFeedback.innerHTML = `${count}`;
+}
+
+/**
+ * Outputs the next due date of the tasks and formats it.
+ * @param {Array} tasks - The list of tasks.
+ */
+function deadlineDate(tasks) {
+  const tasksWithDueDate = tasks.filter((task) => task.date);
+  tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
+  const nextDueDate = tasksWithDueDate[0]?.date; 
+  const [year, month, day] = nextDueDate.split("-");
+  const dateObj = new Date(year, month - 1, day);
+  const formattedDate = dateObj.toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   });
+  const deadlineElement = document.getElementById("deadline_date");
+  deadlineElement.innerHTML = `${formattedDate}`;
 }
 
-/** This function fetches all contact data from the database */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
+/**
+ * Navigates to the board page.
+ */
+function navigatonToBoard() {
+  window.location.href = "../html/board.html";
 }
 
-/** This function fetches all selected contact data from the database */
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displaySelectedContacts(contactsToRender, selectedList);
+/**
+ * Displays the mobile greeting and hides it after 2.5 seconds.
+ */
+function mobileGreeting() {
+  const greetingDialog = document.getElementById("greeting_mobile");
+  if (greetingDialog) {
+    greetingDialog.classList.remove("d-none");
+    setTimeout(() => {
+      greetingDialog.classList.add("d-none");
+      greetingDialog.close();
+    }, 2500); 
+  }
+}
+
+/**
+ * Checks if the mobile greeting should be displayed and shows it if necessary.
+ */
+function checkAndShowGreeting() {
+  const greetingShown = localStorage.getItem("greetingShown");
+  if (greetingShown === "false" || !greetingShown) {
+    mobileGreeting();
+    localStorage.setItem("greetingShown", "true");
+  }
 }</code></pre>
         </article>
     </section>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: addTaskFetchLoad.js</title>
+    <title>JSDoc: Source: accessValidation.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: addTaskFetchLoad.js</h1>
+    <h1 class="page-title">Source: accessValidation.js</h1>
 
     
 
@@ -27,159 +27,296 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This function loads the Add Task Template content an finds the exact location to render
+ * Validates all user inputs for the signup process.
  *
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
+ * @param {string} email - User's email address
+ * @param {string} name - User's full name
+ * @param {string} password - User's chosen password
+ * @param {string} cPassword - Confirmation of the user's password
+ * @returns {Boolean} True if all inputs are valid, throws an error otherwise
  */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  clearTemplate(clear);
-  getContacts();
-  if (clear) {
-      clearButton();
-      renderEditButtons();
+async function validateInputs(email, name, password, cPassword) {
+    const noticeField = document.getElementById("signup_notice_field");
+    const isEmailValid = await validateEmail(email, noticeField);
+    const isNameValid = validateName(name, noticeField);
+    const isPasswordValid = validatePassword(password, cPassword, noticeField);
+    const isLegalAccepted = validateLegalAcceptance(noticeField);
+  
+    const isValid =
+      isEmailValid &amp;&amp; isNameValid &amp;&amp; isPasswordValid &amp;&amp; isLegalAccepted;
+  
+    if (!isValid) {
+      throw new Error("Error in validation");
+    }
+    return true;
   }
-}
-
-/**
- * This function clears the closed template
- * 
- * @param {boolean} clear This variable is a state of true or false
- */
-function clearTemplate(clear) {
-  if (clear === true) {
-      document.getElementById('edit_task_template').innerHTML = "";
-  } else if (clear === false) {
-      document.getElementById('add_task_template').innerHTML = "";
+  
+  /**
+   * Validates the email input for uniqueness and correct format.
+   *
+   * @param {string} email - User's email address
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @returns {Boolean} True if email is valid, false otherwise
+   */
+  async function validateEmail(email, noticeField) {
+    const emailField = document.getElementById("signup_email");
+  
+    if (!(await checkEmailExists(email, noticeField, emailField))) {
+      return false;
+    }
+  
+    if (!checkEmailFormat(email, noticeField, emailField)) {
+      return false;
+    }
+  
+    return true;
   }
-}
-
-function renderEditButtons(){
-  document.getElementById("content_order").classList.add("content-order");
-  document.getElementById("content_order").classList.remove("edit-content-order");
-  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.remove('edit-ok-button');
-}
-
-/** This function gathers all data to create a task */
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
-
-  setTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
-}
-
-/**
- * This function sets all data
- * 
- * @param {Objekt} taskData - all user inputs for a task
- * @param {number} taskId - Id of the task
- */
-function setTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
-  );
-  putTaskToUser(taskId);
-}
-
-/**
- * This function checks if the task Id is includes in active user data 
- * 
- * @param {number} taskId - Id of the task
- */
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
+  
+  /**
+   * Checks if the provided email is already registered.
+   *
+   * @param {string} email - User's email address
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @param {HTMLElement} emailField - Email input field element
+   * @returns {Boolean} True if email doesn't exist, false if it does
+   */
+  async function checkEmailExists(email, noticeField, emailField) {
     try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
+      const emailExists = await isEmailRegistered(email);
+      if (emailExists) {
+        console.log("Email already exists.");
+        emailField.classList.add("border-alert");
+        noticeField.innerHTML += `&lt;div>This email address is already registered.&lt;/div>`;
+        return false;
+      }
+      return true;
     } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
+      console.error("Error checking email existence:", error);
+      return false;
     }
   }
-}
-
-/**
- * Thias function updates the user database Informations
- * 
- * @param {number} userId - Id of the active user
- * @param {number} taskId - Id of the task
- * @returns - activates the pstData function
- */
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
+  
+  /**
+   * Checks if an email is already registered in the user database.
+   *
+   * @param {string} email - The email address to check
+   * @returns {Boolean} True if the email is registered, false otherwise
+   */
+  async function isEmailRegistered(email) {
+    const users = await fetchData("users");
+    if (!users) {
+      return false;
+    }
+    return Object.values(users).some(
+      (user) => user &amp;&amp; user.email.toLowerCase() === email.toLowerCase()
+    );
   }
-}
-
-/**
- * This function puts all informations of the task together
- * 
- * @param {string} title - key of input value of the title
- * @param {string} description - key of input value of the description
- * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
- * @param {number} assignedTo - key of Id of all selcted assigned
- * @param {string} categorySeleced - key of text of the selected category
- */
-function putTasksContent(
-  title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
-) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
-  });
-}
-
-/** This function fetches all contact data from the database */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
-}
-
-/** This function fetches all selected contact data from the database */
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displaySelectedContacts(contactsToRender, selectedList);
-}</code></pre>
+  
+  /**
+   * Validates the format of an email address.
+   *
+   * @param {string} email - The email address to validate
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @param {HTMLElement} emailField - The email input field element
+   * @returns {Boolean} True if the email format is valid, false otherwise
+   */
+  function checkEmailFormat(email, noticeField, emailField) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      console.error("Invalid email format.");
+      emailField.classList.add("border-alert");
+      noticeField.innerHTML += `&lt;div>Please enter a valid email address.&lt;/div>`;
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Validates the user's name input.
+   *
+   * @param {string} name - The name to validate
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @returns {Boolean} True if the name is valid, false otherwise
+   */
+  function validateName(name, noticeField) {
+    let isValidName = true;
+    const nameField = document.getElementById("signup_name");
+  
+    if (!checkNameNotEmpty(name, noticeField, nameField)) {
+      isValidName = false;
+    }
+  
+    if (!checkNameCharacters(name, noticeField, nameField)) {
+      isValidName = false;
+    }
+  
+    return isValidName;
+  }
+  
+  /**
+   * Checks if the name input is not empty and has at least 3 characters.
+   *
+   * @param {string} name - The name to check
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @param {HTMLElement} nameField - The name input field element
+   * @returns {Boolean} True if the name is not empty and has at least 3 characters, false otherwise
+   */
+  function checkNameNotEmpty(name, noticeField, nameField) {
+    if (name.trim().length &lt; 3) {
+      console.log("No name entered.");
+      nameField.classList.add("border-alert");
+      noticeField.innerHTML += `&lt;div>Please enter a name with at least 3 letters.&lt;/div>`;
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Checks if the name contains only valid characters (letters and spaces).
+   *
+   * @param {string} name - The name to check
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @param {HTMLElement} nameField - The name input field element
+   * @returns {Boolean} True if the name contains only valid characters, false otherwise
+   */
+  function checkNameCharacters(name, noticeField, nameField) {
+    const nameRegex = /^[A-Za-zÄäÖöÜüß\s]+$/;
+  
+    if (!nameRegex.test(name)) {
+      console.log("Name contains invalid characters.");
+      nameField.classList.add("border-alert");
+      noticeField.innerHTML += `&lt;div>Your name should only contain letters and spaces.&lt;/div>`;
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Validates the password and its confirmation.
+   *
+   * @param {string} password - The password to validate
+   * @param {string} cPassword - The confirmation password
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @returns {Boolean} True if the password is valid and matches the confirmation, false otherwise
+   */
+  function validatePassword(password, cPassword, noticeField) {
+    let isValidPassword = true;
+    const passwordField = document.getElementById("signup_password");
+    const cPasswordField = document.getElementById("signup_c_password");
+  
+    if (!checkPasswordComplexity(password, noticeField, passwordField)) {
+      isValidPassword = false;
+    }
+  
+    if (
+      !checkPasswordMatch(
+        password,
+        cPassword,
+        noticeField,
+        passwordField,
+        cPasswordField
+      )
+    ) {
+      isValidPassword = false;
+    }
+    return isValidPassword;
+  }
+  
+  /**
+   * Checks if the password meets the required complexity criteria.
+   * 
+   * @param {string} password - The password to check
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @param {HTMLElement} passwordField - The password input field element
+   * @returns {Boolean} True if the password meets complexity requirements, false otherwise
+   */
+  function checkPasswordComplexity(password, noticeField, passwordField) {
+    const complexityRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&amp;*()_+\-=\[\]{};':"\\|,.&lt;>/?]).{8,}$/;
+  
+    if (!complexityRegex.test(password)) {
+      console.log("Password does not meet complexity requirements.");
+      passwordField.classList.add("border-alert");
+      noticeField.innerHTML += `&lt;div>Your password must be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.&lt;/div>`;
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Checks if the password and confirmation password match.
+   * 
+   * @param {string} password - The original password
+   * @param {string} cPassword - The confirmation password
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @param {HTMLElement} passwordField - The password input field element
+   * @param {HTMLElement} cPasswordField - The confirmation password input field element
+   * @returns {Boolean} True if passwords match, false otherwise
+   */
+  function checkPasswordMatch(
+    password,
+    cPassword,
+    noticeField,
+    passwordField,
+    cPasswordField
+  ) {
+    if (password !== cPassword) {
+      console.log("Passwords do not match.");
+      passwordField.classList.add("border-alert");
+      cPasswordField.classList.add("border-alert");
+      noticeField.innerHTML += `&lt;div>Your passwords don't match. Please try again.&lt;/div>`;
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Validates if the user has accepted the legal notice.
+   * 
+   * @param {HTMLElement} noticeField - Element to display validation notices
+   * @returns {Boolean} True if legal notice is accepted, false otherwise
+   */
+  function validateLegalAcceptance(noticeField) {
+    const acceptedLegal = isLegalAccepted();
+    if (!acceptedLegal) {
+      const checkButton = document.getElementById("signup_check_off");
+      console.log("Please accept the Legal notice.");
+      noticeField.innerHTML += `&lt;div>Please accept the Legal notice.&lt;/div>`;
+      checkButton.classList.add("bg-alert");
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Checks if the legal acceptance checkbox is checked.
+   * 
+   * @returns {Boolean} True if the checkbox is checked, false otherwise
+   */
+  function isLegalAccepted() {
+    const checkButton = document.getElementById("signup_check_off");
+    const isChecked = checkButton.src.includes("true");
+    return isChecked;
+  }
+  
+  /**
+   * Checks if the legal acceptance checkbox is checked.
+   * 
+   * @returns {Boolean} True if the checkbox is checked, false otherwise
+   */
+  function getUserInitials(name) {
+    const words = name.trim().split(/\s+/);
+  
+    if (words.length === 1) {
+      return words[0].charAt(0).toUpperCase();
+    }
+  
+    if (words.length >= 2) {
+      return (
+        words[0].charAt(0) + words[words.length - 1].charAt(0)
+      ).toUpperCase();
+    }
+  }</code></pre>
         </article>
     </section>
 

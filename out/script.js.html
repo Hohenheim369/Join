@@ -28,18 +28,30 @@
         <article>
             <pre class="prettyprint source linenums"><code>const BASE_URL =
   "https://join-b72fb-default-rtdb.europe-west1.firebasedatabase.app/";
+let activeUser = getActiveUser();
+
 /**
+ * Downloads the data from the database depending on the deposit and ID.
  * 
- * @param {string} path - fetch all variable data from database
- * @returns - output off all fetched arrays
+ * @param {string} path - The path in the database from where to load the data.
+ * @returns {Array} - Downloaded data.
  */
 async function fetchData(path = "") {
   const response = await fetch(`${BASE_URL}/${path}/.json`);
   const datas = await response.json();
-  const activeData = datas.filter((data) => data !== null);
-  return activeData;
+  if(datas === null){
+    return null;
+  };
+  const dataArray = Array.isArray(datas) ? datas : Object.values(datas);
+  return dataArray.filter(data => data !== null);
 }
 
+/**
+ * Uploads the data from the database depending on the deposit and ID.
+ * 
+ * @param {string} path - The path in the database for which a new ID should be generated.
+ * @param {*} data - Data to be uploaded
+ */
 async function postData(path = "", data = {}) {
   const response = await fetch(`${BASE_URL}/${path}/.json`, {
     method: "PUT",
@@ -55,10 +67,16 @@ async function postData(path = "", data = {}) {
   return await response.json();
 }
 
+/**
+ * Deletes the data from the database depending on the deposit and the ID.
+ * 
+ * @param {string} path - The path in the database for which a new ID should be generated.
+ * @param {*} id - Id of the element to be deleted
+ */
 async function deleteData(path = "", id) {
-  const url = `${BASE_URL}/${path}/${id -1}.json`;
+  const url = `${BASE_URL}/${path}/${id - 1}.json`;
   const response = await fetch(url, {
-    method: 'DELETE',
+    method: "DELETE",
   });
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
@@ -66,6 +84,12 @@ async function deleteData(path = "", id) {
   return await response.json();
 }
 
+/**
+ * Checks whether data exists in the database and returns the new ID.
+ * 
+ * @param {string} path - The path in the database for which a new ID should be generated.
+ * @returns {Number} - New ID
+ */
 async function getNewId(path = "") {
   let response = await fetch(`${BASE_URL}/${path}/.json`);
   let responseToJson = await response.json();
@@ -78,6 +102,12 @@ async function getNewId(path = "") {
   return newUserId;
 }
 
+/**
+ * Returns the new ID depending on the existing data in the database.
+ * 
+ * @param {number} responseToJson 
+ * @returns {Number} - New ID
+ */
 function countId(responseToJson) {
   let keys = Object.keys(responseToJson);
   let lastKey = keys[keys.length - 1];
@@ -86,6 +116,10 @@ function countId(responseToJson) {
   return countId;
 }
 
+/**
+ * Loads the user's data for the activeUser into the LocalStorage
+ * @returns {Objekt} - ActiveUser data 
+ */
 function getActiveUser() {
   try {
     const storedUser = localStorage.getItem("activeUser");
@@ -100,8 +134,22 @@ function getActiveUser() {
   }
 }
 
-let activeUser = getActiveUser();
+/**
+ * Resets the default tasks and contacts in the database.
+ */
+async function resetTheDatabase() {
+  for (let index = 0; index &lt; dbBackupTask.length; index++) {
+      await postData(`tasks/${index}/`, dbBackupTask[index]);
+      await postData(`contacts/${index}/`, dbBackupContacts[index]);
+  }  
+}
 
+/**
+ * Changes the image of the check button.
+ * 
+ * @param {number} CheckButtonId Id of the check-button
+ * @param {HTMLElement} CheckTaskButton The HTML element where the button is displayed
+ */
 function toggleCheckButton(CheckButtonId, CheckTaskButton) {
   const checkButton = document.getElementById(CheckButtonId);
   const isChecked = checkButton.src.includes("true");
@@ -110,30 +158,37 @@ function toggleCheckButton(CheckButtonId, CheckTaskButton) {
   }.png`;
 }
 
+/**
+ * Opens a specified URL in a new browser tab.
+ * 
+ * @param {string} LinkToSide - The URL to be opened in a new tab.
+ */
 function openLegal(LinkToSide) {
   let targetUrl = LinkToSide;
   window.open(targetUrl, "_blank");
 }
 
-
-
+/**
+ * Navigates the browser to the previous page in history.
+ */
 function goBack() {
   window.history.back();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Überprüfen, ob jemand eingeloggt ist
-  const loggedInUserName = localStorage.getItem("loggedInUserName");
+/**
+ * Prevents the function from executing on the Parend element.
+ */
+function bubblingPrevention(event) {
+  event.stopPropagation();
+}
 
-  // Wenn kein Benutzername vorhanden ist, füge eine CSS-Klasse hinzu
-  if (!loggedInUserName) {
-    const body = document.querySelector("body");
-    if (body) {
-      body.classList.add("not-logged-in");
-    }
-  }
-});
-</code></pre>
+/**
+ * Deletes the activeUser data and redirects to the log in page
+ */
+function logOut() {
+  localStorage.removeItem("activeUser");
+  window.location.href = "../index.html";  
+}</code></pre>
         </article>
     </section>
 
@@ -143,13 +198,13 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#fetchData">fetchData</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#bubblingPrevention">bubblingPrevention</a></li><li><a href="global.html#countId">countId</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#fetchData">fetchData</a></li><li><a href="global.html#getActiveUser">getActiveUser</a></li><li><a href="global.html#getNewId">getNewId</a></li><li><a href="global.html#goBack">goBack</a></li><li><a href="global.html#logOut">logOut</a></li><li><a href="global.html#openLegal">openLegal</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#resetTheDatabase">resetTheDatabase</a></li><li><a href="global.html#toggleCheckButton">toggleCheckButton</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Sep 25 2024 23:20:44 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat Oct 05 2024 23:03:32 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

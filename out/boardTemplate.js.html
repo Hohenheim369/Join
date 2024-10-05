@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: addTaskFetchLoad.js</title>
+    <title>JSDoc: Source: boardTemplate.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: addTaskFetchLoad.js</h1>
+    <h1 class="page-title">Source: boardTemplate.js</h1>
 
     
 
@@ -27,159 +27,303 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * This function loads the Add Task Template content an finds the exact location to render
+ * Generates a task representation for the board.
  *
- * @param {string} domLocation This variable is the id where to load the template
- * @param {boolean} clear This variable is a state of true or false
+ * @param {number} id - The unique identifier of the task.
+ * @param {string} title - The title of the task.
+ * @param {string} shortDescription - A brief description of the task.
+ * @param {string} category - The category to which the task belongs.
+ * @param {string} categoryColor - The color associated with the task's category.
+ * @param {string} prio - The priority level of the task.
+ * @returns {string} HTML string representing the task on the board.
  */
-async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
-  document.getElementById(domLocation).innerHTML = data;
-  clearTemplate(clear);
-  getContacts();
-  if (clear) {
-      clearButton();
-      renderEditButtons();
-  }
-}
-
-/**
- * This function clears the closed template
- * 
- * @param {boolean} clear This variable is a state of true or false
- */
-function clearTemplate(clear) {
-  if (clear === true) {
-      document.getElementById('edit_task_template').innerHTML = "";
-  } else if (clear === false) {
-      document.getElementById('add_task_template').innerHTML = "";
-  }
-}
-
-function renderEditButtons(){
-  document.getElementById("content_order").classList.add("content-order");
-  document.getElementById("content_order").classList.remove("edit-content-order");
-  document.getElementById('bottom_button_order').classList.remove('edit-bottom-button-order');
-  document.getElementById('create_button_div').classList.remove('edit-ok-button');
-}
-
-/** This function gathers all data to create a task */
-async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
-
-  setTaskData(taskData, taskId);
-  await handleTaskCreationCompletion(taskId);
-}
-
-/**
- * This function sets all data
- * 
- * @param {Objekt} taskData - all user inputs for a task
- * @param {number} taskId - Id of the task
- */
-function setTaskData(taskData, taskId) {
-  putTasksContent(
-    taskData.title,
-    taskData.description,
-    taskData.dueDate,
-    taskId,
-    taskData.assignedTo,
-    taskData.categorySeleced
-  );
-  putTaskToUser(taskId);
-}
-
-/**
- * This function checks if the task Id is includes in active user data 
- * 
- * @param {number} taskId - Id of the task
- */
-async function putTaskToUser(taskId) {
-  if (!activeUser.tasks.includes(taskId)) {
-    activeUser.tasks.push(taskId);
-    localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    try {
-      await updateUserTaskInDatabase(activeUser.id, taskId);
-    } catch (error) {
-      console.error("Fehler beim Hinzufügen des Tasks:", error);
-      activeUser.tasks.pop();
-      localStorage.setItem("activeUser", JSON.stringify(activeUser));
-    }
-  }
-}
-
-/**
- * Thias function updates the user database Informations
- * 
- * @param {number} userId - Id of the active user
- * @param {number} taskId - Id of the task
- * @returns - activates the pstData function
- */
-async function updateUserTaskInDatabase(userId, taskId) {
-  if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
-    return postData(path, taskId);
-  }
-}
-
-/**
- * This function puts all informations of the task together
- * 
- * @param {string} title - key of input value of the title
- * @param {string} description - key of input value of the description
- * @param {number} dueDate - key of selected date
- * @param {number} taskId - key of Id of the task 
- * @param {number} assignedTo - key of Id of all selcted assigned
- * @param {string} categorySeleced - key of text of the selected category
- */
-function putTasksContent(
+function generateTasksOnBoard(
+  id,
   title,
-  description,
-  dueDate,
-  taskId,
-  assignedTo,
-  categorySeleced
+  shortDescription,
+  category,
+  categoryColor,
+  prio
 ) {
-  postData(`tasks/${taskId - 1}/`, {
-    title: title,
-    description: description,
-    date: dueDate,
-    priority: selectedPrio,
-    category: categorySeleced,
-    id: taskId,
-    subtasks: getSubtasks(),
-    assigned: assignedTo,
-    status: taskStatus,
-    user: Number(userId[0]),
-  });
+  return `  &lt;div
+              class="task-card-area d-flex-column-center"
+              id="task_${id}"
+              draggable="true"
+              ondragstart="startDragging(${id}, event)"
+            >
+              &lt;div class="w-100" id="arrow_area_top_${id}">&lt;/div>
+              
+              &lt;div id="task_card_${id}" class="task-card d-flex-column" onclick="openSingleTask(${id}); initTemplateAddTask('edit_task_template', false)">
+                &lt;div class="task-category font-c-white bg-category-${categoryColor}">
+                  ${category}
+                &lt;/div>
+                &lt;div class="d-flex-column gap-8">
+                  &lt;div class="task-title font-w-700">
+                  ${title}
+                  &lt;/div>
+                  &lt;div class="task-description">
+                  ${shortDescription}
+                  &lt;/div>
+                &lt;/div>
+                &lt;div id="subtasks_${id}" class="task-subtasks d-flex-spbe-center">&lt;/div>
+
+                &lt;div class="d-flex-spbe-center">
+                  &lt;div class="d-flex-center">
+                    &lt;div id="assignees_task_${id}" class="d-flex-center">&lt;/div>
+                    &lt;div id="assignees_number_${id}" class="d-flex-center">&lt;/div>
+                  &lt;/div>
+                  &lt;img src="../assets/img/png/prio-${prio}.png" />
+                &lt;/div>
+              &lt;/div>
+
+              &lt;div class="w-100" id="arrow_area_bottom_${id}">&lt;/div>
+            &lt;/div>
+          `;
 }
 
-/** This function fetches all contact data from the database */
-async function getContacts() {
-  document.getElementById("contact_contant").innerHTML = "";
-  let contacts = await fetchData("contacts");
-  let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displayContacts(contactsToRender);
+/**
+ * Generates HTML for a "No tasks To do" message.
+ *
+ * @returns {string} HTML string representing a div with a "No tasks To do" message.
+ */
+function generateNoTaskField() {
+  return `&lt;div class="task-none d-flex-center">No tasks To do&lt;/div>`;
 }
 
-/** This function fetches all selected contact data from the database */
-async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
-  selectedList.innerHTML = "";
-  let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
-    userContacts.includes(contact.id)
-  );
-  window.allContacts = contactsToRender;
-  displaySelectedContacts(contactsToRender, selectedList);
-}</code></pre>
+/**
+ * Generates HTML for displaying subtask progress.
+ *
+ * @param {number} sumDoneSubtasks - The number of completed subtasks.
+ * @param {number} sumAllSubtasks - The total number of subtasks.
+ * @returns {string} HTML string representing the subtask progress bar and count.
+ */
+function generateSubtasks(sumDoneSubtasks, sumAllSubtasks) {
+  return `
+      &lt;div class="task-subtasks-bar">&lt;/div>
+      &lt;span class="task-subtasks-text font-c-black"
+      >${sumDoneSubtasks}/${sumAllSubtasks} Subtasks
+      &lt;/span>`;
+}
+
+/**
+ * Generates HTML for an assignee field.
+ *
+ * @param {Object} contact - The contact object for the assignee.
+ * @param {string} contact.color - The background color for the assignee field.
+ * @param {string} contact.initials - The initials of the assignee.
+ * @returns {string} HTML string representing an assignee field with initials and color.
+ */
+function generateAssigneeField(contact) {
+  return `&lt;span class="assignee font-s-12 font-c-white mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${contact.color};">${contact.initials}
+      &lt;/span>`;
+}
+
+/**
+ * Generates HTML for displaying additional assignees count.
+ *
+ * @param {number} remainingCount - The number of additional assignees.
+ * @returns {string} HTML string representing a field showing the count of additional assignees.
+ */
+function generateAdditionallyAssigneeField(remainingCount) {
+  return `&lt;span class="additionally-assignee wh-32 d-flex-center">
+        +${remainingCount}
+      &lt;/span>`;
+}
+
+/**
+ * Generates HTML for a user field.
+ *
+ * @param {Object} activeUser - The active user object.
+ * @returns {string} HTML string representing a user field with initials and color.
+ */
+function generateUserField(activeUser) {
+  return `&lt;span class="user font-s-12 mar-r-8 wh-32 d-flex-center" 
+            style="background-color: ${activeUser.color};">${activeUser.initials}
+      &lt;/span>`;
+}
+
+/**
+ * Generates HTML for an upward arrow icon to move a task.
+ *
+ * @param {Object} task - The task object.
+ */
+function generateArrowTop(task) {
+  return `&lt;img class="task-arrow cursor-p" onclick="moveToStatus(${task.id}, '${task.status}', -1)" 
+            src="../assets/img/png/arrow-drop-up.png"/>`;
+}
+
+/**
+ * Generates HTML for a downward arrow icon to move a task.
+ *
+ * @param {Object} task - The task object.
+ * @returns {string} HTML string representing a downward arrow icon with onclick event.
+ */
+function generateArrowBottom(task) {
+  return `&lt;img class="task-arrow cursor-p" onclick="moveToStatus(${task.id}, '${task.status}', 1)" 
+            src="../assets/img/png/arrow-drop-down.png"/>`;
+}
+
+/**
+ * Generates HTML for a single task representation.
+ *
+ * @param {Object} singleTask - The task object containing task details.
+ * @param {string} categoryColor - The color associated with the task's category.
+ * @returns {string} HTML string representing a single task with its details.
+ */
+function generateSingleTasks(singleTask, categoryColor) {
+  return `
+          &lt;div class="single-task-content d-flex-column gap-24">
+            &lt;div class="d-flex-spbe-center">
+              &lt;div class="single-task-category font-c-white bg-category-${categoryColor}">
+              ${singleTask.category}
+              &lt;/div>
+              &lt;div
+                class="litte-button wh-24 d-flex-center"
+                onclick="toggleOverlay('board_task_overlay'); updateTasksOnBoard(); clearButton()">
+                &lt;img src="../assets/img/png/close.png" alt="" />
+              &lt;/div>
+            &lt;/div>
+
+            &lt;h2>${singleTask.title}&lt;/h2>
+
+            &lt;div class="font-c-black">
+              ${singleTask.description}
+            &lt;/div>
+
+            &lt;div class="single-task-meta">
+              Due date:
+              &lt;div class="font-c-black">${singleTask.date}&lt;/div>
+            &lt;/div>
+
+            &lt;div class="single-task-meta">
+              Priority:
+              &lt;img class="single-task-prio" src="../assets/img/png/prio-${singleTask.priority}-text.png" alt="" />
+            &lt;/div>
+
+            &lt;div class="w-100 d-flex-column gap-8">
+              Assigned To:
+
+              &lt;div id="single_assignee" class="single-task-lines d-flex-column gap-4 font-c-black">
+
+                &lt;div class="single-task-assignee">
+                  &lt;span
+                    class="assignee font-c-white wh-42 d-flex-center bg-255-122-0">EM&lt;/span>
+                    Alex Kaljuzhin
+                &lt;/div>
+
+              &lt;/div>
+            &lt;/div>
+
+            &lt;div class="w-100 d-flex-column gap-8">
+              Subtasks:
+              &lt;div id="single_subtask" class="single-task-lines d-flex-column gap-4 font-s-16 font-c-black">&lt;/div>
+            &lt;/div>
+
+            &lt;div class="single-task-edit">
+              &lt;div class="delete cursor-p">
+                &lt;img
+                  class="img-delete"
+                  onclick="openDeleteDialog(${singleTask.id})"
+                  src="../assets/img/png/delete-default.png"
+                  alt=""/>
+              &lt;/div>
+
+              &lt;div class="dividing-line">&lt;/div>
+
+              &lt;div class="edit cursor-p">
+                &lt;img
+                  class="img-edit"
+                  onclick="openEditDialog(${singleTask.id}); taskValuesToEditField(${singleTask.id});"
+                  src="../assets/img/png/edit-default.png"
+                  alt=""/>
+              &lt;/div>
+            &lt;/div>
+          &lt;/div>`;
+}
+
+/**
+ * Generates HTML for displaying the active user as an assignee.
+ *
+ * @returns {string} HTML string representing the active user as an assignee.
+ */
+function generateSingleUserAsAssignee() {
+  return `
+         &lt;div class="single-task-assignee">
+                  &lt;span
+                    class="user font-s-12 wh-42 d-flex-center" style="background-color: ${activeUser.color};">${activeUser.initials}&lt;/span>
+                    ${activeUser.name}
+          &lt;/div>`;
+}
+
+/**
+ * Generates HTML for displaying a single assignee.
+ *
+ * @param {Object} contact - The contact object representing the assignee.
+ * @returns {string} HTML string representing a single assignee.
+ */
+function generateSingleAssignee(contact) {
+  return `
+          &lt;div class="single-task-assignee">
+                  &lt;span
+                    class="assignee font-s-12 font-c-white wh-42 d-flex-center" style="background-color: ${contact.color};">${contact.initials}&lt;/span>
+                    ${contact.name}
+          &lt;/div>`;
+}
+
+/**
+ * Generates HTML for displaying a single subtask.
+ *
+ * @param {Object} subtask - The subtask object.
+ * @param {number} id - The ID of the parent task.
+ * @returns {string} HTML string representing a single subtask with a toggle button.
+ */
+function generateSingleSubtasks(subtask, id) {
+  return `
+          &lt;div onclick="updateSubtaskStatus(${id}, ${subtask.subId})" class="single-task-subtasks cursor-p">
+            &lt;img            
+            id="task_${id}_subtask_${subtask.subId}"
+            class="litte-button"
+            src="../assets/img/png/check-button-${subtask.done}.png"
+            alt=""/>
+            ${subtask.subTaskName}
+          &lt;/div>`;
+}
+
+/**
+ * Generates HTML for displaying a message when no assignees are selected.
+ *
+ * @returns {string} HTML string representing a message for no assignees.
+ */
+function generateNoAssigneeField() {
+  return `&lt;div class="single-task-subtasks font-s-16">
+            No assignee have been selected yet.
+          &lt;/div>`;
+}
+
+/**
+ * Generates HTML for displaying a message when no subtasks are created.
+ *
+ * @returns {string} HTML string representing a message for no subtasks.
+ */
+function generateNoSubtaskField() {
+  return `&lt;div class="single-task-subtasks">
+            No subtasks have been created yet.
+          &lt;/div>`;
+}
+
+/**
+ * Generates HTML for a delete button for a specific task.
+ *
+ * @param {number} taskId - The ID of the task to be deleted.
+ * @returns {string} HTML string representing a delete button with an onclick event.
+ */
+function generateDeleteButton(taskId) {
+  return `&lt;button class="clear-button"
+           onclick="deleteTask(${taskId})">YES
+      &lt;/button>`;
+}
+</code></pre>
         </article>
     </section>
 
