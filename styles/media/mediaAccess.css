@@ -59,7 +59,7 @@
     height: auto;
     flex-direction: column;
     justify-content: center;
-    gap: 21px;
+    gap: clamp(8px, 3vw, 21px);
   }
 
   .access-button {
@@ -67,7 +67,8 @@
   }
 
   .access-button button {
-    width: 180px;
+    width: 100%;
+    font-size: clamp(16px, 3vw, 20px);
     display: flex;
     justify-content: center;
     align-items: center;
