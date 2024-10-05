@@ -56,7 +56,6 @@ async function validateInputs(email, name, password, cPassword) {
     try {
       const emailExists = await isEmailRegistered(email);
       if (emailExists) {
-        console.log("Email already exists.");
         emailField.classList.add("border-alert");
         noticeField.innerHTML += `<div>This email address is already registered.</div>`;
         return false;
@@ -121,7 +120,11 @@ async function validateInputs(email, name, password, cPassword) {
     if (!checkNameCharacters(name, noticeField, nameField)) {
       isValidName = false;
     }
-  
+    if(name.replace(/\s+/g, "").toLowerCase().includes("kevin")){
+      showKevinAlert();
+      document.getElementById("signup_name").value = "";
+      isValidName = false;
+    }
     return isValidName;
   }
   
@@ -135,7 +138,6 @@ async function validateInputs(email, name, password, cPassword) {
    */
   function checkNameNotEmpty(name, noticeField, nameField) {
     if (name.trim().length < 3) {
-      console.log("No name entered.");
       nameField.classList.add("border-alert");
       noticeField.innerHTML += `<div>Please enter a name with at least 3 letters.</div>`;
       return false;
@@ -155,7 +157,6 @@ async function validateInputs(email, name, password, cPassword) {
     const nameRegex = /^[A-Za-zÄäÖöÜüß\s]+$/;
   
     if (!nameRegex.test(name)) {
-      console.log("Name contains invalid characters.");
       nameField.classList.add("border-alert");
       noticeField.innerHTML += `<div>Your name should only contain letters and spaces.</div>`;
       return false;
@@ -207,7 +208,6 @@ async function validateInputs(email, name, password, cPassword) {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,}$/;
   
     if (!complexityRegex.test(password)) {
-      console.log("Password does not meet complexity requirements.");
       passwordField.classList.add("border-alert");
       noticeField.innerHTML += `<div>Your password must be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.</div>`;
       return false;
@@ -233,7 +233,6 @@ async function validateInputs(email, name, password, cPassword) {
     cPasswordField
   ) {
     if (password !== cPassword) {
-      console.log("Passwords do not match.");
       passwordField.classList.add("border-alert");
       cPasswordField.classList.add("border-alert");
       noticeField.innerHTML += `<div>Your passwords don't match. Please try again.</div>`;
@@ -252,7 +251,6 @@ async function validateInputs(email, name, password, cPassword) {
     const acceptedLegal = isLegalAccepted();
     if (!acceptedLegal) {
       const checkButton = document.getElementById("signup_check_off");
-      console.log("Please accept the Legal notice.");
       noticeField.innerHTML += `<div>Please accept the Legal notice.</div>`;
       checkButton.classList.add("bg-alert");
       return false;

@@ -139,3 +139,23 @@ function removeNoticeButtonBg() {
   const checkButton = document.getElementById("signup_check_off");
   checkButton.classList.remove("bg-alert");
 }
+
+/**
+ * Displays and then hides a success message overlay after signup.
+ */
+function showKevinAlert() {
+  return new Promise((resolve) => {
+    const overlay = document.getElementById("kevin_alert");
+    overlay.classList.remove("d-none");
+    overlay.classList.add("active");
+
+    setTimeout(() => {
+      overlay.classList.add("visible");
+      setTimeout(() => {
+        overlay.classList.remove("active", "visible");
+        overlay.classList.add("d-none");
+        resolve();
+      }, 3000);
+    }, 50);
+  });
+}
