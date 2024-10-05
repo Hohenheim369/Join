@@ -26,6 +26,7 @@ function cleanBoard(statuses) {
 async function renderTasksInStatusArea(statuses) {
   let tasksToRender = await filterUserTasks();
   tasksToRender = filterSoughtTaskToRender(tasksToRender);
+  noTaskFound(tasksToRender);
   const contacts = await fetchData("contacts");
 
   statuses.forEach((status) =>
@@ -76,6 +77,19 @@ function getSoughtTask() {
   const soughtedTaskMobile =
     document.getElementById("sought_task_mobile").value;
   return (soughtedTaskDesktop || soughtedTaskMobile).toLowerCase();
+}
+
+function noTaskFound(tasksToRender){
+  let noTaskField = document.getElementById("task_not_found");
+  let kanbanField = document.getElementById("kanban_board");
+
+  noTaskField.classList.add('d-none');
+  kanbanField.classList.remove('d-none');
+
+  if (tasksToRender.length == 0) {
+    noTaskField.classList.remove('d-none');
+    kanbanField.classList.add('d-none');
+  }  
 }
 
 /**
