@@ -130,27 +130,22 @@ function toggleCheckButton(CheckButtonId, CheckTaskButton) {
   }.png`;
 }
 
+/**
+ * Opens a specified URL in a new browser tab.
+ * 
+ * @param {string} LinkToSide - The URL to be opened in a new tab.
+ */
 function openLegal(LinkToSide) {
   let targetUrl = LinkToSide;
   window.open(targetUrl, "_blank");
 }
 
+/**
+ * Navigates the browser to the previous page in history.
+ */
 function goBack() {
   window.history.back();
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Überprüfen, ob jemand eingeloggt ist
-  const loggedInUserName = localStorage.getItem("loggedInUserName");
-
-  // Wenn kein Benutzername vorhanden ist, füge eine CSS-Klasse hinzu
-  if (!loggedInUserName) {
-    const body = document.querySelector("body");
-    if (body) {
-      body.classList.add("not-logged-in");
-    }
-  }
-});
 
 /**
  * Prevents the function from executing on the Parend element.

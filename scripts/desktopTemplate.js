@@ -6,6 +6,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await loadTemplate();
   initializeUserInterface();
+  legalNoticeWithoutUser();
   window.addEventListener("resize", handleResize);
 });
 
@@ -181,4 +182,20 @@ function toggleVisibility(logOut, initials) {
 function updateInitials() {
   const initials = JSON.parse(localStorage.getItem("activeUser"))?.initials;
   document.getElementById("user_profile_initials").textContent = initials || "";
+}
+
+/**
+ * Hides specific HTML elements if no active user is found in the local storage.
+ * 
+ * This function checks if an "activeUser" exists in local storage. If not, 
+ * it hides the elements with the IDs 'header_icons', 'icon_bar', and 'arrow_back' 
+ * by adding the 'd-none' class to them.
+ */
+function legalNoticeWithoutUser() {
+  const checkIfUserIsLogged = localStorage.getItem("activeUser");
+  if (!checkIfUserIsLogged) {
+    document.getElementById('header_icons').classList.add('d-none');
+    document.getElementById('icon_bar').classList.add('d-none');
+    document.getElementById('arrow_back').classList.add('d-none');
+  }
 }
