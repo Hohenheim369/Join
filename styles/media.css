@@ -1,3 +1,16 @@
+@media screen and (max-width: 900px) and (orientation: landscape) {
+  body {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+}
+
 @media screen and (min-width: 1441px) {
   .content {
     padding-inline: calc(96px + (100vw - 1440px) / 2);
