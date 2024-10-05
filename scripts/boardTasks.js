@@ -79,6 +79,11 @@ function getSoughtTask() {
   return (soughtedTaskDesktop || soughtedTaskMobile).toLowerCase();
 }
 
+/**
+ * User feedback for no task found.
+ * 
+ * @param {Object} tasksToRender - all filtered user tasks
+ */
 function noTaskFound(tasksToRender){
   let noTaskField = document.getElementById("task_not_found");
   let kanbanField = document.getElementById("kanban_board");
