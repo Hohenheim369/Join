@@ -12,14 +12,16 @@ async function displayContactInfoMobile(contactId) {
   const contactInfoButtons = document.getElementById("button_edit_dialog");
   contactInfoDiv.innerHTML = generateContactInfo(contact);
   if (contact.id === 0) {
-    document
-      .getElementById("for_active_user")
-      .classList.add("letter-circel-user");
+    document.getElementById("for_active_user").classList.add("letter-circel-user");
+    document.getElementById("user_delete_display_info").classList.add("d-none")
   }
   contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   mobileEditContact();
   const menu = document.getElementById("mobile_menu");
   menu.innerHTML = generateMobileMenu(contact);
+  if (contact.id === 0) {
+    document.getElementById("user_delete_mobile").classList.add("d-none")
+  }
 }
 
 /**
@@ -47,9 +49,8 @@ function goBackMobile() {
 /**
  * Opens the mobile menu for a contact.
  * This function displays the menu and allows closing it by clicking outside the menu.
- * @param {number} contactId - The ID of the contact for which the menu is opened.
  */
-function openMobileMenu(contactId) {
+function openMobileMenu() {
   const menu = document.getElementById("mobile_menu");
   menu.classList.add("d-flex");
   const handleClickOutside = (event) => {

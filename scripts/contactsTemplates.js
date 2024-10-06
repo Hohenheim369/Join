@@ -152,7 +152,7 @@ function generateButtonsInContactInfo(contact) {
  */
 function generateMobileMenu(contact){
   return ` <img onclick="openDialogEdit(${contact.id})" class="mobile-edit-img" src="../assets/img/png/edit-default.png" alt="edit">
-      <img onclick="openDeleteDialog(${contact.id})" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
+      <img onclick="openDeleteDialog(${contact.id})" id="user_delete_mobile" class="mobile-delete-img" src="../assets/img/png/delete-default.png" alt="delete"></img>`;
   
 }
 
