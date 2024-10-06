@@ -8,12 +8,14 @@
  * @returns {string} The HTML string representing the active user's contact.
  */
 function generateActiveUserContact(user){
+  const limitNameLength = limitTextLength(user.name);
+  const limitEmailLength = limitTextLength(user.email);
   return `
       <div id="contact${user.id}" class="contacts" onclick="displayContactInfo(${user.id})">
         <div class="letter-circle letter-circel-user" style="background-color: white;">${user.initials}</div>
         <div class="contact-info">
-          <span>${user.name}(YOU)</span>
-          <a class="contact-email" href="#">${user.email}</a>
+          <span>${limitNameLength}(YOU)</span>
+          <a class="contact-email" href="#">${limitEmailLength}</a>
         </div>
       </div>
     `;
