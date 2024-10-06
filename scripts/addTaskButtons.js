@@ -176,8 +176,10 @@ function cancelSubtasks() {
  * @param {number} id - Id of the subtask list element
  */
 function deleteSubtask(id) {
-  document.getElementById(`listItem_${id}`).remove();  
+  document.getElementById(`listItem_${id}`).remove();
+  document.getElementById(`listItem_input_${id}`).remove();  
   subTasks.splice(id, 1);
+  editSubTaskIndex = null;
 }
 
 /**
@@ -188,7 +190,8 @@ function deleteSubtask(id) {
 function toggleSubtasksImgs(id) {
   document.getElementById(`list_imgs_activ_${id}`).classList.toggle("d-none");
   document.getElementById(`list_imgs_inactiv_${id}`).classList.toggle("d-none");
-  document.getElementById(`list_subtask_${id}`).classList.toggle("d-none");
+  document.getElementById(`listItem_${id}`).classList.toggle("d-none");
+  document.getElementById(`listItem_${id}`).classList.toggle("list-item");
   document.getElementById(`input_subtask_${id}`).classList.toggle("d-none");
 }
 

@@ -92,7 +92,7 @@ function addSubtasksToList(subtasksInput, id) {
               <img class="hover-circle-subtask-active" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="Delet cross">
             </div>
           </div>
-          <div id="listItem_${id}" class="pos-rel li-hover">
+          <div id="listItem_input_${id}" class="pos-rel li-hover">
             <input id="input_subtask_${id}" onkeydown="return checkEnterKey(event, ${id})" type="text" class="subtasks-input font-s-16 d-none">
             <div id="list_imgs_inactiv_${id}" class="d-flex-center gap-4 pos-abs imgs-pos d-none">
               <img class="hover-circle-subtask" onclick="deleteSubtask(${id})" src="../assets/img/png/subtasks-delete.png" alt="Delet cross">
