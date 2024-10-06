@@ -233,6 +233,7 @@ function saveInput(index) {
   document.getElementById(`list_subtask_${index}`).innerText = subInput;
   toggleSubtasksImgs(index);
   handleInputBlur(subInput, index);
+  editSubTaskIndex = null;
 }
 
 /**
@@ -245,9 +246,10 @@ function editSubtask(li, index) {
   const currentText = li.innerText;
   let subInput = document.getElementById(`input_subtask_${index}`);
   handlePreviousEdit(index);
+  editSubTaskIndex = index;
+  handlePreviousEdit(index);
   subInput.value = currentText;
   toggleSubtasksImgs(index);
-  editSubTaskIndex = index;
   subInput.focus();
 }
 
@@ -274,7 +276,6 @@ function checkEnterKey(event, index) {
   if (event.key === "Enter") {
     subInput.blur();
     saveInput(index);
-    editSubTaskIndex = null;
     return false;
   }
   return true;
