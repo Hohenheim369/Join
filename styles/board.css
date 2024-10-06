@@ -9,7 +9,7 @@
 }
 
 .search-box {
-  display: flex;
+  width: 312px;
 }
 
 .search-box-mobile {

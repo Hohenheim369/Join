@@ -47,6 +47,10 @@
 }
 
 @media (max-width: 777px) {
+  input{
+    padding-right: 48px;
+  }
+
   .logo-container {
     background-color: rgb(42, 54, 71);
   }
