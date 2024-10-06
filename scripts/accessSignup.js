@@ -56,7 +56,6 @@ async function addUser(email, name, password, initials) {
 
   try {
     const result = await postData(`users/${userId - 1}/`, userData);
-    handleRegistrationResult(result);
   } catch (error) {
     console.error("Error during registration:", error);
   }
@@ -83,19 +82,6 @@ function createUserData(name, initials, email, password, userId) {
     tasks: [6, 7, 8, 9, 10],
     contacts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   };
-}
-
-/**
- * Handles the result of the user registration process.
- * 
- * @param {boolean} result - The result of the registration attempt
- */
-function handleRegistrationResult(result) {
-  if (result) {
-    console.log("Registration successful!");
-  } else {
-    console.log("There was a problem with the registration. Please try again.");
-  }
 }
 
 /**
