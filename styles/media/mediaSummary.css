@@ -86,7 +86,8 @@
   }
 
   .greeting-user {
-    font-size: clamp(36px, 11vw, 47px);
+    font-size: clamp(30px, 11vw, 47px);
+    margin-left: 21px;
   }
 }
 
