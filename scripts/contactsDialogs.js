@@ -302,6 +302,22 @@ async function editContact(contactId) {
   closeDialogEdit();
   openDialogSuccessfully('edited');
   await renderContent();
+  checkDisplayForInfo(existingContact)
+}
+
+/**
+ * Überprüft die Displaygröße und passt das Layout sowie die Kontaktinformationen an.
+ * 
+ * - Wenn die Fensterbreite kleiner oder gleich 777px ist, wird die Informationsanzeige
+ *   für mobile Geräte versteckt und positionelle Klassen entfernt.
+ * - Andernfalls wird bei großen Bildschirmen der Kontakt basierend auf seiner ID angezeigt.
+ *   Wenn die Farbe des Kontakts weiß ist, wird die Kontakt-ID auf 0 gesetzt.
+ * 
+ * @param {Object} existingContact - Das bestehende Kontaktobjekt, das Informationen über den Kontakt enthält.
+ * @param {number} existingContact.id - Die eindeutige ID des Kontakts.
+ * @param {string} existingContact.color - Die Farbe des Kontakts (im Hex-Format).
+ */
+function checkDisplayForInfo(existingContact){
   if (window.innerWidth <= 777) {
     const infoDiv = document.getElementById("mobile_contact_info");
     infoDiv.classList.add("d-none");
