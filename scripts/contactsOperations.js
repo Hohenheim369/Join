@@ -45,10 +45,6 @@ function addContactToUserLocal(contactId) {
  * @param {number} contactId - The ID of the contact to be deleted.
  */
 async function deleteContact(contactId) {
-  if (contactId === 0) {
-    alert("user can't be deletet by this way");
-    return;
-  }
   await deleteContactInData(contactId);
   openDialogSuccessfully('deleted');
   await renderContent();
