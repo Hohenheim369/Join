@@ -307,6 +307,9 @@ async function editContact(contactId) {
     infoDiv.classList.add("d-none");
     infoDiv.classList.remove("pos-abs");
   } else {
+    if ( existingContact.color === "#ffffff") {
+      existingContact.id = 0;
+    }
     displayContactInfo(existingContact.id);
   }
 }
