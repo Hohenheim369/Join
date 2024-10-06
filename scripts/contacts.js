@@ -174,9 +174,8 @@ async function displayContactInfo(contactId) {
   contactInfoDiv.innerHTML = generateContactInfo(contact);
   contactInfoButtons.innerHTML = generateButtonsInContactInfo(contact);
   if (contact.id === 0) {
-    document
-      .getElementById("for_active_user")
-      .classList.add("letter-circel-user");
+    document.getElementById("for_active_user").classList.add("letter-circel-user");
+    document.getElementById("user_delete_display_info").classList.add("d-none")
   }
   highlightContact(contact);
 }

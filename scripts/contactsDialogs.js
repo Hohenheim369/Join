@@ -91,6 +91,9 @@ async function openDialogEdit(contactId) {
   if (menu.classList.contains("d-flex")) {
     menu.classList.remove("d-flex");
   }
+  if (contact.id === 0) {
+    document.getElementById("user_display_info").classList.add("d-none")
+  }
   const dialogContainer = document.getElementById("dialog_edit");
   dialogContainer.open = true;
   dialogContainer.classList.add("d-flex");
