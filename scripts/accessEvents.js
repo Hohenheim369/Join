@@ -16,16 +16,16 @@ function initAccess() {
  * @param {string} CheckTaskButton - The type of check button
  */
 function toggleCheckButtonAccess(CheckButtonId, CheckTaskButton) {
-  const checkButton = document.getElementById(CheckButtonId);
-  const isChecked = checkButton.src.includes("true");
+  let checkButton = document.getElementById(CheckButtonId);
+  let isChecked = checkButton.src.includes("true");
   checkButton.src = `./assets/img/png/check-${CheckTaskButton}-${
     isChecked ? "false" : "true"
   }.png`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const logoContainer = document.querySelector(".logo-container");
-  const logo = document.querySelector(".img-logo");
+  let logoContainer = document.querySelector(".logo-container");
+  let logo = document.querySelector(".img-logo");
 
   setTimeout(() => {
     logo.classList.add("logo-small");
@@ -44,11 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
  * Checks for stored "Remember Me" data and fills the login form if available.
  */
 function checkRememberMeData() {
-  const rememberMeData = localStorage.getItem("rememberMeData");
+  let rememberMeData = localStorage.getItem("rememberMeData");
 
   if (rememberMeData) {
     try {
-      const { email, password } = JSON.parse(rememberMeData);
+      let { email, password } = JSON.parse(rememberMeData);
       fillLoginForm(email, password);
       toggleCheckButtonAccess("login_check_off", "button");
     } catch (error) {
@@ -64,8 +64,8 @@ function checkRememberMeData() {
  * @param {string} password - The stored password
  */
 function fillLoginForm(email, password) {
-  const emailInput = document.getElementById("login_email");
-  const passwordInput = document.getElementById("login_password");
+  let emailInput = document.getElementById("login_email");
+  let passwordInput = document.getElementById("login_password");
 
   if (emailInput && passwordInput) {
     emailInput.value = email;
@@ -92,9 +92,9 @@ function toggleAccessWindow() {
  * Sets up event listeners for the "Remember Me" functionality in the login form.
  */
 function setupRememberMeFieldListeners() {
-  const emailInput = document.getElementById("login_email");
-  const passwordInput = document.getElementById("login_password");
-  const legalButton = document.getElementById("login_check_off");
+  let emailInput = document.getElementById("login_email");
+  let passwordInput = document.getElementById("login_password");
+  let legalButton = document.getElementById("login_check_off");
 
   emailInput.addEventListener("input", function () {
     if (this.value === "") {
@@ -108,9 +108,9 @@ function setupRememberMeFieldListeners() {
  * Sets up password field interactions for the login form.
  */
 function loginPasswordField() {
-  const passwordField = document.getElementById("login_password");
-  const lockIcon = document.getElementById("login_lock_icon");
-  const togglePassword = document.getElementById("login_toggle_password");
+  let passwordField = document.getElementById("login_password");
+  let lockIcon = document.getElementById("login_lock_icon");
+  let togglePassword = document.getElementById("login_toggle_password");
 
   setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
 
@@ -121,9 +121,9 @@ function loginPasswordField() {
  * Sets up password field interactions for the signup form.
  */
 function signupPasswordField() {
-  const passwordField = document.getElementById("signup_password");
-  const lockIcon = document.getElementById("signup_lock_icon");
-  const togglePassword = document.getElementById("signup_toggle_password");
+  let passwordField = document.getElementById("signup_password");
+  let lockIcon = document.getElementById("signup_lock_icon");
+  let togglePassword = document.getElementById("signup_toggle_password");
 
   setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
 
@@ -134,9 +134,9 @@ function signupPasswordField() {
  * Sets up password field interactions for the confirm password field in the signup form.
  */
 function signupConfirmPasswordField() {
-  const passwordField = document.getElementById("signup_c_password");
-  const lockIcon = document.getElementById("signup_c_lock_icon");
-  const togglePassword = document.getElementById("signup_c_toggle_password");
+  let passwordField = document.getElementById("signup_c_password");
+  let lockIcon = document.getElementById("signup_c_lock_icon");
+  let togglePassword = document.getElementById("signup_c_toggle_password");
 
   setupPasswordFieldInteractions(passwordField, lockIcon, togglePassword);
 
@@ -218,7 +218,7 @@ function setupTouchListeners(passwordField, togglePassword) {
  * @param {HTMLElement} togglePassword - The toggle password visibility element
  */
 function updateVisibility(passwordField, lockIcon, togglePassword) {
-  const isEmpty = passwordField.value.length === 0;
+  let isEmpty = passwordField.value.length === 0;
   lockIcon.classList.toggle("d-none", !isEmpty);
   togglePassword.classList.toggle("d-none", isEmpty);
 }

@@ -22,10 +22,10 @@ function loginAsGuest() {
  * Fetches user data, validates credentials, and handles login outcome.
  */
 async function loginAsUser() {
-  const loginEmail = document.getElementById("login_email").value.trim();
-  const loginPassword = document.getElementById("login_password").value;
-  const users = await fetchData("users");
-  const user = users.find(
+  let loginEmail = document.getElementById("login_email").value.trim();
+  let loginPassword = document.getElementById("login_password").value;
+  let users = await fetchData("users");
+  let user = users.find(
     (user) => user.email.toLowerCase() === loginEmail.toLowerCase()
   );
 
@@ -43,7 +43,7 @@ async function loginAsUser() {
  * Clears notice field and removes alert borders from input fields.
  */
 function resetLoginAlert() {
-  const noticeField = document.getElementById("login_notice_field");
+  let noticeField = document.getElementById("login_notice_field");
   noticeField.innerHTML = "";
 
   document.getElementById("login_email").classList.remove("border-alert");
@@ -59,7 +59,7 @@ function resetLoginAlert() {
 async function handleSuccessfulLogin(user) {
   handleRememberMe(user);
 
-  const userData = await loadUserData(user);
+  let userData = await loadUserData(user);
 
   localStorage.setItem("activeUser", JSON.stringify(userData));
   localStorage.setItem("greetingShown", "false");
@@ -75,7 +75,7 @@ async function handleSuccessfulLogin(user) {
  */
 async function handleRememberMe(user) {
   if (isRememberMeChecked()) {
-    const saveData = await loadRememberMeData(user);
+    let saveData = await loadRememberMeData(user);
     localStorage.setItem("rememberMeData", JSON.stringify(saveData));
   }
 
@@ -90,8 +90,8 @@ async function handleRememberMe(user) {
  * @returns {boolean} True if remember me is checked, false otherwise
  */
 function isRememberMeChecked() {
-  const checkButton = document.getElementById("login_check_off");
-  const isChecked = checkButton.src.includes("true");
+  let checkButton = document.getElementById("login_check_off");
+  let isChecked = checkButton.src.includes("true");
   return isChecked;
 }
 
@@ -142,7 +142,7 @@ function resetLoginFormInputs() {
  * Displays error message and highlights input fields.
  */
 function handleLoginError() {
-  const noticeField = document.getElementById("login_notice_field");
+  let noticeField = document.getElementById("login_notice_field");
   noticeField.innerHTML += `<div>Check your email and password. Please try again.</div>`;
   document.getElementById("login_email").classList.add("border-alert");
   document.getElementById("login_password").classList.add("border-alert");

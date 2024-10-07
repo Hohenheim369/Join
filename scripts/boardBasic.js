@@ -98,7 +98,7 @@ async function moveTo(status) {
  */
 async function postUpdatedTask(task) {
   try {
-    const updatedTask = await postData(`tasks/${task.id - 1}`, task);
+    let updatedTask = await postData(`tasks/${task.id - 1}`, task);
     return updatedTask;
   } catch (error) {
     console.error("Fehler beim Aktualisieren des Tasks:", error);

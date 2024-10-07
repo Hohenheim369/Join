@@ -7,7 +7,7 @@ async function openSingleTask(taskId) {
   let tasks = await fetchData("tasks");
   let singleTask = tasks.find((task) => task.id === taskId);
   let categoryColor = singleTask.category.replace(/\s+/g, "").toLowerCase();
-  const contacts = await fetchData("contacts");
+  let contacts = await fetchData("contacts");
 
   displaySingleTask(singleTask, categoryColor);
   displaySingleAssinees(singleTask, contacts);
@@ -63,8 +63,8 @@ function displaySingleAssinees(singleTask, contacts) {
  * @returns {boolean} - True if there are assignees, false otherwise
  */
 function displayAssigneesAndUsers(singleTask, contacts, assigneeField) {
-  const hasUserAssignees = displayUserAsAssignee(singleTask, assigneeField);
-  const hasContactAssignees = displayContactAsAssinee(
+  let hasUserAssignees = displayUserAsAssignee(singleTask, assigneeField);
+  let hasContactAssignees = displayContactAsAssinee(
     singleTask,
     contacts,
     assigneeField
@@ -97,8 +97,8 @@ function displayUserAsAssignee(singleTask, assigneeField) {
  * @returns {boolean} - True if there are contacts as assignees, false otherwise
  */
 function displayContactAsAssinee(singleTask, contacts, assigneeField) {
-  const assinees = singleTask.assigned || [];
-  const validContacts = contacts.filter(
+  let assinees = singleTask.assigned || [];
+  let validContacts = contacts.filter(
     (contact) =>
       assinees.includes(contact.id) && activeUser.contacts.includes(contact.id)
   );
@@ -139,10 +139,10 @@ function displaySingleSubtasks(subtasks, taskId) {
 async function updateSubtaskStatus(taskId, subId) {
   toggleCheckButton(`task_${taskId}_subtask_${subId}`, "button");
 
-  const checkButton = document.getElementById(
+  let checkButton = document.getElementById(
     `task_${taskId}_subtask_${subId}`
   );
-  const isChecked = checkButton.src.includes("true");
+  let isChecked = checkButton.src.includes("true");
 
   let tasks = await fetchData("tasks");
   let task = tasks.find((task) => task.id === taskId);
@@ -264,7 +264,7 @@ function deleteTaskInLocalStorage(taskId) {
  */
 function showSuccessfullyDelete() {
   return new Promise((resolve) => {
-    const overlay = document.getElementById("successfully_delete_task");
+    let overlay = document.getElementById("successfully_delete_task");
     overlay.classList.remove("d-none");
     overlay.classList.add("active");
 

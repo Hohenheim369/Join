@@ -2,10 +2,10 @@
  * Initiates the sign-up process by collecting user input from the form.
  */
 function signUp() {
-  const email = document.getElementById("signup_email").value.trim();
-  const name = document.getElementById("signup_name").value.trim();
-  const password = document.getElementById("signup_password").value;
-  const cPassword = document.getElementById("signup_c_password").value;
+  let email = document.getElementById("signup_email").value.trim();
+  let name = document.getElementById("signup_name").value.trim();
+  let password = document.getElementById("signup_password").value;
+  let cPassword = document.getElementById("signup_c_password").value;
 
   signUpProcess(email, name, password, cPassword);
 }
@@ -21,7 +21,7 @@ function signUp() {
 async function signUpProcess(email, name, password, cPassword) {
   resetSignupAlert();
   await validateInputs(email, name, password, cPassword);
-  const initials = getUserInitials(name);
+  let initials = getUserInitials(name);
   await addUser(email, name, password, initials);
   resetSignupFormInputs();
   await showSuccessfullySignedUp();
@@ -33,7 +33,7 @@ async function signUpProcess(email, name, password, cPassword) {
  * Resets the signup form's alert states and styling.
  */
 function resetSignupAlert() {
-  const noticeField = document.getElementById("signup_notice_field");
+  let noticeField = document.getElementById("signup_notice_field");
   noticeField.innerHTML = "";
 
   document.getElementById("signup_email").classList.remove("border-alert");
@@ -51,11 +51,11 @@ function resetSignupAlert() {
  * @param {string} initials - The user's initials
  */
 async function addUser(email, name, password, initials) {
-  const userId = await getNewId("users");
-  const userData = createUserData(name, initials, email, password, userId);
+  let userId = await getNewId("users");
+  let userData = createUserData(name, initials, email, password, userId);
 
   try {
-    const result = await postData(`users/${userId - 1}/`, userData);
+    let result = await postData(`users/${userId - 1}/`, userData);
   } catch (error) {
     console.error("Error during registration:", error);
   }
@@ -103,7 +103,7 @@ function resetSignupFormInputs() {
  */
 function showSuccessfullySignedUp() {
   return new Promise((resolve) => {
-    const overlay = document.getElementById("successfully_signed_up");
+    let overlay = document.getElementById("successfully_signed_up");
     overlay.classList.remove("d-none");
     overlay.classList.add("active");
 
@@ -122,7 +122,7 @@ function showSuccessfullySignedUp() {
  * Removes the alert background from the legal notice acceptance checkbox.
  */
 function removeNoticeButtonBg() {
-  const checkButton = document.getElementById("signup_check_off");
+  let checkButton = document.getElementById("signup_check_off");
   checkButton.classList.remove("bg-alert");
 }
 
@@ -131,7 +131,7 @@ function removeNoticeButtonBg() {
  */
 function showKevinAlert() {
   return new Promise((resolve) => {
-    const overlay = document.getElementById("kevin_alert");
+    let overlay = document.getElementById("kevin_alert");
     overlay.classList.remove("d-none");
     overlay.classList.add("active");
 

@@ -13,7 +13,7 @@ async function updateTasksOnBoard() {
  */
 function cleanBoard(statuses) {
   statuses.forEach((status) => {
-    const statusColumn = document.getElementById(`kanban_${status}`);
+    let statusColumn = document.getElementById(`kanban_${status}`);
     statusColumn.innerHTML = "";
   });
 }
@@ -27,7 +27,7 @@ async function renderTasksInStatusArea(statuses) {
   let tasksToRender = await filterUserTasks();
   tasksToRender = filterSoughtTaskToRender(tasksToRender);
   noTaskFound(tasksToRender);
-  const contacts = await fetchData("contacts");
+  let contacts = await fetchData("contacts");
 
   statuses.forEach((status) =>
     renderStatusArea(status, tasksToRender, contacts)
@@ -43,7 +43,7 @@ async function filterUserTasks() {
   let userTasks = activeUser.tasks;
   let allTasks = await fetchData("tasks");
 
-  const tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
+  let tasksToRender = allTasks.filter((task) => userTasks.includes(task.id));
   return tasksToRender;
 }
 
@@ -73,8 +73,8 @@ function filterSoughtTaskToRender(tasksToRender) {
  * @returns {string} The lowercase search query
  */
 function getSoughtTask() {
-  const soughtedTaskDesktop = document.getElementById("sought_task").value;
-  const soughtedTaskMobile =
+  let soughtedTaskDesktop = document.getElementById("sought_task").value;
+  let soughtedTaskMobile =
     document.getElementById("sought_task_mobile").value;
   return (soughtedTaskDesktop || soughtedTaskMobile).toLowerCase();
 }
@@ -150,7 +150,7 @@ function renderStatusTasks(tasks, area, contacts) {
  * @returns {string} - The shortened description
  */
 function shortenDescription(description) {
-  const words = description.split(/\s+/);
+  let words = description.split(/\s+/);
   if (words.length <= 6) return description;
   return words.slice(0, 6).join(" ") + "...";
 }
@@ -196,10 +196,10 @@ function addSubtasksOnBoardTasks(subtaskArea, task) {
  * @param {number} sumAllSubtasks - The total number of subtasks
  */
 function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
-  const taskElement = document.getElementById(`task_${taskId}`);
-  const subtasksBar = taskElement.querySelector(".task-subtasks-bar");
+  let taskElement = document.getElementById(`task_${taskId}`);
+  let subtasksBar = taskElement.querySelector(".task-subtasks-bar");
 
-  const percentage = (sumDoneSubtasks / sumAllSubtasks) * 100;
+  let percentage = (sumDoneSubtasks / sumAllSubtasks) * 100;
   subtasksBar.style.setProperty("--progress", `${percentage}%`);
 }
 
@@ -210,10 +210,10 @@ function updateSubtasksBar(taskId, sumDoneSubtasks, sumAllSubtasks) {
  * @param {Array} contacts - An array of contact objects
  */
 function displayAssigneesForTask(task, contacts) {
-  const assignedField = document.getElementById(`assignees_task_${task.id}`);
+  let assignedField = document.getElementById(`assignees_task_${task.id}`);
   assignedField.innerHTML = "";
   let maxDisplayed = determineMaxDisplayed(task);
-  const validContacts = contacts.filter(
+  let validContacts = contacts.filter(
     (contact) =>
       activeUser.contacts.includes(contact.id)
   );
@@ -262,7 +262,7 @@ function displayAssignees(assignees, contacts, assignedField, maxDisplayed) {
  * @param {HTMLElement} assignedField - The HTML element to render the assignee in
  */
 function renderAssignee(contactId, contacts, assignedField) {
-  const contact = contacts.find((c) => c.id === contactId);
+  let contact = contacts.find((c) => c.id === contactId);
 
   if (contact) {
     assignedField.innerHTML += generateAssigneeField(contact);
@@ -277,11 +277,11 @@ function renderAssignee(contactId, contacts, assignedField) {
  * @param {number} maxDisplayed - The maximum number of assignees displayed
  */
 function displayCount(task, assignees, maxDisplayed) {
-  const numberField = document.getElementById(`assignees_number_${task.id}`);
+  let numberField = document.getElementById(`assignees_number_${task.id}`);
   numberField.innerHTML = "";
 
   if (assignees.length > maxDisplayed) {
-    const remainingCount = assignees.length - maxDisplayed;
+    let remainingCount = assignees.length - maxDisplayed;
     numberField.innerHTML += generateAdditionallyAssigneeField(remainingCount);
   }
 }

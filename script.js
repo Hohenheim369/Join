@@ -9,12 +9,12 @@ let activeUser = getActiveUser();
  * @returns {Array} - Downloaded data.
  */
 async function fetchData(path = "") {
-  const response = await fetch(`${BASE_URL}/${path}/.json`);
-  const datas = await response.json();
+  let response = await fetch(`${BASE_URL}/${path}/.json`);
+  let datas = await response.json();
   if(datas === null){
     return null;
   };
-  const dataArray = Array.isArray(datas) ? datas : Object.values(datas);
+  let dataArray = Array.isArray(datas) ? datas : Object.values(datas);
   return dataArray.filter(data => data !== null);
 }
 
@@ -25,7 +25,7 @@ async function fetchData(path = "") {
  * @param {*} data - Data to be uploaded
  */
 async function postData(path = "", data = {}) {
-  const response = await fetch(`${BASE_URL}/${path}/.json`, {
+  let response = await fetch(`${BASE_URL}/${path}/.json`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -46,8 +46,8 @@ async function postData(path = "", data = {}) {
  * @param {*} id - Id of the element to be deleted
  */
 async function deleteData(path = "", id) {
-  const url = `${BASE_URL}/${path}/${id - 1}.json`;
-  const response = await fetch(url, {
+  let url = `${BASE_URL}/${path}/${id - 1}.json`;
+  let response = await fetch(url, {
     method: "DELETE",
   });
   if (!response.ok) {
@@ -95,9 +95,9 @@ function countId(responseToJson) {
  */
 function getActiveUser() {
   try {
-    const storedUser = localStorage.getItem("activeUser");
-    if (storedUser) {
-      return JSON.parse(storedUser);
+    const STORED_USER = localStorage.getItem("activeUser");
+    if (STORED_USER) {
+      return JSON.parse(STORED_USER);
     } else {
       return {};
     }
@@ -124,8 +124,8 @@ async function resetTheDatabase() {
  * @param {HTMLElement} CheckTaskButton - The HTML element where the button is displayed
  */
 function toggleCheckButton(CheckButtonId, CheckTaskButton) {
-  const checkButton = document.getElementById(CheckButtonId);
-  const isChecked = checkButton.src.includes("true");
+  let checkButton = document.getElementById(CheckButtonId);
+  let isChecked = checkButton.src.includes("true");
   checkButton.src = `../assets/img/png/check-${CheckTaskButton}-${
     isChecked ? "false" : "true"
   }.png`;
