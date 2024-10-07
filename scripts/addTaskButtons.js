@@ -1,6 +1,6 @@
 /**
  * This function activates all prio functions to handle them
- * 
+ *
  * @param {string} priority - text of the selected prio button
  */
 function selectPrio(priority) {
@@ -13,7 +13,7 @@ function selectPrio(priority) {
 
 /**
  * This function resets the selection of a prio button
- * 
+ *
  * @param {string} prio - text of the selected prio button
  */
 function resetPrio(prio) {
@@ -28,7 +28,7 @@ function resetPrio(prio) {
 
 /**
  * This function sets the selection of a prio button
- * 
+ *
  * @param {string} priority - text of the selected prio button
  */
 function setPrio(priority) {
@@ -117,8 +117,8 @@ function toggleSubtaskIcons() {
 
 /**
  * This function add a subtask to the list below
- * 
- * @param {string} subtasksInput - is the text input 
+ *
+ * @param {string} subtasksInput - is the text input
  */
 function addSubtaskToList(subtasksInput) {
   subTasks.push(subtasksInput);
@@ -138,17 +138,22 @@ function enterValue() {
       event.preventDefault();
       addSubtasksHandle();
       document.getElementById("subtasks_inactiv_img").classList.add("d-none");
-      document.getElementById("subtasks_activ_img").classList.remove("d-none");    }
+      document.getElementById("subtasks_activ_img").classList.remove("d-none");
+    }
   });
 }
 
 /**
  * This function adds and removes d-none
- * 
- * @param {Object} event - PointerEvent 
+ *
+ * @param {Object} event - PointerEvent
  */
-function changeSubtasksImagesClick(event){
-  if (event.target.id === 'add_task_board'||'edit_task_board'||'add_task_content') {
+function changeSubtasksImagesClick(event) {
+  if (
+    event.target.id === "add_task_board" ||
+    "edit_task_board" ||
+    "add_task_content"
+  ) {
     document.getElementById("subtasks_inactiv_img").classList.remove("d-none");
     document.getElementById("subtasks_activ_img").classList.add("d-none");
   }
@@ -156,8 +161,8 @@ function changeSubtasksImagesClick(event){
 
 /**
  * This function prevents from executing on the Parend element
- * 
- * @param {Object} event - PointerEvent 
+ *
+ * @param {Object} event - PointerEvent
  */
 function changeSubtasksImagesClickPrevention(event) {
   event.stopPropagation();
@@ -172,19 +177,19 @@ function cancelSubtasks() {
 
 /**
  * This function allows the user to delet a subtask
- * 
+ *
  * @param {number} id - Id of the subtask list element
  */
 function deleteSubtask(id) {
   document.getElementById(`listItem_${id}`).remove();
-  document.getElementById(`listItem_input_${id}`).remove();  
+  document.getElementById(`listItem_input_${id}`).remove();
   subTasks.splice(id, 1);
   editSubTaskIndex = null;
 }
 
 /**
  * This function toggles the images of the list elements
- * 
+ *
  * @param {number} id - Id of the subtask list element
  */
 function toggleSubtasksImgs(id) {
@@ -208,7 +213,7 @@ function enableButton() {
 
 /**
  * This function gets the Input values
- * 
+ *
  * @returns - the values as key
  */
 function getInputValues() {
@@ -220,7 +225,7 @@ function getInputValues() {
 
 /**
  * This function gets the Category value
- * 
+ *
  * @returns - the inner text of the element
  */
 function getCategoryValue() {
@@ -229,7 +234,7 @@ function getCategoryValue() {
 
 /**
  * This function checks if the elements are filled and valid
- * 
+ *
  * @param {string} input - key for the title and date value
  * @param {string} category - key for the category text
  * @returns - true or false of completion
@@ -251,4 +256,14 @@ function processValidForm() {
 /** This function precesses through the invalid form */
 function processInvalidForm() {
   requiredFields();
+}
+
+/** This function disables days past by in the calendar */
+function setDate(){
+let today = new Date();
+let dd = String(today.getDate()).padStart(2, "0");
+let mm = String(today.getMonth() + 1).padStart(2, "0");
+let yyyy = today.getFullYear();
+let formattedDate = `${yyyy}-${mm}-${dd}`;
+document.getElementById("due_date").setAttribute("min", formattedDate);
 }

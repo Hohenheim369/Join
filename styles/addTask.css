@@ -244,10 +244,6 @@ li {
   margin-bottom: 16px;
 }
 
-.add-task-h1 {
-  width: 100%;
-}
-
 .bottom-order {
   max-width: 976px;
   display: flex;
@@ -406,6 +402,6 @@ li {
 
 .edit-content-order {
   overflow-y: auto;
-  max-height: calc(100vh - 230px);
+  max-height: calc(100vh - 290px);
   margin-top: 24px;
 }

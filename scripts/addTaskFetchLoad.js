@@ -10,6 +10,7 @@ async function initTemplateAddTask(domLocation, clear) {
   document.getElementById(domLocation).innerHTML = data;
   clearTemplate(clear);
   getContacts();
+  setDate();
   if (clear) {
       clearButton();
       renderEditButtons();

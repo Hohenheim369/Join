@@ -234,6 +234,9 @@ function saveInput(index) {
   toggleSubtasksImgs(index);
   handleInputBlur(subInput, index);
   editSubTaskIndex = null;
+  // if (subInput == "") {
+  //   deleteSubtask(index);
+  // }
 }
 
 /**
@@ -293,7 +296,7 @@ function handleInputBlur(li, index) {
   if (input.trim() !== "") {
     saveChanges(li, index);
   } else {
-    removeSubtask(li, index);
+    removeSubtask(index);
     return;
   }
 }
@@ -312,11 +315,10 @@ function saveChanges(subtasksInput, index) {
 /**
  * This function removes Subtasks from the List
  * 
- * @param {string} li - is the current list Element
  * @param {number} index - is the Id of the selected Subtask to edit
  */
-function removeSubtask(li, index) {
-  li.parentNode.remove();
+function removeSubtask(index) {
+  deleteSubtask(index) 
   subTasks.splice(index, 1);
 }
 

@@ -1,164 +1,3 @@
-/* @media screen and (max-width: 1200px) {
-  .bottom-order {
-    width: calc(100% - 150px);
-  }
-  .add-task-board-click {
-    width: calc(100% - 60px);
-  }
-  .add-task-board {
-    height: calc(100vh - 130px);
-  }
-  .bottom-edit-order {
-    width: 150%;
-  }
-  .content-order{
-    overflow-y: auto;
-    height: 552px;
-  }
-}
-
-@media screen and (max-width: 999px) {
-  .bottom-order {
-    width: calc(100% - 17%);
-  }
-  h1 {
-    font-size: clamp(47px, 7vw, 61px);
-  }
-  .bottom-edit-order {
-    width: 120%;
-  }
-}
-
-@media screen and (max-width: 882px) {
-  .add-task-board {
-    height: calc(100vh - 130px);
-    padding: 50px 35px;
-  }
-  .div-button-order {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  .bottom-order {
-    width: calc(100% - 9%) !important;
-  }
-  .bottom-edit-order {
-    max-width: 493px;
-    position: fixed;
-    bottom: 40px;
-    padding-inline: 20px;
-  }
-  .edit-overflow {
-    height: 90%;
-    overflow-y: auto;
-  }
-  .single-edit-task {
-    padding-inline: clamp(5px, 4vw, 40px);
-  }
-}
-
-@media screen and (max-width: 777px) {
-  .add-task-h1 {
-    padding-inline: 16px;
-  }
-  label {
-    font-size: clamp(16px, 4vw, 20px);
-  }
-  input {
-    font-size: clamp(16px, 4vw, 20px);
-  }
-  textarea {
-    font-size: clamp(16px, 4vw, 20px);
-  }
-  .div-input {
-    font-size: clamp(16px, 4vw, 20px);
-  }
-  .prio-span {
-    font-size: clamp(16px, 4vw, 20px);
-  }
-  button {
-    font-size: clamp(16px, 4vw, 20px);
-  }
-  .alert-field {
-    font-size: clamp(12px, 4vw, 16px);
-  }
-  .add-task-board {
-    width: 715px;
-  }
-  .content-order {
-    display: flex;
-    flex-direction: column;
-    margin-top: 25px;
-    overflow-y: auto;
-    height: calc(100vh - 375px);
-  }
-  .dividing-bar {
-    display: none;
-  }
-  .add-task-form-left {
-    padding: 0px 16px;
-    width: auto;
-  }
-  .add-task-form-right {
-    padding: 0px 16px;
-    width: auto;
-  }
-  .div-button-order {
-    justify-content: space-between;
-  }
-  .clear-button {
-    display: none;
-  }
-  .bottom-order {
-    background-color: white;
-    padding: 16px 0px;
-    width: calc(100% - 13%) !important;
-  }
-  .bottom-edit-order {
-    max-width: 493px;
-    position: fixed;
-    bottom: 115px;
-    padding-inline: 20px;
-    background-color: white;
-  }
-  .single-edit-task{
-    height: calc(100vh - 140px);
-  }
-}
-
-@media screen and (max-width: 635px) {
-  .bottom-order {
-    width: calc(100% - 16%) !important;
-  }
-}
-
-@media screen and (max-width: 516px) {
-  .add-task-board {
-    height: calc(100vh - 240px);
-    padding: 50px 16px;
-  }
-  .bottom-order {
-    width: calc(100% - 14%) !important;
-    bottom: 10px;
-  }
-  .div-button-order {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  ::-webkit-calendar-picker-indicator {
-    height: 20px;
-    width: 20px;
-  }
-  .bottom-edit-order {
-    max-width: calc(100% - 5%);
-  }
-  .content-order {
-    display: flex;
-    flex-direction: column;
-    margin-top: 25px;
-    overflow-y: auto;
-    height: calc(100vh - 470px);
-  }
-} */
 @media screen and (max-width: 1440px) {
   .content-order {
     display: flex;
@@ -185,7 +24,7 @@
     padding-inline: clamp(8px, 1vw, 40px);
   }
   .add-task-h1 {
-    display: none;
+    padding-left: 16px;
   }
   .bottom-order {
     width: 100%;
@@ -197,7 +36,7 @@
     flex-direction: column;
     margin-top: 70px;
     overflow-y: auto;
-    max-height: calc(100vh - 300px);
+    max-height: calc(100vh - 355px);
     padding-bottom: 30px;
   }
   .dividing-bar {
@@ -245,9 +84,6 @@
   .bottom-edit-order {
     background-color: rgb(246, 247, 248);
     padding-inline: 16px;
-  }
-  .edit-content-order {
-    max-height: calc(100vh - 250px);
   }
   .edit-overflow {
     height: 95vh;

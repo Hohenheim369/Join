@@ -20,7 +20,10 @@
 
 @media screen and (max-width: 777px) {
   .add-task-h1 {
-    display: none;
+    font-size: 40px;
+    position: absolute;
+    top: 80px;
+    padding-left: 16px;
   }
   .content {
     width: 100%;
@@ -40,7 +43,9 @@
     flex-direction: column;
     margin-top: 70px;
     overflow-y: auto;
-    height: calc(100vh - 265px);
+    height: calc(100vh - 324px);
+    position: relative;
+    top: 50px;
   }
   .dividing-bar {
     display: none;
