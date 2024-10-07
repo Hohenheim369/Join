@@ -68,7 +68,7 @@ async function renderTasks() {
   const tasks = await loadTasks();
   countToDo(tasks);
   countDone(tasks);
-  countTasksWithDueDate(tasks);
+  countUrgent(tasks);
   deadlineDate(tasks);
   countTaskInBoard(tasks);
   countTaskInProgress(tasks);
@@ -118,13 +118,10 @@ function countDone(tasks) {
  * Counts the number of tasks with a due date and updates the display.
  * @param {Array} tasks - The list of tasks.
  */
-function countTasksWithDueDate(tasks) {
-  const tasksWithDueDate = tasks.filter((task) => task.date);
-  tasksWithDueDate.sort((a, b) => new Date(a.date) - new Date(b.date));
-  const nextDueDate = tasksWithDueDate[0]?.date;
-  const tasksWithSameDueDate = tasks.filter((task) => task.date === nextDueDate);
-  const taskCountElement = document.getElementById("count_priority_urgent");
-  taskCountElement.innerHTML = `${tasksWithSameDueDate.length}`;
+function countUrgent(tasks) {
+  let urgent = document.getElementById("count_priority_urgent");
+  let count = tasks.filter((task) => task.priority === "urgent").length;
+  urgent.innerHTML = `${count}`;
 }
 
 /**
