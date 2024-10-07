@@ -4,7 +4,7 @@
  * @param {string} priority - text of the selected prio button
  */
 function selectPrio(priority) {
-  const prios = ["low", "medium", "urgent"];
+  let prios = ["low", "medium", "urgent"];
   prios.forEach((prio) => resetPrio(prio));
   setPrio(priority);
   selectedButton = priority;
@@ -87,7 +87,7 @@ function clearButton() {
   document.getElementById("title_input").value = "";
   document.getElementById("description_textarea").value = "";
   document.getElementById("due_date").value = "";
-  const existingUserIndex = userId.map(Number);
+  let existingUserIndex = userId.map(Number);
   removeUserAssigned(existingUserIndex);
   selectedContacts.length = 0;
   updateSelectedContactsDisplay();
@@ -101,7 +101,7 @@ function clearButton() {
 /** This function handles the actions after adding a subtask */
 function addSubtasksHandle() {
   toggleSubtaskIcons();
-  const subtasksInput = document.getElementById("subtasks_input").value;
+  let subtasksInput = document.getElementById("subtasks_input").value;
 
   if (subtasksInput.trim() !== "") {
     addSubtaskToList(subtasksInput);
@@ -122,7 +122,7 @@ function toggleSubtaskIcons() {
  */
 function addSubtaskToList(subtasksInput) {
   subTasks.push(subtasksInput);
-  const ids = subTasks.length;
+  let ids = subTasks.length;
   document.getElementById("subtasks_list").innerHTML += addSubtasksToList(
     subtasksInput,
     ids - 1
@@ -197,8 +197,8 @@ function toggleSubtasksImgs(id) {
 
 /** This function enables the create task button */
 function enableButton() {
-  const input = getInputValues();
-  const category = getCategoryValue();
+  let input = getInputValues();
+  let category = getCategoryValue();
   if (isFormComplete(input, category)) {
     processValidForm();
   } else {

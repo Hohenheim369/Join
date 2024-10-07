@@ -5,8 +5,8 @@
  * @param {boolean} clear This variable is a state of true or false
  */
 async function initTemplateAddTask(domLocation, clear) {
-  const response = await fetch("../assets/templates/taskTemplate.html");
-  const data = await response.text();
+  let response = await fetch("../assets/templates/taskTemplate.html");
+  let data = await response.text();
   document.getElementById(domLocation).innerHTML = data;
   clearTemplate(clear);
   getContacts();
@@ -38,8 +38,8 @@ function renderEditButtons(){
 
 /** This function gathers all data to create a task */
 async function createTask() {
-  const taskData = getTaskFormData();
-  const taskId = await getNewId("tasks");
+  let taskData = getTaskFormData();
+  let taskId = await getNewId("tasks");
 
   setTaskData(taskData, taskId);
   await handleTaskCreationCompletion(taskId);
@@ -91,7 +91,7 @@ async function putTaskToUser(taskId) {
  */
 async function updateUserTaskInDatabase(userId, taskId) {
   if (userId != 0) {
-    const path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
+    let path = `users/${userId - 1}/tasks/${activeUser.tasks.length - 1}`;
     return postData(path, taskId);
   }
 }
@@ -133,7 +133,7 @@ async function getContacts() {
   document.getElementById("contact_contant").innerHTML = "";
   let contacts = await fetchData("contacts");
   let userContacts = activeUser.contacts;
-  const contactsToRender = contacts.filter((contact) =>
+  let contactsToRender = contacts.filter((contact) =>
     userContacts.includes(contact.id)
   );
   window.allContacts = contactsToRender;
@@ -142,11 +142,11 @@ async function getContacts() {
 
 /** This function fetches all selected contact data from the database */
 async function updateSelectedContactsDisplay() {
-  const newContacts = await fetchData("contacts");
-  const selectedList = document.getElementById("selected_contacts");
+  let newContacts = await fetchData("contacts");
+  let selectedList = document.getElementById("selected_contacts");
   selectedList.innerHTML = "";
   let userContacts = activeUser.contacts;
-  const contactsToRender = newContacts.filter((contact) =>
+  let contactsToRender = newContacts.filter((contact) =>
     userContacts.includes(contact.id)
   );
   window.allContacts = contactsToRender;

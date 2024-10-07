@@ -21,7 +21,6 @@ function openEditDialog(taskId) {
   document.getElementById("alert_field").classList.add("d-none");
   document.getElementById("alert_field").classList.remove("alert-field");
   document.getElementById("dividing_bar").classList.add("d-none");
-  document.getElementById("add_task_h1").classList.add("d-none");
   document.getElementById("content_order").classList.remove("content-order");
   document.getElementById("content_order").classList.add("edit-content-order");
   document.getElementById('bottom_button_order').classList.add('edit-bottom-button-order');
@@ -37,7 +36,7 @@ function openEditDialog(taskId) {
 async function taskValuesToEditField(taskId) {
   let tasks = await fetchData("tasks");
   let singleTask = tasks.find((task) => task.id === taskId);
-  const contacts = await fetchData("contacts");
+  let contacts = await fetchData("contacts");
   setTaskBasicValues(singleTask);
   setTaskUser(singleTask);
   setTaskContacts(singleTask, contacts);
@@ -121,7 +120,7 @@ function setTaskCategory(singleTask) {
  * @param {array} singleTask - is the array of the clicked task
  */
 function setTaskSubtasks(singleTask) {
-  const subtaskEdit = singleTask.subtasks;
+  let subtaskEdit = singleTask.subtasks;
   let subTaskField = document.getElementById("subtasks_list");
   subTaskField.innerHTML = "";
   if (subtaskEdit) {
@@ -139,8 +138,8 @@ function setTaskSubtasks(singleTask) {
  * @param {number} taskId -id of the task
  */
 function enableEditButton(taskId) {
-  const input = getInputFields();
-  const category = getCategory();
+  let input = getInputFields();
+  let category = getCategory();
   if (isFormValid(input, category)) {
     handleValidForm(taskId);
   } else {
@@ -205,11 +204,11 @@ function handleInvalidForm() {
  * @param {number} taskId - Id of the task
  */
 async function editTask(taskId) {
-  const taskData = getTaskFormData();
-  const tasks = await fetchData("tasks");
-  const singleTask = tasks.find((task) => task.id === taskId);
-  const userTaskId = userTest();
-  const currenttaskStatus = singleTask.status;
+  let taskData = getTaskFormData();
+  let tasks = await fetchData("tasks");
+  let singleTask = tasks.find((task) => task.id === taskId);
+  let userTaskId = userTest();
+  let currenttaskStatus = singleTask.status;
   await updateTaskContent(taskData, taskId, userTaskId, currenttaskStatus);
   await handleTaskEditCompletion(taskId);
 }
@@ -343,7 +342,7 @@ function createSubtaskObject(subName, index, filteredSubtasks) {
 
 /** This function closes the dialog feedback after editing a task */
 function closeAddTaskDialogFeedback() {
-  const slidingDiv = document.getElementById("task_added_overlay");
+  let slidingDiv = document.getElementById("task_added_overlay");
   slidingDiv.innerHTML = "";
   slidingDiv.classList.toggle("visible");
 }

@@ -12,7 +12,7 @@ async function openAddTaskDialogFeedback() {
   overlayFeedback.innerHTML ="";
   overlayFeedback.innerHTML = taskAddedToBoard();
   await sleep(10);
-  const slidingDiv = document.getElementById("task_added_overlay");
+  let slidingDiv = document.getElementById("task_added_overlay");
   slidingDiv.classList.toggle("visible");
 }
 
@@ -32,11 +32,11 @@ function sleep(ms) {
  * @returns - all variables set
  */
 function getTaskFormData() {
-  const title = document.getElementById("title_input").value;
-  const description = document.getElementById("description_textarea").value;
-  const dueDate = document.getElementById("due_date").value;
-  const categorySeleced = document.getElementById("category").innerText;
-  const assignedTo = selectedContacts.map(Number);
+  let title = document.getElementById("title_input").value;
+  let description = document.getElementById("description_textarea").value;
+  let dueDate = document.getElementById("due_date").value;
+  let categorySeleced = document.getElementById("category").innerText;
+  let assignedTo = selectedContacts.map(Number);
 
   return { title, description, dueDate, categorySeleced, assignedTo };
 }
@@ -68,11 +68,11 @@ function getSubtasks() {
  */
 function displayContacts(contacts) {
   document.getElementById("contact_contant").innerHTML = "";
-  const userHtml = showAssignedUser(activeUser);
+  let userHtml = showAssignedUser(activeUser);
   document.getElementById("contact_contant").innerHTML = userHtml;
   contacts.sort((a, b) => a.name.localeCompare(b.name));
   for (let contact of contacts) {
-    const contactHtml = showAssignedContactList(contact);
+    let contactHtml = showAssignedContactList(contact);
     document.getElementById("contact_contant").innerHTML += contactHtml;
   }
 }
@@ -90,7 +90,7 @@ function addContactToTask(CheckButtonId, CheckTaskButton, bgChange, contactId) {
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle("assigned-color-change");
   colorChange.classList.toggle("contact-list");
-  const existingContactIndex = selectedContacts.indexOf(contactId);
+  let existingContactIndex = selectedContacts.indexOf(contactId);
   if (existingContactIndex === -1) {
     addContactAssigned(contactId);
   } else {
@@ -111,7 +111,7 @@ function addUserToTask(CheckButtonId, CheckTaskButton, bgChange, activUserId) {
   let colorChange = document.getElementById(bgChange);
   colorChange.classList.toggle("assigned-color-change");
   colorChange.classList.toggle("contact-list");
-  const existingUserIndex = userId.indexOf(activUserId);
+  let existingUserIndex = userId.indexOf(activUserId);
   if (existingUserIndex === -1) {
     addUserAssigned(activUserId);
   } else {
@@ -172,9 +172,9 @@ function removeUserAssigned(index) {
 function updateSelectedUserDisplay() {
   let selectedList = document.getElementById("activ_user");
   selectedList.innerHTML = "";
-  const userInitials = activeUser.initials;
-  const activUserID = activeUser.id;
-  const userColor = activeUser.color;
+  let userInitials = activeUser.initials;
+  let activUserID = activeUser.id;
+  let userColor = activeUser.color;
   selectedList.innerHTML += assignedUser(userInitials, activUserID, userColor);
 }
 
@@ -187,7 +187,7 @@ function updateSelectedUserDisplay() {
 function displaySelectedContacts(newContacts, selectedList) {
   for (let i = 0; i < Math.min(selectedContacts.length); i++) {
     let contactId = Number(selectedContacts[i]);
-    const activeContacts = newContacts.find(
+    let activeContacts = newContacts.find(
       (contact) => contact.id === contactId
     );
     selectedList.innerHTML += assignedContacts(activeContacts);
@@ -243,7 +243,7 @@ function saveInput(index) {
  * @param {number} index - is the Id of the selected Subtask to edit
  */
 function editSubtask(li, index) {
-  const currentText = li.innerText;
+  let currentText = li.innerText;
   let subInput = document.getElementById(`input_subtask_${index}`);
   handlePreviousEdit(index);
   editSubTaskIndex = index;
