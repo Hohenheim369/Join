@@ -120,11 +120,7 @@ function validateName(name, noticeField) {
   if (!checkNameCharacters(name, noticeField, nameField)) {
     isValidName = false;
   }
-  if (name.replace(/\s+/g, "").toLowerCase().includes("kevin")) {
-    showKevinAlert();
-    document.getElementById("signup_name").value = "";
-    isValidName = false;
-  }
+  
   return isValidName;
 }
 

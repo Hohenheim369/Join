@@ -125,23 +125,3 @@ function removeNoticeButtonBg() {
   let checkButton = document.getElementById("signup_check_off");
   checkButton.classList.remove("bg-alert");
 }
-
-/**
- * Displays a message that Kevin cannot log in.
- */
-function showKevinAlert() {
-  return new Promise((resolve) => {
-    let overlay = document.getElementById("kevin_alert");
-    overlay.classList.remove("d-none");
-    overlay.classList.add("active");
-
-    setTimeout(() => {
-      overlay.classList.add("visible");
-      setTimeout(() => {
-        overlay.classList.remove("active", "visible");
-        overlay.classList.add("d-none");
-        resolve();
-      }, 3000);
-    }, 50);
-  });
-}
