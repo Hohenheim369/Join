@@ -145,16 +145,15 @@ function generateArrowBottom(task) {
  */
 function generateSingleTasks(singleTask, categoryColor) {
   return `
-          <div class="single-task-content d-flex-column gap-24">
-            <div class="d-flex-spbe-center">
-              <div class="single-task-category font-c-white bg-category-${categoryColor}">
-              ${singleTask.category}
-              </div>
-              <div
-                class="litte-button wh-24 d-flex-center"
+            <div
+                class="litte-button singel-task-close-btn wh-24 d-flex-center"
                 onclick="toggleOverlay('board_task_overlay'); updateTasksOnBoard(); clearButton()">
                 <img src="../assets/img/png/close.png" alt="" />
-              </div>
+            </div>        
+          <div class="single-task-content d-flex-column gap-24">
+            
+            <div class="single-task-category font-c-white bg-category-${categoryColor}">
+              ${singleTask.category}
             </div>
 
             <h2>${singleTask.title}</h2>
