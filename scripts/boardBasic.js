@@ -1,4 +1,4 @@
-const statuses = ["todo", "inprogress", "awaitfeedback", "done"];
+const STATUSES = ["todo", "inprogress", "awaitfeedback", "done"];
 let currentDraggedElement;
 
 /**
@@ -30,9 +30,9 @@ function toggleOverlay(section) {
  * @param {number} moveToDirection - The direction to move (-1 for left, 1 for right).
  */
 async function moveToStatus(taskId, status, moveToDirection) {
-  let currentIndex = statuses.indexOf(status);
+  let currentIndex = STATUSES.indexOf(status);
   let newIndex = currentIndex + moveToDirection;
-  let newStatus = statuses[newIndex];
+  let newStatus = STATUSES[newIndex];
 
   currentDraggedElement = taskId;
 

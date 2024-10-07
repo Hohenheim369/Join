@@ -2,17 +2,15 @@
  * Updates the Kanban board by cleaning it and rendering tasks in their respective status areas.
  */
 async function updateTasksOnBoard() {
-  cleanBoard(statuses);
-  await renderTasksInStatusArea(statuses);
+  cleanBoard();
+  await renderTasksInStatusArea();
 }
 
 /**
  * Cleans the Kanban board by removing all tasks from each status column.
- *
- * @param {string} statuses - An array of status names
  */
-function cleanBoard(statuses) {
-  statuses.forEach((status) => {
+function cleanBoard() {
+  STATUSES.forEach((status) => {
     let statusColumn = document.getElementById(`kanban_${status}`);
     statusColumn.innerHTML = "";
   });
@@ -20,16 +18,14 @@ function cleanBoard(statuses) {
 
 /**
  * Renders filtered tasks in their respective status areas on the Kanban board.
- *
- * @param {string} statuses - An array of status names
  */
-async function renderTasksInStatusArea(statuses) {
+async function renderTasksInStatusArea() {
   let tasksToRender = await filterUserTasks();
   tasksToRender = filterSoughtTaskToRender(tasksToRender);
   noTaskFound(tasksToRender);
   let contacts = await fetchData("contacts");
 
-  statuses.forEach((status) =>
+  STATUSES.forEach((status) =>
     renderStatusArea(status, tasksToRender, contacts)
   );
 }
